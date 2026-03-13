@@ -9,3 +9,11 @@ wheels/
 # Virtual environments
 .venv
 .env
+
+# Reports
+reports/
+screenshots/
+test-results/
+allure-results/
+tests/.DS_Store
+.DS_Store
