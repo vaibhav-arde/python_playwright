@@ -22,12 +22,12 @@ def pytest_addoption(parser):
     Adds command line options for test configuration.
     You can override these when running pytest or store defaults in pytest.ini.
     """
-    parser.addoption("--browser", default="chromium", help="Browser: chromium, firefox, webkit")
-    parser.addoption("--headed", action="store_true", help="Run in headed (visible) mode")
-    parser.addoption("--base-url", default="https://tutorialsninja.com/demo/", help="Base URL for tests")
-    parser.addoption("--video", default="retain-on-failure", help="Record video: on, off, retain-on-failure")
-    parser.addoption("--screenshot", default="only-on-failure", help="Take screenshot: on, off, only-on-failure")
-    parser.addoption("--tracing", default="retain-on-failure", help="Tracing: on, off, retain-on-failure")
+    # parser.addoption("--browser", default="chromium", help="Browser: chromium, firefox, webkit")
+    # parser.addoption("--headed", action="store_true", help="Run in headed (visible) mode")
+    # parser.addoption("--base-url", default="https://tutorialsninja.com/demo/", help="Base URL for tests")
+    # parser.addoption("--video", default="retain-on-failure", help="Record video: on, off, retain-on-failure")
+    # parser.addoption("--screenshot", default="only-on-failure", help="Take screenshot: on, off, only-on-failure")
+    # parser.addoption("--tracing", default="retain-on-failure", help="Tracing: on, off, retain-on-failure")
 
 
 # ----------------------------------------------------------------------------
@@ -42,6 +42,9 @@ def get_config_value(config, option_name):
     # Try command-line first
     cmd_value = config.getoption(option_name)
     if cmd_value is not None:
+        # pytest-playwright returns a list for --browser because it supports multiple browsers
+        if isinstance(cmd_value, list) and len(cmd_value) > 0:
+            return cmd_value[0]
         return cmd_value
 
     # Fallback to pytest.ini
