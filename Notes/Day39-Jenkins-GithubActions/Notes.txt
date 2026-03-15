@@ -1,0 +1,57 @@
+
+Installing Jenkins
+-----------
+
+Pre-requisite: JDK ( Java installation & Setup path)
+
+download Jenkins war file:
+-----
+https://www.jenkins.io/download/
+
+jenkins.war
+
+open the command prompt(terminal):
+
+ java -jar jenkins.war --enable-future-java
+
+Once you running/configured Jenkins.....
+
+Mange Jenkins.....
+
+1) install required plugins
+
+Allure Jenkins Plugin
+Git client plugin
+Git plugin
+GitHub API Plugin
+GitHub plugin
+Pipeline: GitHub Groovy Libraries
+Pipeline
+
+
+2) set tools paths
+
+Git path
+allure command line
+
+
+
+
+Pipeline
+-------
+1.	Checkout Code
+2.	Setup Python Environment
+3.	Install Dependencies
+4.	Clean Old Reports
+5.	Run Tests
+6.	Publish Allure Report
+
+
+
+
+
+
+
+
+
+
