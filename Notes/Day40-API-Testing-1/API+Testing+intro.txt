@@ -1,0 +1,34 @@
+API Testing
+-----------
+API ---> Application Programming Interface
+
+
+Frontend( Browser/Web)<------> API<-----> Database server
+
+
+http requests
+--------------
+Get ( Select)
+Post ( Create)
+Put ( Update)
+Delete (Delete)
+Patch (Partially Update)
+etc...
+
+Request----> API ----> Response 
+
+JSON format
+
+
+Post ( Create)
+-------------
+data --> post request body(request payload)
+
+
+3 ways of creating request body(request payload)
+----------
+1) keep the data inside the test ( json)/ hard coded
+2) read data from external json file
+3) dynamic data using Faker
+
+
