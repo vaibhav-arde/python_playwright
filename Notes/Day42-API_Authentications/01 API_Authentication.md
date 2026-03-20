@@ -372,7 +372,6 @@ In large frameworks we usually create an **auth fixture** that:
 3. Stores it
 4. Injects it into all API requests automatically
 
-If you want, I can show a **clean pytest + Playwright authentication fixture used in production frameworks.**
 ---
 ---
 
@@ -583,5 +582,201 @@ api_client.get("/orders")
 ```
 
 instead of repeating headers.
+---
+---
+
+## 🔐 What is OAuth Authentication?
+
+**OAuth (Open Authorization)** is a protocol that allows applications to **access resources on behalf of a user without exposing the user's credentials**.
+
+Most modern APIs use **OAuth 2.0**.
+
+Common examples:
+
+* Google APIs
+* GitHub APIs
+* Microsoft APIs
+
+OAuth typically returns an **Access Token**, which is then used as a **Bearer token**.
+
+---
+
+# OAuth Flow (Simplified)
+
+```text
+Client → Authorization server (login)
+Authorization server → returns access_token
+Client → API request with Bearer token
+Server → validates token
+Server → returns data
+```
+
+Example header:
+
+```http
+Authorization: Bearer ACCESS_TOKEN
+```
+
+---
+
+# 1️⃣ OAuth in Playwright (JavaScript)
+
+Usually the automation flow is:
+
+1. Request token from OAuth server
+2. Extract access_token
+3. Use token in API requests
+
+### Example
+
+```javascript
+import { request } from '@playwright/test';
+
+const authContext = await request.newContext();
+
+const tokenResponse = await authContext.post(
+  "https://api.example.com/oauth/token",
+  {
+    form: {
+      grant_type: "client_credentials",
+      client_id: "CLIENT_ID",
+      client_secret: "CLIENT_SECRET"
+    }
+  }
+);
+
+const token = (await tokenResponse.json()).access_token;
+
+const apiContext = await request.newContext({
+  extraHTTPHeaders: {
+    Authorization: `Bearer ${token}`
+  }
+});
+
+const response = await apiContext.get("/users");
+
+console.log(await response.json());
+```
+
+---
+
+# 2️⃣ OAuth in Playwright (Python)
+
+### Example
+
+```python
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+
+    request_context = p.request.new_context()
+
+    token_response = request_context.post(
+        "https://api.example.com/oauth/token",
+        form={
+            "grant_type": "client_credentials",
+            "client_id": "CLIENT_ID",
+            "client_secret": "CLIENT_SECRET"
+        }
+    )
+
+    token = token_response.json()["access_token"]
+
+    api_context = p.request.new_context(
+        extra_http_headers={
+            "Authorization": f"Bearer {token}"
+        }
+    )
+
+    response = api_context.get("/users")
+
+    print(response.json())
+```
+
+---
+
+# 3️⃣ OAuth Grant Types (Important for Interviews)
+
+| Grant Type         | Use Case                |
+| ------------------ | ----------------------- |
+| Authorization Code | User login via browser  |
+| Client Credentials | Machine-to-machine APIs |
+| Password Grant     | Legacy systems          |
+| Refresh Token      | Get new access tokens   |
+
+Most **API automation uses Client Credentials**.
+
+---
+
+# OAuth Example Request
+
+Token request:
+
+```http
+POST /oauth/token
+Content-Type: application/x-www-form-urlencoded
+```
+
+Body:
+
+```text
+grant_type=client_credentials
+client_id=abc
+client_secret=xyz
+```
+
+Response:
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+```
+
+---
+
+# Real Automation Flow
+
+```text
+Step 1 → Get OAuth token
+Step 2 → Store token
+Step 3 → Use token in Authorization header
+Step 4 → Run API tests
+```
+
+---
+
+# ⭐ Interview Answer
+
+If asked:
+
+**How do you handle OAuth authentication in Playwright?**
+
+Best answer:
+
+> In Playwright we first request the OAuth token from the authorization server using client credentials or another OAuth flow. Then we extract the access token from the response and include it in the `Authorization: Bearer` header for all API requests.
+
+---
+
+💡 **Senior SDET Tip**
+
+In production frameworks we usually:
+
+* create **auth fixture**
+* fetch OAuth token **once**
+* cache it
+* refresh when expired
+
+Example pattern:
+
+```python
+@pytest.fixture(scope="session")
+def token():
+```
+
+This avoids generating token for every test.
+
 ---
 ---
