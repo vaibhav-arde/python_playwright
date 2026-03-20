@@ -1,12 +1,13 @@
 import pytest
-from playwright.sync_api import expect, Page
-from loginpage import LoginPage
-from homepage import HomePage
 from cartpage import CartPage
+from homepage import HomePage
+from loginpage import LoginPage
+from playwright.sync_api import Page, expect
 
-@pytest.mark.parametrize("username, password, product_name", [
-    ("pavanol", "test@123", "Samsung galaxy s6")
-])
+
+@pytest.mark.parametrize(
+    "username, password, product_name", [("pavanol", "test@123", "Samsung galaxy s6")]
+)
 def test_user_can_login_and_add_product_to_cart(page: Page, username, password, product_name):
     # Navigate to site
     page.goto("https://www.demoblaze.com/index.html")

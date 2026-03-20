@@ -1,4 +1,4 @@
-from utils.data_reader_util import read_json_data, read_csv_data, read_excel_data
+from utils.data_reader_util import read_csv_data, read_excel_data, read_json_data
 
 # Read JSON data
 json_data = read_json_data("testdata/data.json")

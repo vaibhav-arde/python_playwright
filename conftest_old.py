@@ -1,8 +1,10 @@
-import pytest
 from datetime import datetime
 from pathlib import Path
-from slugify import slugify
+
 import allure
+import pytest
+from slugify import slugify  # type: ignore
+
 
 def pytest_configure(config):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -13,7 +15,7 @@ def pytest_configure(config):
 def pytest_runtest_makereport(item, call):
     pytest_html = item.config.pluginmanager.getplugin("html")
     outcome = yield
-    screen_file = ''
+    screen_file = ""
     report = outcome.get_result()
     extra = getattr(report, "extra", [])
     if report.when == "call":
@@ -33,7 +35,7 @@ def pytest_runtest_makereport(item, call):
                 allure.attach.file(
                     screen_file,
                     name="Failure Screenshot",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=allure.attachment_type.PNG,
                 )
 
         report.extra = extra

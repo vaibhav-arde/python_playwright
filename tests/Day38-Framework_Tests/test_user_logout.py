@@ -23,10 +23,11 @@ Clicking "Continue" should navigate back to the Home page successfully.
 
 import pytest
 from playwright.sync_api import expect
+
+from config import Config
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
-from config import Config
 
 
 @pytest.mark.regression

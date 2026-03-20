@@ -1,6 +1,7 @@
-import pytest
-import allure
 from pathlib import Path
+
+import allure
+import pytest
 from playwright.sync_api import sync_playwright
 
 # ========================================================================
@@ -184,7 +185,7 @@ def page(request, browser_context):
         allure.attach.file(
             screenshot_path,
             name=f"{test_name}_screenshot",
-            attachment_type=allure.attachment_type.PNG
+            attachment_type=allure.attachment_type.PNG,
         )
         print("[ATTACH] Screenshot attached to Allure report")
 
@@ -193,8 +194,6 @@ def page(request, browser_context):
         video_path = page.video.path() if page.video else None
         if video_path and Path(video_path).exists():
             allure.attach.file(
-                video_path,
-                name=f"{test_name}_video",
-                attachment_type=allure.attachment_type.WEBM
+                video_path, name=f"{test_name}_video", attachment_type=allure.attachment_type.WEBM
             )
             print("[ATTACH] Video attached to Allure report")

@@ -1,9 +1,9 @@
 import pytest
-
-from playwright.sync_api import expect,Playwright
+from playwright.sync_api import expect
 
 # Test data
-search_items = ['laptop', 'Gift card', 'smartphone', 'monitor']
+search_items = ["laptop", "Gift card", "smartphone", "monitor"]
+
 
 @pytest.mark.parametrize("item", search_items)
 def test_search_items(item, page):

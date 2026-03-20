@@ -1,5 +1,6 @@
 from playwright.sync_api import Page
 
+
 class HomePage:
     def __init__(self, page: Page):
         self.page = page
@@ -20,7 +21,7 @@ class HomePage:
                 products.nth(i).click()
                 break
 
-        self.page.on("dialog", lambda dialog: dialog.accept()) # handle dialog
+        self.page.on("dialog", lambda dialog: dialog.accept())  # handle dialog
         self.add_to_cart_button.click()
 
     def goto_cart(self):

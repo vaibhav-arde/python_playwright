@@ -22,26 +22,27 @@ Expected Result:
 After submitting valid details, the system should display the message:
 "Your Account Has Been Created!"
 """
+
 import pytest
+from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from utilities.random_data_util import RandomDataUtil
-from playwright.sync_api import expect
 
 
 @pytest.mark.sanity
 @pytest.mark.regression
 def test_user_registration(page):
-    home_page=HomePage(page)
-    registration_page=RegistrationPage(page)
+    home_page = HomePage(page)
+    registration_page = RegistrationPage(page)
 
     home_page.click_my_account()
     home_page.click_register()
 
-    random_data=RandomDataUtil()
+    random_data = RandomDataUtil()
 
-    first_name=random_data.get_first_name()
+    first_name = random_data.get_first_name()
     last_name = random_data.get_last_name()
     email = random_data.get_email()
     phone = random_data.get_phone_number()
@@ -57,5 +58,5 @@ def test_user_registration(page):
     registration_page.set_privacy_policy()
     registration_page.click_continue()
 
-    confirmation_msg=registration_page.get_confirmation_msg()
+    confirmation_msg = registration_page.get_confirmation_msg()
     expect(confirmation_msg).to_have_text("Your Account Has Been Created!")

@@ -32,15 +32,16 @@ Expected Result:
 ----------------
 The "My Account" page should appear, confirming a successful login.
 """
+
 import time
 
 import pytest
+from playwright.sync_api import expect
 
+from config import Config  # Configuration file holding credentials
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
-from playwright.sync_api import expect
-from config import Config    # Configuration file holding credentials
 
 
 @pytest.mark.regression
@@ -76,12 +77,3 @@ def test_valid_user_login(page):
     time.sleep(3)
 
     expect(my_account_page.get_my_account_page_heading()).to_be_visible(timeout=3000)
-
-
-
-
-
-
-
-
-

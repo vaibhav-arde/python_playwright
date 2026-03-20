@@ -1,5 +1,6 @@
 from playwright.sync_api import Page
 
+
 class HomePage:
     """Page Object Model class for the 'Home' page."""
 

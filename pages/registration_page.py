@@ -14,12 +14,12 @@ class RegistrationPage:
 
         # ===== Locators =====
         # Input fields
-        self.txt_firstname = page.locator('#input-firstname')
-        self.txt_lastname = page.locator('#input-lastname')
-        self.txt_email = page.locator('#input-email')
-        self.txt_telephone = page.locator('#input-telephone')
-        self.txt_password = page.locator('#input-password')
-        self.txt_confirm_password = page.locator('#input-confirm')
+        self.txt_firstname = page.locator("#input-firstname")
+        self.txt_lastname = page.locator("#input-lastname")
+        self.txt_email = page.locator("#input-email")
+        self.txt_telephone = page.locator("#input-telephone")
+        self.txt_password = page.locator("#input-password")
+        self.txt_confirm_password = page.locator("#input-confirm")
 
         # Checkbox and buttons
         self.chk_policy = page.locator('input[name="agree"]')

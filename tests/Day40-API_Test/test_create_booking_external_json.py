@@ -1,6 +1,7 @@
 import json
-from playwright.sync_api import Playwright
 from pathlib import Path
+
+from playwright.sync_api import Playwright
 
 # -------------------------------------------------------------------
 # Test: Create Booking (POST request with static body)
@@ -8,14 +9,15 @@ from pathlib import Path
 # Data : External json file
 # -------------------------------------------------------------------
 
-def test_create_booking(playwright:Playwright):
+
+def test_create_booking(playwright: Playwright):
     base_url = "https://restful-booker.herokuapp.com"
 
     request_context = playwright.request.new_context()
 
     # Load request body from external JSON file
     file_path = Path(__file__).parent / "testdata" / "post_request_body.json"
-    with open(file_path, "r") as file:
+    with open(file_path) as file:
         request_body = json.load(file)
 
     # Send POST request

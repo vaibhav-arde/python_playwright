@@ -1,5 +1,6 @@
 # shopping_cart_page.py
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
 from pages.checkout_page import CheckoutPage  # Adjust import path as per your project structure
 
 
@@ -49,7 +50,7 @@ class ShoppingCartPage:
             print(f"Error clicking on checkout button: {e}")
             raise e  # Re-raise to fail the test if critical navigation fails
 
-    def is_page_loaded(self) :
+    def is_page_loaded(self):
         """
         Verifies if the Shopping Cart page is successfully loaded.
 

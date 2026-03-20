@@ -4,8 +4,7 @@
 # It follows the Page Object Model (POM) design pattern
 # to separate page locators and actions from the test logic.
 
-from playwright.sync_api import Page, expect
-from pages.home_page import HomePage  # Adjust this import path as per your project structure
+from playwright.sync_api import Page
 
 
 class LogoutPage:
@@ -20,7 +19,7 @@ class LogoutPage:
 
         # ===== Locators =====
         # Button used to return to the home page after successful logout
-        self.btn_continue = page.locator('.btn.btn-primary')
+        self.btn_continue = page.locator(".btn.btn-primary")
 
     # ===== Action Methods =====
 

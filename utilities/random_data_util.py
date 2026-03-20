@@ -1,6 +1,7 @@
-from faker import Faker
 import random
 import string
+
+from faker import Faker
 
 
 class RandomDataUtil:
@@ -45,10 +46,10 @@ class RandomDataUtil:
 
     def get_random_alphanumeric(self, length: int) -> str:
         chars = string.ascii_letters + string.digits
-        return ''.join(random.choice(chars) for _ in range(length))
+        return "".join(random.choice(chars) for _ in range(length))
 
     def get_random_numeric(self, length: int) -> str:
-        return ''.join(random.choice(string.digits) for _ in range(length))
+        return "".join(random.choice(string.digits) for _ in range(length))
 
     def get_random_uuid(self) -> str:
         return str(self.faker.uuid4())

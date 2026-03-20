@@ -23,9 +23,10 @@ and a visible confirmation message should appear.
 
 import pytest
 from playwright.sync_api import expect
+
+from config import Config
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
-from config import Config
 
 
 @pytest.mark.regression
@@ -35,8 +36,8 @@ def test_add_product_to_cart(page):
     """
 
     # --- Test Data ---
-    product_name = Config.product_name      # Get product name from configuration file
-    quantity = Config.product_quantity      # Get product quantity from configuration file
+    product_name = Config.product_name  # Get product name from configuration file
+    quantity = Config.product_quantity  # Get product quantity from configuration file
 
     # --- Page Object Initialization ---
     home_page = HomePage(page)

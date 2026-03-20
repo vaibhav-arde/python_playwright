@@ -1,5 +1,6 @@
-import json
 import csv
+import json
+
 import openpyxl
 
 
@@ -14,11 +15,13 @@ def read_json_data(file_path: str):
     """
     data = []
     try:
-        file= open(file_path, "r")
+        file = open(file_path)
         json_data = json.load(file)
         for record in json_data:
-            #data.append((record["email"], record["password"], record["validity"]))
-            data.append(tuple(record.values())) # Convert dictionary values to tuple (preserve order of keys)
+            # data.append((record["email"], record["password"], record["validity"]))
+            data.append(
+                tuple(record.values())
+            )  # Convert dictionary values to tuple (preserve order of keys)
     except Exception as e:
         print(f"Error reading JSON file: {e}")
     return data
@@ -31,17 +34,17 @@ def read_csv_data(file_path: str):
     """
     data = []
     try:
-        file= open(file_path, newline='', encoding='utf-8')
+        file = open(file_path, newline="", encoding="utf-8")
         reader = csv.DictReader(file)
         for row in reader:
-            #data.append((row["email"], row["password"], row["validity"]))
+            # data.append((row["email"], row["password"], row["validity"]))
             data.append(tuple(row.values()))
     except Exception as e:
         print(f"Error reading CSV file: {e}")
     return data
 
 
-def read_excel_data(file_path: str, sheet_name: str = None):
+def read_excel_data(file_path: str, sheet_name: str | None = None):
     """
     Reads test data from an Excel file and returns a list of tuples.
     Assumes the first row contains headers (email, password, validity).

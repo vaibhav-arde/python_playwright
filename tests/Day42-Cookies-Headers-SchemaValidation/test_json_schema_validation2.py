@@ -5,28 +5,29 @@ Install dependencies
     pip install jsonschema
 
 """
-from jsonschema import validate, ValidationError
-from playwright.sync_api import sync_playwright, Playwright
+
+from jsonschema import ValidationError, validate
+from playwright.sync_api import Playwright
+
 
 # Helper function to validate schema
-def validate_json_schema(response_json,myschema):
+def validate_json_schema(response_json, myschema):
     try:
-        validate(instance=response_json,schema=myschema)
+        validate(instance=response_json, schema=myschema)
         print("Schema validation succcessfull..")
         return True
-    except ValidationError as e:
+    except ValidationError:
         print("Schema validation failed")
         return False
 
 
-
-def test_validate_json_schema(playwright:Playwright):
+def test_validate_json_schema(playwright: Playwright):
     request_context = playwright.request.new_context()
 
-    response=request_context.get("https://jsonplaceholder.typicode.com/posts/1")
+    response = request_context.get("https://jsonplaceholder.typicode.com/posts/1")
 
     assert response.ok
-    response_body=response.json()
+    response_body = response.json()
 
     print(response_body)
 
@@ -35,30 +36,15 @@ def test_validate_json_schema(playwright:Playwright):
         "title": "Generated schema for Root",
         "type": "object",
         "properties": {
-            "userId": {
-                "type": "number"
-            },
-            "id": {
-                "type": "number"
-            },
-            "title": {
-                "type": "string"
-            },
-            "body": {
-                "type": "string"
-            }
+            "userId": {"type": "number"},
+            "id": {"type": "number"},
+            "title": {"type": "string"},
+            "body": {"type": "string"},
         },
-        "required": [
-            "userId",
-            "id",
-            "title",
-            "body"
-        ]
+        "required": ["userId", "id", "title", "body"],
     }
 
-    is_valid=validate_json_schema(response_body,schema)
+    is_valid = validate_json_schema(response_body, schema)
     assert is_valid
 
     request_context.dispose()
-
-

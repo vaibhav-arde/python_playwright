@@ -7,9 +7,10 @@
 6) Delete Booking (DELETE)
 """
 
-import pytest
 import json
 from pathlib import Path
+
+import pytest
 from playwright.sync_api import Playwright
 
 # -------------------------------------------------------------------
@@ -23,7 +24,7 @@ base_url = "https://restful-booker.herokuapp.com"
 # -------------------------------------------------------------------
 def read_json(file_path):
     full_path = Path(__file__).parent / file_path
-    with open(full_path, "r") as file:
+    with open(full_path) as file:
         return json.load(file)
 
 
@@ -198,12 +199,11 @@ def test_full_update_booking(request_context):
 def test_delete_booking(request_context):
     """Delete booking using auth token"""
     response = request_context.delete(
-        f"{base_url}/booking/{booking_id}",
-        headers={"Cookie": f"token={token}"}
+        f"{base_url}/booking/{booking_id}", headers={"Cookie": f"token={token}"}
     )
 
     # API returns 201 on successful deletion
     assert response.status == 201
-    assert response.status_text=="Created"
+    assert response.status_text == "Created"
 
-    print(f"\nBooking deleted successfully - ID:", booking_id)
+    print("\nBooking deleted successfully - ID:", booking_id)

@@ -4,7 +4,8 @@
 # It follows the Page Object Model (POM) pattern to separate
 # the page locators and actions from the actual test cases.
 
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
 from pages.logout_page import LogoutPage  # Adjust import path based on your project structure
 
 

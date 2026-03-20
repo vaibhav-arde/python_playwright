@@ -6,7 +6,8 @@ from playwright.sync_api import Playwright
 # Data : Hardcoded data inside the test
 # -------------------------------------------------------------------
 
-def test_create_booking(playwright:Playwright):
+
+def test_create_booking(playwright: Playwright):
     base_url = "https://restful-booker.herokuapp.com"
 
     request_context = playwright.request.new_context()
@@ -17,11 +18,8 @@ def test_create_booking(playwright:Playwright):
         "lastname": "Brown",
         "totalprice": 1000,
         "depositpaid": True,
-        "bookingdates": {
-            "checkin": "2025-07-01",
-            "checkout": "2025-07-05"
-        },
-        "additionalneeds": "super bowls"
+        "bookingdates": {"checkin": "2025-07-01", "checkout": "2025-07-05"},
+        "additionalneeds": "super bowls",
     }
 
     # Send POST request
