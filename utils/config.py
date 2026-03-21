@@ -35,5 +35,5 @@ class Config:
 
     # Product test data
     product_name = "MacBook"
-    product_quantity = "1"
+    product_quantity = "2"
     total_price = "$602.00"

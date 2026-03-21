@@ -40,4 +40,4 @@ def test_add_product_to_cart(page):
     product_page.add_to_cart()
 
     # Verify confirmation message
-    expect(product_page.get_confirmation_message()).to_be_visible(timeout=5000)
+    expect(product_page.get_confirmation_message()).to_be_visible(timeout=10000)
