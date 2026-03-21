@@ -15,6 +15,20 @@ reports/
 screenshots/
 test-results/
 allure-results/
-tests/.DS_Store
+
+# OS files
 .DS_Store
+tests/.DS_Store
+
+# IDE
 .vscode/
+.idea/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

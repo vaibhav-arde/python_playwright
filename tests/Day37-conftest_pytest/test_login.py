@@ -36,9 +36,9 @@ The "My Account" page should appear, confirming a successful login.
 import time
 
 import pytest
+from config import Config  # Configuration file holding credentials
 from playwright.sync_api import expect
 
-from config import Config  # Configuration file holding credentials
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
