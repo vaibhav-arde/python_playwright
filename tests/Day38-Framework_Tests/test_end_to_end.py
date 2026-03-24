@@ -1,7 +1,7 @@
 import pytest
+from config import Config
 from playwright.sync_api import expect
 
-from config import Config
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage

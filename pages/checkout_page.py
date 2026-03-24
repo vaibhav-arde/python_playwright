@@ -1,24 +1,20 @@
-# checkout_page.py
+# pages/checkout_page.py
 # =====================
-# This class represents the "Checkout Page" in the application.
-# It follows the Page Object Model (POM) design pattern to organize
-# locators and methods (actions) clearly.
+# Page Object for the Checkout Page.
+# Inherits from BasePage for reusable UI interaction methods.
 
 from playwright.sync_api import Page
 
+from pages.base_page import BasePage
 
-class CheckoutPage:
+
+class CheckoutPage(BasePage):
     """Page Object Model class for the Checkout Page."""
 
     def __init__(self, page: Page):
-        """
-        Constructor that initializes the Playwright Page object
-        and defines all the locators used on the Checkout page.
-        """
-        self.page = page
+        super().__init__(page)
 
         # ===== Locators =====
-        # These identify the web elements we want to interact with on the page.
         self.radio_guest = page.locator('input[value="guest"]')
         self.btn_continue = page.locator("#button-account")
         self.txt_first_name = page.locator("#input-payment-firstname")
@@ -39,41 +35,24 @@ class CheckoutPage:
         self.btn_conf_order = page.locator("#button-confirm")
         self.lbl_order_con_msg = page.locator("#content h1")
 
-    # ===== Page Validation Methods =====
+    # ===== Page Validation =====
 
-    def get_checkout_page_title(self) -> str | None:
+    def get_checkout_page_title(self) -> str:
         """Return the title of the Checkout page."""
-        try:
-            return self.page.title()
-        except Exception as e:
-            print(f" Exception while getting Checkout page title: {e}")
-            return None
+        return self.get_title()
 
     # ===== Checkout Option =====
 
     def choose_checkout_option(self, checkout_option: str):
-        """
-        Choose the checkout type (e.g., Guest Checkout).
-        """
-        try:
-            if checkout_option.lower() == "guest checkout":
-                self.radio_guest.click()
-        except Exception as e:
-            print(f" Exception while choosing checkout option '{checkout_option}': {e}")
-            raise
-
-    # ===== Continue Button =====
+        """Choose the checkout type (e.g., Guest Checkout)."""
+        if checkout_option.lower() == "guest checkout":
+            self.radio_guest.click()
 
     def click_continue(self):
         """Click the Continue button after choosing checkout option."""
-        try:
-            self.btn_continue.click()
-        except Exception as e:
-            print(f" Exception while clicking Continue: {e}")
-            raise
+        self.btn_continue.click()
 
     # ===== Billing Details =====
-    # Each method fills a specific billing detail field.
 
     def set_first_name(self, first_name: str):
         self.txt_first_name.fill(first_name)
@@ -104,21 +83,21 @@ class CheckoutPage:
     # ===== Continue Buttons =====
 
     def click_continue_after_billing_address(self):
-        """Click Continue after entering billing address details."""
+        """Click Continue after entering billing address."""
         self.btn_continue_billing_address.click()
 
     def click_continue_after_delivery_address(self):
-        """Click Continue after confirming the delivery address."""
+        """Click Continue after confirming delivery address."""
         self.btn_continue_delivery_address.click()
 
     # ===== Delivery Method =====
 
     def set_delivery_method_comment(self, message: str):
-        """Enter a comment or instruction for delivery."""
+        """Enter a comment for delivery."""
         self.txt_delivery_method.fill(message)
 
     def click_continue_after_delivery_method(self):
-        """Click Continue after setting the delivery method."""
+        """Click Continue after setting delivery method."""
         self.btn_continue_shipping_address.click()
 
     # ===== Payment Method =====
@@ -139,21 +118,9 @@ class CheckoutPage:
 
     def click_confirm_order(self):
         """Click the Confirm Order button."""
-        try:
-            self.btn_conf_order.click()
-        except Exception as e:
-            print(f" Exception while confirming order: {e}")
-            raise
+        self.btn_conf_order.click()
 
     def is_order_placed(self):
-        """
-        Verify if the order confirmation message appears.
-        Handles unexpected alert dialogs if they pop up.
-        """
-        try:
-            # Handle alert/dialog popups automatically if they appear
-            self.page.on("dialog", lambda dialog: dialog.accept())
-            return self.lbl_order_con_msg
-        except Exception as e:
-            print(f" Exception while checking order confirmation: {e}")
-            return None
+        """Verify if the order confirmation message appears."""
+        self.page.on("dialog", lambda dialog: dialog.accept())
+        return self.lbl_order_con_msg

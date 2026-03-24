@@ -1,49 +1,28 @@
-# logout_page.py
+# pages/logout_page.py
 # =====================
-# This class represents the "Logout Page" of the application.
-# It follows the Page Object Model (POM) design pattern
-# to separate page locators and actions from the test logic.
+# Page Object for the Logout Page.
+# Inherits from BasePage for reusable UI interaction methods.
 
 from playwright.sync_api import Page
 
+from pages.base_page import BasePage
 
-class LogoutPage:
+
+class LogoutPage(BasePage):
     """Page Object Model class for the Logout Page."""
 
     def __init__(self, page: Page):
-        """
-        Constructor that initializes the Playwright Page instance
-        and defines all locators used on the Logout Page.
-        """
-        self.page = page
+        super().__init__(page)
 
         # ===== Locators =====
-        # Button used to return to the home page after successful logout
         self.btn_continue = page.locator(".btn.btn-primary")
 
     # ===== Action Methods =====
 
     def click_continue(self):
-        """
-        Click the 'Continue' button after logging out.
-        This typically redirects the user back to the Home Page.
-        """
-        try:
-            self.btn_continue.click()
-        except Exception as e:
-            print(f" Exception while clicking 'Continue' button: {e}")
-            raise
+        """Click the 'Continue' button after logging out."""
+        self.btn_continue.click()
 
     def get_continue_button(self):
-        """
-        Return the Continue button locator.
-        Useful for checking its visibility or state in test assertions.
-
-        Example:
-            expect(logout_page.get_continue_button()).to_be_visible()
-        """
-        try:
-            return self.btn_continue
-        except Exception as e:
-            print(f" Exception while fetching 'Continue' button locator: {e}")
-            return None
+        """Return the Continue button locator."""
+        return self.btn_continue

@@ -19,9 +19,9 @@ visible in the search results list.
 """
 
 import pytest
+from config import Config
 from playwright.sync_api import expect
 
-from config import Config
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 
