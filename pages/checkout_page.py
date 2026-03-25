@@ -46,7 +46,7 @@ class CheckoutPage(BasePage):
     def choose_checkout_option(self, checkout_option: str):
         """Choose the checkout type (e.g., Guest Checkout)."""
         if checkout_option.lower() == "guest checkout":
-            self.click(self.radio_guest)
+            self.radio_guest.click
 
     def click_continue(self):
         """Click the Continue button after choosing checkout option."""
