@@ -65,3 +65,5 @@ class InvalidEmail:
         ("pavanol@", "Please enter a part following '@'."),
         ("@gmail.com", "Please enter a part followed by '@'."),
     ]
+
+ACCOUNT_CREATED_SUCCESS_MESSAGE = "Your Account Has Been Created!"
