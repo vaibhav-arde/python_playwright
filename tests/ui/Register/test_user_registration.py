@@ -48,6 +48,7 @@ def test_user_registration(page):
     confirmation_msg = registration_page.get_confirmation_msg()
     expect(confirmation_msg).to_have_text("Your Account Has Been Created!")
 
+
 def test_user_registration_empty_fields(page):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)

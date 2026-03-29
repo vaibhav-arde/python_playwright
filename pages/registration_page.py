@@ -88,10 +88,13 @@ class RegistrationPage(BasePage):
     def error_msg_visible(self):
         """check the error message visible or not for empty fields on click continue."""
         return (
-            self.err_privacy_policy.text_content() == "Warning: You must agree to the Privacy Policy!"
-            and self.err_firstname.text_content() == "First Name must be between 1 and 32 characters!"
+            self.err_privacy_policy.text_content()
+            == "Warning: You must agree to the Privacy Policy!"
+            and self.err_firstname.text_content()
+            == "First Name must be between 1 and 32 characters!"
             and self.err_lastname.text_content() == "Last Name must be between 1 and 32 characters!"
             and self.err_email.text_content() == "E-Mail Address does not appear to be valid!"
-            and self.err_telephone.text_content() == "Telephone must be between 3 and 32 characters!"
+            and self.err_telephone.text_content()
+            == "Telephone must be between 3 and 32 characters!"
             and self.err_password.text_content() == "Password must be between 4 and 20 characters!"
         )
