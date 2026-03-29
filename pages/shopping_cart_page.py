@@ -17,7 +17,7 @@ class ShoppingCartPage(BasePage):
 
         # ===== Locators =====
         self.lbl_total_price = page.locator(
-            "//*[@id='content']/div[2]/div/table//strong[text()='Total:']//following::td"
+            "//*[@id='cart']/ul/li[2]/div/table/tbody/tr[4]/td[2]"
         )
         self.btn_checkout = page.locator("a.btn.btn-primary")
 

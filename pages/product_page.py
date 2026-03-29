@@ -18,7 +18,7 @@ class ProductPage(BasePage):
         # ===== Locators =====
         self.txt_quantity = page.locator('input[name="quantity"]')
         self.btn_add_to_cart = page.locator("#button-cart")
-        self.cnf_msg = page.locator(".alert.alert-success.alert-dismissible")
+        self.cnf_msg = page.locator("div.alert.alert-success")
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 
@@ -33,6 +33,9 @@ class ProductPage(BasePage):
 
     def add_to_cart(self):
         """Click the 'Add to Cart' button."""
+        # Wait for OpenCart's common.js event listener to attach to the button
+        self.page.wait_for_load_state("domcontentloaded")
+        self.page.wait_for_timeout(500)
         self.btn_add_to_cart.click()
 
     # ===== Confirmation Message =====
