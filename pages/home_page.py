@@ -29,20 +29,20 @@ class HomePage(BasePage):
 
     def click_my_account(self):
         """Click on the 'My Account' link."""
-        self.lnk_my_account.click()
+        self.click(self.lnk_my_account)
 
     def click_register(self):
         """Click on the 'Register' link under My Account."""
-        self.lnk_register.click()
+        self.click(self.lnk_register)
 
     def click_login(self):
         """Click on the 'Login' link under My Account."""
-        self.lnk_login.click()
+        self.click(self.lnk_login)
 
     def enter_product_name(self, product_name: str):
         """Enter the product name into the search input box."""
-        self.txt_search_box.fill(product_name)
+        self.fill(self.txt_search_box, product_name)
 
     def click_search(self):
         """Click on the search button to initiate the product search."""
-        self.btn_search.click()
+        self.click(self.btn_search)

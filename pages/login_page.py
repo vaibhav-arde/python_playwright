@@ -24,15 +24,15 @@ class LoginPage(BasePage):
 
     def set_email(self, email: str):
         """Enter the email address in the Email field."""
-        self.txt_email_address.fill(email)
+        self.fill(self.txt_email_address, email)
 
     def set_password(self, password: str):
         """Enter the password in the Password field."""
-        self.txt_password.fill(password)
+        self.fill(self.txt_password, password)
 
     def click_login(self):
         """Click the Login button."""
-        self.btn_login.click()
+        self.click(self.btn_login)
 
     def login(self, email: str, password: str):
         """Perform the complete login operation."""

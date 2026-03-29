@@ -29,7 +29,7 @@ class MyAccountPage(BasePage):
 
     def click_logout(self) -> LogoutPage:
         """Click on the 'Logout' link and return a LogoutPage instance."""
-        self.lnk_logout.click()
+        self.click(self.lnk_logout)
         return LogoutPage(self.page)
 
     # ===== Page Title Verification =====

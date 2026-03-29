@@ -46,69 +46,69 @@ class CheckoutPage(BasePage):
     def choose_checkout_option(self, checkout_option: str):
         """Choose the checkout type (e.g., Guest Checkout)."""
         if checkout_option.lower() == "guest checkout":
-            self.radio_guest.click()
+            self.click(self.radio_guest)
 
     def click_continue(self):
         """Click the Continue button after choosing checkout option."""
-        self.btn_continue.click()
+        self.click(self.btn_continue)
 
     # ===== Billing Details =====
 
     def set_first_name(self, first_name: str):
-        self.txt_first_name.fill(first_name)
+        self.fill(self.txt_first_name, first_name)
 
     def set_last_name(self, last_name: str):
-        self.txt_last_name.fill(last_name)
+        self.fill(self.txt_last_name, last_name)
 
     def set_address1(self, address1: str):
-        self.txt_address1.fill(address1)
+        self.fill(self.txt_address1, address1)
 
     def set_address2(self, address2: str):
-        self.txt_address2.fill(address2)
+        self.fill(self.txt_address2, address2)
 
     def set_city(self, city: str):
-        self.txt_city.fill(city)
+        self.fill(self.txt_city, city)
 
     def set_pin(self, pin: str):
-        self.txt_pin.fill(pin)
+        self.fill(self.txt_pin, pin)
 
     def set_country(self, country: str):
         """Select a country from the dropdown."""
-        self.drp_country.select_option(label=country)
+        self.select_option(self.drp_country, label=country)
 
     def set_state(self, state: str):
         """Select a state/region from the dropdown."""
-        self.drp_state.select_option(label=state)
+        self.select_option(self.drp_state, label=state)
 
     # ===== Continue Buttons =====
 
     def click_continue_after_billing_address(self):
         """Click Continue after entering billing address."""
-        self.btn_continue_billing_address.click()
+        self.click(self.btn_continue_billing_address)
 
     def click_continue_after_delivery_address(self):
         """Click Continue after confirming delivery address."""
-        self.btn_continue_delivery_address.click()
+        self.click(self.btn_continue_delivery_address)
 
     # ===== Delivery Method =====
 
     def set_delivery_method_comment(self, message: str):
         """Enter a comment for delivery."""
-        self.txt_delivery_method.fill(message)
+        self.fill(self.txt_delivery_method, message)
 
     def click_continue_after_delivery_method(self):
         """Click Continue after setting delivery method."""
-        self.btn_continue_shipping_address.click()
+        self.click(self.btn_continue_shipping_address)
 
     # ===== Payment Method =====
 
     def select_terms_and_conditions(self):
         """Check the Terms & Conditions checkbox."""
-        self.chkbox_terms.check()
+        self.check(self.chkbox_terms)
 
     def click_continue_after_payment_method(self):
         """Click Continue after selecting payment method."""
-        self.btn_continue_payment_method.click()
+        self.click(self.btn_continue_payment_method)
 
     # ===== Order Confirmation =====
 
@@ -118,7 +118,7 @@ class CheckoutPage(BasePage):
 
     def click_confirm_order(self):
         """Click the Confirm Order button."""
-        self.btn_conf_order.click()
+        self.click(self.btn_conf_order)
 
     def is_order_placed(self):
         """Verify if the order confirmation message appears."""

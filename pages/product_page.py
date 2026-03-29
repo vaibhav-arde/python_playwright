@@ -26,14 +26,14 @@ class ProductPage(BasePage):
 
     def set_quantity(self, qty: str):
         """Set the desired product quantity."""
-        self.txt_quantity.fill("")
-        self.txt_quantity.fill(qty)
+        self.fill(self.txt_quantity, "")
+        self.fill(self.txt_quantity, qty)
 
     # ===== Add to Cart Methods =====
 
     def add_to_cart(self):
         """Click the 'Add to Cart' button."""
-        self.btn_add_to_cart.click()
+        self.click(self.btn_add_to_cart)
 
     # ===== Confirmation Message =====
 
@@ -45,11 +45,11 @@ class ProductPage(BasePage):
 
     def click_items_to_navigate_to_cart(self):
         """Click the cart icon to open the cart dropdown."""
-        self.btn_items.click()
+        self.click(self.btn_items)
 
     def click_view_cart(self) -> ShoppingCartPage:
         """Click 'View Cart' link and return ShoppingCartPage instance."""
-        self.lnk_view_cart.click()
+        self.click(self.lnk_view_cart)
         return ShoppingCartPage(self.page)
 
     # ===== Combined Workflow =====

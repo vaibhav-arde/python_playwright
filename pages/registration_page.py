@@ -29,35 +29,35 @@ class RegistrationPage(BasePage):
 
     def set_first_name(self, fname: str):
         """Enter the user's first name."""
-        self.txt_firstname.fill(fname)
+        self.fill(self.txt_firstname, fname)
 
     def set_last_name(self, lname: str):
         """Enter the user's last name."""
-        self.txt_lastname.fill(lname)
+        self.fill(self.txt_lastname, lname)
 
     def set_email(self, email: str):
         """Enter the user's email address."""
-        self.txt_email.fill(email)
+        self.fill(self.txt_email, email)
 
     def set_telephone(self, tel: str):
         """Enter the user's telephone number."""
-        self.txt_telephone.fill(tel)
+        self.fill(self.txt_telephone, tel)
 
     def set_password(self, pwd: str):
         """Enter the password."""
-        self.txt_password.fill(pwd)
+        self.fill(self.txt_password, pwd)
 
     def set_confirm_password(self, pwd: str):
         """Re-enter the password in the Confirm Password field."""
-        self.txt_confirm_password.fill(pwd)
+        self.fill(self.txt_confirm_password, pwd)
 
     def set_privacy_policy(self):
         """Select the Privacy Policy checkbox."""
-        self.chk_policy.check()
+        self.check(self.chk_policy)
 
     def click_continue(self):
         """Click the Continue button to submit the registration form."""
-        self.btn_continue.click()
+        self.click(self.btn_continue)
 
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
