@@ -22,7 +22,7 @@ class BasePage:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
         if isinstance(locator, str):
             return self.page.locator(locator)
-        return locator  
+        return locator
 
     def open(self, path: str = "/"):
         """Navigate to a path relative to the current base URL."""
@@ -38,25 +38,25 @@ class BasePage:
     def fill(self, locator: str | Locator, value: str):
         """Fill a text field. Accepts string selector OR Locator object."""
         target = self.get_locator(locator)
-        logger.info(f"Filling element with value")
+        logger.info("Filling element with value")
         target.fill(value)
 
     def check(self, locator: str | Locator):
         """Select a checkbox or radio button."""
         target = self.get_locator(locator)
-        logger.info(f"Checking element")
+        logger.info("Checking element")
         target.check()
 
     def uncheck(self, locator: str | Locator):
         """Deselect a checkbox."""
         target = self.get_locator(locator)
-        logger.info(f"Unchecking element")
+        logger.info("Unchecking element")
         target.uncheck()
 
     def select_option(self, locator: str | Locator, **kwargs):
         """Select an option from a dropdown."""
         target = self.get_locator(locator)
-        logger.info(f"Selecting option in element")
+        logger.info("Selecting option in element")
         target.select_option(**kwargs)
 
     def is_visible(self, locator: str | Locator) -> bool:
