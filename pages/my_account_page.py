@@ -18,6 +18,9 @@ class MyAccountPage(BasePage):
         # ===== Locators =====
         self.msg_heading = page.locator('h2:has-text("My Account")')
         self.lnk_logout = page.locator("text='Logout'").nth(1)
+        self.newsletter_subscription=page.locator("a:has-text('Subscribe / unsubscribe to newsletter')")
+        self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
+        self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
 
     # ===== Page Validation Methods =====
 
@@ -37,3 +40,8 @@ class MyAccountPage(BasePage):
     def get_page_title(self) -> str:
         """Returns the title of the current page."""
         return self.get_title()
+
+    # ===== Newsletter Subscription Action =====
+    def click_newsletter_subscription(self):
+        """Click on the 'Subscribe / unsubscribe to newsletter' link."""
+        self.newsletter_subscription.click()

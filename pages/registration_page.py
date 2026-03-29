@@ -22,7 +22,9 @@ class RegistrationPage(BasePage):
         self.txt_password = page.locator("#input-password")
         self.txt_confirm_password = page.locator("#input-confirm")
         self.chk_policy = page.locator('input[name="agree"]')
-        self.btn_continue = page.locator('input[value="Continue"]')
+        self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
+        self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
+        self.btn_continue = page.locator('.btn-primary')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
 
     # ===== Action Methods =====
@@ -54,6 +56,18 @@ class RegistrationPage(BasePage):
     def set_privacy_policy(self):
         """Select the Privacy Policy checkbox."""
         self.check(self.chk_policy)
+
+
+    def set_newsletter_subscription(self, subscribe: bool = True):
+        """
+        Choose newsletter subscription.
+        :param subscribe: True to subscribe (Yes), False to unsubscribe (No).
+        """
+        if subscribe:
+            self.radio_newsletter_yes.check()
+        else:
+            self.radio_newsletter_no.check()
+
 
     def click_continue(self):
         """Click the Continue button to submit the registration form."""

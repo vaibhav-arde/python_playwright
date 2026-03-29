@@ -39,3 +39,8 @@ class UIRoutes:
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
+
+class Messages:
+    """Common UI messages."""
+    ACCOUNT_CREATED = "Your Account Has Been Created!"
+    MY_ACCOUNT_HEADING = "My Account"
