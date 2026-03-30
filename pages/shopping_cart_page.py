@@ -27,7 +27,7 @@ class ShoppingCartPage(BasePage):
 
     def click_on_checkout(self) -> CheckoutPage:
         """Click on the Checkout button and navigate to CheckoutPage."""
-        self.btn_checkout.click()
+        self.click(self.btn_checkout)
         return CheckoutPage(self.page)
 
     def is_page_loaded(self):

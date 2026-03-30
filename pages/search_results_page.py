@@ -46,7 +46,7 @@ class SearchResultsPage(BasePage):
             product = self.search_products.nth(i)
             title = product.text_content()
             if title and title.strip() == product_name:
-                product.click()
+                self.click(product)
                 return ProductPage(self.page)
         return None
 

@@ -21,7 +21,7 @@ class LogoutPage(BasePage):
 
     def click_continue(self):
         """Click the 'Continue' button after logging out."""
-        self.btn_continue.click()
+        self.click(self.btn_continue)
 
     def get_continue_button(self):
         """Return the Continue button locator."""

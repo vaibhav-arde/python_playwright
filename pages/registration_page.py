@@ -25,47 +25,39 @@ class RegistrationPage(BasePage):
         self.btn_continue = page.locator('input[value="Continue"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
 
-        # ===== Error Message Locators =====
-        self.err_privacy_policy = page.locator("div.alert-danger")
-        self.err_firstname = page.locator("#input-firstname + .text-danger")
-        self.err_lastname = page.locator("#input-lastname + .text-danger")
-        self.err_email = page.locator("#input-email + .text-danger")
-        self.err_telephone = page.locator("#input-telephone + .text-danger")
-        self.err_password = page.locator("#input-password + .text-danger")
-
     # ===== Action Methods =====
 
     def set_first_name(self, fname: str):
         """Enter the user's first name."""
-        self.txt_firstname.fill(fname)
+        self.fill(self.txt_firstname, fname)
 
     def set_last_name(self, lname: str):
         """Enter the user's last name."""
-        self.txt_lastname.fill(lname)
+        self.fill(self.txt_lastname, lname)
 
     def set_email(self, email: str):
         """Enter the user's email address."""
-        self.txt_email.fill(email)
+        self.fill(self.txt_email, email)
 
     def set_telephone(self, tel: str):
         """Enter the user's telephone number."""
-        self.txt_telephone.fill(tel)
+        self.fill(self.txt_telephone, tel)
 
     def set_password(self, pwd: str):
         """Enter the password."""
-        self.txt_password.fill(pwd)
+        self.fill(self.txt_password, pwd)
 
     def set_confirm_password(self, pwd: str):
         """Re-enter the password in the Confirm Password field."""
-        self.txt_confirm_password.fill(pwd)
+        self.fill(self.txt_confirm_password, pwd)
 
     def set_privacy_policy(self):
         """Select the Privacy Policy checkbox."""
-        self.chk_policy.check()
+        self.check(self.chk_policy)
 
     def click_continue(self):
         """Click the Continue button to submit the registration form."""
-        self.btn_continue.click()
+        self.click(self.btn_continue)
 
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
@@ -84,17 +76,3 @@ class RegistrationPage(BasePage):
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
-
-    def error_msg_visible(self):
-        """check the error message visible or not for empty fields on click continue."""
-        return (
-            self.err_privacy_policy.text_content()
-            == "Warning: You must agree to the Privacy Policy!"
-            and self.err_firstname.text_content()
-            == "First Name must be between 1 and 32 characters!"
-            and self.err_lastname.text_content() == "Last Name must be between 1 and 32 characters!"
-            and self.err_email.text_content() == "E-Mail Address does not appear to be valid!"
-            and self.err_telephone.text_content()
-            == "Telephone must be between 3 and 32 characters!"
-            and self.err_password.text_content() == "Password must be between 4 and 20 characters!"
-        )
