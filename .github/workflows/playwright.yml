@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main, dev]
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
 jobs:
   playwright:
     name: Playwright Tests
@@ -37,42 +42,34 @@ jobs:
           uv run ruff check .
           uv run ruff format --check .
 
-      - name: Create report directories
-        run: |
-          mkdir -p test-results
-          mkdir -p playwright-report
-          mkdir -p test-artifacts
-
       - name: Run tests
-        run: |
-          xvfb-run uv run pytest \
-            --junitxml=test-results/results.xml \
-            --html=playwright-report/report.html \
-            --self-contained-html
+        run: xvfb-run uv run pytest
         continue-on-error: true
 
-      - name: Upload HTML Report
+      - name: Debug generated files
+        if: always()
+        run: |
+          echo "===== REPORTS ====="
+          ls -R reports || true
+          echo "===== TEST RESULTS ====="
+          ls -R test-results || true
+
+      - name: Upload HTML and Allure Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-html-report
-          path: playwright-report
+          name: test-reports
+          path: reports
+          if-no-files-found: warn
           retention-days: 14
 
-      - name: Upload Test Results XML
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit-results
-          path: test-results/results.xml
-          retention-days: 14
-
-      - name: Upload Playwright Artifacts
+      - name: Upload Playwright Failure Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-artifacts
-          path: test-artifacts
+          path: test-results
+          if-no-files-found: warn
           retention-days: 14
 
       - name: Publish Test Summary
@@ -80,12 +77,12 @@ jobs:
         uses: dorny/test-reporter@v1
         with:
           name: Playwright Test Results
-          path: test-results/results.xml
+          path: reports/results.xml
           reporter: java-junit
 
       - name: Fail workflow if tests failed
         run: |
-          if grep -q 'failures="0"' test-results/results.xml && grep -q 'errors="0"' test-results/results.xml; then
+          if grep -q 'failures="0"' reports/results.xml && grep -q 'errors="0"' reports/results.xml; then
             echo "All tests passed"
           else
             echo "Tests failed"
