@@ -25,6 +25,14 @@ class RegistrationPage(BasePage):
         self.btn_continue = page.locator('input[value="Continue"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
 
+        # ===== Error Message Locators =====
+        self.err_privacy_policy = page.locator("div.alert-danger")
+        self.err_firstname = page.locator("#input-firstname + .text-danger")
+        self.err_lastname = page.locator("#input-lastname + .text-danger")
+        self.err_email = page.locator("#input-email + .text-danger")
+        self.err_telephone = page.locator("#input-telephone + .text-danger")
+        self.err_password = page.locator("#input-password + .text-danger")
+
     # ===== Action Methods =====
 
     def set_first_name(self, fname: str):
@@ -76,3 +84,17 @@ class RegistrationPage(BasePage):
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
+
+    def error_msg_visible(self):
+        """check the error message visible or not for empty fields on click continue."""
+        return (
+            self.err_privacy_policy.text_content()
+            == "Warning: You must agree to the Privacy Policy!"
+            and self.err_firstname.text_content()
+            == "First Name must be between 1 and 32 characters!"
+            and self.err_lastname.text_content() == "Last Name must be between 1 and 32 characters!"
+            and self.err_email.text_content() == "E-Mail Address does not appear to be valid!"
+            and self.err_telephone.text_content()
+            == "Telephone must be between 3 and 32 characters!"
+            and self.err_password.text_content() == "Password must be between 4 and 20 characters!"
+        )
