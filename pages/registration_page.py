@@ -7,6 +7,7 @@ from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
 from utils.message import Message
+from pages.my_account_page import MyAccountPage
 
 
 class RegistrationPage(BasePage):
@@ -23,9 +24,9 @@ class RegistrationPage(BasePage):
         self.txt_password = page.locator("#input-password")
         self.txt_confirm_password = page.locator("#input-confirm")
         self.chk_policy = page.locator('input[name="agree"]')
-        self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
-        self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator(".btn-primary")
+        self.btn_continue = page.locator('input[value="Continue"]')
+        self.radio_yes = page.locator('input[name="newsletter"][value="1"]')
+        self.radio_no = page.locator('input[name="newsletter"][value="0"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
 
         # ===== Error Message Locators =====
@@ -69,7 +70,15 @@ class RegistrationPage(BasePage):
 
     def set_privacy_policy(self):
         """Select the Privacy Policy checkbox."""
-        self.check(self.chk_policy)
+        self.chk_policy.check()
+
+    def set_newsletter_yes(self):
+        """Select the Newsletter Yes radio button."""
+        self.radio_yes.check()
+
+    def set_newsletter_no(self):
+        """Select the Newsletter No radio button."""
+        self.radio_no.check()
 
     def set_newsletter_subscription(self, locator: str | Locator):
         self.check(locator)
@@ -97,6 +106,10 @@ class RegistrationPage(BasePage):
     def get_privacy_policy_warning(self) -> str:
         """Return the Privacy Policy alert warning text."""
         return self.get_text(self.warn_privacy_policy)
+    # ===== My Account Page Navigation =====
+    def click_continue_to_my_account(self):
+        self.page.get_by_role("link", name="Continue").click()
+        return MyAccountPage(self.page)    
 
     # ===== Combined Workflow =====
 
