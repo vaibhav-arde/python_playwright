@@ -1,31 +1,93 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, dev ]
+    branches: [main, dev]
   pull_request:
-    branches: [ main, dev ]
+    branches: [main, dev]
+
 jobs:
   playwright:
-    name: 'Playwright Tests'
+    name: Playwright Tests
     runs-on: ubuntu-latest
+
     container:
       image: mcr.microsoft.com/playwright/python:v1.55.0-noble
       options: --user 1001
+
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout code
+        uses: actions/checkout@v5
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: "3.13"
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
           version: "latest"
+
       - name: Install dependencies
         run: uv sync
+
       - name: Lint Code
         run: |
           uv run ruff check .
           uv run ruff format --check .
-      - name: Run your tests
-        run: xvfb-run uv run pytest
+
+      - name: Create report directories
+        run: |
+          mkdir -p test-results
+          mkdir -p playwright-report
+          mkdir -p test-artifacts
+
+      - name: Run tests
+        run: |
+          xvfb-run uv run pytest \
+            --junitxml=test-results/results.xml \
+            --html=playwright-report/report.html \
+            --self-contained-html
+        continue-on-error: true
+
+      - name: Upload HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: playwright-report
+          retention-days: 14
+
+      - name: Upload Test Results XML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-results
+          path: test-results/results.xml
+          retention-days: 14
+
+      - name: Upload Playwright Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: test-artifacts
+          retention-days: 14
+
+      - name: Publish Test Summary
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Playwright Test Results
+          path: test-results/results.xml
+          reporter: java-junit
+
+      - name: Fail workflow if tests failed
+        run: |
+          if grep -q 'failures="0"' test-results/results.xml && grep -q 'errors="0"' test-results/results.xml; then
+            echo "All tests passed"
+          else
+            echo "Tests failed"
+            exit 1
+          fi
