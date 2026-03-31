@@ -26,38 +26,38 @@ class BasePage:
 
     def open(self, path: str = "/"):
         """Navigate to a path relative to the current base URL."""
-        logger.info(f"Navigating to: {path}")
         self.page.goto(path)
+        logger.info(f"Navigated to: {path}")
 
     def click(self, locator: str | Locator):
         """Click an element. Accepts string selector OR Locator object."""
         target = self.get_locator(locator)
-        logger.info(f"Clicking: {target}")
         target.click()
+        logger.info(f"Clicked: {target}")
 
     def fill(self, locator: str | Locator, value: str):
         """Fill a text field. Accepts string selector OR Locator object."""
         target = self.get_locator(locator)
-        logger.info("Filling element with value")
         target.fill(value)
+        logger.info(f"Filled {target} with value: {value}")
 
     def check(self, locator: str | Locator):
         """Select a checkbox or radio button."""
         target = self.get_locator(locator)
-        logger.info("Checking element")
         target.check()
+        logger.info(f"Checked element: {target}")
 
     def uncheck(self, locator: str | Locator):
         """Deselect a checkbox."""
         target = self.get_locator(locator)
-        logger.info("Unchecking element")
         target.uncheck()
+        logger.info(f"Unchecked element: {target}")
 
     def select_option(self, locator: str | Locator, **kwargs):
         """Select an option from a dropdown."""
         target = self.get_locator(locator)
-        logger.info("Selecting option in element")
         target.select_option(**kwargs)
+        logger.info(f"Selected option in {target} with args: {kwargs}")
 
     def is_visible(self, locator: str | Locator) -> bool:
         """Check if an element is visible on the page."""
@@ -74,8 +74,8 @@ class BasePage:
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
         target = self.get_locator(locator)
-        logger.info(f"Waiting for element to be {state}")
         target.wait_for(state=state, timeout=timeout)
+        logger.info(f"Element {target} reached state: {state}")
 
     def get_title(self) -> str:
         """Return the page title."""
