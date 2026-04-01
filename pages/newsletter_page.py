@@ -14,14 +14,13 @@ class NewsletterPage(BasePage):
         self.btn_continue = page.get_by_role("button", name="Continue")
 
     # ===== Actions =====
-    def select_yes(self):
-        self.radio_newsletter_yes.check()
-
-    def select_no(self):
-        self.radio_newsletter_no.check()
+    def set_newsletter(self, value: str):
+        """Select newsletter option."""
+        self.select_radio(self.radio_newsletter_yes, self.radio_newsletter_no, value)
 
     def click_continue(self):
-        self.btn_continue.click()
+        """Click the Continue button."""
+        self.click_continue_button(self.btn_continue)
 
     # ===== Validations =====
     def get_newsletter_yes_radio(self):

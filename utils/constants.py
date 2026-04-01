@@ -67,3 +67,6 @@ class InvalidEmail:
     ]
 
 ACCOUNT_CREATED_SUCCESS_MESSAGE = "Your Account Has Been Created!"
+NEWSLETTER_YES = "yes"
+NEWSLETTER_NO = "no"
+INVALID_PHONE_NUMBER = "abc123"

@@ -28,6 +28,7 @@ class RegistrationPage(BasePage):
         self.radio_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_no = page.locator('input[name="newsletter"][value="0"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
+        self.lnk_continue = page.get_by_role("link", name="Continue")
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
@@ -72,20 +73,15 @@ class RegistrationPage(BasePage):
         """Select the Privacy Policy checkbox."""
         self.chk_policy.check()
 
-    def set_newsletter_yes(self):
-        """Select the Newsletter Yes radio button."""
-        self.radio_yes.check()
-
-    def set_newsletter_no(self):
-        """Select the Newsletter No radio button."""
-        self.radio_no.check()
+    def set_newsletter(self, value: str):
+        """Set newsletter preference."""
+        self.select_radio(self.radio_yes, self.radio_no, value)
 
     def set_newsletter_subscription(self, locator: str | Locator):
         self.check(locator)
 
     def click_continue(self):
-        """Click the Continue button to submit the registration form."""
-        self.click(self.btn_continue)
+        self.click_continue_button(self.btn_continue)
 
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
@@ -108,7 +104,8 @@ class RegistrationPage(BasePage):
         return self.get_text(self.warn_privacy_policy)
     # ===== My Account Page Navigation =====
     def click_continue_to_my_account(self):
-        self.page.get_by_role("link", name="Continue").click()
+        """Click Continue link and navigate to My Account page."""
+        self.click_continue_button(self.lnk_continue)
         return MyAccountPage(self.page)    
 
     # ===== Combined Workflow =====

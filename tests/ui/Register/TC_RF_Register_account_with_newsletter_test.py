@@ -12,10 +12,10 @@ import pytest
 from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
-from pages.newsletter_page import NewsletterPage
 from pages.registration_page import RegistrationPage
 from utils.helpers import RandomDataUtil
-from utils.constants import ACCOUNT_CREATED_SUCCESS_MESSAGE
+from utils.messages import ACCOUNT_CREATED_SUCCESS_MESSAGE
+from utils.constants import NEWSLETTER_YES
 
 @pytest.mark.sanity
 def test_register_account_with_newsletter_yes_option(page):
@@ -41,7 +41,7 @@ def test_register_account_with_newsletter_yes_option(page):
   registration_page.set_telephone(phone)
   registration_page.set_password(password)
   registration_page.set_confirm_password(confirm_password)
-  registration_page.set_newsletter_yes()
+  registration_page.set_newsletter(NEWSLETTER_YES)
   registration_page.set_privacy_policy()
   registration_page.click_continue()
 
