@@ -6,7 +6,7 @@
 from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
-from utils.messages import Messages
+from utils import messages
 
 
 class RegistrationPage(BasePage):
@@ -42,8 +42,8 @@ class RegistrationPage(BasePage):
         self.err_email = page.locator("#input-email + .text-danger")
         self.err_telephone = page.locator("#input-telephone + .text-danger")
         self.err_password = page.locator("#input-password + .text-danger")
-        self.password_mismatch_error = page.get_by_text(Messages.password_not_match_error)
-        self.err_email_already_exist = page.get_by_text(Messages.email_already_exist_error)
+        self.password_mismatch_error = page.get_by_text(messages.WARN_PASSWORD_MISMATCH)
+        self.err_email_already_exist = page.get_by_text(messages.WARN_EMAIL_ALREADY_EXISTS)
 
         # ===== Warning / Validation Message Locators =====
         self.warn_privacy_policy = page.locator(".alert-danger")
