@@ -63,6 +63,10 @@ class RegistrationPage(BasePage):
         """Return the confirmation message locator."""
         return self.msg_confirmation
 
+    def get_page_heading(self):
+        """Return the page heading locator."""
+        return self.page.get_by_role("heading", name="Register Account")
+
     # ===== Combined Workflow =====
 
     def complete_registration(self, user_data: dict):
@@ -76,3 +80,5 @@ class RegistrationPage(BasePage):
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
+
+

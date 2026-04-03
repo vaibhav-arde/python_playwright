@@ -43,3 +43,11 @@ class LoginPage(BasePage):
     def get_login_error(self):
         """Return the error message element if login fails."""
         return self.txt_error_message
+
+    def click_continue(self):
+        """Click the Continue button after logging out."""
+        self.page.get_by_role("link", name="Continue").click()
+
+    def click_right_column_register(self):
+        """Click the Register button in the right column."""
+        self.page.get_by_role("link", name="Register").click()
