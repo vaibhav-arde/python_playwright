@@ -6,7 +6,7 @@
 from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
-from utils.message import Message
+from utils.messages import Messages
 
 
 class RegistrationPage(BasePage):
@@ -25,12 +25,15 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator(".btn-primary")
+        self.btn_continue = page.locator('input[value="Continue"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
         self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
         self.msg_privacy_policy_warning = page.locator(".alert-danger")
         self.lnk_login = page.get_by_role("link", name="Login")
         self.lnk_breadcrumb = page.locator("#account-register ul.breadcrumb")
+
+        # ===== Warning / Validation Message Locators =====
+        self.warn_privacy_policy = page.locator(".alert-danger")
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
@@ -39,13 +42,12 @@ class RegistrationPage(BasePage):
         self.err_email = page.locator("#input-email + .text-danger")
         self.err_telephone = page.locator("#input-telephone + .text-danger")
         self.err_password = page.locator("#input-password + .text-danger")
-        self.password_mismatch_error = page.get_by_text(Message.password_not_match_error)
-        self.err_email_already_exist = page.get_by_text(Message.email_already_exist_error)
+        self.password_mismatch_error = page.get_by_text(Messages.password_not_match_error)
+        self.err_email_already_exist = page.get_by_text(Messages.email_already_exist_error)
 
         # ===== Warning / Validation Message Locators =====
         self.warn_privacy_policy = page.locator(".alert-danger")
         self.login_page_link = page.get_by_role("link", name="login page")
-
 
     # ===== Action Methods =====
 
@@ -113,7 +115,6 @@ class RegistrationPage(BasePage):
     def get_confirm_password_field_type(self):
         """Return the type attribute of the confirm password field."""
         return self.txt_confirm_password.get_attribute("type")
-
     
     # ===== Combined Workflow =====
 
