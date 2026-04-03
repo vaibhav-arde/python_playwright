@@ -6,6 +6,7 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+from utils.constants import Messages
 
 
 class RegistrationPage(BasePage):
@@ -23,7 +24,9 @@ class RegistrationPage(BasePage):
         self.txt_confirm_password = page.locator("#input-confirm")
         self.chk_policy = page.locator('input[name="agree"]')
         self.btn_continue = page.locator('input[value="Continue"]')
-        self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
+        self.msg_confirmation = page.locator(
+         f'h1:has-text("{Messages.REGISTRATION_SUCCESS}")'
+)
 
     # ===== Action Methods =====
 
@@ -62,6 +65,15 @@ class RegistrationPage(BasePage):
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
         return self.msg_confirmation
+
+    def fill_registration_form(self, fname: str, lname: str, email: str, telephone: str, password: str, confirm_password: str):
+        """Fill all registration form fields with the provided values."""
+        self.set_first_name(fname)
+        self.set_last_name(lname)
+        self.set_email(email)
+        self.set_telephone(telephone)
+        self.set_password(password)
+        self.set_confirm_password(confirm_password)
 
     # ===== Combined Workflow =====
 

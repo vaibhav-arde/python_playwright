@@ -1,8 +1,5 @@
 # utils/constants.py
 # =====================
-# Centralized constants for API endpoints and HTTP headers.
-# Avoids hardcoding values across tests and API clients.
-
 
 class APIEndpoints:
     """Centralized API endpoint paths."""
@@ -27,6 +24,12 @@ class Headers:
         "Content-Type": "application/x-www-form-urlencoded",
     }
 
+
+class Messages:
+    """UI Messages"""
+
+    REGISTRATION_SUCCESS = "Your Account Has Been Created!"
+    
 
 class UIRoutes:
     """Common UI route paths (relative to base URL)."""
