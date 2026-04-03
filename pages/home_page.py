@@ -46,3 +46,18 @@ class HomePage(BasePage):
     def click_search(self):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
+
+    def open_home_page(self):
+        self.page.goto("https://tutorialsninja.com/demo/")
+        self.page.wait_for_load_state("networkidle")
+
+    def click_my_account(self):
+        self.lnk_my_account.wait_for(state="visible")
+        self.lnk_my_account.click()
+
+    def click_register(self):
+        self.lnk_register.click()
+
+    def click_login(self):
+        self.lnk_login.click()
+
