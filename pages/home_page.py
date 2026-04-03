@@ -4,11 +4,11 @@
 # Inherits from BasePage for reusable UI interaction methods.
 
 import re
-
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.login_page import LoginPage
+from utils import messages
 
 
 class HomePage(BasePage):
@@ -18,7 +18,6 @@ class HomePage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        # This is the dropdown toggle that opens the account menu.
         self.lnk_my_account = page.locator('#top-links a[title="My Account"]')
         self.lnk_register = page.locator(
             "#top-links ul.dropdown-menu.dropdown-menu-right"
@@ -27,7 +26,6 @@ class HomePage(BasePage):
             "#top-links ul.dropdown-menu.dropdown-menu-right"
         ).get_by_text("Login", exact=True)
         self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
-        # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
         self.lnk_show_all_desktops = page.get_by_role(
             "link", name=re.compile(r"Show All\s*Desktops")
         )
@@ -36,7 +34,6 @@ class HomePage(BasePage):
         self.lnk_logout = page.locator('a:has-text("Logout")')
         self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
-        self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
         self.lnk_change_password = page.get_by_role("link", name="Change your password")
 
@@ -57,12 +54,18 @@ class HomePage(BasePage):
 
     # ===== Action Methods =====
 
+    def open_home_page(self):
+        """Navigate to the home page."""
+        self.open("/")
+        self.page.wait_for_load_state("networkidle")
+
     def get_home_page_title(self) -> str:
         """Return the title of the Home Page."""
         return self.get_title()
 
     def click_my_account(self):
         """Click on the 'My Account' link."""
+        self.lnk_my_account.wait_for(state="visible")
         self.click(self.lnk_my_account)
 
     def click_change_password(self):
@@ -111,12 +114,12 @@ class HomePage(BasePage):
         self.click(self.lnk_desktops)
 
     def logout_link(self):
-        """Click on the 'Logout' link."""
+        """Return the 'Logout' link locator."""
         return self.lnk_logout
 
     def is_dropdown_menu_visible(self) -> bool:
         """Check if the dropdown menu is visible."""
-        return self.dropdown
+        return self.dropdown.is_visible()
 
     # ===== Featured Section Methods =====
 

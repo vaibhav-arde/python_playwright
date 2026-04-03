@@ -28,6 +28,7 @@ class LoginPage(BasePage):
         self.right_column_login = page.locator("#column-right").get_by_role("link", name="Login")
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.page_heading = page.locator("h1")
+        self.btn_continue = page.get_by_role("link", name="Continue")
 
     # ===== Action Methods =====
 
@@ -60,6 +61,10 @@ class LoginPage(BasePage):
         self.set_email(email)
         self.set_password(password)
         self.click_login()
+
+    def click_continue(self):
+        """Click the Continue button."""
+        self.click(self.btn_continue)
 
     def click_continue_register(self):
         """Click the Continue button under New Customer section."""
@@ -125,3 +130,11 @@ class LoginPage(BasePage):
     def get_breadcrumb(self):
         """Return the breadcrumb element."""
         return self.breadcrumb
+
+    def get_page_heading(self):
+        """Return the page heading element."""
+        return self.page_heading
+
+    def click_right_column_register(self):
+        """Click the Register button in the right column."""
+        self.page.get_by_role("link", name="Register").click()
