@@ -54,9 +54,8 @@ COMPARISON_TABLE_HEADERS = [
 ]
 
 # Change Password Field error message
-WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
+WARN_PASSWORD_MISMATCH_CHANGE = "Password confirmation does not match password!"
 WARN_PASSWORD_REQUIRED = "Password must be between 4 and 20 characters!"
-
 
 # Change Password Field assert message
 ASSERT_PASSWORD_REQUIRED = "Password field should be marked as mandatory with a red asterisk"
@@ -73,3 +72,8 @@ CONTACT_US_PAGE_TITLE = "Contact Us"
 # KEYBOARDSHORTCUTS
 COPY_shortcut = "Control+C"
 PASTE_SHORTCUT = "Control+V"
+
+# Aliases for compatibility during rebase
+INVALID_LOGIN_MSG = WARN_LOGIN_ERROR
+PRIVACY_POLICY_WARNING_MSG = WARN_PRIVACY_POLICY
+SUCCESS_REGISTER_MSG = ACCOUNT_CREATED

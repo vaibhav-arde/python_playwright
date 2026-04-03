@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="11.274" timestamp="2026-03-25T10:51:19.164890+05:30" hostname="Sayaa"><testcase classname="tests.ui.Register.TC_RF_007_test" name="test_navigate_to_register_page[chromium]" time="11.211"><failure message="AssertionError: Page title expected to be 'Register Account'&#10;Actual value:  &#10;Call log:&#10;  - Expect &quot;to_have_title&quot; with timeout 5000ms&#10;    9 × unexpected value &quot;&quot;">page = &lt;Page url='chrome-error://chromewebdata/'&gt;
+
+    @pytest.mark.sanity
+    @pytest.mark.regression
+    def test_navigate_to_register_page(page: Page):
+        """
+        Validate different ways of navigating to 'Register Account' page
+        """
+        home_page = HomePage(page)
+    
+        # 1. Open the Application (Handled by fixture above)
+    
+        # 2. Click on 'My Account' Drop menu
+        home_page.click_my_account()
+    
+        # 3. Click on 'Register' option (ER-1)
+        home_page.click_register()
+&gt;       expect(page).to_have_title("Register Account")
+E       AssertionError: Page title expected to be 'Register Account'
+E       Actual value:  
+E       Call log:
+E         - Expect "to_have_title" with timeout 5000ms
+E           9 × unexpected value ""
+
+tests\ui\Register\TC_RF_007_test.py:34: AssertionError</failure></testcase></testsuite></testsuites>
