@@ -7,6 +7,7 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.logout_page import LogoutPage
+from pages.edit_account_page import EditAccountPage
 
 
 class MyAccountPage(BasePage):
@@ -18,9 +19,12 @@ class MyAccountPage(BasePage):
         # ===== Locators =====
         self.msg_heading = page.locator('h2:has-text("My Account")')
         self.lnk_logout = page.locator("text='Logout'").nth(1)
-        self.newsletter_subscription=page.locator("a:has-text('Subscribe / unsubscribe to newsletter')")
+        self.newsletter_subscription = page.locator(
+            "a:has-text('Subscribe / unsubscribe to newsletter')"
+        )
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
+        self.lnk_edit_account = page.locator('a:has-text("Edit your account information")')
 
     # ===== Page Validation Methods =====
 
@@ -45,3 +49,9 @@ class MyAccountPage(BasePage):
     def click_newsletter_subscription(self):
         """Click on the 'Subscribe / unsubscribe to newsletter' link."""
         self.newsletter_subscription.click()
+
+    # ===== Account Detail Actions =====
+    def click_edit_account_info(self) -> EditAccountPage:
+        """Click on 'Edit your account information' and return EditAccountPage instance."""
+        self.click(self.lnk_edit_account)
+        return EditAccountPage(self.page)
