@@ -24,3 +24,8 @@ EMAIL_PLACEHOLDER = "E-Mail Address"
 PASSWORD_PLACEHOLDER = "Password"
 WARN_LOGIN_ATTEMPTS_EXCEEDED = "Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour."
 SUCCESS_PASSWORD_UPDATED = "Success: Your password has been successfully updated."
+
+# Aliases for compatibility with older test files
+INVALID_LOGIN_MSG = WARN_LOGIN_ERROR
+PRIVACY_POLICY_WARNING_MSG = WARN_PRIVACY_POLICY
+SUCCESS_REGISTER_MSG = ACCOUNT_CREATED

@@ -32,7 +32,6 @@ class RegistrationPage(BasePage):
         self.lnk_login = page.get_by_role("link", name="Login")
         self.lnk_breadcrumb = page.locator("#account-register ul.breadcrumb")
 
-
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
         self.err_firstname = page.locator("#input-firstname + .text-danger")
@@ -46,19 +45,6 @@ class RegistrationPage(BasePage):
         # ===== Warning / Validation Message Locators =====
         self.warn_privacy_policy = page.locator(".alert-danger")
         self.login_page_link = page.get_by_role("link", name="login page")
-
-        # ===== Error Message Locators =====
-        self.err_privacy_policy = page.locator("div.alert-danger")
-        self.err_firstname = page.locator("#input-firstname + .text-danger")
-        self.err_lastname = page.locator("#input-lastname + .text-danger")
-        self.err_email = page.locator("#input-email + .text-danger")
-        self.err_telephone = page.locator("#input-telephone + .text-danger")
-        self.err_password = page.locator("#input-password + .text-danger")
-        self.password_mismatch_error = page.get_by_text(Message.password_not_match_error)
-        self.err_email_already_exist = page.get_by_text(Message.email_already_exist_error)
-
-        # ===== Warning / Validation Message Locators =====
-        self.warn_privacy_policy = page.locator(".alert-danger")
 
     # ===== Action Methods =====
 
@@ -108,6 +94,14 @@ class RegistrationPage(BasePage):
     def click_login_page_link(self):
         """Click on the 'Login Page' link."""
         self.click(self.login_page_link)
+
+    def get_page_heading(self):
+        """Return the page heading locator."""
+        return self.lbl_page_heading
+
+    def get_privacy_policy_warning(self):
+        """Return the privacy policy warning message locator."""
+        return self.warn_privacy_policy
 
     # ===== Combined Workflow =====
 
