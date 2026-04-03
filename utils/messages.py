@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """Common UI messages."""
 
 ACCOUNT_CREATED = "Your Account Has Been Created!"
@@ -24,3 +25,8 @@ EMAIL_PLACEHOLDER = "E-Mail Address"
 PASSWORD_PLACEHOLDER = "Password"
 WARN_LOGIN_ATTEMPTS_EXCEEDED = "Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour."
 SUCCESS_PASSWORD_UPDATED = "Success: Your password has been successfully updated."
+=======
+INVALID_LOGIN_MSG = "Warning: No match for E-Mail Address and/or Password."
+PRIVACY_POLICY_WARNING_MSG = "Warning: You must agree to the Privacy Policy!"
+SUCCESS_REGISTER_MSG = "Your Account Has Been Created!"
+>>>>>>> 508fadd (Test Added without privacy policy registeration is not completed)
