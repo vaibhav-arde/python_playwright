@@ -71,6 +71,13 @@ class RegistrationPage(BasePage):
         """Return the privacy policy warning message locator."""
         return self.page.locator("#account-register > div.alert.alert-danger.alert-dismissible")
 
+    def get_password_field_type(self):
+        """Return the type attribute of the password field."""
+        return self.txt_password.get_attribute("type")
+
+    def get_confirm_password_field_type(self):
+        """Return the type attribute of the confirm password field."""
+        return self.txt_confirm_password.get_attribute("type")    
 
     # ===== Combined Workflow =====
 
