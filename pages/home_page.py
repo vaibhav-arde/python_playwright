@@ -144,3 +144,18 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def open_home_page(self):
+        self.page.goto("https://tutorialsninja.com/demo/")
+        self.page.wait_for_load_state("networkidle")
+
+    def click_my_account(self):
+        self.lnk_my_account.wait_for(state="visible")
+        self.lnk_my_account.click()
+
+    def click_register(self):
+        self.lnk_register.click()
+
+    def click_login(self):
+        self.lnk_login.click()
+
