@@ -67,6 +67,11 @@ class RegistrationPage(BasePage):
         """Return the page heading locator."""
         return self.page.get_by_role("heading", name="Register Account")
 
+    def get_privacy_policy_warning(self):
+        """Return the privacy policy warning message locator."""
+        return self.page.locator("#account-register > div.alert.alert-danger.alert-dismissible")
+
+
     # ===== Combined Workflow =====
 
     def complete_registration(self, user_data: dict):
