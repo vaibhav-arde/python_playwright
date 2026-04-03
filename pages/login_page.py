@@ -47,7 +47,9 @@ class LoginPage(BasePage):
         return self.txt_error_message
 
     def click_continue(self):
-        self.btn_continue.click()
+        """Click the Continue button after logging out."""
+        self.click(self.btn_continue)
 
     def click_right_column_register(self):
-        self.lnk_register_right.click()
+        """Click the Register button in the right column."""
+        self.click(self.lnk_register_right)
