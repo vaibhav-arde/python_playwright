@@ -149,3 +149,4 @@ class HomePage(BasePage):
         self.page.goto("/")
         self.page.wait_for_load_state("networkidle")
 
+
