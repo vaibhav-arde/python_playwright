@@ -6,7 +6,7 @@
 from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
-from utils.messages import Messages
+from utils import messages
 
 
 class RegistrationPage(BasePage):
@@ -41,8 +41,8 @@ class RegistrationPage(BasePage):
         self.err_email = page.locator("#input-email + .text-danger")
         self.err_telephone = page.locator("#input-telephone + .text-danger")
         self.err_password = page.locator("#input-password + .text-danger")
-        self.password_mismatch_error = page.get_by_text(Messages.password_not_match_error)
-        self.err_email_already_exist = page.get_by_text(Messages.email_already_exist_error)
+        self.password_mismatch_error = page.get_by_text(messages.WARN_PASSWORD_MISMATCH)
+        self.err_email_already_exist = page.get_by_text(messages.WARN_EMAIL_ALREADY_EXISTS)
 
     # ===== Action Methods =====
 
@@ -92,8 +92,17 @@ class RegistrationPage(BasePage):
         return self.lnk_breadcrumb  
 
     def get_privacy_policy_warning(self):
+        """Return the privacy policy warning message locator."""
         return self.msg_privacy_policy_warning
-    
+
+    def get_password_field_type(self):
+        """Return the type attribute of the password field."""
+        return self.txt_password.get_attribute("type")
+
+    def get_confirm_password_field_type(self):
+        """Return the type attribute of the confirm password field."""
+        return self.txt_confirm_password.get_attribute("type")
+
     # ===== Combined Workflow =====
 
     def complete_registration(self, user_data: dict, newsletter_locator: str | Locator = None):
