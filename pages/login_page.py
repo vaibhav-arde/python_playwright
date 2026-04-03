@@ -129,3 +129,11 @@ class LoginPage(BasePage):
     def get_page_heading(self):
         """Return the page heading element."""
         return self.page_heading
+
+    def click_continue(self):
+        """Click the Continue button after logging out."""
+        self.page.get_by_role("link", name="Continue").click()
+
+    def click_right_column_register(self):
+        """Click the Register button in the right column."""
+        self.page.get_by_role("link", name="Register").click()
