@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """Common UI messages."""
 
 ACCOUNT_CREATED = "Your Account Has Been Created!"
@@ -12,3 +13,8 @@ WARN_PASSWORD = "Password must be between 4 and 20 characters!"
 WARN_PRIVACY_POLICY = "Warning: You must agree to the Privacy Policy!"
 WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
 WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
+=======
+INVALID_LOGIN_MSG = "Warning: No match for E-Mail Address and/or Password."
+PRIVACY_POLICY_WARNING_MSG = "Warning: You must agree to the Privacy Policy!"
+SUCCESS_REGISTER_MSG = "Your Account Has Been Created!"
+>>>>>>> 508fadd (Test Added without privacy policy registeration is not completed)
