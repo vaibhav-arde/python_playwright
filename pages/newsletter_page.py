@@ -20,7 +20,7 @@ class NewsletterPage(BasePage):
 
     def click_continue(self):
         """Click the Continue button."""
-        self.click_continue_button(self.btn_continue)
+        self.click(self.btn_continue)
 
     # ===== Validations =====
     def get_newsletter_yes_radio(self):

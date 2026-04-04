@@ -104,8 +104,3 @@ class BasePage:
         else:
             logger.info(f"Skipped radio selection. Invalid value: {value}")
 
-    def click_continue_button(self, locator):
-        """Click on a Continue button."""
-        target = self.get_locator(locator)
-        logger.info(f"Clicking on Continue button: {target}")
-        target.click()
