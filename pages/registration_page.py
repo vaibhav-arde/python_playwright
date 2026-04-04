@@ -27,6 +27,9 @@ class RegistrationPage(BasePage):
         self.btn_continue = page.locator('.btn-primary')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
 
+        # ===== Warning / Validation Message Locators =====
+        self.warn_privacy_policy = page.locator('.alert-danger')
+
     # ===== Action Methods =====
 
     def set_first_name(self, fname: str):
@@ -76,6 +79,10 @@ class RegistrationPage(BasePage):
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
         return self.msg_confirmation
+
+    def get_privacy_policy_warning(self) -> str:
+        """Return the Privacy Policy alert warning text."""
+        return self.get_text(self.warn_privacy_policy)
 
     # ===== Combined Workflow =====
 
