@@ -28,6 +28,8 @@ class LoginPage(BasePage):
         self.right_column_login = page.locator("#column-right").get_by_role("link", name="Login")
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.page_heading = page.locator("h1")
+        self.btn_continue = page.get_by_role("link", name="Continue")
+        self.lnk_register_right = page.get_by_role("link", name="Register")
 
     # ===== Action Methods =====
 
@@ -127,9 +129,7 @@ class LoginPage(BasePage):
         return self.breadcrumb
 
     def click_continue(self):
-        """Click the Continue button after logging out."""
-        self.page.get_by_role("link", name="Continue").click()
+        self.btn_continue.click()
 
     def click_right_column_register(self):
-        """Click the Register button in the right column."""
-        self.page.get_by_role("link", name="Register").click()
+        self.lnk_register_right.click()

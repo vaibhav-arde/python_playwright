@@ -15,6 +15,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.registration_page import RegistrationPage
+from utils.constants import UIRoutes
 
 
 @pytest.mark.sanity
@@ -28,8 +29,8 @@ def test_navigation_to_register_page(page):
     home_page.click_my_account()
     home_page.click_register()
 
-    expect(registration_page.get_page_heading()).to_have_text("Register Account")
-
+    expect(registration_page.lbl_page_heading).to_have_text(REGISTER_PAGE_HEADING)
+    
     # ---- Path 2: My Account → Login → Continue ----
     home_page.open_home_page()
     home_page.click_my_account()
@@ -37,13 +38,10 @@ def test_navigation_to_register_page(page):
 
     login_page.click_continue()
 
-    expect(registration_page.get_page_heading()).to_have_text("Register Account")
+    expect(registration_page.lbl_page_heading).to_have_text(REGISTER_PAGE_HEADING)
 
     # ---- Path 3: Login → Right Column Register ----
-    home_page.open_home_page()
-    home_page.click_my_account()
-    home_page.click_login()
-
+    home_page.navigate_to_login()
     login_page.click_right_column_register()
 
-    expect(registration_page.get_page_heading()).to_have_text("Register Account")
+    expect(registration_page.lbl_page_heading).to_have_text(REGISTER_PAGE_HEADING)

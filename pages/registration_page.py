@@ -98,10 +98,11 @@ class RegistrationPage(BasePage):
     def get_page_heading(self):
         """Return the page heading locator."""
         return self.lbl_page_heading
+        return self.lbl_page_heading
 
     def get_privacy_policy_warning(self):
         """Return the privacy policy warning message locator."""
-        return self.warn_privacy_policy
+        return self.msg_privacy_policy_warning
 
     def get_password_field_type(self):
         """Return the type attribute of the password field."""
@@ -114,7 +115,7 @@ class RegistrationPage(BasePage):
 
     def get_breadcrumb(self):
         """Return the breadcrumb locator."""
-        return self.page.locator("#account-register > ul.breadcrumb")       
+        return self.lnk_breadcrumb       
 
     # ===== Combined Workflow =====
 

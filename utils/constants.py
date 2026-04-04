@@ -87,3 +87,12 @@ class FilePaths:
     SESSION_STORAGE_DIR = Path("session_storage")
     AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
+
+class UIHeadingsAndTestData:
+    # UI Page Headings
+    REGISTER_PAGE_HEADING = "Register Account"
+    REGISTER_BREADCRUMB = "Register"
+
+    # Test Data
+    VALID_PASSWORD = "Test@123"
+    INVALID_PASSWORD = "123"
