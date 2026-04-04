@@ -89,5 +89,5 @@ class BasePage:
         """Select a radio button."""
         target = self.get_locator(locator)
         target.wait_for(state="visible")
-        target.check()
+        self.check(locator)
         logger.info("Radio button selected")
