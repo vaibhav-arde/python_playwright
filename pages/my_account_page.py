@@ -38,7 +38,8 @@ class MyAccountPage(BasePage):
     # ===== Newsletter Action =====
     
     def click_subscribe_unsubscribe_to_newsletter(self) -> NewsletterPage:
-        self.lnk_subscribe_unsubscribe_to_newsletter.click()
+        """Navigate to Newsletter page by clicking the subscribe/unsubscribe link."""
+        self.click(self.lnk_subscribe_unsubscribe_to_newsletter)
         return NewsletterPage(self.page)
 
     def get_newsletter_page_heading(self):

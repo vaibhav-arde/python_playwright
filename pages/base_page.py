@@ -85,22 +85,9 @@ class BasePage:
         """Return the current page URL."""
         return self.page.url
 
-    def get_warning(self, field_id: str) -> Locator:
-        """Return the .text-danger warning element adjacent to a field by its ID."""
-        return self.page.locator(f"#{field_id} + .text-danger")
-
-    def select_radio(self, locator_yes, locator_no, value):
-        """Select a radio button based on the given value."""
-        value = value.lower()
-
-        if value == "yes":
-            self.get_locator(locator_yes).check()
-            logger.info("Successfully selected: YES")
-
-        elif value == "no":
-            self.get_locator(locator_no).check()
-            logger.info("Successfully selected: NO")
-
-        else:
-            logger.info(f"Skipped radio selection. Invalid value: {value}")
-
+    def select_radio(self, locator):
+        """Select a radio button."""
+        target = self.get_locator(locator)
+        target.wait_for(state="visible")
+        target.check()
+        logger.info("Radio button selected")

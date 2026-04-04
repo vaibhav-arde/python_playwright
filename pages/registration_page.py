@@ -8,6 +8,7 @@ from playwright.sync_api import Page, expect, Locator
 from pages.base_page import BasePage
 from utils.message import Message
 from pages.my_account_page import MyAccountPage
+from pages.newsletter_page import NewsletterPage
 
 
 class RegistrationPage(BasePage):
@@ -71,11 +72,11 @@ class RegistrationPage(BasePage):
 
     def set_privacy_policy(self):
         """Select the Privacy Policy checkbox."""
-        self.chk_policy.check()
+        self.check(self.chk_policy)
 
     def set_newsletter(self, value: str):
-        """Set newsletter preference."""
-        self.select_radio(self.radio_yes, self.radio_no, value)
+        newsletter_page = NewsletterPage(self.page)
+        newsletter_page.set_newsletter(value)
 
     def set_newsletter_subscription(self, locator: str | Locator):
         self.check(locator)

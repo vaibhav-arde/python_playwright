@@ -15,8 +15,13 @@ class NewsletterPage(BasePage):
 
     # ===== Actions =====
     def set_newsletter(self, value: str):
-        """Select newsletter option."""
-        self.select_radio(self.radio_newsletter_yes, self.radio_newsletter_no, value)
+        value = value.lower()
+
+        if value == "yes":
+            self.select_radio(self.radio_newsletter_yes)
+
+        elif value == "no":
+            self.select_radio(self.radio_newsletter_no) 
 
     def click_continue(self):
         """Click the Continue button."""
