@@ -101,7 +101,8 @@ class RegistrationPage(BasePage):
         return self.txt_confirm_password.get_attribute("type")
     def get_breadcrumb(self):
         """Return the breadcrumb locator."""
-        return self.page.locator("#account-register > ul.breadcrumb")
+        return self.lnk_breadcrumb
+
 
 
     # ===== Combined Workflow =====

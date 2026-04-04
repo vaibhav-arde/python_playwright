@@ -31,10 +31,12 @@ class HomePage(BasePage):
 
     def get_home_page_title(self) -> str:
         """Return the title of the Home Page."""
+        self.lnk_my_account.wait_for(state="visible")
         return self.get_title()
 
     def click_my_account(self):
         """Click on the 'My Account' link."""
+        self.lnk_my_account.wait_for(state="visible")
         self.click(self.lnk_my_account)
 
     def click_register(self):
@@ -63,28 +65,18 @@ class HomePage(BasePage):
         self.click(self.lnk_desktops)
 
     def logout_link(self):
-        """Click on the 'Logout' link."""
+        """Return the 'Logout' link locator."""
         return self.lnk_logout
 
     def is_dropdown_menu_visible(self) -> bool:
         """Check if the dropdown menu is visible."""
-        return self.dropdown
+        return self.dropdown.is_visible()
 
     def click_show_all_desktops(self):
         """Click on the 'Show All Desktops' link."""
         self.click(self.lnk_show_all_desktops)
 
     def open_home_page(self):
-        self.page.goto("https://tutorialsninja.com/demo/")
+        """Navigate to the home page."""
+        self.open("/")
         self.page.wait_for_load_state("networkidle")
-
-    def click_my_account(self):
-        self.lnk_my_account.wait_for(state="visible")
-        self.lnk_my_account.click()
-
-    def click_register(self):
-        self.lnk_register.click()
-
-    def click_login(self):
-        self.lnk_login.click()
-
