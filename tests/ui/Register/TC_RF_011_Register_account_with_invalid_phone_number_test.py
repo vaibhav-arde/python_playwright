@@ -15,7 +15,6 @@ from utils.messages import INVALID_TELEPHONE_NUMBER_ERROR_MSG
 from utils.constants import INVALID_PHONE_NUMBER
 
 
-@pytest.mark.bug
 @pytest.mark.sanity
 def test_register_account_with_invalid_phone_number(page):
     home_page = HomePage(page)
