@@ -6,7 +6,6 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
-# from utils.constants import Messages
 
 
 class RegistrationPage(BasePage):

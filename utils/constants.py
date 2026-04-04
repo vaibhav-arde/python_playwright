@@ -23,12 +23,6 @@ class Headers:
     FORM = {
         "Content-Type": "application/x-www-form-urlencoded",
     }
-
-
-class Messages:
-    """UI Messages"""
-
-    REGISTRATION_SUCCESS = "Your Account Has Been Created!"
     
 
 class UIRoutes:
