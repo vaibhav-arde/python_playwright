@@ -24,6 +24,10 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.btn_continue = page.locator('input[value="Continue"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
+        self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
+        self.msg_privacy_policy_warning = page.locator(".alert-danger")
+        self.lnk_breadcrumb = page.locator("#account-register ul.breadcrumb")
+
 
     # ===== Action Methods =====
 
@@ -64,13 +68,14 @@ class RegistrationPage(BasePage):
         return self.msg_confirmation
 
     def get_page_heading(self):
-        """Return the page heading locator."""
-        return self.page.get_by_role("heading", name="Register Account")
+        return self.lbl_page_heading
+
+    def get_breadcrumb(self):
+        return self.lnk_breadcrumb  
 
     def get_privacy_policy_warning(self):
-        """Return the privacy policy warning message locator."""
-        return self.page.locator("#account-register > div.alert.alert-danger.alert-dismissible")
-
+        return self.msg_privacy_policy_warning
+    
     def get_password_field_type(self):
         """Return the type attribute of the password field."""
         return self.txt_password.get_attribute("type")
@@ -79,10 +84,7 @@ class RegistrationPage(BasePage):
         """Return the type attribute of the confirm password field."""
         return self.txt_confirm_password.get_attribute("type")
 
-    def get_breadcrumb(self):
-        """Return the breadcrumb locator."""
-        return self.page.locator("#account-register > ul.breadcrumb")       
-
+    
     # ===== Combined Workflow =====
 
     def complete_registration(self, user_data: dict):

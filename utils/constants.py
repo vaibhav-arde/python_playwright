@@ -39,3 +39,11 @@ class UIRoutes:
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
+
+    # UI Page Headings
+    REGISTER_PAGE_HEADING = "Register Account"
+    REGISTER_BREADCRUMB = "Register"
+
+    # Test Data
+    VALID_PASSWORD = "Test@123"
+    INVALID_PASSWORD = "123"
