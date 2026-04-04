@@ -86,7 +86,7 @@ class BasePage:
         return self.page.url
 
     def select_radio(self, locator):
-        """Select a radio button."""
+        """Select a radio button as per locator."""
         target = self.get_locator(locator)
         target.wait_for(state="visible")
         self.check(locator)
