@@ -22,10 +22,6 @@ def test_register_field_placeholders(page):
     home_page.click_my_account()
     home_page.click_register()
 
-    expect(registration_page.txt_firstname).to_have_attribute("placeholder", "First Name")
-    expect(registration_page.txt_lastname).to_have_attribute("placeholder", "Last Name")
-    expect(registration_page.txt_email).to_have_attribute("placeholder", "E-Mail")
-    expect(registration_page.txt_telephone).to_have_attribute("placeholder", "Telephone")
-    expect(registration_page.txt_password).to_have_attribute("placeholder", "Password")
-    expect(registration_page.txt_confirm_password).to_have_attribute("placeholder", "Password Confirm")
+    # Validate All Placeholders
+    registration_page.validate_all_placeholders()
 

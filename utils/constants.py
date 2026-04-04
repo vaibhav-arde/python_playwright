@@ -23,7 +23,7 @@ class Headers:
     FORM = {
         "Content-Type": "application/x-www-form-urlencoded",
     }
-    
+
 
 class UIRoutes:
     """Common UI route paths (relative to base URL)."""
@@ -36,3 +36,33 @@ class UIRoutes:
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
+
+
+# =====================
+# UI Attributes
+# =====================
+
+class UIAttributes:
+    """Common UI attribute names"""
+
+    PLACEHOLDER = "placeholder"
+    VALUE = "value"
+    TYPE = "type"
+    CLASS = "class"
+    ID = "id"
+    NAME = "name"
+
+
+# =====================
+# Register Page Constants
+# =====================
+
+class RegisterPlaceholders:
+    """Register Page Placeholder values"""
+
+    FIRST_NAME = "First Name"
+    LAST_NAME = "Last Name"
+    EMAIL = "E-Mail"
+    TELEPHONE = "Telephone"
+    PASSWORD = "Password"
+    CONFIRM_PASSWORD = "Password Confirm"

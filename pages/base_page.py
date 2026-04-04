@@ -71,6 +71,29 @@ class BasePage:
         """Get the inner text of an element."""
         return self.get_locator(locator).inner_text()
 
+    def get_attribute_value(self, locator: str | Locator, attribute: str) -> str:
+        """Get attribute value from element"""
+        target = self.get_locator(locator)
+        logger.info(f"Getting attribute '{attribute}' from element")
+        return target.get_attribute(attribute)
+
+    def validate_attribute(
+        self,
+        locator: str | Locator,
+        attribute: str,
+        expected_value: str
+    ):
+        """Validate attribute value"""
+        target = self.get_locator(locator)
+        logger.info(f"Validating attribute '{attribute}'")
+
+        actual_value = target.get_attribute(attribute)
+
+        assert actual_value == expected_value, (
+            f"Expected attribute '{attribute}' to be "
+            f"'{expected_value}', but got '{actual_value}'"
+        )
+
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
         target = self.get_locator(locator)

@@ -45,5 +45,6 @@ def test_register_without_confirm_password(page):
     registration_page.set_privacy_policy()
     registration_page.click_continue()
     expect(registration_page.get_confirm_password_error()).to_be_visible()
+    
 
 

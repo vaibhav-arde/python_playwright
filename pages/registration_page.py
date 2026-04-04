@@ -6,6 +6,7 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+from utils.constants import UIAttributes, RegisterPlaceholders
 
 
 class RegistrationPage(BasePage):
@@ -24,11 +25,11 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.btn_continue = page.locator('input[value="Continue"]')
         self.msg_confirmation = page.locator(
-         f'h1:has-text("Your Account Has Been Created!")'
-)
-        self.msg_confirm_password_error = page.locator("text=Password confirmation does not match password!")
-
-       
+            'h1:has-text("Your Account Has Been Created!")'
+        )
+        self.msg_confirm_password_error = page.locator(
+            "text=Password confirmation does not match password!"
+        )
 
     # ===== Action Methods =====
 
@@ -73,9 +74,17 @@ class RegistrationPage(BasePage):
         return self.msg_confirm_password_error
 
 
+    # ===== Form Fill Method =====
 
-
-    def fill_registration_form(self, fname: str, lname: str, email: str, telephone: str, password: str, confirm_password: str):
+    def fill_registration_form(
+        self,
+        fname: str,
+        lname: str,
+        email: str,
+        telephone: str,
+        password: str,
+        confirm_password: str
+    ):
         """Fill all registration form fields with the provided values."""
         self.set_first_name(fname)
         self.set_last_name(lname)
@@ -83,6 +92,7 @@ class RegistrationPage(BasePage):
         self.set_telephone(telephone)
         self.set_password(password)
         self.set_confirm_password(confirm_password)
+
 
     # ===== Combined Workflow =====
 
@@ -98,5 +108,59 @@ class RegistrationPage(BasePage):
         self.click_continue()
         return self.msg_confirmation
 
-    
 
+    # ===== Placeholder Validation Methods =====
+
+    def validate_firstname_placeholder(self):
+        self.validate_attribute(
+            self.txt_firstname,
+            UIAttributes.PLACEHOLDER,
+            RegisterPlaceholders.FIRST_NAME
+        )
+
+    def validate_lastname_placeholder(self):
+        self.validate_attribute(
+            self.txt_lastname,
+            UIAttributes.PLACEHOLDER,
+            RegisterPlaceholders.LAST_NAME
+        )
+
+    def validate_email_placeholder(self):
+        self.validate_attribute(
+            self.txt_email,
+            UIAttributes.PLACEHOLDER,
+            RegisterPlaceholders.EMAIL
+        )
+
+    def validate_telephone_placeholder(self):
+        self.validate_attribute(
+            self.txt_telephone,
+            UIAttributes.PLACEHOLDER,
+            RegisterPlaceholders.TELEPHONE
+        )
+
+    def validate_password_placeholder(self):
+        self.validate_attribute(
+            self.txt_password,
+            UIAttributes.PLACEHOLDER,
+            RegisterPlaceholders.PASSWORD
+        )
+
+    def validate_confirm_password_placeholder(self):
+        self.validate_attribute(
+            self.txt_confirm_password,
+            UIAttributes.PLACEHOLDER,
+            RegisterPlaceholders.CONFIRM_PASSWORD
+        )
+
+
+    # ===== Validate All Placeholders =====
+
+    def validate_all_placeholders(self):
+        """Validate all register page placeholders"""
+        self.validate_firstname_placeholder()
+        self.validate_lastname_placeholder()
+        self.validate_email_placeholder()
+        self.validate_telephone_placeholder()
+        self.validate_password_placeholder()
+        self.validate_confirm_password_placeholder()
