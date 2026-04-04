@@ -3,7 +3,7 @@
 # Page Object for the Registration Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from utils.constants import UIAttributes, RegisterPlaceholders
@@ -30,6 +30,18 @@ class RegistrationPage(BasePage):
         self.msg_confirm_password_error = page.locator(
             "text=Password confirmation does not match password!"
         )
+
+    def validate_register_ui(self):
+        """Validate Register Account UI"""
+
+        expect(self.txt_firstname).to_be_visible()
+        expect(self.txt_lastname).to_be_visible()
+        expect(self.txt_email).to_be_visible()
+        expect(self.txt_telephone).to_be_visible()
+        expect(self.txt_password).to_be_visible()
+        expect(self.txt_confirm_password).to_be_visible()
+        expect(self.chk_policy).to_be_visible()
+        expect(self.btn_continue).to_be_visible()
 
     # ===== Action Methods =====
 
