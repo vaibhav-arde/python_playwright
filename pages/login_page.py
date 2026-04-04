@@ -19,6 +19,8 @@ class LoginPage(BasePage):
         self.txt_password = page.locator("#input-password")
         self.btn_login = page.locator('input[value="Login"]')
         self.txt_error_message = page.locator(".alert.alert-danger.alert-dismissible")
+        self.btn_continue = page.get_by_role("link", name="Continue")
+        self.lnk_register_right = page.get_by_role("link", name="Register")
 
     # ===== Action Methods =====
 
@@ -45,9 +47,7 @@ class LoginPage(BasePage):
         return self.txt_error_message
 
     def click_continue(self):
-        """Click the Continue button after logging out."""
-        self.page.get_by_role("link", name="Continue").click()
+        self.btn_continue.click()
 
     def click_right_column_register(self):
-        """Click the Register button in the right column."""
-        self.page.get_by_role("link", name="Register").click()
+        self.lnk_register_right.click()
