@@ -20,8 +20,8 @@ def test_register_account_with_invalid_phone_number(page):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
 
-    home_page.click_my_account
-    home_page.click_register
+    home_page.click_my_account()
+    home_page.click_register()
 
     random_data = RandomDataUtil()
 
