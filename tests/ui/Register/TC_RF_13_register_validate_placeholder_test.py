@@ -15,7 +15,7 @@ from pages.registration_page import RegistrationPage
 
 @pytest.mark.sanity
 @pytest.mark.regression
-def test_user_registration(page):
+def test_register_field_placeholders(page):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
 

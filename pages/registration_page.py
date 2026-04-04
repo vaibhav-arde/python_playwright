@@ -6,7 +6,7 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
-from utils.constants import Messages
+# from utils.constants import Messages
 
 
 class RegistrationPage(BasePage):
@@ -25,8 +25,11 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.btn_continue = page.locator('input[value="Continue"]')
         self.msg_confirmation = page.locator(
-         f'h1:has-text("{Messages.REGISTRATION_SUCCESS}")'
+         f'h1:has-text("Your Account Has Been Created!")'
 )
+        self.msg_confirm_password_error = page.locator("text=Password confirmation does not match password!")
+
+       
 
     # ===== Action Methods =====
 
@@ -66,6 +69,13 @@ class RegistrationPage(BasePage):
         """Return the confirmation message locator."""
         return self.msg_confirmation
 
+    def get_confirm_password_error(self):
+        """Return the confirmation password error message locator."""
+        return self.msg_confirm_password_error
+
+
+
+
     def fill_registration_form(self, fname: str, lname: str, email: str, telephone: str, password: str, confirm_password: str):
         """Fill all registration form fields with the provided values."""
         self.set_first_name(fname)
@@ -88,3 +98,6 @@ class RegistrationPage(BasePage):
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
+
+    
+
