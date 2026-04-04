@@ -28,7 +28,7 @@ def test_user_registration_no_newsletter(page):
     registration_page.set_password(password)
     registration_page.set_confirm_password(password)
 
-    registration_page.set_newsletter_subscription(False)
+    registration_page.set_newsletter_subscription(registration_page.radio_newsletter_no)
     registration_page.set_privacy_policy()
     registration_page.click_continue()
 

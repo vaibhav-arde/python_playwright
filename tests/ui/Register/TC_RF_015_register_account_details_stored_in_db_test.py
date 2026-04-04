@@ -3,21 +3,6 @@
 # Test Case ID: TC_RF_015
 # Description: Validate the details provided while Registering an Account
 # are stored in the Database (Verified via Account Profile UI Persistence)
-"""
-Validate that all details entered during registration are successfully persisted.
-Following industry standards, persistence is verified by retrieving the details
-from the 'Edit Account Information' and 'Newsletter' pages after registration.
-
-Steps:
-1. Open the application.
-2. Click on 'My Account' -> 'Register'.
-3. Enter new account details (First Name, Last Name, E-Mail, Telephone, Password).
-4. Select Newsletter 'Yes' and check Privacy Policy.
-5. Click 'Continue' to register.
-6. Verify registration success message.
-7. Navigate to 'Edit Account Information' and verify details match registration input.
-8. Navigate to 'Newsletter' and verify subscription status matches.
-"""
 # =========================================================================
 
 import pytest
@@ -57,7 +42,9 @@ def test_register_account_details_stored_in_db(page):
     registration_page.set_password(password)
     registration_page.set_confirm_password(password)
 
-    registration_page.set_newsletter_subscription(True)  # Subscribe to Yes
+    registration_page.set_newsletter_subscription(
+        registration_page.radio_newsletter_yes
+    )  # Subscribe to Yes
     registration_page.set_privacy_policy()
 
     # Step: Complete Registration

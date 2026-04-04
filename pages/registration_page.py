@@ -3,7 +3,7 @@
 # Page Object for the Registration Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, Locator
 
 from pages.base_page import BasePage
 
@@ -24,11 +24,11 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator('.btn-primary')
+        self.btn_continue = page.locator(".btn-primary")
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
 
         # ===== Warning / Validation Message Locators =====
-        self.warn_privacy_policy = page.locator('.alert-danger')
+        self.warn_privacy_policy = page.locator(".alert-danger")
 
     # ===== Action Methods =====
 
@@ -60,17 +60,8 @@ class RegistrationPage(BasePage):
         """Select the Privacy Policy checkbox."""
         self.check(self.chk_policy)
 
-
-    def set_newsletter_subscription(self, subscribe: bool = True):
-        """
-        Choose newsletter subscription.
-        :param subscribe: True to subscribe (Yes), False to unsubscribe (No).
-        """
-        if subscribe:
-            self.radio_newsletter_yes.check()
-        else:
-            self.radio_newsletter_no.check()
-
+    def set_newsletter_subscription(self, locator: str | Locator):
+        self.check(locator)
 
     def click_continue(self):
         """Click the Continue button to submit the registration form."""

@@ -87,4 +87,4 @@ class BasePage:
 
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""
-        return self.page.locator(f'#{field_id} + .text-danger')
+        return self.page.locator(f"#{field_id} + .text-danger")

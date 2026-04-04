@@ -48,7 +48,7 @@ class MyAccountPage(BasePage):
     # ===== Newsletter Subscription Action =====
     def click_newsletter_subscription(self):
         """Click on the 'Subscribe / unsubscribe to newsletter' link."""
-        self.newsletter_subscription.click()
+        self.click(self.newsletter_subscription)
 
     # ===== Account Detail Actions =====
     def click_edit_account_info(self) -> EditAccountPage:
