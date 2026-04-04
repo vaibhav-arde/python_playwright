@@ -81,7 +81,7 @@ class RegistrationPage(BasePage):
         self.check(locator)
 
     def click_continue(self):
-        self.click_continue_button(self.btn_continue)
+        self.click(self.btn_continue)
 
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
@@ -105,7 +105,7 @@ class RegistrationPage(BasePage):
     # ===== My Account Page Navigation =====
     def click_continue_to_my_account(self):
         """Click Continue link and navigate to My Account page."""
-        self.click_continue_button(self.lnk_continue)
+        self.click(self.lnk_continue)
         return MyAccountPage(self.page)    
 
     # ===== Combined Workflow =====
