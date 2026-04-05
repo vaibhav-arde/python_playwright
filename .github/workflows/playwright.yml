@@ -47,7 +47,7 @@ jobs:
           uv run ruff format --check .
 
       - name: Run tests
-        run: xvfb-run uv run pytest --headed
+        run: xvfb-run uv run pytest
         continue-on-error: true
 
       - name: Debug generated files
