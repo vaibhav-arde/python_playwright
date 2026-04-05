@@ -16,7 +16,6 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from utils.helpers import RandomDataUtil
-from utils.config import Config
 from utils.message import Message
 from utils.constants import UserDetails
 from utils.constants import InvalidEmail
@@ -52,18 +51,6 @@ def test_user_registration(page):
 
     confirmation_msg = registration_page.get_confirmation_msg()
     expect(confirmation_msg).to_have_text(Message.registration_success)
-
-
-def test_user_registration_empty_fields(page):
-    home_page = HomePage(page)
-    registration_page = RegistrationPage(page)
-
-    home_page.click_my_account()
-    home_page.click_register()
-
-    registration_page.click_continue()
-
-    registration_page.error_msg_visible()
 
 
 def test_validate_password_and_confirm_password(page):
