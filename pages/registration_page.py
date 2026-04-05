@@ -3,9 +3,10 @@
 # Page Object for the Registration Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
+from utils.message import Message
 
 
 class RegistrationPage(BasePage):
@@ -26,6 +27,16 @@ class RegistrationPage(BasePage):
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.btn_continue = page.locator(".btn-primary")
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
+
+        # ===== Error Message Locators =====
+        self.err_privacy_policy = page.locator("div.alert-danger")
+        self.err_firstname = page.locator("#input-firstname + .text-danger")
+        self.err_lastname = page.locator("#input-lastname + .text-danger")
+        self.err_email = page.locator("#input-email + .text-danger")
+        self.err_telephone = page.locator("#input-telephone + .text-danger")
+        self.err_password = page.locator("#input-password + .text-danger")
+        self.password_mismatch_error = page.get_by_text(Message.password_not_match_error)
+        self.err_email_already_exist = page.get_by_text(Message.email_already_exist_error)
 
         # ===== Warning / Validation Message Locators =====
         self.warn_privacy_policy = page.locator(".alert-danger")
@@ -71,6 +82,18 @@ class RegistrationPage(BasePage):
         """Return the confirmation message locator."""
         return self.msg_confirmation
 
+    def get_password_mismatch_error(self):
+        """Return the password mismatch error message locator."""
+        return self.password_mismatch_error
+
+    def get_email_already_exist_error(self):
+        """Return the email already exist error message locator."""
+        return self.err_email_already_exist
+
+    def get_email_validation_message(self) -> str:
+        """Return the native browser validation message for the email input."""
+        return self.txt_email.evaluate("node => node.validationMessage")
+
     def get_privacy_policy_warning(self) -> str:
         """Return the Privacy Policy alert warning text."""
         return self.get_text(self.warn_privacy_policy)
@@ -88,3 +111,18 @@ class RegistrationPage(BasePage):
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
+
+    def error_msg_visible(self):
+        """check the error message visible or not for empty fields on click continue."""
+
+        expect(self.err_privacy_policy).to_have_text(Message.privacy_policy_error)
+
+        expect(self.err_firstname).to_have_text(Message.firstname_error)
+
+        expect(self.err_lastname).to_have_text(Message.lastname_error)
+
+        expect(self.err_email).to_have_text(Message.email_error)
+
+        expect(self.err_telephone).to_have_text(Message.telephone_error)
+
+        expect(self.err_password).to_have_text(Message.password_error)

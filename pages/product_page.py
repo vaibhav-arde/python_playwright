@@ -18,7 +18,7 @@ class ProductPage(BasePage):
         # ===== Locators =====
         self.txt_quantity = page.locator('input[name="quantity"]')
         self.btn_add_to_cart = page.locator("#button-cart")
-        self.cnf_msg = page.locator("div.alert.alert-success")
+        self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 

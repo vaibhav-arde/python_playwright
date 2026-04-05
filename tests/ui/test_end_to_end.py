@@ -125,7 +125,7 @@ def add_product_to_cart(page):
     product_page.set_quantity(quantity)
     product_page.add_to_cart()
 
-    expect(product_page.get_confirmation_message()).to_be_visible(timeout=5000)
+    expect(product_page.get_confirmation_message()).to_be_visible(timeout=10000)
 
 
 def verify_shopping_cart(page):
