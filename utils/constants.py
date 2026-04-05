@@ -40,10 +40,15 @@ class UIRoutes:
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
 
+class UILabels:
     # UI Page Headings
     REGISTER_PAGE_HEADING = "Register Account"
     REGISTER_BREADCRUMB = "Register"
 
+class UITitles:
+    REGISTER_PAGE_TITLE = "Register Account"
+
+class TestData:
     # Test Data
     VALID_PASSWORD = "Test@123"
     INVALID_PASSWORD = "123"

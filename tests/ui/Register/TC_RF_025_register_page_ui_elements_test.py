@@ -15,7 +15,8 @@ import re
 from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
-from utils.constants import UIRoutes
+from utils.constants import UILabels, UITitles, UIRoutes
+
 
 
 @pytest.mark.sanity
@@ -29,13 +30,13 @@ def test_register_page_ui_elements(page):
     home_page.click_register()
 
     # ✅ Page Heading
-    expect(registration_page.lbl_page_heading).to_have_text(REGISTER_PAGE_HEADING)
+    expect(registration_page.lbl_page_heading).to_have_text(UILabels.REGISTER_PAGE_HEADING)
 
     # ✅ URL Validation
     assert page.url.endswith(UIRoutes.REGISTER)
 
     # Page Title
-    expect(page).to_have_title(UIRoutes.REGISTER_PAGE_HEADING)
+    expect(page).to_have_title(UITitles.REGISTER_PAGE_TITLE)
 
     # Breadcrumb
-    expect(registration_page.lnk_breadcrumb).to_contain_text(UIRoutes.REGISTER_BREADCRUMB)
+    expect(registration_page.lnk_breadcrumb).to_contain_text(UILabels.REGISTER_BREADCRUMB)
