@@ -79,6 +79,7 @@ INVALID_PHONE_NUMBERS = [
     "123456789012345678901234567890123",  # too long
 ]
 
+
 class FilePaths:
     """Centralized file and directory paths."""
 
@@ -87,12 +88,17 @@ class FilePaths:
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
 
 
-class UIHeadingsAndTestData:
+class UILabels:
     # UI Page Headings
     REGISTER_PAGE_HEADING = "Register Account"
     REGISTER_BREADCRUMB = "Register"
 
+
+class UITitles:
+    REGISTER_PAGE_TITLE = "Register Account"
+
+
+class TestData:
     # Test Data
     VALID_PASSWORD = "Test@123"
     INVALID_PASSWORD = "123"
-
