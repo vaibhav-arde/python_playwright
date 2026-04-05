@@ -40,8 +40,10 @@ class UIRoutes:
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
 
+
 class UserDetails:
     """User details for validate existing account in registration."""
+
     first_name = "Pavan"
     last_name = "B"
     email = "pavanoltraining@gmail.com"
@@ -50,14 +52,16 @@ class UserDetails:
     confirm_password = "12345"
 
 
-class InvalidPassword: 
+class InvalidPassword:
     password = "12345"
     confirm_password = "abcde"
 
+
 class InvalidEmail:
     """Invalid email test data and expected Chromium validation tooltips."""
+
     test_data = [
         ("pavanol", "Please include an '@' in the email address."),
         ("pavanol@", "Please enter a part following '@'."),
-        ("@gmail.com", "Please enter a part followed by '@'.")
+        ("@gmail.com", "Please enter a part followed by '@'."),
     ]

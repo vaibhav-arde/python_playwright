@@ -126,5 +126,3 @@ class RegistrationPage(BasePage):
         expect(self.err_telephone).to_have_text(Message.telephone_error)
 
         expect(self.err_password).to_have_text(Message.password_error)
-
-    

@@ -65,6 +65,7 @@ def test_user_registration_empty_fields(page):
 
     registration_page.error_msg_visible()
 
+
 def test_validate_password_and_confirm_password(page):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
@@ -105,6 +106,7 @@ def test_user_registration_empty_fields(page):
     registration_page.click_continue()
 
     registration_page.error_msg_visible()
+
 
 def test_account_validation_with_existing_account_details(page):
     home_page = HomePage(page)
