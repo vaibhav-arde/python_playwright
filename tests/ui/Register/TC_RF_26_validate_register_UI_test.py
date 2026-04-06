@@ -8,7 +8,6 @@ Validate the UI of the 'Register Account' page
 """
 
 import pytest
-from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 
@@ -22,4 +21,5 @@ def test_register_ui(page):
     home_page.click_register()
 
     # Verify the UI of the 'Register Account' page
-    registration_page.validate_register_ui() 
+    registration_page.validate_register_ui()
+

@@ -9,7 +9,6 @@ Validate all the fields in the Register Account page have the proper placeholder
 4. View the First Name, Last Name, E-Mail, Telephone, Password, Password Confirm fields for Placeholders (ER-1)"""
 
 import pytest
-from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 
