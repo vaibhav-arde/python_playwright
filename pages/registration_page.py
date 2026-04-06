@@ -79,8 +79,12 @@ class RegistrationPage(BasePage):
         """Select the Privacy Policy checkbox."""
         self.check(self.chk_policy)
 
-    def set_newsletter_subscription(self, locator: str | Locator):
-        self.check(locator)
+    def set_newsletter_subscription(self, is_yes: bool = True):
+        """Select newsletter subscription option."""
+        if is_yes:
+            self.check(self.radio_newsletter_yes)
+        else:
+            self.check(self.radio_newsletter_no)
 
     def click_continue(self):
         """Click the Continue button to submit the registration form."""
@@ -99,13 +103,15 @@ class RegistrationPage(BasePage):
         self.click(self.login_page_link)
 
     def get_page_heading(self):
+        """Return the page heading locator."""
         return self.lbl_page_heading
 
     def get_breadcrumb(self):
+        """Return the breadcrumb locator."""
         return self.lnk_breadcrumb  
 
     def get_privacy_policy_warning(self):
-        """Return the privacy policy warning message locator."""
+        """Return the privacy policy warning locator."""
         return self.msg_privacy_policy_warning
 
     def get_password_field_type(self):
@@ -118,7 +124,7 @@ class RegistrationPage(BasePage):
     
     # ===== Combined Workflow =====
 
-    def complete_registration(self, user_data: dict, newsletter_locator: str | Locator = None):
+    def complete_registration(self, user_data: dict, subscribe_newsletter: bool = False):
         """Complete the full registration process using a data dictionary."""
         self.set_first_name(user_data["firstName"])
         self.set_last_name(user_data["lastName"])
@@ -126,8 +132,8 @@ class RegistrationPage(BasePage):
         self.set_telephone(user_data["telephone"])
         self.set_password(user_data["password"])
         self.set_confirm_password(user_data["password"])
-        if newsletter_locator:
-            self.set_newsletter_subscription(newsletter_locator)
+        if subscribe_newsletter:
+            self.set_newsletter_subscription(True)
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
