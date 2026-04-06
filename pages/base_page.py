@@ -53,3 +53,16 @@ class BasePage:
     def get_url(self) -> str:
         """Return the current page URL."""
         return self.page.url
+
+    def get_element_attribute(self, element, attribute_name: str):
+        """
+        Return the value of a given attribute from a locator.
+
+        Args:
+            element: Playwright locator
+            attribute_name (str): HTML attribute name
+
+        Returns:
+            str | None: Attribute value if present, else None
+        """
+        return element.get_attribute(attribute_name)
