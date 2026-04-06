@@ -26,17 +26,19 @@ class HomePage(BasePage):
         self.lnk_login = page.locator(
             "#top-links ul.dropdown-menu.dropdown-menu-right"
         ).get_by_text("Login", exact=True)
+        
         self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
         # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
         self.lnk_show_all_desktops = page.get_by_role(
             "link", name=re.compile(r"Show All\s*Desktops")
         )
+        
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
         self.lnk_logout = page.locator('a:has-text("Logout")')
         self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
-        self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
+        
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
         self.lnk_change_password = page.get_by_role("link", name="Change your password")
 
