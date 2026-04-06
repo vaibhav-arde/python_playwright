@@ -10,8 +10,8 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from pages.my_account_page import MyAccountPage
-from utils.helpers import RandomDataUtil
 from utils import messages
+from utils.random_test_data import RandomTestData
 from pages.login_page import LoginPage
 
 
@@ -21,7 +21,6 @@ def test_register_account_details_stored_in_db(page):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
     my_account_page = MyAccountPage(page)
-    random_data = RandomDataUtil()
 
     # Step: Navigate to Register
     home_page.click_my_account()
@@ -29,26 +28,11 @@ def test_register_account_details_stored_in_db(page):
     login_page = LoginPage(page)
 
     # Step: Prepare and fill Data
-    first_name = random_data.get_first_name()
-    last_name = random_data.get_last_name()
-    email = random_data.get_email()
-    phone = random_data.get_phone_number()
-    password = random_data.get_password()
+    user = RandomTestData.get_user()
 
-    registration_page.set_first_name(first_name)
-    registration_page.set_last_name(last_name)
-    registration_page.set_email(email)
-    registration_page.set_telephone(phone)
-    registration_page.set_password(password)
-    registration_page.set_confirm_password(password)
-
-    registration_page.set_newsletter_subscription(
-        registration_page.radio_newsletter_yes
-    )  # Subscribe to Yes
-    registration_page.set_privacy_policy()
-
-    # Step: Complete Registration
-    registration_page.click_continue()
+    registration_page.complete_registration(
+        user, newsletter_locator=registration_page.radio_newsletter_yes
+    )
 
     # Verification: Account Created Success Message
     confirmation_msg = registration_page.get_confirmation_msg()
@@ -63,8 +47,8 @@ def test_register_account_details_stored_in_db(page):
     # Step: Verify Edit Account Info Persistence
     home_page.click_my_account()
     home_page.click_login()
-    login_page.set_email(email)
-    login_page.set_password(password)
+    login_page.set_email(user["email"])
+    login_page.set_password(user["password"])
     login_page.click_login()
 
     expect(my_account_page.get_my_account_page_heading()).to_be_visible()

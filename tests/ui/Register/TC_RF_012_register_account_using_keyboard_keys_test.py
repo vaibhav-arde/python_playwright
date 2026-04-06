@@ -30,40 +30,33 @@ def test_register_account_using_keyboard_keys(page):
     # Focus on the first field to start the keyboard sequence
     registration_page.txt_firstname.focus()
 
-    # Fill First Name
-    page.keyboard.type(random_data.get_first_name())
-    page.keyboard.press("Tab")  # move to last name
-
-    # Fill Last Name and Tab
-    page.keyboard.type(random_data.get_last_name())
-    page.keyboard.press("Tab")  # move to email
-
-    # Fill E-Mail and Tab
-    page.keyboard.type(random_data.get_email())
-    page.keyboard.press("Tab")  # move to phone_number
-
-    # Fill Telephone and Tab
-    page.keyboard.type(random_data.get_phone_number())
-    page.keyboard.press("Tab")  # move to password
-
-    # Fill Password and Tab
+    # Generate common password
     test_password = random_data.get_password()
-    page.keyboard.type(test_password)
-    page.keyboard.press("Tab")  # move to confirm password
 
-    # Fill Password Confirm and Tab
-    page.keyboard.type(test_password)
-    page.keyboard.press("Tab")  # move to newsletter
+    # Define sequence of input actions
+    form_fields_data = [
+        random_data.get_first_name(),
+        random_data.get_last_name(),
+        random_data.get_email(),
+        random_data.get_phone_number(),
+        test_password,  # Password
+        test_password,  # Password Confirm
+    ]
 
-    # Newsletter Selection (Default is No)
-    page.keyboard.press("Tab")  # move to privacy policy
+    # Type value and Tab to the next field
+    for field_value in form_fields_data:
+        page.keyboard.type(field_value)
+        page.keyboard.press("Tab")
 
-    # Privacy Policy Checkbox (Use Spacebar to check)
-    page.keyboard.press("Tab")  # Move to Privacy Policy checkbox
-    page.keyboard.press("Space")  # check privacy policy
+    # Navigate past Newsletter selection to Privacy Policy checkbox (2 tabs)
+    for _ in range(2):
+        page.keyboard.press("Tab")
 
-    # Click on 'Continue' button (Use Enter to submit)
-    page.keyboard.press("Tab")  # Move to Continue button
+    # Check Privacy Policy
+    page.keyboard.press("Space")
+
+    # Navigate to Continue button and submit
+    page.keyboard.press("Tab")
     page.keyboard.press("Enter")
 
     # Verification: User should be taken to 'Account Success' page
