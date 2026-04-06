@@ -18,7 +18,7 @@ class HomePage(BasePage):
         # ===== Locators =====
         self.lnk_my_account = page.locator('span:has-text("My Account")')
         self.lnk_register = page.locator('a:has-text("Register")')
-        self.lnk_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
+        self.lnk_login = page.locator('a:has-text("Login")')
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
         self.lnk_logout = page.locator('a:has-text("Logout")')
@@ -39,6 +39,7 @@ class HomePage(BasePage):
         self.lnk_my_account.wait_for(state="visible")
         self.click(self.lnk_my_account)
 
+
     def click_register(self):
         """Click on the 'Register' link under My Account."""
         self.click(self.lnk_register)
@@ -50,11 +51,11 @@ class HomePage(BasePage):
 
     def enter_product_name(self, product_name: str):
         """Enter the product name into the search input box."""
-        self.fill(self.txt_search_box, product_name)
+        self.txt_search_box.fill(product_name)
 
     def click_search(self):
         """Click on the search button to initiate the product search."""
-        self.click(self.btn_search)
+        self.btn_search.click()
 
     def click_contact_us(self):
         """Click on the Contact Us link in the footer."""
@@ -80,3 +81,4 @@ class HomePage(BasePage):
         """Navigate to the home page."""
         self.open("/")
         self.page.wait_for_load_state("networkidle")
+
