@@ -152,3 +152,4 @@ class HomePage(BasePage):
     def open_home_page(self):
         self.page.goto("/")
         self.page.wait_for_load_state("networkidle")
+
