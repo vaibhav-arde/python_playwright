@@ -44,6 +44,7 @@ class RegistrationPage(BasePage):
         # ===== Warning / Validation Message Locators =====
         self.warn_privacy_policy = page.locator(".alert-danger")
 
+
     # ===== Action Methods =====
 
     def set_first_name(self, fname: str):
@@ -86,25 +87,23 @@ class RegistrationPage(BasePage):
         return self.msg_confirmation
 
     def get_page_heading(self):
-        """Return the page heading locator."""
         return self.lbl_page_heading
 
-    def get_privacy_policy_warning(self):
-        """Return the privacy policy warning message locator."""
-        return self.msg_privacy_policy_warning
-
-    def get_password_field_type(self):
-        """Return the type attribute of the password field."""
-        return self.txt_password.get_attribute("type")
-
-    def get_confirm_password_field_type(self):
-        """Return the type attribute of the confirm password field."""
-        return self.txt_confirm_password.get_attribute("type")
-
     def get_breadcrumb(self):
-        """Return the breadcrumb locator."""
-        return self.lnk_breadcrumb       
+        return self.lnk_breadcrumb  
 
+    def get_privacy_policy_warning(self):
+        return self.msg_privacy_policy_warning
+    
+    # def get_password_field_type(self):
+    #     """Return the type attribute of the password field."""
+    #     return self.txt_password.get_attribute("type")
+
+    # def get_confirm_password_field_type(self):
+    #     """Return the type attribute of the confirm password field."""
+    #     return self.txt_confirm_password.get_attribute("type")
+
+    
     # ===== Combined Workflow =====
 
     def complete_registration(self, user_data: dict):

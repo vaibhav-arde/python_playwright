@@ -88,3 +88,16 @@ class BasePage:
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""
         return self.page.locator(f"#{field_id} + .text-danger")
+
+    def get_element_attribute(self, element, attribute_name: str):
+        """
+        Return the value of a given attribute from a locator.
+
+        Args:
+            element: Playwright locator
+            attribute_name (str): HTML attribute name
+
+        Returns:
+            str | None: Attribute value if present, else None
+        """
+        return element.get_attribute(attribute_name)
