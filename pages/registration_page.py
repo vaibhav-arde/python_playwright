@@ -46,6 +46,7 @@ class RegistrationPage(BasePage):
         self.warn_privacy_policy = page.locator(".alert-danger")
         self.login_page_link = page.get_by_role("link", name="login page")
 
+
     # ===== Action Methods =====
 
     def set_first_name(self, fname: str):
@@ -96,9 +97,10 @@ class RegistrationPage(BasePage):
         self.click(self.login_page_link)
 
     def get_page_heading(self):
-        """Return the page heading locator."""
         return self.lbl_page_heading
-        return self.lbl_page_heading
+
+    def get_breadcrumb(self):
+        return self.lnk_breadcrumb  
 
     def get_privacy_policy_warning(self):
         """Return the privacy policy warning message locator."""
@@ -111,12 +113,8 @@ class RegistrationPage(BasePage):
     def get_confirm_password_field_type(self):
         """Return the type attribute of the confirm password field."""
         return self.txt_confirm_password.get_attribute("type")
-        return self.txt_confirm_password.get_attribute("type")
 
-    def get_breadcrumb(self):
-        """Return the breadcrumb locator."""
-        return self.lnk_breadcrumb       
-
+    
     # ===== Combined Workflow =====
 
     def complete_registration(self, user_data: dict, newsletter_locator: str | Locator = None):

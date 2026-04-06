@@ -131,3 +131,17 @@ class BasePage:
     def click_site_map(self):
         """Click on the 'Site Map' link in the footer."""
         self.click(self.lnk_site_map)
+
+    def get_element_attribute(self, element, attribute_name: str):
+        """
+        Return the value of a given attribute from a locator.
+
+        Args:
+            element: Playwright locator
+            attribute_name (str): HTML attribute name
+
+        Returns:
+            str | None: Attribute value if present, else None
+        """
+        return element.get_attribute(attribute_name)
+
