@@ -84,10 +84,3 @@ class BasePage:
     def get_url(self) -> str:
         """Return the current page URL."""
         return self.page.url
-
-    def select_radio(self, locator):
-        """Select a radio button as per locator."""
-        target = self.get_locator(locator)
-        target.wait_for(state="visible")
-        self.check(locator)
-        logger.info("Radio button selected")

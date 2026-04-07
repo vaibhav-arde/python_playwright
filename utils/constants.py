@@ -66,9 +66,12 @@ class InvalidEmail:
         ("@gmail.com", "Please enter a part followed by '@'."),
     ]
 
-ACCOUNT_CREATED_SUCCESS_MESSAGE = "Your Account Has Been Created!"
-NEWSLETTER_YES = "yes"
-NEWSLETTER_NO = "no"
 
-INVALID_PHONE_NUMBER = "12"
-
+INVALID_PHONE_NUMBERS = [
+    "1",  # too short
+    "12",  # too short
+    "abcde",  # non-numeric (BUG case)
+    "123abc",  # mixed input (BUG case)
+    "@@@@",  # special chars (BUG case)
+    "123456789012345678901234567890123",  # too long
+]

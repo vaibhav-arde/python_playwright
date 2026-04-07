@@ -7,8 +7,6 @@ from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
 from utils.message import Message
-from pages.my_account_page import MyAccountPage
-from pages.newsletter_page import NewsletterPage
 
 
 class RegistrationPage(BasePage):
@@ -25,11 +23,10 @@ class RegistrationPage(BasePage):
         self.txt_password = page.locator("#input-password")
         self.txt_confirm_password = page.locator("#input-confirm")
         self.chk_policy = page.locator('input[name="agree"]')
-        self.btn_continue = page.locator('input[value="Continue"]')
-        self.radio_yes = page.locator('input[name="newsletter"][value="1"]')
-        self.radio_no = page.locator('input[name="newsletter"][value="0"]')
+        self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
+        self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
-        self.lnk_continue = page.get_by_role("link", name="Continue")
+        self.btn_continue = page.locator(".btn-primary")
         self.msg_telephone_error = page.locator(
             "div.form-group:has(input[name='telephone']) div.text-danger"
         )
@@ -81,10 +78,6 @@ class RegistrationPage(BasePage):
         """Return the Privacy Policy checkbox locator."""
         return self.chk_policy
 
-    def set_newsletter(self, value: str):
-        newsletter_page = NewsletterPage(self.page)
-        newsletter_page.set_newsletter(value)
-
     def set_newsletter_subscription(self, locator: str | Locator):
         self.check(locator)
 
@@ -110,11 +103,6 @@ class RegistrationPage(BasePage):
     def get_privacy_policy_warning(self) -> str:
         """Return the Privacy Policy alert warning text."""
         return self.get_text(self.warn_privacy_policy)
-    # ===== My Account Page Navigation =====
-    def click_continue_to_my_account(self):
-        """Click Continue link and navigate to My Account page."""
-        self.click(self.lnk_continue)
-        return MyAccountPage(self.page)
 
     def get_telephone_error_msg(self):
         """Returns the locator for the telephone field error message."""

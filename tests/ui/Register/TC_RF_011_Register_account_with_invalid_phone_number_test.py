@@ -11,12 +11,14 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from utils.helpers import RandomDataUtil
-from utils.messages import INVALID_TELEPHONE_NUMBER_ERROR_MSG
-from utils.constants import INVALID_PHONE_NUMBER
+from utils.messages import WARN_TELEPHONE
+from utils.constants import INVALID_PHONE_NUMBERS
 
 
+@pytest.mark.bug
 @pytest.mark.sanity
-def test_register_account_with_invalid_phone_number(page):
+@pytest.mark.parametrize("phone", INVALID_PHONE_NUMBERS)
+def test_register_account_with_invalid_phone_number(page, phone):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
 
@@ -34,11 +36,11 @@ def test_register_account_with_invalid_phone_number(page):
     registration_page.set_first_name(first_name)
     registration_page.set_last_name(last_name)
     registration_page.set_email(email)
-    registration_page.set_telephone(INVALID_PHONE_NUMBER)
+    registration_page.set_telephone(phone)
     registration_page.set_password(password)
     registration_page.set_confirm_password(confirm_password)
     registration_page.set_privacy_policy()
     registration_page.click_continue()
 
     actual_error_msg = registration_page.get_telephone_error_msg()
-    expect(actual_error_msg).to_have_text(INVALID_TELEPHONE_NUMBER_ERROR_MSG)
+    expect(actual_error_msg).to_have_text(WARN_TELEPHONE)

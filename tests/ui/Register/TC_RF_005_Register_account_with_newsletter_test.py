@@ -10,12 +10,12 @@
 
 import pytest
 from playwright.sync_api import expect
+
 from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
 from pages.registration_page import RegistrationPage
 from utils.helpers import RandomDataUtil
-from utils.messages import ACCOUNT_CREATED_SUCCESS_MESSAGE
-from utils.constants import NEWSLETTER_YES
+from utils import messages
 
 
 @pytest.mark.sanity
@@ -34,23 +34,21 @@ def test_register_account_with_newsletter_yes_option(page):
     email = random_data.get_email()
     phone = random_data.get_phone_number()
     password = random_data.get_password()
-    confirm_password = password
 
     registration_page.set_first_name(first_name)
     registration_page.set_last_name(last_name)
     registration_page.set_email(email)
     registration_page.set_telephone(phone)
     registration_page.set_password(password)
-    registration_page.set_confirm_password(confirm_password)
-    registration_page.set_newsletter(NEWSLETTER_YES)
+    registration_page.set_confirm_password(password)
+
+    registration_page.set_newsletter_subscription(registration_page.radio_newsletter_yes)
     registration_page.set_privacy_policy()
     registration_page.click_continue()
 
     confirmation_msg = registration_page.get_confirmation_msg()
-    expect(confirmation_msg).to_have_text(ACCOUNT_CREATED_SUCCESS_MESSAGE)
-
-    my_account_page = registration_page.click_continue_to_my_account()
-    newsletter_page = my_account_page.click_subscribe_unsubscribe_to_newsletter()
-
-    expect(newsletter_page.get_newsletter_heading()).to_be_visible()
-    expect(newsletter_page.get_newsletter_yes_radio()).to_be_checked()
+    expect(confirmation_msg).to_have_text(messages.ACCOUNT_CREATED)
+    registration_page.click_continue()
+    expect(my_account_page.get_my_account_page_heading()).to_have_text(messages.MY_ACCOUNT_HEADING)
+    my_account_page.click_newsletter_subscription()
+    expect(my_account_page.radio_newsletter_yes).to_be_checked()
