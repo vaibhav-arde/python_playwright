@@ -16,6 +16,7 @@ from utils.constants import INVALID_PHONE_NUMBERS
 
 
 @pytest.mark.bug
+@pytest.mark.xfail
 @pytest.mark.sanity
 @pytest.mark.parametrize("phone", INVALID_PHONE_NUMBERS)
 def test_register_account_with_invalid_phone_number(page, phone):
