@@ -18,7 +18,9 @@ SPACES_ONLY = "   "
 
 @pytest.mark.regression
 @pytest.mark.bug
-@pytest.mark.xfail
+@pytest.mark.xfail(
+    reason="Bug: Spaces are accepted as valid input, no immediate fix planned", strict=True
+)
 def test_register_mandatory_fields_only_spaces(page, base_url):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
