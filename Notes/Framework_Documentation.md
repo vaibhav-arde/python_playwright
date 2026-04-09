@@ -29,6 +29,7 @@
 16. [How to Run Tests](#-16-how-to-run-tests)
 17. [Dependency Graph](#-17-dependency-graph)
 18. [File Reference Index](#-18-file-reference-index)
+19. [Strict Engineering Guidelines](#-19-strict-engineering-guidelines)
 
 ---
 
@@ -96,7 +97,8 @@ pythonPlaywright/
 │   ├── constants.py            ←   API endpoints, HTTP headers, UI routes
 │   ├── logger.py               ←   Centralized Python logging
 │   ├── data_loader.py          ←   JSON / CSV / Excel data readers
-│   └── helpers.py              ←   Random data generation (Faker)
+│   ├── helpers.py              ←   Random data generation (Faker)
+│   └── messages.py             ←   UI assertion strings (Toast, Warnings)
 │
 ├── tests/                      ← 🧪 TEST SUITES
 │   ├── __init__.py
@@ -435,7 +437,16 @@ class Config:
 | `Headers`       | Common HTTP headers: JSON, FORM                    |
 | `UIRoutes`      | UI route paths: HOME, LOGIN, REGISTER, etc.        |
 
-### 9.3 `utils/logger.py` — Centralized Logging
+### 9.3 `utils/messages.py` — Centralized UI Strings
+
+All expected string values used in assertions (e.g., toast messages, validation errors) live here to avoid hardcoding strings in tests.
+
+```python
+ACCOUNT_CREATED = "Your Account Has Been Created!"
+WARN_PASSWORD = "Password must be between 4 and 20 characters!"
+```
+
+### 9.4 `utils/logger.py` — Centralized Logging
 
 ```python
 from utils.logger import get_logger
@@ -444,7 +455,7 @@ logger.info("Test started")
 # Output: 2026-03-21 12:00:00 | INFO     | module_name | Test started
 ```
 
-### 9.4 `utils/data_loader.py` — Test Data Readers
+### 9.5 `utils/data_loader.py` — Test Data Readers
 
 | Function           | Source  | Returns        |
 | ------------------ | ------- | -------------- |
@@ -452,7 +463,7 @@ logger.info("Test started")
 | `read_csv_data()`  | `.csv`  | `list[tuple]`  |
 | `read_excel_data()`| `.xlsx` | `list[tuple]`  |
 
-### 9.5 `utils/helpers.py` — Random Data Generation
+### 9.6 `utils/helpers.py` — Random Data Generation
 
 `RandomDataUtil` class wrapping `Faker`:
 
@@ -811,6 +822,7 @@ tests/api/test_*.py  (future)
 | `logger.py`     | 37    | `get_logger()`                                        |
 | `data_loader.py`| 67    | `read_json_data()`, `read_csv_data()`, `read_excel_data()` |
 | `helpers.py`    | 63    | `RandomDataUtil`                                      |
+| `messages.py`   | 15    | UI validation constants (e.g. `WARN_PASSWORD`)        |
 
 ### Tests (`tests/ui/`)
 
@@ -829,3 +841,26 @@ tests/api/test_*.py  (future)
 > **Total Framework Files**: ~35 source files
 > **Total Lines of Code**: ~1,500 lines (excluding tests in old Day* folders)
 > **Design Level**: Senior SDET / Architect
+
+---
+
+## 📏 19. Strict Engineering Guidelines
+
+To maintain the scalable design of this architect-level framework, always adhere to these rules when adding new functions or code.
+
+### 19.1 Where to Place Common Methods (Rule of Thumb)
+*If you need to import `Page` or `Locator`, it belongs in `pages/`. If it's pure standard Python logic, it belongs in `utils/`.*
+
+| Method Type | Target Location | Description & Examples |
+| ----------- | --------------- | ---------------------- |
+| **Native DOM Actions** | `pages/base_page.py` | If the method wraps a raw Playwright command to add logging, custom waits, or error handling. Examples: `click()`, `fill()`, `wait_for()`, `is_visible()`. |
+| **Business User Flows** | Specific POM (`pages/*.py`) | If the method navigates the user through a specific flow unique to a single piece of the website. Examples: `complete_registration()`, `login()`. |
+| **Data Generation / Parsing** | `utils/helpers.py` | If the method generates, formats, or calculates data and doesn't explicitly interact with the DOM via Playwright. Examples: `get_random_email()`, `generate_uuid()`. |
+
+### 19.2 Where to Place Constants
+Constants should **never** be hardcoded directly inside your test files (`test_*.py`). 
+
+1. **`utils/constants.py` ➔ Application State & Enums**: Rules of your app that rarely change. E.g. `APIEndpoints`, HTTP `Headers`, and broad groupings of static test data like `INVALID_PHONE_NUMBERS`.
+2. **`utils/messages.py` ➔ UI Verification Strings**: Every string used in `expect(...).to_have_text(...)`. E.g. `WARN_PASSWORD`, `ACCOUNT_CREATED`.
+3. **`utils/config.py` ➔ Environment & Credentials**: Anything reliant on external runtime flags (`qa` vs `prod`). E.g. Base URLs, admin users.
+4. **`test_data/` ➔ Parameterized Test Data**: Complex iteration sets. E.g. A CSV of 50 different login combinations or edge-case users.
