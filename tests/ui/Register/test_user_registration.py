@@ -16,7 +16,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from utils.helpers import RandomDataUtil
-from utils.message import Message
+from utils import messages
 from utils.constants import UserDetails
 from utils.constants import InvalidEmail
 from utils.constants import InvalidPassword
@@ -50,7 +50,7 @@ def test_user_registration(page):
     registration_page.click_continue()
 
     confirmation_msg = registration_page.get_confirmation_msg()
-    expect(confirmation_msg).to_have_text(Message.registration_success)
+    expect(confirmation_msg).to_have_text(messages.ACCOUNT_CREATED)
 
 
 def test_validate_password_and_confirm_password(page):
@@ -80,7 +80,7 @@ def test_validate_password_and_confirm_password(page):
     registration_page.click_continue()
 
     password_mismatch_error = registration_page.get_password_mismatch_error()
-    expect(password_mismatch_error).to_have_text(Message.password_not_match_error)
+    expect(password_mismatch_error).to_have_text(messages.WARN_PASSWORD_MISMATCH)
 
 
 def test_user_registration_empty_fields(page):
@@ -120,7 +120,7 @@ def test_account_validation_with_existing_account_details(page):
     registration_page.click_continue()
 
     email_already_exist_error = registration_page.get_email_already_exist_error()
-    expect(email_already_exist_error).to_have_text(Message.email_already_exist_error)
+    expect(email_already_exist_error).to_have_text(messages.WARN_EMAIL_ALREADY_EXISTS)
 
 
 @pytest.mark.parametrize("invalid_email, expected_msg", InvalidEmail.test_data)
