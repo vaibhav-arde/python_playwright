@@ -26,11 +26,20 @@ class MyAccountPage(BasePage):
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.lnk_edit_account = page.locator('a:has-text("Edit your account information")')
 
+        self.lnk_subscribe_unsubscribe_to_newsletter = page.locator("#column-right").get_by_role(
+            "link", name="Newsletter"
+        )
+        self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
+
     # ===== Page Validation Methods =====
 
     def get_my_account_page_heading(self):
         """Returns the locator for the 'My Account' page heading."""
         return self.msg_heading
+
+    def get_newsletter_page_heading(self):
+        """Returns the locator for Newsletter page."""
+        return self.msg_newsletter_heading
 
     # ===== Logout Action =====
 

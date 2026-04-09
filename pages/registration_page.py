@@ -25,8 +25,11 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator(".btn-primary")
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
+        self.btn_continue = page.locator(".btn-primary")
+        self.msg_telephone_error = page.locator(
+            "div.form-group:has(input[name='telephone']) div.text-danger"
+        )
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
@@ -71,11 +74,14 @@ class RegistrationPage(BasePage):
         """Select the Privacy Policy checkbox."""
         self.check(self.chk_policy)
 
+    def get_privacy_policy_checkbox(self):
+        """Return the Privacy Policy checkbox locator."""
+        return self.chk_policy
+
     def set_newsletter_subscription(self, locator: str | Locator):
         self.check(locator)
 
     def click_continue(self):
-        """Click the Continue button to submit the registration form."""
         self.click(self.btn_continue)
 
     def get_confirmation_msg(self):
@@ -97,6 +103,10 @@ class RegistrationPage(BasePage):
     def get_privacy_policy_warning(self) -> str:
         """Return the Privacy Policy alert warning text."""
         return self.get_text(self.warn_privacy_policy)
+
+    def get_telephone_error_msg(self):
+        """Returns the locator for the telephone field error message."""
+        return self.msg_telephone_error
 
     # ===== Combined Workflow =====
 

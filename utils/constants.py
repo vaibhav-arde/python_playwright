@@ -65,3 +65,13 @@ class InvalidEmail:
         ("pavanol@", "Please enter a part following '@'."),
         ("@gmail.com", "Please enter a part followed by '@'."),
     ]
+
+
+INVALID_PHONE_NUMBERS = [
+    "1",  # too short
+    "12",  # too short
+    "abcde",  # non-numeric (BUG case)
+    "123abc",  # mixed input (BUG case)
+    "@@@@",  # special chars (BUG case)
+    "123456789012345678901234567890123",  # too long
+]
