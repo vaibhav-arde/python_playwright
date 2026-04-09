@@ -1,0 +1,11 @@
+# Default owner for all files
+* @vaibhav-arde
+
+# Python automation framework
+/tests/ui/ @vaibhav-arde
+/tests/api/ @vaibhav-arde
+/pages/ @vaibhav-arde
+/utils/ @vaibhav-arde
+
+# CI/CD
+/.github/ @vaibhav-arde

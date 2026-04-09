@@ -1,7 +1,7 @@
 [project]
 name = "pythonplaywright"
-version = "0.1.0"
-description = "Python Playwright E2E test automation UI + API project"
+version = "0.2.0"
+description = "Python Playwright E2E test automation UI + API hybrid framework"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -9,12 +9,13 @@ dependencies = [
     "faker>=40.11.0",
     "jsonschema>=4.26.0",
     "openpyxl>=3.1.5",
-    "pip>=26.0.1",
-    "playwright>=1.58.0",
+    "playwright==1.55.0",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
     "pytest-html>=4.2.0",
     "pytest-playwright>=0.7.2",
+    "pytest-xdist>=3.5.0",
+    "pytest-rerunfailures>=14.0",
 ]
 
 [dependency-groups]
@@ -44,7 +45,8 @@ select = [
 ]
 
 ignore = [
-  "E501"  # handled by formatter
+  "E501",  # handled by formatter
+  "I001",  # import sorting
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -53,4 +55,3 @@ ignore = [
 [tool.mypy]
 python_version = "3.12"
 ignore_missing_imports = true
-

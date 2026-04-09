@@ -18,7 +18,7 @@ main  (Production Truth - always green)
 │
 └── dev  (Controlled Integration - NOT a dumping ground)
      │
-     ├── feat/*
+     ├── feature/*
      ├── fix/*
      ├── chore/*
      └── spike/*
@@ -88,14 +88,14 @@ main  (Production Truth - always green)
 
 ---
 
-## 🔵 `feat/*` → **Short-lived Development Units**
+## 🔵 `feature/*` → **Short-lived Development Units**
 
 Add strict naming:
 
 ```bash
-feat/ui-login-tests
-feat/api-order-validation
-feat/framework-fixtures-refactor
+feature/ui-login-tests
+feature/api-order-validation
+feature/framework-fixtures-refactor
 ```
 
 ---
@@ -126,7 +126,7 @@ chore/improve-reporting
 spike/parallel-execution-poc
 ```
 
-👉 NEVER merge directly → convert to `feat/*`
+👉 NEVER merge directly → convert to `feature/*`
 
 ---
 
@@ -136,7 +136,7 @@ This is where your version becomes **elite-level**.
 
 ---
 
-## 🧪 Layer 1: `feat → dev` PR Pipeline
+## 🧪 Layer 1: `feature → dev` PR Pipeline
 
 👉 Goal: Fast feedback (< 10 mins)
 
@@ -249,7 +249,7 @@ Promote ONLY if:
 
 | Branch  | Tests             |
 | ------- | ----------------- |
-| feat PR | smoke + critical  |
+| feature PR | smoke + critical  |
 | dev     | regression subset |
 | main    | full regression   |
 | nightly | full + flaky      |
@@ -316,7 +316,7 @@ def base_url(pytestconfig):
 
 | Branch | Environment |
 | ------ | ----------- |
-| feat   | QA          |
+| feature   | QA          |
 | dev    | Staging     |
 | main   | Prod / RC   |
 
@@ -356,7 +356,7 @@ def base_url(pytestconfig):
 👉 Enforce:
 
 ```bash
-feat: add login tests
+feature: add login tests
 fix: resolve flaky checkout
 chore: update config
 ```
@@ -414,7 +414,7 @@ chore: update config
 * 🏆 Enterprise-ready
 
 ---
----
+
 ---
 
-
+---
