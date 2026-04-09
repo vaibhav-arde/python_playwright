@@ -6,7 +6,7 @@
 from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
-from utils.message import Message
+from utils import messages
 
 
 class RegistrationPage(BasePage):
@@ -38,8 +38,8 @@ class RegistrationPage(BasePage):
         self.err_email = page.locator("#input-email + .text-danger")
         self.err_telephone = page.locator("#input-telephone + .text-danger")
         self.err_password = page.locator("#input-password + .text-danger")
-        self.password_mismatch_error = page.get_by_text(Message.password_not_match_error)
-        self.err_email_already_exist = page.get_by_text(Message.email_already_exist_error)
+        self.password_mismatch_error = page.get_by_text(messages.WARN_PASSWORD_MISMATCH)
+        self.err_email_already_exist = page.get_by_text(messages.WARN_EMAIL_ALREADY_EXISTS)
 
         # ===== Warning / Validation Message Locators =====
         self.warn_privacy_policy = page.locator(".alert-danger")
@@ -125,14 +125,14 @@ class RegistrationPage(BasePage):
     def error_msg_visible(self):
         """check the error message visible or not for empty fields on click continue."""
 
-        expect(self.err_privacy_policy).to_have_text(Message.privacy_policy_error)
+        expect(self.err_privacy_policy).to_have_text(messages.WARN_PRIVACY_POLICY)
 
-        expect(self.err_firstname).to_have_text(Message.firstname_error)
+        expect(self.err_firstname).to_have_text(messages.WARN_FIRST_NAME)
 
-        expect(self.err_lastname).to_have_text(Message.lastname_error)
+        expect(self.err_lastname).to_have_text(messages.WARN_LAST_NAME)
 
-        expect(self.err_email).to_have_text(Message.email_error)
+        expect(self.err_email).to_have_text(messages.WARN_EMAIL)
 
-        expect(self.err_telephone).to_have_text(Message.telephone_error)
+        expect(self.err_telephone).to_have_text(messages.WARN_TELEPHONE)
 
-        expect(self.err_password).to_have_text(Message.password_error)
+        expect(self.err_password).to_have_text(messages.WARN_PASSWORD)

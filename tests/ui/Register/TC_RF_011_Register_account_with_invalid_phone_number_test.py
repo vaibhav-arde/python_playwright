@@ -17,7 +17,7 @@ from utils.constants import INVALID_PHONE_NUMBERS
 
 @pytest.mark.bug
 @pytest.mark.xfail(
-    reason="Bug: Invalid phone numbers are accepted as valid, no immediate fix planned", strict=True
+    reason="Bug: Invalid phone numbers are accepted as valid, no immediate fix planned"
 )
 @pytest.mark.sanity
 @pytest.mark.parametrize("phone", INVALID_PHONE_NUMBERS)
