@@ -18,7 +18,7 @@ class HomePage(BasePage):
         self.lnk_my_account = page.locator('span:has-text("My Account")')
         self.lnk_register = page.locator('a:has-text("Register")')
         self.lnk_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
-        self.txt_search_box = page.locator('input[placeholder="Search"]')
+        self.txt_search_box = page.get_by_role("textbox", name="Search")
         self.btn_search = page.locator('#search button[type="button"]')
 
     # ===== Action Methods =====

@@ -16,14 +16,21 @@ class SearchResultsPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.search_page_header = page.locator("#content h1", has_text="Search -")
+        self.search_page_header = page.locator("#content").get_by_role("heading", level=1)
         self.search_products = page.locator("h4 > a")
+        self.msg_empty_search = page.get_by_text(
+            "There is no product that matches the search criteria."
+        )
 
     # ===== Page Header =====
 
     def get_search_results_page_header(self):
         """Returns the header element of the search results page."""
         return self.search_page_header
+
+    def get_empty_search_message(self):
+        """Returns the locator for the empty search results message."""
+        return self.msg_empty_search
 
     # ===== Product Verification =====
 
@@ -55,3 +62,7 @@ class SearchResultsPage(BasePage):
     def get_product_count(self):
         """Returns all product locators found in search results."""
         return self.search_products
+
+    def get_products_by_search_term(self, search_term: str):
+        """Returns a locator of products filtered by the given search term text."""
+        return self.search_products.filter(has_text=search_term)

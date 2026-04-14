@@ -35,5 +35,7 @@ class Config:
 
     # Product test data
     product_name = "MacBook"
+    invalid_product_name = "Fitbit"
     product_quantity = "2"
     total_price = "$1,204.00"
+    multiple_products_search_term = "Mac"
