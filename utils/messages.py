@@ -13,6 +13,9 @@ WARN_PRIVACY_POLICY = "Warning: You must agree to the Privacy Policy!"
 WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
 WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
 
+# ===== Product Comparison =====
+COMPARE_SUCCESS = "Success: You have added {product_name} to your product comparison!"
+
 # ===== Login Field error message =====
 WARN_LOGIN_ERROR = "Warning: No match for E-Mail Address and/or Password."
 

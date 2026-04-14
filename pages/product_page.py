@@ -22,6 +22,10 @@ class ProductPage(BasePage):
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 
+        self.btn_compare = page.locator("#content").get_by_role("button", name="\uf0ec").first
+        # Link inside the success alert navigating to the product comparison page.
+        self.lnk_product_comparison = self.cnf_msg.get_by_role("link", name="product comparison")
+
     # ===== Quantity Methods =====
 
     def set_quantity(self, qty: str):
@@ -59,3 +63,26 @@ class ProductPage(BasePage):
         self.set_quantity(quantity)
         self.add_to_cart()
         expect(self.get_confirmation_message()).to_be_visible()
+
+    # ===== Compare This Product Methods =====
+
+    def get_compare_button_tooltip(self) -> str | None:
+        """Return the tooltip text of the 'Compare this Product' button (data-original-title)."""
+        return self.get_attribute(self.btn_compare, "data-original-title")
+
+    def hover_compare_button(self):
+        """Hover over the 'Compare this Product' button."""
+        self.hover(self.btn_compare)
+
+    def click_compare_button(self):
+        """Click the 'Compare this Product' button."""
+        self.click(self.btn_compare)
+
+    def get_compare_success_message(self) -> str:
+        """Return the text of the success alert shown after adding a product for comparison."""
+        self.wait_for(self.cnf_msg, state="visible", timeout=10000)
+        return self.get_text(self.cnf_msg)
+
+    def click_product_comparison_link(self):
+        """Click the 'product comparison' link from the comparison success message."""
+        self.click(self.lnk_product_comparison)

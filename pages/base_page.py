@@ -69,7 +69,23 @@ class BasePage:
 
     def get_text(self, locator: str | Locator) -> str:
         """Get the inner text of an element."""
-        return self.get_locator(locator).inner_text()
+        target = self.get_locator(locator)
+        text = target.inner_text()
+        logger.info(f"Got text from {target}: '{text}'")
+        return text
+
+    def hover(self, locator: str | Locator):
+        """Hover over an element."""
+        target = self.get_locator(locator)
+        target.hover()
+        logger.info(f"Hovered over: {target}")
+
+    def get_attribute(self, locator: str | Locator, name: str) -> str | None:
+        """Get the value of an attribute for an element."""
+        target = self.get_locator(locator)
+        value = target.get_attribute(name)
+        logger.info(f"Got attribute '{name}' from {target}: '{value}'")
+        return value
 
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
