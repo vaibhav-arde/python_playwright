@@ -89,3 +89,6 @@ class TestData:
     # Test Data
     VALID_PASSWORD = "Test@123"
     INVALID_PASSWORD = "123"
+
+    PRODUCT_NAME_IMAC = "iMac"
+    
