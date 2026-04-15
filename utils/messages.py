@@ -29,3 +29,16 @@ SUCCESS_PASSWORD_UPDATED = "Success: Your password has been successfully updated
 INVALID_LOGIN_MSG = WARN_LOGIN_ERROR
 PRIVACY_POLICY_WARNING_MSG = WARN_PRIVACY_POLICY
 SUCCESS_REGISTER_MSG = ACCOUNT_CREATED
+
+# ===== Product Display Page / Cart Messages =====
+SUCCESS_ALERT_KEYWORD = "Success"
+WARNING_ALERT_KEYWORD = "Warning"
+INVALID_QTY_ALERT_EXPECTATION = "Expected success or warning alert for invalid quantity input"
+AVAILABILITY_STATUS_EMPTY = "Availability status should not be empty"
+AVAILABILITY_STATUS_UNEXPECTED = "Unexpected availability status: '{status}'"
+SEARCH_RESULT_PRODUCT_NOT_FOUND = "No product found in search results for '{keyword}'"
+SEARCH_RESULT_PRODUCT_NAME_EMPTY = "Product Name in search results should not be empty"
+PDP_PRODUCT_NAME_MISMATCH = "Expected Product Name '{expected}', but got '{actual}'"
+PDP_PRODUCT_BRAND_EMPTY = "Product Brand should not be empty"
+PDP_PRODUCT_CODE_EMPTY = "Product Code should not be empty"
+THUMBNAIL_SRC_SHOULD_CHANGE_ON_NEXT = "Lightbox image source should change after clicking next"
