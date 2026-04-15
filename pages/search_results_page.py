@@ -22,6 +22,7 @@ class SearchResultsPage(BasePage):
             "There is no product that matches the search criteria."
         )
         self.txt_search_criteria = page.locator("#input-search")
+        self.btn_search_criteria = page.get_by_role("button", name="Search")
 
     # ===== Page Header =====
 
@@ -36,6 +37,16 @@ class SearchResultsPage(BasePage):
     def get_empty_search_message(self):
         """Returns the locator for the empty search results message."""
         return self.msg_empty_search
+
+    # ===== Actions =====
+
+    def enter_search_criteria(self, criteria: str):
+        """Enter text into the Search Criteria text box."""
+        self.fill(self.txt_search_criteria, criteria)
+
+    def click_search_criteria_button(self):
+        """Click the Search button next to the Search Criteria text box."""
+        self.click(self.btn_search_criteria)
 
     # ===== Product Verification =====
 
