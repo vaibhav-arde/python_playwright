@@ -34,5 +34,5 @@ htmlcov/
 .ruff_cache/
 
 # Session Storage
-test_data/auth_state.json
-test_data/user_data.json
+session_storage/auth_state.json
+session_storage/auth_user.json

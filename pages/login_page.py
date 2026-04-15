@@ -6,6 +6,7 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+from utils import messages
 
 
 class LoginPage(BasePage):
@@ -18,8 +19,8 @@ class LoginPage(BasePage):
         self.txt_email_address = page.locator("#input-email")
         self.txt_password = page.locator("#input-password")
         self.btn_login = page.locator('input[value="Login"]')
-        self.txt_error_message = page.locator(".alert.alert-danger.alert-dismissible")
-
+        self.txt_error_message = page.get_by_text(messages.WARN_LOGIN_ERROR)
+    
     # ===== Action Methods =====
 
     def set_email(self, email: str):
