@@ -27,9 +27,6 @@ def test_validate_add_to_cart_functionality(page: Page):
     # Step 5: Validate Success Message
     # ER: Success message should be displayed for adding the product to cart
 
-    # success_msg = product_page.get_confirmation_message()
-    # expect(success_msg).to_be_visible()
-
     success_msg = product_page.get_confirmation_message()
 
     expect(success_msg).to_be_visible(timeout=5000)
