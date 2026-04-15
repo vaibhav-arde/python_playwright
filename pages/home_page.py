@@ -46,3 +46,7 @@ class HomePage(BasePage):
     def click_search(self):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
+
+    def get_search_box(self):
+        """Returns the search input field on home page"""
+        return self.txt_search_box

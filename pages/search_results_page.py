@@ -21,12 +21,17 @@ class SearchResultsPage(BasePage):
         self.msg_empty_search = page.get_by_text(
             "There is no product that matches the search criteria."
         )
+        self.txt_search_criteria = page.locator("#input-search")
 
     # ===== Page Header =====
 
     def get_search_results_page_header(self):
         """Returns the header element of the search results page."""
         return self.search_page_header
+
+    def get_search_criteria_textbox(self):
+        """Returns the search criteria text box locator on the search results page."""
+        return self.txt_search_criteria
 
     def get_empty_search_message(self):
         """Returns the locator for the empty search results message."""
