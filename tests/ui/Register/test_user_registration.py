@@ -150,6 +150,6 @@ def test_account_validation_with_invalid_email(page, invalid_email, expected_msg
     registration_page.click_continue()
 
     validation_msg = registration_page.get_email_validation_message()
-    assert expected_msg in validation_msg, (
-        f"Expected '{expected_msg}' in validation message, got: '{validation_msg}'"
-    )
+    assert (
+        expected_msg in validation_msg
+    ), f"Expected '{expected_msg}' in validation message, got: '{validation_msg}'"
