@@ -7,6 +7,7 @@ from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
+from utils.constants import UITimeouts
 
 
 class ProductPage(BasePage):
@@ -19,6 +20,8 @@ class ProductPage(BasePage):
         self.txt_quantity = page.locator('input[name="quantity"]')
         self.btn_add_to_cart = page.locator("#button-cart")
         self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
+        self.warning_msg = page.locator("div.alert.alert-danger.alert-dismissible, div.alert.alert-danger")
+        self.any_alert_msg = page.locator("div.alert")
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 
@@ -59,6 +62,14 @@ class ProductPage(BasePage):
     def get_confirmation_message(self):
         """Return the confirmation message element shown after adding to cart."""
         return self.cnf_msg
+
+    def get_warning_message(self):
+        """Return the warning message element shown after add-to-cart validation."""
+        return self.warning_msg
+
+    def wait_for_cart_feedback(self, timeout: int = UITimeouts.CART_ALERT_WAIT_MS):
+        """Wait until any cart feedback alert (success/warning) is displayed."""
+        self.any_alert_msg.first.wait_for(state="visible", timeout=timeout)
 
     # ===== Navigate to Shopping Cart =====
 

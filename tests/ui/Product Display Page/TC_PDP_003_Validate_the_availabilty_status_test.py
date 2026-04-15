@@ -4,7 +4,8 @@ from playwright.sync_api import expect, Page
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
-from utils.constants import TestData
+from utils.constants import TestData, UIAvailability
+from utils import messages
 
 # Removed local PRODUCT_NAME in favor of centralized TestData.PRODUCT_NAME_IMAC
 
@@ -37,13 +38,8 @@ def test_validate_the_availability_status(page: Page):
     expect(product_page.lbl_product_availability).to_be_visible()
     actual_availability = product_page.get_product_availability()
     
-    # Check that availability is populated (e.g. 'In Stock', 'Out Of Stock', 'Pre-Order')
-    assert actual_availability != "", "Availability status should not be empty"
-    
-    # We can perform a soft check against commonly known expected statuses 
-    # without hardcoding it to exactly one, since stock might vary.
-    valid_statuses = ["In Stock", "Out Of Stock", "Pre-Order", "2-3 Days"]
-    
-    # Normalizing string for comparison to avoid case-sensitivity issues
-    assert actual_availability in valid_statuses or len(actual_availability) > 2, \
-        f"Unexpected availability status format: '{actual_availability}'"
+    # Check that availability is populated and follows supported status values.
+    assert actual_availability != "", messages.AVAILABILITY_STATUS_EMPTY
+    assert actual_availability in UIAvailability.VALID_PRODUCT_STATUSES, (
+        messages.AVAILABILITY_STATUS_UNEXPECTED.format(status=actual_availability)
+    )

@@ -85,10 +85,28 @@ class UILabels:
 class UITitles:
     REGISTER_PAGE_TITLE = "Register Account"
 
+
+class UITimeouts:
+    CART_ALERT_WAIT_MS = 5000
+
+
+class UIAvailability:
+    VALID_PRODUCT_STATUSES = ["In Stock", "Out Of Stock", "Pre-Order", "2-3 Days"]
+
+
+class UIIndexes:
+    FIRST_ADDITIONAL_THUMBNAIL = 0
+
+
+class UIAttributes:
+    IMAGE_SOURCE = "src"
+
+
 class TestData:
     # Test Data
     VALID_PASSWORD = "Test@123"
     INVALID_PASSWORD = "123"
 
     PRODUCT_NAME_IMAC = "iMac"
+    INVALID_PRODUCT_QUANTITY = "0"
     

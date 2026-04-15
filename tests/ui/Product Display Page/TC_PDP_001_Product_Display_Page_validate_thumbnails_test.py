@@ -4,7 +4,8 @@ from playwright.sync_api import expect, Page
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
-from utils.constants import TestData
+from utils.constants import TestData, UIIndexes, UIAttributes
+from utils import messages
 
 # Removed local PRODUCT_NAME in favor of centralized TestData.PRODUCT_NAME_IMAC
 
@@ -35,13 +36,14 @@ def test_product_display_page_validate_thumbnails(page: Page):
     expect(lightbox).to_be_visible()
     
     # Store initial image src to assert navigation works
-    initial_image_src = product_page.get_lightbox_image().get_attribute("src")
+    initial_image_src = product_page.get_element_attribute(product_page.get_lightbox_image(), UIAttributes.IMAGE_SOURCE)
 
     # Step 5: Click on '<' and '>' options
     product_page.click_lightbox_next()
     
     # Validate ER-2: User should be able to navigate to other thumbnail images
-    expect(product_page.get_lightbox_image()).not_to_have_attribute("src", initial_image_src or "")
+    next_image_src = product_page.get_element_attribute(product_page.get_lightbox_image(), UIAttributes.IMAGE_SOURCE)
+    assert next_image_src != (initial_image_src or ""), messages.THUMBNAIL_SRC_SHOULD_CHANGE_ON_NEXT
 
     # Click prev to ensure dual navigation works
     product_page.click_lightbox_prev()
@@ -56,7 +58,7 @@ def test_product_display_page_validate_thumbnails(page: Page):
     additional_thumbnails_count = product_page.get_additional_thumbnails_count()
     if additional_thumbnails_count > 0:
         # Click the first normal-sized additional thumbnail
-        product_page.click_additional_thumbnail(0)
+        product_page.click_additional_thumbnail(UIIndexes.FIRST_ADDITIONAL_THUMBNAIL)
         
         # Validate ER-4: Light box view should be displayed again
         expect(lightbox).to_be_visible()
