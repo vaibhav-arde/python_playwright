@@ -7,7 +7,6 @@ from pages.product_page import ProductPage
 from utils.constants import TestData
 from utils import messages
 
-# Removed local PRODUCT_NAME in favor of centralized TestData.PRODUCT_NAME_IMAC
 
 def test_validate_name_brand_product_code_displayed(page: Page):
     """
