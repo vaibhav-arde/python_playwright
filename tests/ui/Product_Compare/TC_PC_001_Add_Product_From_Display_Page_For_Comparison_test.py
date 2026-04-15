@@ -6,6 +6,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.product_comparison_page import ProductComparisonPage
 from pages.search_results_page import SearchResultsPage
+from utils.constants import UIRoutes
 from utils.messages import COMPARE_SUCCESS
 from utils.data_loader import read_json_data
 
@@ -25,7 +26,7 @@ def test_product_comparison(page, product_name, expected_tooltip):
     home_page.click_search()
 
     # Verify search results page is displayed
-    expect(search_results_page.get_search_results_page_header()).to_be_visible(timeout=8000)
+    expect(search_results_page.get_search_results_page_header()).to_be_visible()
 
     # ===== Step 3: Click on the product from search results =====
     product_page = search_results_page.select_product(product_name)
@@ -59,12 +60,11 @@ def test_product_comparison(page, product_name, expected_tooltip):
 
     # Assert the URL contains the comparison route
     expect(page).to_have_url(
-        re.compile(r"route=product/compare"),
-        timeout=8000,
+        re.compile(re.escape(UIRoutes.COMPARISON)),
     )
 
     # Assert the page heading is 'Product Comparison'
-    expect(comparison_page.get_page_heading()).to_be_visible(timeout=8000)
+    expect(comparison_page.get_page_heading()).to_be_visible()
 
     # Assert the added product is displayed in the comparison table
-    expect(comparison_page.get_product_name_in_table(product_name)).to_be_visible(timeout=8000)
+    expect(comparison_page.get_product_name_in_table(product_name)).to_be_visible()

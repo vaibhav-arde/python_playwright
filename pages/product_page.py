@@ -80,7 +80,7 @@ class ProductPage(BasePage):
 
     def get_compare_success_message(self) -> str:
         """Return the text of the success alert shown after adding a product for comparison."""
-        self.wait_for(self.cnf_msg, state="visible", timeout=10000)
+        self.wait_for(self.cnf_msg, state="visible")
         return self.get_text(self.cnf_msg)
 
     def click_product_comparison_link(self):
