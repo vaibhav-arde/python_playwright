@@ -1,13 +1,13 @@
-""" TC_HP_001 (TS_011 - Home Page)
- Validate navigating to Home Page from 'Shopping Cart' page
-  Steps:
-   1. Open the Application URL
-   2. Enter any existing Product name into the Search text box field
-   3. Click on Search button
-   4. Click on 'Add to Cart' button
-   5. Click on 'shopping cart!' link in success message
-   6. Click on 'Continue Shopping' button
-   Expected Result: User should be taken to Home page """
+"""TC_HP_001 (TS_011 - Home Page)
+Validate navigating to Home Page from 'Shopping Cart' page
+ Steps:
+  1. Open the Application URL
+  2. Enter any existing Product name into the Search text box field
+  3. Click on Search button
+  4. Click on 'Add to Cart' button
+  5. Click on 'shopping cart!' link in success message
+  6. Click on 'Continue Shopping' button
+  Expected Result: User should be taken to Home page"""
 
 import pytest
 from playwright.sync_api import expect

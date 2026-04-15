@@ -32,7 +32,7 @@ class HomePage(BasePage):
         )
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
-        self.img_logo = page.locator("#logo a")   # ✅ Added logo locator
+        self.img_logo = page.locator("#logo a")  # ✅ Added logo locator
 
         # ===== Featured Section Locators =====
         self.featured_products_section = page.locator(

@@ -134,6 +134,7 @@ class BasePage:
     def click_logo(self):
         """Click on the site logo and navigate to Home Page."""
         from pages.home_page import HomePage
+
         self.click(self.img_logo)
         logger.info("Clicked on Logo (Your Store)")
         return HomePage(self.page)
