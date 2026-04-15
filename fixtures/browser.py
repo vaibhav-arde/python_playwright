@@ -25,12 +25,22 @@ def pytest_runtest_makereport(item, call):
 
 
 @pytest.fixture(scope="function", autouse=True)
-def navigate_to_base_url(request, page):
+def navigate_to_base_url(request):
     """
     Auto-navigate the page to the base URL before each test.
     pytest-playwright's page fixture starts at about:blank,
     so this ensures all tests begin at the configured base URL.
+
+    Skipped when the test uses the authenticated_page fixture,
+    which already loads the page with auth state and navigates.
     """
+    # Skip if the test uses authenticated_page (it handles its own navigation)
+    if "authenticated_page" in request.fixturenames:
+        logger.info("Test uses authenticated_page — skipping auto-navigation")
+        yield
+        return
+
+    page = request.getfixturevalue("page")
     base_url = request.config.getoption("--base-url", default=None)
     if base_url:
         logger.info(f"Navigating to base URL: {base_url}")
