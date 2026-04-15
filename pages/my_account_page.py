@@ -25,11 +25,17 @@ class MyAccountPage(BasePage):
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.lnk_edit_account = page.locator('a:has-text("Edit your account information")')
-
         self.lnk_subscribe_unsubscribe_to_newsletter = page.locator("#column-right").get_by_role(
             "link", name="Newsletter"
         )
         self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
+
+        # Add My Account dropdown locator
+        self.lnk_my_account = page.locator('span:has-text("My Account")')
+        
+        #Add Link logout sidebar
+        self.lnk_logout_sidebar = page.locator("#column-right").get_by_role("link", name="Logout")
+        
 
     # ===== Page Validation Methods =====
 
@@ -64,3 +70,13 @@ class MyAccountPage(BasePage):
         """Click on 'Edit your account information' and return EditAccountPage instance."""
         self.click(self.lnk_edit_account)
         return EditAccountPage(self.page)
+
+    # Click my account dropdown in logout page
+    def click_my_account_dropdown(self):
+        """Click on the 'My Account' link."""
+        self.click(self.lnk_my_account)
+
+    # Click logout right side in my account page
+    def click_logout_sidebar(self):
+        """Click on the 'Logout' link."""
+        self.click(self.lnk_logout_sidebar)

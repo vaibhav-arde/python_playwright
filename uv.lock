@@ -721,6 +721,7 @@ dependencies = [
     { name = "pytest-playwright" },
     { name = "pytest-rerunfailures" },
     { name = "pytest-xdist" },
+    { name = "python-slugify" },
 ]
 
 [package.dev-dependencies]
@@ -743,6 +744,7 @@ requires-dist = [
     { name = "pytest-playwright", specifier = ">=0.7.2" },
     { name = "pytest-rerunfailures", specifier = ">=14.0" },
     { name = "pytest-xdist", specifier = ">=3.5.0" },
+    { name = "python-slugify", specifier = ">=8.0.4" },
 ]
 
 [package.metadata.requires-dev]

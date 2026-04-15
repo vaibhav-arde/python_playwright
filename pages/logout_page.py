@@ -14,7 +14,11 @@ class LogoutPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
+        #Add logout page heading locator
+        self.logout_heading = page.get_by_role("heading", name="Account Logout")
+
         self.btn_continue = page.locator(".btn.btn-primary")
+        self.btn_logout = page.locator("ul.dropdown-menu").get_by_role("link", name="Logout")
 
     # ===== Action Methods =====
 
