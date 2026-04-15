@@ -7,6 +7,7 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.checkout_page import CheckoutPage
+from pages.home_page import HomePage
 
 
 class ShoppingCartPage(BasePage):
@@ -33,7 +34,6 @@ class ShoppingCartPage(BasePage):
 
     def click_continue_shopping(self):
         """Click 'Continue Shopping' button and navigate back to Home Page."""
-        from pages.home_page import HomePage
         self.click(self.btn_continue_shopping)
         return HomePage(self.page)
 

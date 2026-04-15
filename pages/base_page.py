@@ -18,7 +18,11 @@ class BasePage:
     def __init__(self, page: Page):
         """Initialize with a Playwright Page instance."""
         self.page = page
+
         self.lnk_site_map = page.get_by_role("link", name="Site Map")
+
+        # ✅ Common Locator (Header Component)
+        self.img_logo = page.locator("#logo a")
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
@@ -131,3 +135,11 @@ class BasePage:
     def click_site_map(self):
         """Click on the 'Site Map' link in the footer."""
         self.click(self.lnk_site_map)
+
+    # ✅ NEW METHOD (Logo Navigation)
+    def click_logo(self):
+        """Click on the site logo and navigate to Home Page."""
+        from pages.home_page import HomePage
+        self.click(self.img_logo)
+        logger.info("Clicked on Logo (Your Store)")
+        return HomePage(self.page)
