@@ -7,7 +7,6 @@ from pages.product_page import ProductPage
 from utils.constants import TestData, UIAvailability
 from utils import messages
 
-# Removed local PRODUCT_NAME in favor of centralized TestData.PRODUCT_NAME_IMAC
 
 def test_validate_the_availability_status(page: Page):
     """

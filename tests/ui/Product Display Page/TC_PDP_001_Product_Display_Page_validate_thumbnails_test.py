@@ -7,7 +7,6 @@ from pages.product_page import ProductPage
 from utils.constants import TestData, UIIndexes, UIAttributes
 from utils import messages
 
-# Removed local PRODUCT_NAME in favor of centralized TestData.PRODUCT_NAME_IMAC
 
 def test_product_display_page_validate_thumbnails(page: Page):
     """
