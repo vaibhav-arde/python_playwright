@@ -19,6 +19,9 @@ class BasePage:
         """Initialize with a Playwright Page instance."""
         self.page = page
 
+        # ✅ Common Locator (Header Component)
+        self.img_logo = page.locator("#logo a")
+
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
         if isinstance(locator, str):
@@ -126,3 +129,11 @@ class BasePage:
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""
         return self.page.locator(f"#{field_id} + .text-danger")
+
+    # ✅ NEW METHOD (Logo Navigation)
+    def click_logo(self):
+        """Click on the site logo and navigate to Home Page."""
+        from pages.home_page import HomePage
+        self.click(self.img_logo)
+        logger.info("Clicked on Logo (Your Store)")
+        return HomePage(self.page)

@@ -7,6 +7,8 @@ import re
 
 from playwright.sync_api import Page
 from pages.base_page import BasePage
+from pages.search_results_page import SearchResultsPage
+
 
 class HomePage(BasePage):
     """Page Object Model class for the Home page."""
@@ -30,11 +32,7 @@ class HomePage(BasePage):
         )
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
-        self.lnk_logout = page.locator('a:has-text("Logout")')
-        self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
-        self.lnk_desktops = page.get_by_role("link", name="Desktops")
-        self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
-        self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
+        self.img_logo = page.locator("#logo a")   # ✅ Added logo locator
 
         # ===== Featured Section Locators =====
         self.featured_products_section = page.locator(
@@ -52,14 +50,17 @@ class HomePage(BasePage):
         )
 
     # ===== Action Methods =====
-    
+
     def click_my_account(self):
+        """Click on the 'My Account' link."""
         self.click(self.lnk_my_account)
 
     def click_register(self):
+        """Click on the 'Register' link under My Account."""
         self.click(self.lnk_register)
 
     def click_login(self):
+        """Click on the 'Login' link under My Account."""
         self.click(self.lnk_login)
         return LoginPage(self.page)
 
@@ -80,10 +81,11 @@ class HomePage(BasePage):
         self.click(self.lnk_show_all_desktops)
 
     def enter_product_name(self, product_name: str):
+        """Enter the product name into the search input box."""
         self.fill(self.txt_search_box, product_name)
 
     def click_search(self):
-        from pages.search_results_page import SearchResultsPage
+        """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
 
     def click_contact_us(self):
@@ -128,3 +130,9 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+        return SearchResultsPage(self.page)
+
+    def click_logo(self):
+        """Clicks on the site logo and returns HomePage"""
+        self.click(self.img_logo)
+        return HomePage(self.page)

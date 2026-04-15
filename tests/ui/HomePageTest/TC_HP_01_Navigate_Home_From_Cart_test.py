@@ -12,7 +12,7 @@
 import pytest
 from playwright.sync_api import expect
 from pages.home_page import HomePage
-from utils.config import BASE_URL, ENV, Config
+from utils.config import Config
 from utils.constants import expected_title
 
 
@@ -23,8 +23,6 @@ def test_navigate_home_from_cart(page):
     navigates the user back to the Home Page."""
 
     product_name = Config.product_name
-
-    # Step 1: Application URL is opened via navigate_to_base_url fixture
 
     # Step 2 & 3: Search for a product
     home_page = HomePage(page)
