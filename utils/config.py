@@ -41,6 +41,4 @@ class Config:
     product_quantity = "2"
     total_price = "$1,204.00"
 
-    # Inactive credentials (for negative tests)
-    inactive_email = "[EMAIL_ADDRESS]"
-    inactive_password = "[PASSWORD]"
+    

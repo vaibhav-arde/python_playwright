@@ -19,6 +19,7 @@ class ProductPage(BasePage):
         self.txt_quantity = page.locator('input[name="quantity"]')
         self.btn_add_to_cart = page.locator("#button-cart")
         self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
+        self.lnk_shopping_cart_success_msg = page.locator("div.alert-success a", has_text="shopping cart")
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 
@@ -65,6 +66,15 @@ class ProductPage(BasePage):
     def get_confirmation_message(self):
         """Return the confirmation message element shown after adding to cart."""
         return self.cnf_msg
+
+    def click_shopping_cart_in_success_message(self) -> ShoppingCartPage:
+        """Click the 'shopping cart' link within the success message and return ShoppingCartPage."""
+        # Wait for the success alert container first
+        self.cnf_msg.wait_for(state="visible", timeout=15000)
+        # Click the 'shopping cart' link within the alert
+        target_link = self.cnf_msg.get_by_role("link", name="shopping cart")
+        target_link.click()
+        return ShoppingCartPage(self.page)
 
     # ===== Navigate to Shopping Cart =====
 

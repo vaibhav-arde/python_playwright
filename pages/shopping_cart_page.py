@@ -18,6 +18,7 @@ class ShoppingCartPage(BasePage):
         # ===== Locators =====
         self.lbl_total_price = page.locator("//*[@id='cart']/ul/li[2]/div/table/tbody/tr[4]/td[2]")
         self.btn_checkout = page.locator("a.btn.btn-primary")
+        self.btn_continue_shopping = page.locator("a.btn.btn-default", has_text="Continue Shopping")
 
     # ===== Methods =====
 
@@ -29,6 +30,12 @@ class ShoppingCartPage(BasePage):
         """Click on the Checkout button and navigate to CheckoutPage."""
         self.click(self.btn_checkout)
         return CheckoutPage(self.page)
+
+    def click_continue_shopping(self):
+        """Click 'Continue Shopping' button and navigate back to Home Page."""
+        from pages.home_page import HomePage
+        self.click(self.btn_continue_shopping)
+        return HomePage(self.page)
 
     def is_page_loaded(self):
         """Verify if the Shopping Cart page is loaded."""
