@@ -39,3 +39,7 @@ class Config:
     product_quantity = "2"
     total_price = "$1,204.00"
     multiple_products_search_term = "Mac"
+
+
+class ProductData:
+    IMAC = {"description_term": "iLife", "expected_product": "iMac"}

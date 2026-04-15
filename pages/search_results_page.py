@@ -23,6 +23,7 @@ class SearchResultsPage(BasePage):
         )
         self.txt_search_criteria = page.locator("#input-search")
         self.btn_search_criteria = page.get_by_role("button", name="Search")
+        self.chk_search_in_descriptions = page.get_by_label("Search in product descriptions")
 
     # ===== Page Header =====
 
@@ -43,6 +44,10 @@ class SearchResultsPage(BasePage):
     def enter_search_criteria(self, criteria: str):
         """Enter text into the Search Criteria text box."""
         self.fill(self.txt_search_criteria, criteria)
+
+    def select_search_in_product_descriptions(self):
+        """Select the 'Search in product descriptions' checkbox."""
+        self.check(self.chk_search_in_descriptions)
 
     def click_search_criteria_button(self):
         """Click the Search button next to the Search Criteria text box."""
