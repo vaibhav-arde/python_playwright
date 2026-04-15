@@ -6,10 +6,7 @@
 import re
 
 from playwright.sync_api import Page
-
 from pages.base_page import BasePage
-from pages.login_page import LoginPage
-
 
 class HomePage(BasePage):
     """Page Object Model class for the Home page."""
@@ -55,21 +52,14 @@ class HomePage(BasePage):
         )
 
     # ===== Action Methods =====
-
-    def get_home_page_title(self) -> str:
-        """Return the title of the Home Page."""
-        return self.get_title()
-
+    
     def click_my_account(self):
-        """Click on the 'My Account' link."""
         self.click(self.lnk_my_account)
 
     def click_register(self):
-        """Click on the 'Register' link under My Account."""
         self.click(self.lnk_register)
 
     def click_login(self):
-        """Click on the 'Login' link under My Account."""
         self.click(self.lnk_login)
         return LoginPage(self.page)
 
@@ -90,11 +80,10 @@ class HomePage(BasePage):
         self.click(self.lnk_show_all_desktops)
 
     def enter_product_name(self, product_name: str):
-        """Enter the product name into the search input box."""
         self.fill(self.txt_search_box, product_name)
 
     def click_search(self):
-        """Click on the search button to initiate the product search."""
+        from pages.search_results_page import SearchResultsPage
         self.click(self.btn_search)
 
     def click_contact_us(self):
