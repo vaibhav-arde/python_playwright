@@ -16,28 +16,28 @@ class RegistrationPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.txt_firstname = page.locator("#input-firstname")
-        self.txt_lastname = page.locator("#input-lastname")
-        self.txt_email = page.locator("#input-email")
-        self.txt_telephone = page.locator("#input-telephone")
-        self.txt_password = page.locator("#input-password")
-        self.txt_confirm_password = page.locator("#input-confirm")
+        self.txt_firstname = page.get_by_label("First Name")
+        self.txt_lastname = page.get_by_label("Last Name")
+        self.txt_email = page.get_by_label("E-Mail")
+        self.txt_telephone = page.get_by_label("Telephone")
+        self.txt_password = page.get_by_role("textbox", name="* Password", exact=True)
+        self.txt_confirm_password = page.get_by_role("textbox", name="* Password Confirm")
         self.chk_policy = page.locator('input[name="agree"]')
-        self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
-        self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
-        self.btn_continue = page.locator(".btn-primary")
-        self.msg_telephone_error = page.locator(
-            "div.form-group:has(input[name='telephone']) div.text-danger"
+        self.radio_newsletter_yes = page.get_by_label("Yes")
+        self.radio_newsletter_no = page.get_by_label("No")
+        self.msg_confirmation = page.get_by_role("heading", name="Your Account Has Been Created!")
+        self.btn_continue = page.get_by_role("button", name="Continue")
+        self.msg_telephone_error = (
+            page.get_by_label("Telephone").locator("xpath=..").locator(".text-danger")
         )
 
         # ===== Error Message Locators =====
-        self.err_privacy_policy = page.locator("div.alert-danger")
-        self.err_firstname = page.locator("#input-firstname + .text-danger")
-        self.err_lastname = page.locator("#input-lastname + .text-danger")
-        self.err_email = page.locator("#input-email + .text-danger")
-        self.err_telephone = page.locator("#input-telephone + .text-danger")
-        self.err_password = page.locator("#input-password + .text-danger")
+        self.err_privacy_policy = page.locator(".alert-danger")
+        self.err_firstname = self.get_warning("First Name")
+        self.err_lastname = self.get_warning("Last Name")
+        self.err_email = self.get_warning("E-Mail")
+        self.err_telephone = self.get_warning("Telephone")
+        self.err_password = self.get_warning("Password")
         self.password_mismatch_error = page.get_by_text(messages.WARN_PASSWORD_MISMATCH)
         self.err_email_already_exist = page.get_by_text(messages.WARN_EMAIL_ALREADY_EXISTS)
 

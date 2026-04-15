@@ -16,11 +16,11 @@ class ProductPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.txt_quantity = page.locator('input[name="quantity"]')
-        self.btn_add_to_cart = page.locator("#button-cart")
-        self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
-        self.btn_items = page.locator("#cart")
-        self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
+        self.txt_quantity = page.get_by_label("Quantity")
+        self.btn_add_to_cart = page.get_by_role("button", name="Add to Cart")
+        self.cnf_msg = page.get_by_role("alert")
+        self.btn_items = page.get_by_role("link", name="Cart")
+        self.lnk_view_cart = page.get_by_role("link", name="View Cart")
 
     # ===== Quantity Methods =====
 

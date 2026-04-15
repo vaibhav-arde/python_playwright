@@ -9,3 +9,5 @@
 from fixtures.api import *  # noqa: F401, F403
 from fixtures.auth import *  # noqa: F401, F403
 from fixtures.browser import *  # noqa: F401, F403
+from fixtures.user_setup import *  # noqa: F401, F403
+from fixtures.cart_setup import *  # noqa: F401, F403
