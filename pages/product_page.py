@@ -30,6 +30,11 @@ class ProductPage(BasePage):
         self.lbl_product_brand = page.locator("ul.list-unstyled >> li:has-text('Brand:')")
         self.lbl_product_code = page.locator("ul.list-unstyled >> li:has-text('Product Code:')")
         self.lbl_product_availability = page.locator("ul.list-unstyled >> li:has-text('Availability:')")
+        self.lbl_minimum_quantity_info = page.locator(
+            "#content div.alert.alert-info:has-text('minimum quantity'), #content div:has-text('minimum quantity')"
+        )
+        self.lnk_description_tab = page.locator("a[href='#tab-description'], a:has-text('Description')")
+        self.pnl_description = page.locator("#tab-description")
         
         # ===== Price Locators =====
         self.lbl_product_price = page.locator("#content ul.list-unstyled li h2")
@@ -110,6 +115,24 @@ class ProductPage(BasePage):
         """Return the product availability status."""
         text = self.lbl_product_availability.text_content()
         return text.replace("Availability:", "").strip() if text else ""
+
+    def get_default_quantity_value(self) -> str:
+        """Return quantity textbox current value."""
+        return self.get_element_attribute(self.txt_quantity, "value") or ""
+
+    def get_minimum_quantity_info_text(self) -> str:
+        """Return minimum quantity helper/info text from PDP."""
+        text = self.lbl_minimum_quantity_info.first.text_content()
+        return text.strip() if text else ""
+
+    def click_description_tab(self):
+        """Click Description tab in Product Display Page."""
+        self.click(self.lnk_description_tab.first)
+
+    def get_description_text(self) -> str:
+        """Return product description text from Description tab panel."""
+        text = self.pnl_description.text_content()
+        return text.strip() if text else ""
 
     # ===== Price Methods =====
 
