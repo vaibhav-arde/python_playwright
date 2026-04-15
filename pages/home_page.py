@@ -46,3 +46,9 @@ class HomePage(BasePage):
     def click_search(self):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
+
+    def verify_login_visible_after_logout(self):
+        """Verify the login link is visible under the My Account dropdown after logout."""
+        from playwright.sync_api import expect
+        self.click_my_account()
+        expect(self.lnk_login).to_be_visible()

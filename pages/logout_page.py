@@ -34,3 +34,8 @@ class LogoutPage(BasePage):
         # Click logout link from dropdown
         self.click(self.page.locator("ul.dropdown-menu").get_by_role("link", name="Logout"))
         self.click_continue()
+
+    def verify_logout_page(self):
+        """Verify the logout page is visible."""
+        from playwright.sync_api import expect
+        expect(self.logout_heading).to_be_visible()
