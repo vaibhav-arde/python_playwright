@@ -29,6 +29,7 @@ class SearchResultsPage(BasePage):
         )
         self.product_links = page.locator(".product-layout").get_by_role("link")
         self.lnk_product_compare = page.get_by_role("link", name=re.compile(r"Product Compare"))
+        self.search_products = page.locator("#content h4 > a")
 
     # ===== Page Header =====
 

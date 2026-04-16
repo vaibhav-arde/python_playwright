@@ -35,6 +35,8 @@ class UIRoutes:
 
     HOME = "/"
     LOGIN = "index.php?route=account/login"
+    BASE_URL = "https://tutorialsninja.com/demo/"
+
     REGISTER = "index.php?route=account/register"
     MY_ACCOUNT = "/index.php?route=account/account"
     LOGOUT = "/index.php?route=account/logout"
@@ -43,6 +45,8 @@ class UIRoutes:
     CHECKOUT = "/index.php?route=checkout/checkout"
     COMPARISON = "index.php?route=product/compare"
     CHANGE_PASSWORD = "index.php?route=account/password"
+    INDEX_ENTRY = "index.php"
+
 
 
 class UserDetails:
@@ -114,6 +118,10 @@ class UIAvailability:
     VALID_PRODUCT_STATUSES = ["In Stock", "Out Of Stock", "Pre-Order", "2-3 Days"]
 
 
+class UIPricing:
+    CURRENCY_SYMBOLS = ["$", "\u20ac", "\u00a3"]
+
+
 class UIIndexes:
     FIRST_ADDITIONAL_THUMBNAIL = 0
 
@@ -128,7 +136,13 @@ class TestData:
     INVALID_PASSWORD = "123"
 
     PRODUCT_NAME_IMAC = "iMac"
+    PRODUCT_NAME_MACBOOK = "MacBook"
     PRODUCT_NAME_APPLE_CINEMA_30 = 'Apple Cinema 30"'
+    PRODUCTS_WITH_SPECIFICATION_TAB = [PRODUCT_NAME_APPLE_CINEMA_30, PRODUCT_NAME_MACBOOK]
+    REVIEW_AUTHOR_NAME = "Automation Reviewer"
+    REVIEW_TEXT_VALID = "This is an automation review submitted for test validation."
+    REVIEW_RATING_VALUE = "5"
+    CART_TARGET_QUANTITY = "2"
     INVALID_PRODUCT_QUANTITY = "0"
     MINIMUM_PRODUCT_QUANTITY = "2"
     BELOW_MINIMUM_PRODUCT_QUANTITY = "1"

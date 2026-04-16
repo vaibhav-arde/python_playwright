@@ -19,22 +19,18 @@ class HomePage(BasePage):
 
         # ===== Locators =====
         # This is the dropdown toggle that opens the account menu.
-        self.lnk_my_account = page.locator('#top-links a[title="My Account"]')
-        self.lnk_register = page.locator(
-            "#top-links ul.dropdown-menu.dropdown-menu-right"
-        ).get_by_text("Register", exact=True)
-        self.lnk_login = page.locator(
-            "#top-links ul.dropdown-menu.dropdown-menu-right"
-        ).get_by_text("Login", exact=True)
+        self.lnk_my_account = page.locator("a[title='My Account']")
+        self.lnk_register = page.get_by_role("link", name="Register")
+        self.lnk_login = page.get_by_role("link", name="Login")
+        self.txt_search_box = page.get_by_placeholder("Search")
+        self.btn_search = page.locator("#search").get_by_role("button")
         
         self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
         # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
         self.lnk_show_all_desktops = page.get_by_role(
             "link", name=re.compile(r"Show All\s*Desktops")
         )
-        
-        self.txt_search_box = page.locator('input[placeholder="Search"]')
-        self.btn_search = page.locator('#search button[type="button"]')
+
         self.lnk_logout = page.locator('a:has-text("Logout")')
         self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
