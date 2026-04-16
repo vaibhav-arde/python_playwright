@@ -5,12 +5,17 @@
 # Adds auto-navigation to base_url and screenshot-on-failure hooks.
 
 import logging
+import time
 from pathlib import Path
 
 import allure
 import pytest
+from playwright.sync_api import Error as PlaywrightError
 
 logger = logging.getLogger(__name__)
+DNS_RESOLVE_ERROR = "ERR_NAME_NOT_RESOLVED"
+BASE_NAV_RETRIES = 3
+BASE_NAV_RETRY_DELAY_SEC = 2
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -34,7 +39,28 @@ def navigate_to_base_url(request, page):
     base_url = request.config.getoption("--base-url", default=None)
     if base_url:
         logger.info(f"Navigating to base URL: {base_url}")
-        page.goto(base_url)
+        last_error = None
+        for attempt in range(1, BASE_NAV_RETRIES + 1):
+            try:
+                page.goto(base_url)
+                break
+            except PlaywrightError as exc:
+                last_error = exc
+                error_text = str(exc)
+                is_dns_error = DNS_RESOLVE_ERROR in error_text
+
+                if not is_dns_error or attempt == BASE_NAV_RETRIES:
+                    raise
+
+                logger.warning(
+                    "Base URL navigation failed due to DNS resolution "
+                    f"(attempt {attempt}/{BASE_NAV_RETRIES}). Retrying in "
+                    f"{BASE_NAV_RETRY_DELAY_SEC}s..."
+                )
+                time.sleep(BASE_NAV_RETRY_DELAY_SEC)
+
+        if last_error:
+            logger.info("Recovered from transient base URL navigation error after retry")
 
     yield
 

@@ -53,12 +53,12 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     assert TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text, messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(
         qty=TestData.MINIMUM_PRODUCT_QUANTITY, actual=feedback_text
     )
-    assert "minimum quantity" in feedback_text.lower(), messages.PDP_MIN_QTY_WARNING_MISSING_KEYWORD.format(
+    assert messages.PDP_MIN_QTY_KEYWORD in feedback_text.lower(), messages.PDP_MIN_QTY_WARNING_MISSING_KEYWORD.format(
         actual=feedback_text
     )
 
     shopping_cart_page = ShoppingCartPage(page)
-    app_base_url = page.url.split("index.php")[0]
+    app_base_url = page.url.split(UIRoutes.INDEX_ENTRY)[0]
     shopping_cart_page.open(f"{app_base_url}{UIRoutes.CART.lstrip('/')}")
     expect(page.locator("#content")).to_contain_text(messages.CART_EMPTY_TEXT)
 
@@ -74,5 +74,5 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     assert final_feedback_text != "", messages.PDP_ADD_TO_CART_FEEDBACK_EMPTY
     assert (
         messages.SUCCESS_ALERT_KEYWORD.lower() in final_feedback_text.lower()
-        or "minimum quantity" in final_feedback_text.lower()
+        or messages.PDP_MIN_QTY_KEYWORD in final_feedback_text.lower()
     ), messages.PDP_ADD_TO_CART_FEEDBACK_UNEXPECTED.format(actual=final_feedback_text)

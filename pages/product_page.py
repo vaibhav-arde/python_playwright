@@ -15,34 +15,37 @@ class ProductPage(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
+        self.content = page.locator("#content")
 
     # ===== Locators =====
-        self.txt_quantity = page.locator('input[name="quantity"]')
-        self.btn_add_to_cart = page.locator("#button-cart")
-        self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
-        self.warning_msg = page.locator("div.alert.alert-danger.alert-dismissible, div.alert.alert-danger")
+        self.txt_quantity = self.content.locator('input[name="quantity"]')
+        self.btn_add_to_cart = self.content.get_by_role("button", name="Add to Cart", exact=True)
+        self.cnf_msg = page.locator("div.alert.alert-success, div.alert-success")
+        self.warning_msg = page.locator("div.alert.alert-danger, div.alert-danger")
         self.any_alert_msg = page.locator("div.alert")
-        self.btn_items = page.locator("#cart")
-        self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
+        self.btn_items = page.locator("#cart > button")
+        self.lnk_view_cart = page.get_by_role("link", name="View Cart")
 
         # ===== Product Details Locators =====
-        self.lbl_product_name = page.locator("#content h1")
-        self.lbl_product_brand = page.locator("ul.list-unstyled >> li:has-text('Brand:')")
-        self.lbl_product_code = page.locator("ul.list-unstyled >> li:has-text('Product Code:')")
-        self.lbl_product_availability = page.locator("ul.list-unstyled >> li:has-text('Availability:')")
+        self.lbl_product_name = self.content.get_by_role("heading", level=1)
+        self.lbl_product_brand = self.content.locator("ul.list-unstyled li", has_text="Brand:")
+        self.lbl_product_code = self.content.locator("ul.list-unstyled li", has_text="Product Code:")
+        self.lbl_product_availability = self.content.locator("ul.list-unstyled li", has_text="Availability:")
         self.lbl_minimum_quantity_info = page.locator(
             "#content div.alert.alert-info:has-text('minimum quantity'), #content div:has-text('minimum quantity')"
         )
-        self.lnk_description_tab = page.locator("a[href='#tab-description'], a:has-text('Description')")
-        self.pnl_description = page.locator("#tab-description")
+        self.lnk_description_tab = self.content.locator("a[href='#tab-description'], li > a:has-text('Description')")
+        self.pnl_description = self.content.locator("#tab-description")
+        self.lnk_specification_tab = self.content.locator("a[href='#tab-specification']").first
+        self.pnl_specification = self.content.locator("#tab-specification")
         
         # ===== Price Locators =====
-        self.lbl_product_price = page.locator("#content ul.list-unstyled li h2")
-        self.lbl_product_ex_tax = page.locator("#content ul.list-unstyled li:has-text('Ex Tax:')")
+        self.lbl_product_price = self.content.locator("ul.list-unstyled li h2")
+        self.lbl_product_ex_tax = self.content.locator("ul.list-unstyled li", has_text="Ex Tax:")
 
         # ===== Thumbnail and Lightbox Locators =====
-        self.img_main_thumbnail = page.locator("ul.thumbnails > li:nth-child(1) > a.thumbnail")
-        self.img_additional_thumbnails = page.locator("ul.thumbnails > li.image-additional > a.thumbnail")
+        self.img_main_thumbnail = self.content.locator("ul.thumbnails > li > a.thumbnail").first
+        self.img_additional_thumbnails = self.content.locator("ul.thumbnails > li.image-additional > a.thumbnail")
         self.lightbox = page.locator("div.mfp-container") # Magnific popup container is usually the direct parent handling visibility/clicks
         self.lightbox_image = page.locator("img.mfp-img")
         self.btn_lightbox_next = page.locator("button.mfp-arrow-right")
@@ -132,6 +135,15 @@ class ProductPage(BasePage):
     def get_description_text(self) -> str:
         """Return product description text from Description tab panel."""
         text = self.pnl_description.text_content()
+        return text.strip() if text else ""
+
+    def click_specification_tab(self):
+        """Click Specification tab in Product Display Page."""
+        self.click(self.lnk_specification_tab.first)
+
+    def get_specification_text(self) -> str:
+        """Return product specification text from Specification tab panel."""
+        text = self.pnl_specification.text_content()
         return text.strip() if text else ""
 
     # ===== Price Methods =====

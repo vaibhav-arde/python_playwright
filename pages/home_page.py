@@ -15,11 +15,11 @@ class HomePage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lnk_my_account = page.locator('span:has-text("My Account")')
-        self.lnk_register = page.locator('a:has-text("Register")')
-        self.lnk_login = page.locator('a:has-text("Login")')
-        self.txt_search_box = page.locator('input[placeholder="Search"]')
-        self.btn_search = page.locator('#search button[type="button"]')
+        self.lnk_my_account = page.locator("a[title='My Account']")
+        self.lnk_register = page.get_by_role("link", name="Register")
+        self.lnk_login = page.get_by_role("link", name="Login")
+        self.txt_search_box = page.get_by_placeholder("Search")
+        self.btn_search = page.locator("#search").get_by_role("button")
 
     # ===== Action Methods =====
 

@@ -16,10 +16,10 @@ class ShoppingCartPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lbl_total_price = page.locator("//*[@id='cart']/ul/li[2]/div/table/tbody/tr[4]/td[2]")
-        self.btn_checkout = page.locator("a.btn.btn-primary")
+        self.lbl_total_price = page.locator("#content tr:has(td strong:has-text('Total:')) td:last-child")
+        self.btn_checkout = page.get_by_role("link", name="Checkout")
         self.warning_msg = page.locator("div.alert.alert-danger.alert-dismissible, div.alert.alert-danger")
-        self.txt_cart_quantity = page.locator("input[name^='quantity']")
+        self.txt_cart_quantity = page.locator("#content input[name^='quantity']")
 
     # ===== Methods =====
 

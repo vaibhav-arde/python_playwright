@@ -3,6 +3,7 @@
 # Page Object for the Search Results Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+import re
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
@@ -16,8 +17,8 @@ class SearchResultsPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.search_page_header = page.locator("#content h1", has_text="Search -")
-        self.search_products = page.locator("h4 > a")
+        self.search_page_header = page.get_by_role("heading", name=re.compile(r"^Search -"))
+        self.search_products = page.locator("#content h4 > a")
 
     # ===== Page Header =====
 
