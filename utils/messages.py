@@ -14,6 +14,7 @@ WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
 WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
 
 # ===== Product Comparison =====
+COMPARE_BUTTON_TOOLTIP = "Compare this Product"
 COMPARE_SUCCESS = "Success: You have added {product_name} to your product comparison!"
 
 # ===== Login Field error message =====
