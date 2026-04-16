@@ -19,12 +19,13 @@ class SearchResultsPage(BasePage):
 
         # ===== Locators =====
         self.search_page_header = page.get_by_role("heading", name=re.compile(r"^Search -"))
+        self.grid_view_button = page.locator("#grid-view")
         self.list_view_button = page.locator("#list-view")
         self.compare_success_message = page.locator("div.alert.alert-success.alert-dismissible")
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
         )
-        self.product_links = page.locator(".product-layout h4 > a")
+        self.product_links = page.locator(".product-layout").get_by_role("link")
 
     # ===== Page Header =====
 
@@ -38,6 +39,10 @@ class SearchResultsPage(BasePage):
         """Switch the search results to list view."""
         self.click(self.list_view_button)
 
+    def click_grid_view(self):
+        """Switch the search results to grid view."""
+        self.click(self.grid_view_button)
+
     # ===== Product Verification =====
 
     # def get_product_link(self, product_name: str):
@@ -46,7 +51,7 @@ class SearchResultsPage(BasePage):
 
     def get_product_link(self, product_name: str):
         """Return the product title link inside the product card."""
-        return self.get_product_card(product_name).locator("h4 a")
+        return self.get_product_card(product_name).get_by_role("link", name=product_name).first
 
     def is_product_exist(self, product_name: str):
         """Check whether a specific product is displayed in search results."""
