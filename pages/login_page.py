@@ -16,10 +16,10 @@ class LoginPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.txt_email_address = page.locator("#input-email")
-        self.txt_password = page.locator("#input-password")
-        self.btn_login = page.locator('input[value="Login"]')
-        self.txt_error_message = page.get_by_text(messages.WARN_LOGIN_ERROR)
+        self.txt_email_address = page.get_by_label("E-Mail Address")
+        self.txt_password = page.get_by_label("Password")
+        self.btn_login = page.get_by_role("button", name="Login")
+        self.txt_error_message = page.locator("#account-login .alert.alert-danger, .alert.alert-danger.alert-dismissible")
         self.txt_login_attempts_error = page.get_by_text(messages.WARN_LOGIN_ATTEMPTS_EXCEEDED)
         self.lnk_forgot_password = page.locator("#content").get_by_role(
             "link", name=messages.FORGOT_PASSWORD

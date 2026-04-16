@@ -15,7 +15,7 @@ class CheckoutPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.radio_guest = page.locator('input[value="guest"]')
+        self.radio_guest = page.get_by_label("Guest Checkout")
         self.btn_continue = page.locator("#button-account")
         self.txt_first_name = page.locator("#input-payment-firstname")
         self.txt_last_name = page.locator("#input-payment-lastname")
@@ -31,9 +31,9 @@ class CheckoutPage(BasePage):
         self.btn_continue_shipping_address = page.locator("#button-shipping-method")
         self.chkbox_terms = page.locator('input[name="agree"]')
         self.btn_continue_payment_method = page.locator("#button-payment-method")
-        self.lbl_total_price = page.locator('strong:has-text("Total:") + td')
+        self.lbl_total_price = page.locator("tr:has(td strong:has-text('Total:')) td:last-child")
         self.btn_conf_order = page.locator("#button-confirm")
-        self.lbl_order_con_msg = page.locator("#content h1")
+        self.lbl_order_con_msg = page.get_by_role("heading", level=1)
 
     # ===== Page Validation =====
 
