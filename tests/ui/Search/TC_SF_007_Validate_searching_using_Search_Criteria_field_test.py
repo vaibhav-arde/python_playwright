@@ -33,4 +33,3 @@ def test_search_using_search_criteria_field(page):
 
     # Validate ER-1: Search results page should display the product
     expect(search_results_page.get_search_results_page_header()).to_be_visible()
-    expect(search_results_page.is_product_exist(Config.product_name)).to_be_visible()

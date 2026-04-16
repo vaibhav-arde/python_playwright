@@ -29,4 +29,4 @@ def test_search_with_existing_product_name(page):
     expect(search_results_page.get_search_results_page_header()).to_contain_text(
         Config.product_name
     )
-    expect(search_results_page.is_product_exist(Config.product_name)).to_be_visible()
+    assert search_results_page.is_product_exist(Config.product_name)

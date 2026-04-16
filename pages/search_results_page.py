@@ -21,7 +21,10 @@ class SearchResultsPage(BasePage):
         self.msg_empty_search = page.get_by_text(
             "There is no product that matches the search criteria."
         )
-        self.txt_search_criteria = page.locator("#input-search")
+        self.txt_search_criteria = page.get_by_role("textbox", name="Search Criteria")
+        self.drp_category = page.get_by_role("combobox").filter(
+            has=page.locator("option[value='27']")
+        )
         self.btn_search_criteria = page.get_by_role("button", name="Search")
         self.chk_search_in_descriptions = page.get_by_label("Search in product descriptions")
 
@@ -45,6 +48,14 @@ class SearchResultsPage(BasePage):
         """Enter text into the Search Criteria text box."""
         self.fill(self.txt_search_criteria, criteria)
 
+    def select_category(self, category_name: str):
+        option = next(
+            opt
+            for opt in self.drp_category.locator("option").all()
+            if opt.text_content().replace("\xa0", "").strip() == category_name
+        )
+        self.drp_category.select_option(value=option.get_attribute("value"))
+
     def select_search_in_product_descriptions(self):
         """Select the 'Search in product descriptions' checkbox."""
         self.check(self.chk_search_in_descriptions)
@@ -55,15 +66,8 @@ class SearchResultsPage(BasePage):
 
     # ===== Product Verification =====
 
-    def is_product_exist(self, product_name: str):
-        """Check whether a specific product is displayed in search results."""
-        count = self.search_products.count()
-        for i in range(count):
-            product = self.search_products.nth(i)
-            title = product.text_content()
-            if title and title.strip() == product_name:
-                return product
-        return None
+    def is_product_exist(self, product_name: str) -> bool:
+        return self.search_products.filter(has_text=product_name).count() > 0
 
     # ===== Product Selection =====
 

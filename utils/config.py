@@ -34,11 +34,13 @@ class Config:
     invalid_password = "test@123xyz"
 
     # Product test data
-    product_name = "MacBook"
+    product_name = "iMac"
     invalid_product_name = "Fitbit"
     product_quantity = "2"
     total_price = "$1,204.00"
     multiple_products_search_term = "Mac"
+    correct_category = "Mac"
+    wrong_category = "PC"
 
 
 class ProductData:
