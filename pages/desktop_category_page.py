@@ -3,6 +3,7 @@
 # Page Object for the Desktops category page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+import re
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
@@ -22,6 +23,7 @@ class DesktopCategoryPage(BasePage):
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
         )
+        self.lnk_product_compare = page.get_by_role("link", name=re.compile(r"Product Compare"))
         self.product_cards = page.locator(".product-layout")
 
     # ===== Page Header =====
@@ -82,3 +84,7 @@ class DesktopCategoryPage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def click_product_compare_link(self):
+        """Click the 'Product Compare' link located above the product listing."""
+        self.click(self.lnk_product_compare)
