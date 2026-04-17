@@ -23,10 +23,13 @@ class SearchResultsPage(BasePage):
         )
         self.txt_search_criteria = page.get_by_role("textbox", name="Search Criteria")
         self.drp_category = page.get_by_role("combobox").filter(
-            has=page.locator("option[value='27']")
+            has=page.get_by_role("option", name="All Categories")
         )
         self.btn_search_criteria = page.get_by_role("button", name="Search")
         self.chk_search_in_descriptions = page.get_by_label("Search in product descriptions")
+        self.chk_search_in_subcategories = page.get_by_role(
+            "checkbox", name="Search in subcategories"
+        )
 
     # ===== Page Header =====
 
@@ -49,16 +52,19 @@ class SearchResultsPage(BasePage):
         self.fill(self.txt_search_criteria, criteria)
 
     def select_category(self, category_name: str):
-        option = next(
-            opt
-            for opt in self.drp_category.locator("option").all()
-            if opt.text_content().replace("\xa0", "").strip() == category_name
-        )
-        self.drp_category.select_option(value=option.get_attribute("value"))
+        """Select a category from the Category dropdown using role-based locator."""
+        # Find the option by name with exact match to handle "Mac" vs "Macs" and whitespace
+        option = self.drp_category.get_by_role("option", name=category_name, exact=True)
+        value = option.get_attribute("value")
+        self.select_option(self.drp_category, value=value)
 
     def select_search_in_product_descriptions(self):
         """Select the 'Search in product descriptions' checkbox."""
         self.check(self.chk_search_in_descriptions)
+
+    def select_search_in_subcategories(self):
+        """Select the 'Search in subcategories' checkbox."""
+        self.check(self.chk_search_in_subcategories)
 
     def click_search_criteria_button(self):
         """Click the Search button next to the Search Criteria text box."""

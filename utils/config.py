@@ -40,6 +40,7 @@ class Config:
     total_price = "$1,204.00"
     multiple_products_search_term = "Mac"
     correct_category = "Mac"
+    parent_category = "Desktops"
     wrong_category = "PC"
 
 

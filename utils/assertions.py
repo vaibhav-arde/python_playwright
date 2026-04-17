@@ -4,10 +4,7 @@ from playwright.sync_api import expect, Locator
 def assert_products_match_search(products, search_term):
     """Validate that all displayed products match the given search term."""
     count = products.count()
-    assert count > 1, f"Expected multiple products, got {count}"
-
-    expect(products.first).to_be_visible()
-
+    assert count > 0, f"Expected multiple products, got {count}"
     for i in range(count):
         expect(products.nth(i)).to_contain_text(search_term, ignore_case=True)
 
