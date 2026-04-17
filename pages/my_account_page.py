@@ -80,3 +80,12 @@ class MyAccountPage(BasePage):
     def click_logout_sidebar(self):
         """Click on the 'Logout' link."""
         self.click(self.lnk_logout_sidebar)
+
+    # Verify logout sidebar
+    def verify_logout_sidebar_visible(self):
+        """Verify the logout link is visible under the My Account page."""
+        return self.lnk_logout_sidebar
+
+    def verify_logout_btn_in_dropdown(self):
+        """Verify the logout link is visible under the My Account dropdown."""
+        return self.lnk_logout

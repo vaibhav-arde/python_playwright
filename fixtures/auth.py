@@ -28,7 +28,10 @@ def authenticated_page(new_context, auth_state_path, request, launch_browser):
     try:
         yield page
     finally:
-        context.close()
+        try:
+            context.close()
+        except ValueError:
+            pass
         ensure_auth_state_silently(launch_browser, base_url)
 
 

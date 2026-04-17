@@ -18,6 +18,7 @@ class HomePage(BasePage):
         self.lnk_my_account = page.locator('span:has-text("My Account")')
         self.lnk_register = page.locator('a:has-text("Register")')
         self.lnk_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
+        self.lnk_logout = page.locator("ul.dropdown-menu").get_by_role("link", name="Logout")
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
 
@@ -47,8 +48,8 @@ class HomePage(BasePage):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
 
-    def verify_login_visible_after_logout(self):
-        """Verify the login link is visible under the My Account dropdown after logout."""
-        from playwright.sync_api import expect
-        self.click_my_account()
-        expect(self.lnk_login).to_be_visible()
+    def verify_login_btn_visible(self):
+        return self.lnk_login
+        
+    def verify_logout_btn_not_visible(self):
+        return self.lnk_logout

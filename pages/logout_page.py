@@ -16,15 +16,19 @@ class LogoutPage(BasePage):
         # ===== Locators =====
         #Add logout page heading locator
         self.logout_heading = page.get_by_role("heading", name="Account Logout")
-
         self.btn_continue = page.locator(".btn.btn-primary")
-        self.btn_logout = page.locator("ul.dropdown-menu").get_by_role("link", name="Logout")
+        self.btn_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
+        self.lnk_my_account = page.locator('span:has-text("My Account")')
 
     # ===== Action Methods =====
 
     def click_continue(self):
         """Click the 'Continue' button after logging out."""
         self.click(self.btn_continue)
+
+    # Click dropdown menu from logout page
+    def click_dropdown_logout_page(self):
+        self.click(self.lnk_my_account)
 
     def get_continue_button(self):
         """Return the Continue button locator."""
@@ -35,7 +39,8 @@ class LogoutPage(BasePage):
         self.click(self.page.locator("ul.dropdown-menu").get_by_role("link", name="Logout"))
         self.click_continue()
 
-    def verify_logout_page(self):
-        """Verify the logout page is visible."""
-        from playwright.sync_api import expect
-        expect(self.logout_heading).to_be_visible()
+    def verify_logout_page_heading(self):
+        return self.logout_heading
+
+    def verify_login_btn_in_dropdown(self):
+        return self.btn_login

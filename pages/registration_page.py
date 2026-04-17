@@ -30,6 +30,7 @@ class RegistrationPage(BasePage):
         self.msg_telephone_error = page.locator(
             "div.form-group:has(input[name='telephone']) div.text-danger"
         )
+        self.lnk_logout = page.locator("ul.dropdown-menu").get_by_role("link", name="Logout")
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
@@ -136,3 +137,7 @@ class RegistrationPage(BasePage):
         expect(self.err_telephone).to_have_text(messages.WARN_TELEPHONE)
 
         expect(self.err_password).to_have_text(messages.WARN_PASSWORD)
+
+    def verify_logout_btn_not_visible(self):
+        return self.lnk_logout
+        

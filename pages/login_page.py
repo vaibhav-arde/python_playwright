@@ -45,3 +45,6 @@ class LoginPage(BasePage):
         self.set_email(email)
         self.set_password(pwd)
         self.click_login()
+
+    def verify_login_btn_visible(self):
+        return self.btn_login
