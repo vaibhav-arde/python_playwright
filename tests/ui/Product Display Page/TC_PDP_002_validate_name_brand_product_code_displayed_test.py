@@ -8,6 +8,9 @@ from utils.constants import TestData
 from utils import messages
 
 
+@pytest.mark.ui
+@pytest.mark.regression
+@pytest.mark.sanity
 def test_validate_name_brand_product_code_displayed(page: Page):
     """
     Test Case ID: TC_PDP_002
