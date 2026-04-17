@@ -19,8 +19,10 @@ class SearchResultsPage(BasePage):
 
         # ===== Locators =====
         self.search_page_header = page.get_by_role("heading", name=re.compile(r"^Search -"))
-        self.grid_view_button = page.locator("#grid-view")
-        self.list_view_button = page.locator("#list-view")
+        self.grid_view_button = page.get_by_role("button").filter(has=page.locator(".fa-th")).first
+        self.list_view_button = (
+            page.get_by_role("button").filter(has=page.locator(".fa-th-list")).first
+        )
         self.compare_success_message = page.locator("div.alert.alert-success.alert-dismissible")
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
@@ -45,38 +47,41 @@ class SearchResultsPage(BasePage):
 
     # ===== Product Verification =====
 
-    # def get_product_link(self, product_name: str):
-    #     """Return the product link for a specific search result."""
-    #     return self.page.get_by_role("link", name=product_name, exact=True)
-
     def get_product_link(self, product_name: str):
         """Return the product title link inside the product card."""
-        return self.get_product_card(product_name).get_by_role("link", name=product_name).first
+        return (
+            self.page.locator(".product-layout")
+            .filter(has_text=product_name)
+            .get_by_role("link", name=product_name)
+            .first
+        )
 
-    def is_product_exist(self, product_name: str):
+    def is_product_exist(self, product_name: str) -> bool:
         """Check whether a specific product is displayed in search results."""
-        return self.get_product_link(product_name)
+        return self.get_product_link(product_name).is_visible()
 
     # ===== Product Selection =====
 
     def select_product(self, product_name: str) -> ProductPage | None:
         """Select a product from search results by name."""
         product = self.get_product_link(product_name)
-        if product.count() == 0:
+        try:
+            self.wait_for(product, state="visible")
+        except Exception:
             return None
         self.click(product)
         return ProductPage(self.page)
 
     # ===== Product Comparison in List View =====
 
-    def get_product_card(self, product_name: str):
-        """Return the product card locator for a product in list view."""
-        return self.page.locator(".product-layout").filter(has_text=product_name).first
-
     def get_compare_button(self, product_name: str):
         """Return the 'Compare this Product' button for a specific product."""
-        return self.get_product_card(product_name).locator(
-            'button[data-original-title="Compare this Product"]'
+        return (
+            self.page.locator(".product-layout")
+            .filter(has_text=product_name)
+            .get_by_role("button")
+            .filter(has=self.page.locator(".fa-exchange"))
+            .first
         )
 
     def get_compare_button_tooltip(self, product_name: str) -> str | None:

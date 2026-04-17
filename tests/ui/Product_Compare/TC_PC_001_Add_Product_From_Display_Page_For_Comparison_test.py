@@ -30,15 +30,16 @@ def test_product_comparison(page, product_name, expected_tooltip):
 
     # ===== Step 3: Click on the product from search results =====
     product_page = search_results_page.select_product(product_name)
-    assert product_page is not None, f"Product '{product_name}' was not found in search results."
+    assert product_page is not None
+
+    # Validate the displayed Product Display Page
+    expect(product_page.get_product_header()).to_have_text(product_name)
 
     # ===== Step 4: ER-1 — Validate tooltip on hover =====
     product_page.hover_compare_button()
 
     actual_tooltip = product_page.get_compare_button_tooltip()
-    assert (
-        actual_tooltip == expected_tooltip
-    ), f"ER-1 FAILED: Expected tooltip '{expected_tooltip}', but got '{actual_tooltip}'"
+    assert actual_tooltip == expected_tooltip
 
     # ===== Step 5: Click 'Compare this Product' =====
     product_page.click_compare_button()
@@ -47,10 +48,7 @@ def test_product_comparison(page, product_name, expected_tooltip):
     expected_success_msg = COMPARE_SUCCESS.format(product_name=product_name)
     actual_success_msg = product_page.get_compare_success_message()
 
-    assert expected_success_msg in actual_success_msg, (
-        f"ER-2 FAILED: Expected message containing '{expected_success_msg}', "
-        f"but got '{actual_success_msg}'"
-    )
+    assert expected_success_msg in actual_success_msg
 
     # ===== Step 7: ER-3 — Click 'product comparison' link from success message =====
     product_page.click_product_comparison_link()

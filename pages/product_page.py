@@ -22,9 +22,16 @@ class ProductPage(BasePage):
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 
-        self.btn_compare = page.locator("#content").get_by_role("button", name="\uf0ec").first
+        self.btn_compare = (
+            page.locator("#content")
+            .locator(
+                'button[data-original-title="Compare this Product"], button[title="Compare this Product"]'
+            )
+            .first
+        )
         # Link inside the success alert navigating to the product comparison page.
         self.lnk_product_comparison = self.cnf_msg.get_by_role("link", name="product comparison")
+        self.product_header = page.locator("#content").get_by_role("heading", level=1)
 
     # ===== Quantity Methods =====
 
@@ -63,6 +70,12 @@ class ProductPage(BasePage):
         self.set_quantity(quantity)
         self.add_to_cart()
         expect(self.get_confirmation_message()).to_be_visible()
+
+    # ===== Product Verification Methods =====
+
+    def get_product_header(self):
+        """Return the product page header element (typically product name)."""
+        return self.product_header
 
     # ===== Compare This Product Methods =====
 
