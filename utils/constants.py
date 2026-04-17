@@ -39,6 +39,7 @@ class UIRoutes:
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
+    PRODUCT_PAGE = r".*route=product/product.*"
 
 
 class UserDetails:
