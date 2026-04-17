@@ -28,6 +28,7 @@ class SearchResultsPage(BasePage):
             "link", name="product comparison"
         )
         self.product_links = page.locator(".product-layout").get_by_role("link")
+        self.lnk_product_compare = page.get_by_role("link", name=re.compile(r"Product Compare"))
 
     # ===== Page Header =====
 
@@ -104,6 +105,10 @@ class SearchResultsPage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def click_product_compare_link(self):
+        """Click the 'Product Compare' link displayed above the search results."""
+        self.click(self.lnk_product_compare)
 
     # ===== Product Count =====
 
