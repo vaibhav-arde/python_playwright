@@ -17,20 +17,20 @@ def test_user_logout(authenticated_page):
     my_account_page = MyAccountPage(page)
     logout_page = LogoutPage(page)
 
-    #Step 1: Verify logout option
-    expect(my_account_page.lnk_logout_sidebar).to_be_visible()
-
-    #Step 2: Click logout
+    #Step 1: Click logout from right column
     my_account_page.click_logout_sidebar()
 
-    #Step 3: Verify logout page
-    logout_page.verify_logout_page()
+    #Step 2: Verify logout page
+    expect(logout_page.verify_logout_page_heading()).to_have_text("Account Logout")
 
-    #Step 4: Click continue
+    #Step 3: Click dropdown menu from logout page
+    logout_page.click_dropdown_logout_page()
+
+    #Step 4: Verify Login button is visible
+    expect(logout_page.verify_login_btn_in_dropdown()).to_be_visible()
+
+    #Step 5: Click continue
     logout_page.click_continue()
 
-    #Step 5: Verify home page
+    #Step 6: Verify home page
     expect(page).to_have_title(home_page.get_home_page_title())
-
-    #Step 6: Verify login visible
-    home_page.verify_login_visible_after_logout()

@@ -23,10 +23,16 @@ def test_user_logout(authenticated_page):
     my_account_page.click_logout()
 
     #Step 3: Verify Logout page using element
-    expect(logout_page.btn_continue).to_be_visible()
+    expect(logout_page.verify_logout_page_heading()).to_be_visible()
 
-    #Step 4: Click Continue
+    #Step 4: Click dropdown menu from logout page
+    logout_page.click_dropdown_logout_page()
+
+    #Step 5: Verify Login button is visible
+    expect(logout_page.verify_login_btn_in_dropdown()).to_be_visible()
+
+    #Step 6: Click Continue
     logout_page.click_continue()
 
-    #Step 5: Verify Home page using TITLE
+    #Step 7: Verify Home page using TITLE
     expect(page).to_have_title(home_page.get_home_page_title())
