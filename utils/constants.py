@@ -1,7 +1,9 @@
-# utils/constants.py
 # =====================
-# Centralized constants for API endpoints and HTTP headers.
+# Centralized constants for API endpoints, HTTP headers, and file paths.
 # Avoids hardcoding values across tests and API clients.
+
+
+from pathlib import Path
 
 
 class APIEndpoints:
@@ -34,7 +36,7 @@ class UIRoutes:
     HOME = "/"
     LOGIN = "/index.php?route=account/login"
     REGISTER = "index.php?route=account/register"
-    MY_ACCOUNT = "/index.php?route=account/account"
+    MY_ACCOUNT = "index.php?route=account/account"
     LOGOUT = "/index.php?route=account/logout"
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
@@ -75,3 +77,11 @@ INVALID_PHONE_NUMBERS = [
     "@@@@",  # special chars (BUG case)
     "123456789012345678901234567890123",  # too long
 ]
+
+
+class FilePaths:
+    """Centralized file and directory paths."""
+
+    SESSION_STORAGE_DIR = Path("session_storage")
+    AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
+    AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"

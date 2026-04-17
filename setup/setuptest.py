@@ -16,39 +16,37 @@ from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage
 from pages.registration_page import RegistrationPage
 from utils import messages
+from utils.constants import FilePaths
 from utils.config import BASE_URL, ENV
 from utils.user_registration import generate_user_data
+from urllib.parse import urljoin
 
 logger = logging.getLogger(__name__)
 
-SESSION_STORAGE_DIR = Path("session_storage")
-AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
-AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
 DEFAULT_BASE_URL = BASE_URL.get(ENV, BASE_URL["qa"])
-ACCOUNT_URL_PATH = "index.php?route=account/account"
 
 
-def _account_url(base_url: str) -> str:
-    """Build the account page URL for the active environment."""
-    return f"{base_url.rstrip('/')}/{ACCOUNT_URL_PATH}"
+def build_url(base_url: str, path: str = "") -> str:
+    """Safely join base URL and path (cross-platform safe for URLs)."""
+    return urljoin(base_url.rstrip("/") + "/", path)
 
 
 def _save_registered_user(user_data: dict) -> None:
     """Persist the registered user so expired sessions can log in again."""
-    SESSION_STORAGE_DIR.mkdir(parents=True, exist_ok=True)
-    AUTH_USER_PATH.write_text(json.dumps(user_data, indent=2), encoding="utf-8")
-    logger.info("Saved registered user data to %s", AUTH_USER_PATH)
+    FilePaths.SESSION_STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    FilePaths.AUTH_USER_PATH.write_text(json.dumps(user_data, indent=2), encoding="utf-8")
+    logger.info("Saved registered user data to %s", FilePaths.AUTH_USER_PATH)
 
 
 def load_registered_user() -> dict | None:
     """Load the previously registered user details, if available."""
-    if not AUTH_USER_PATH.exists():
+    if not FilePaths.AUTH_USER_PATH.exists():
         return None
 
     try:
-        user_data = json.loads(AUTH_USER_PATH.read_text(encoding="utf-8"))
+        user_data = json.loads(FilePaths.AUTH_USER_PATH.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        logger.warning("Could not read saved user data from %s: %s", AUTH_USER_PATH, exc)
+        logger.warning("Could not read saved user data from %s: %s", FilePaths.AUTH_USER_PATH, exc)
         return None
 
     required_keys = {"firstName", "lastName", "email", "telephone", "password"}
@@ -61,14 +59,14 @@ def load_registered_user() -> dict | None:
 
 def _is_session_valid(browser, base_url: str) -> bool:
     """Check whether the saved auth state still opens the My Account page."""
-    if not AUTH_STATE_PATH.exists():
+    if not FilePaths.AUTH_STATE_PATH.exists():
         return False
 
-    context = browser.new_context(storage_state=str(AUTH_STATE_PATH), base_url=base_url)
+    context = browser.new_context(storage_state=str(FilePaths.AUTH_STATE_PATH), base_url=base_url)
     page = context.new_page()
 
     try:
-        page.goto(_account_url(base_url))
+        page.goto(build_url(base_url))
         heading = page.locator(f'h2:has-text("{messages.MY_ACCOUNT_HEADING}")')
         heading.wait_for(timeout=5000)
         return heading.is_visible()
@@ -81,9 +79,9 @@ def _is_session_valid(browser, base_url: str) -> bool:
 
 def _save_storage_state(context) -> None:
     """Persist the current browser storage state to auth_state.json."""
-    SESSION_STORAGE_DIR.mkdir(parents=True, exist_ok=True)
-    context.storage_state(path=str(AUTH_STATE_PATH))
-    logger.info("Saved auth state to %s", AUTH_STATE_PATH)
+    FilePaths.SESSION_STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    context.storage_state(path=str(FilePaths.AUTH_STATE_PATH))
+    logger.info("Saved auth state to %s", FilePaths.AUTH_STATE_PATH)
 
 
 def _login_and_save_state(browser, base_url: str, user_data: dict) -> None:
@@ -93,7 +91,7 @@ def _login_and_save_state(browser, base_url: str, user_data: dict) -> None:
 
     try:
         logger.info("Logging in with saved registered user: %s", user_data["email"])
-        page.goto(base_url)
+        page.goto(build_url(base_url))
 
         home_page = HomePage(page)
         login_page = LoginPage(page)
@@ -121,7 +119,7 @@ def _register_login_and_save_state(browser, base_url: str) -> None:
     try:
         user_data = generate_user_data()
         logger.info("No saved user found. Registering a new user: %s", user_data["email"])
-        page.goto(base_url)
+        page.goto(build_url(base_url))
 
         home_page = HomePage(page)
         registration_page = RegistrationPage(page)
@@ -157,7 +155,7 @@ def _register_login_and_save_state(browser, base_url: str) -> None:
 def _ensure_auth_state(browser, base_url: str) -> None:
     """Make sure a valid auth_state.json exists before tests use it."""
     if _is_session_valid(browser, base_url):
-        logger.info("Reusing existing auth state from %s", AUTH_STATE_PATH)
+        logger.info("Reusing existing auth state from %s", FilePaths.AUTH_STATE_PATH)
         return
 
     user_data = load_registered_user()
@@ -179,25 +177,14 @@ def ensure_auth_state_silently(launch_browser, base_url: str) -> None:
         temp_browser.close()
 
 
-@pytest.fixture(scope="session")
-def auth_state_path(launch_browser, request):
-    """
-    Provide the path to a valid saved auth state file.
 
-    Registration and login happen only when auth_state.json is missing or
-    invalid and no previously registered user is available for login.
-    """
-    base_url = request.config.getoption("--base-url", default=DEFAULT_BASE_URL) or DEFAULT_BASE_URL
-    SESSION_STORAGE_DIR.mkdir(parents=True, exist_ok=True)
-
+def get_auth_state_path(launch_browser, base_url: str) -> str:
+    FilePaths.SESSION_STORAGE_DIR.mkdir(parents=True, exist_ok=True)
     ensure_auth_state_silently(launch_browser, base_url)
-    return str(AUTH_STATE_PATH)
+    return str(FilePaths.AUTH_STATE_PATH)
 
-
-@pytest.fixture(scope="session")
-def registered_user(auth_state_path):
-    """Return the saved registered user data for tests that need it."""
+def get_registered_user() -> dict:
     user_data = load_registered_user()
     if user_data is None:
-        pytest.fail("Registered user data was not created after auth setup.")
+        raise RuntimeError("Registered user data was not created after auth setup.")
     return user_data
