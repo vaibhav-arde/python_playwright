@@ -8,18 +8,15 @@ from pages.product_comparison_page import ProductComparisonPage
 from pages.search_results_page import SearchResultsPage
 from utils.constants import UIRoutes
 from utils.data_loader import read_json_data
-from utils.messages import COMPARE_SUCCESS
+from utils.messages import COMPARE_SUCCESS, COMPARE_BUTTON_TOOLTIP
 
 
 @pytest.mark.regression
 @pytest.mark.ui
-@pytest.mark.parametrize(
-    "product_name, expected_tooltip", read_json_data("test_data/comparedata.json")
-)
-def test_add_product_from_search_results_list_view_for_comparison(
-    page, product_name, expected_tooltip
-):
+@pytest.mark.parametrize(("product_name",), read_json_data("test_data/comparedata.json"))
+def test_add_product_from_search_results_list_view_for_comparison(page, product_name):
     """Verify that a product can be added to comparison from search results list view."""
+    expected_tooltip = COMPARE_BUTTON_TOOLTIP
 
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
