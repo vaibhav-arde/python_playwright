@@ -10,13 +10,11 @@ Expected:
 """
 
 import pytest
-import re
 
 from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from utils.constants import UILabels, UITitles, UIRoutes
-
 
 
 @pytest.mark.sanity

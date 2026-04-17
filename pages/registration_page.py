@@ -3,7 +3,7 @@
 # Page Object for the Registration Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, Locator, expect
 from pages.base_page import BasePage
 from utils import messages
 
@@ -24,7 +24,9 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator('input[value="Continue"]')
+        self.btn_continue = page.locator(
+            'input[value="Continue"], a.btn.btn-primary:has-text("Continue")'
+        )
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
         self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
         self.msg_privacy_policy_warning = page.locator("#account-register > div.alert.alert-danger.alert-dismissible")
@@ -103,6 +105,31 @@ class RegistrationPage(BasePage):
     def get_breadcrumb(self):
         """Return the breadcrumb locator."""
         return self.lnk_breadcrumb
+
+    def get_privacy_policy_checkbox(self):
+        """Return the privacy policy checkbox locator."""
+        return self.chk_policy
+
+    def get_password_mismatch_error(self):
+        """Return the password mismatch error locator."""
+        return self.password_mismatch_error
+
+    def get_email_already_exist_error(self):
+        """Return the email already exist error locator."""
+        return self.err_email_already_exist
+
+    def get_email_validation_message(self):
+        """Return the native HTML5 validation message of the email field."""
+        return self.txt_email.evaluate("element => element.validationMessage")
+
+    def error_msg_visible(self):
+        """Assert that all mandatory field error messages are visible."""
+        expect(self.err_privacy_policy).to_be_visible()
+        expect(self.err_firstname).to_be_visible()
+        expect(self.err_lastname).to_be_visible()
+        expect(self.err_email).to_be_visible()
+        expect(self.err_telephone).to_be_visible()
+        expect(self.err_password).to_be_visible()
 
     # ===== Combined Workflow =====
 

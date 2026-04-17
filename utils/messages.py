@@ -12,7 +12,6 @@ WARN_PASSWORD = "Password must be between 4 and 20 characters!"
 WARN_PRIVACY_POLICY = "Warning: You must agree to the Privacy Policy!"
 WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
 WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
-
 # ===== Login Field error message =====
 WARN_LOGIN_ERROR = "Warning: No match for E-Mail Address and/or Password."
 
@@ -29,3 +28,4 @@ SUCCESS_PASSWORD_UPDATED = "Success: Your password has been successfully updated
 INVALID_LOGIN_MSG = WARN_LOGIN_ERROR
 PRIVACY_POLICY_WARNING_MSG = WARN_PRIVACY_POLICY
 SUCCESS_REGISTER_MSG = ACCOUNT_CREATED
+
