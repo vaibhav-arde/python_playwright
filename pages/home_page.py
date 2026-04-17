@@ -39,6 +39,21 @@ class HomePage(BasePage):
         self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
 
+        # ===== Featured Section Locators =====
+        self.featured_products_section = page.locator(
+            'h3:has-text("Featured") ~ .row .product-thumb'
+        )
+        self.btn_compare_featured = (
+            self.featured_products_section.first.get_by_role("button")
+            .filter(has=page.locator(".fa-exchange"))
+            .first
+        )
+        self.lnk_featured_product_name = self.featured_products_section.first.locator("h4 a")
+        self.compare_success_message = page.locator("div.alert.alert-success.alert-dismissible")
+        self.lnk_product_comparison = self.compare_success_message.get_by_role(
+            "link", name="product comparison"
+        )
+
     # ===== Action Methods =====
 
     def get_home_page_title(self) -> str:
@@ -82,6 +97,7 @@ class HomePage(BasePage):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
 
+<<<<<<< HEAD
     def click_contact_us(self):
         """Click on the Contact Us link in the footer."""
         self.click(self.lnk_contact_us)
@@ -101,3 +117,31 @@ class HomePage(BasePage):
     def click_show_all_desktops(self):
         """Click on the 'Show All Desktops' link."""
         self.click(self.lnk_show_all_desktops)
+=======
+    # ===== Featured Section Methods =====
+
+    def get_first_featured_product_name(self) -> str:
+        """Return the name of the first product in the Featured section."""
+        return self.get_text(self.lnk_featured_product_name)
+
+    def hover_featured_compare_button(self):
+        """Hover over the 'Compare this Product' button of the first featured product."""
+        self.hover(self.btn_compare_featured)
+
+    def get_featured_compare_button_tooltip(self) -> str | None:
+        """Return the tooltip text (title) of the featured product's compare button."""
+        return self.get_attribute(self.btn_compare_featured, "data-original-title")
+
+    def click_featured_compare_button(self):
+        """Click the 'Compare this Product' button of the first featured product."""
+        self.click(self.btn_compare_featured)
+
+    def get_compare_success_message(self) -> str:
+        """Return the success message shown after adding a product for comparison."""
+        self.wait_for(self.compare_success_message, state="visible")
+        return self.get_text(self.compare_success_message)
+
+    def click_product_comparison_link(self):
+        """Click the 'product comparison' link from the success message."""
+        self.click(self.lnk_product_comparison)
+>>>>>>> 5f87fe6 (Add Test : Validate adding product from featured section of Home Page for comparison)

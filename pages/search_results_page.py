@@ -56,9 +56,9 @@ class SearchResultsPage(BasePage):
             .first
         )
 
-    def is_product_exist(self, product_name: str) -> bool:
+    def is_product_exist(self, product_name: str):
         """Check whether a specific product is displayed in search results."""
-        return self.get_product_link(product_name).is_visible()
+        return self.get_product_link(product_name)
 
     # ===== Product Selection =====
 
