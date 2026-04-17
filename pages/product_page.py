@@ -33,6 +33,18 @@ class ProductPage(BasePage):
         self.lnk_product_comparison = self.cnf_msg.get_by_role("link", name="product comparison")
         self.product_header = page.locator("#content").get_by_role("heading", level=1)
 
+        # ===== Related Products Locators =====
+        self.related_products_header = page.get_by_role("heading", name="Related Products")
+        self.related_product_layout = page.locator(
+            'h3:has-text("Related Products") ~ div .product-thumb'
+        )
+        self.btn_compare_related = (
+            self.related_product_layout.first.get_by_role("button")
+            .filter(has=page.locator(".fa-exchange"))
+            .first
+        )
+        self.lnk_related_product_name = self.related_product_layout.first.locator("h4 a")
+
     # ===== Quantity Methods =====
 
     def set_quantity(self, qty: str):
@@ -99,3 +111,21 @@ class ProductPage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the comparison success message."""
         self.click(self.lnk_product_comparison)
+
+    # ===== Related Products Methods =====
+
+    def get_related_product_name(self) -> str:
+        """Return the name of the first related product."""
+        return self.get_text(self.lnk_related_product_name)
+
+    def hover_related_compare_button(self):
+        """Hover over the 'Compare this Product' button of the first related product."""
+        self.hover(self.btn_compare_related)
+
+    def get_related_compare_button_tooltip(self) -> str | None:
+        """Return the tooltip text of the related product's compare button."""
+        return self.get_attribute(self.btn_compare_related, "data-original-title")
+
+    def click_related_compare_button(self):
+        """Click the 'Compare this Product' button of the first related product."""
+        self.click(self.btn_compare_related)
