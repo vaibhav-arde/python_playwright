@@ -8,6 +8,9 @@ from utils.constants import TestData, UIPricing
 from utils import messages
 
 
+@pytest.mark.ui
+@pytest.mark.regression
+@pytest.mark.sanity
 def test_validate_the_product_price(page: Page):
     """
     Test Case ID: TC_PDP_004

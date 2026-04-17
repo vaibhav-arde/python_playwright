@@ -8,6 +8,9 @@ from utils.constants import TestData, UIIndexes, UIAttributes
 from utils import messages
 
 
+@pytest.mark.ui
+@pytest.mark.regression
+@pytest.mark.sanity
 def test_product_display_page_validate_thumbnails(page: Page):
     """
     Test Case ID: TC_PDP_001
