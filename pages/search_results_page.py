@@ -37,6 +37,7 @@ class SearchResultsPage(BasePage):
         self.btn_wish_list = page.get_by_role("button", name="Add to Wish List")
         self.btn_compare = page.get_by_role("button", name="Compare this Product")
         self.msg_success = page.locator(".alert-success")
+        self.link_product_compare = page.get_by_role("link", name="Product Compare")
 
     # ===== Page Header =====
 
@@ -161,3 +162,6 @@ class SearchResultsPage(BasePage):
 
     def get_success_message(self, product_name: str):
         return self.msg_success.filter(has=self.page.get_by_role("link", name=product_name))
+
+    def click_product_compare_link(self):
+        self.click(self.link_product_compare)
