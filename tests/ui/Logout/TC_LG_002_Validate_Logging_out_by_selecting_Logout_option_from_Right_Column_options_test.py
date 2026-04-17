@@ -7,7 +7,6 @@ from pages.my_account_page import MyAccountPage
 
 
 @pytest.mark.ui
-@pytest.mark.logout
 def test_user_logout(authenticated_page):
 
     page = authenticated_page
