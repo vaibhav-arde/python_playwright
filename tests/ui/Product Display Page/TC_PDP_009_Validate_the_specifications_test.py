@@ -1,3 +1,4 @@
+import pytest
 from playwright.sync_api import Page
 
 from pages.home_page import HomePage
@@ -7,6 +8,8 @@ from utils.constants import TestData
 from utils import messages
 
 
+@pytest.mark.ui
+@pytest.mark.regression
 def test_validate_the_specifications(page: Page):
     """
     Test Case ID: TC_PDP_009

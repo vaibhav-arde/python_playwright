@@ -6,6 +6,9 @@ from pages.product_page import ProductPage
 from utils.constants import TestData, UITimeouts
 from utils import messages
 
+@pytest.mark.ui
+@pytest.mark.regression
+@pytest.mark.sanity
 def test_validate_add_to_cart_functionality(page: Page):
     """
     Test Case ID: TC_PDP_005

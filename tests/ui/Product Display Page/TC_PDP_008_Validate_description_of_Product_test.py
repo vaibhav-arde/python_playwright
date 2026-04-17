@@ -8,6 +8,8 @@ from utils.constants import TestData
 from utils import messages
 
 
+@pytest.mark.ui
+@pytest.mark.regression
 def test_validate_description_of_product(page: Page):
     """
     Test Case ID: TC_PDP_008

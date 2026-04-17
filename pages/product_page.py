@@ -3,6 +3,7 @@
 # Page Object for the Product Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+import re
 from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
@@ -38,19 +39,41 @@ class ProductPage(BasePage):
         self.pnl_description = self.content.locator("#tab-description")
         self.lnk_specification_tab = self.content.locator("a[href='#tab-specification']").first
         self.pnl_specification = self.content.locator("#tab-specification")
-        
+
         # ===== Price Locators =====
         self.lbl_product_price = self.content.locator("ul.list-unstyled li h2")
         self.lbl_product_ex_tax = self.content.locator("ul.list-unstyled li", has_text="Ex Tax:")
 
         # ===== Thumbnail and Lightbox Locators =====
-        self.img_main_thumbnail = self.content.locator("ul.thumbnails > li > a.thumbnail").first
-        self.img_additional_thumbnails = self.content.locator("ul.thumbnails > li.image-additional > a.thumbnail")
-        self.lightbox = page.locator("div.mfp-container") # Magnific popup container is usually the direct parent handling visibility/clicks
-        self.lightbox_image = page.locator("img.mfp-img")
-        self.btn_lightbox_next = page.locator("button.mfp-arrow-right")
-        self.btn_lightbox_prev = page.locator("button.mfp-arrow-left")
-        self.btn_lightbox_close = page.locator("button.mfp-close")
+        self.thumbnail_items = self.content.get_by_role("listitem").filter(has=page.get_by_role("img"))
+        self.img_main_thumbnail = self.thumbnail_items.first.get_by_role("link")
+        self.lightbox = page.locator("div.mfp-container")
+        self.lightbox_image = self.lightbox.get_by_role("img")
+        self.btn_lightbox_next = page.get_by_title("Next (Right arrow key)")
+        self.btn_lightbox_prev = page.get_by_title("Previous (Left arrow key)")
+        # get_by_title
+        self.btn_lightbox_close = page.get_by_title("Close (Esc)")
+
+        # ===== Review Tab Locators =====
+        # get_by_role: resolves via ARIA link role + accessible name for the quick link near the top
+        self.lnk_write_review = self.content.get_by_role("link", name="Write a review")
+        
+        # Summary block for stars and review links above Add to Cart
+        self.pnl_rating_summary = self.content.locator(".rating").first
+        self.lbl_review_count = self.pnl_rating_summary.get_by_role("link", name=re.compile(r"^\d+\s+reviews?$", re.IGNORECASE))
+        
+        # get_by_role: Use regex to match "Reviews (0)" vs "0 reviews" (avoid strict mode violation)
+        self.lnk_review_tab = self.content.get_by_role("link", name=re.compile(r"^Reviews", re.IGNORECASE))
+        self.pnl_review = self.content.locator("#tab-review")
+
+        self.txt_review_name = self.pnl_review.get_by_label("Your Name")
+        self.txt_review_text = self.pnl_review.get_by_label("Your Review")
+        self.btn_review_submit = self.pnl_review.get_by_role("button", name="Continue")
+        self.alert_review_success = self.pnl_review.locator(".alert-success")
+        self.alert_review_warning = self.pnl_review.locator(".alert-danger")
+        
+        # Container holding actual reviews or the "no reviews" message
+        self.lbl_no_reviews = self.pnl_review.locator("#review p")
 
     # ===== Quantity Methods =====
 
@@ -164,12 +187,16 @@ class ProductPage(BasePage):
         self.click(self.img_main_thumbnail)
 
     def click_additional_thumbnail(self, index: int):
-        """Click on a normal sized Thumbnail image by its index."""
-        self.click(self.img_additional_thumbnails.nth(index))
+        """Click on a normal sized Thumbnail image by its index (0-based).
+        
+        Since index 0 of the full list is the main thumbnail, we offset by 1.
+        """
+        self.click(self.thumbnail_items.nth(index + 1).get_by_role("link"))
 
     def get_additional_thumbnails_count(self) -> int:
         """Get the total count of additional thumbnails."""
-        return self.img_additional_thumbnails.count()
+        total = self.thumbnail_items.count()
+        return max(0, total - 1)
 
     def get_lightbox(self):
         """Return the Lightbox container locator."""
@@ -195,3 +222,61 @@ class ProductPage(BasePage):
         """Press the 'ESC' keyboard key."""
         self.page.keyboard.press("Escape")
 
+    # ===== Review Tab Methods =====
+
+    def click_write_review_link(self):
+        """Click the 'Write a review' quick link on the Product Display Page."""
+        self.click(self.lnk_write_review)
+
+    def click_review_count_link(self):
+        """Click the 'x reviews' link on the Product Display Page."""
+        self.click(self.lbl_review_count)
+
+    def click_review_tab(self):
+        """Click the Reviews tab on the Product Display Page."""
+        self.click(self.lnk_review_tab)
+
+    def enter_review_name(self, name: str):
+        """Enter the reviewer's name into the 'Your Name' field."""
+        self.fill(self.txt_review_name, name)
+
+    def enter_review_text(self, text: str):
+        """Enter the review body into the 'Your Review' textarea."""
+        self.fill(self.txt_review_text, text)
+
+    def select_review_rating(self, rating_value: str):
+        """Select a star rating by value (e.g. '5' for 5 stars).
+
+        Since OpenCart rating radios lack standard <label> wrappers, 
+        we compute the 0-based index from the 1-5 rating value safely 
+        using pure role locators.
+        """
+        index = int(rating_value) - 1
+        self.pnl_review.get_by_role("radio").nth(index).check()
+
+    def submit_review(self):
+        """Click the Continue button to submit the review."""
+        self.click(self.btn_review_submit)
+
+    def get_review_success_alert(self):
+        """Return the review success alert locator."""
+        return self.alert_review_success
+
+    def get_review_success_text(self) -> str:
+        """Return the text content of the review success alert."""
+        text = self.alert_review_success.text_content()
+        return text.strip() if text else ""
+
+    def get_review_warning_alert(self):
+        """Return the locator for the review validation warning."""
+        return self.alert_review_warning
+
+    def get_review_warning_text(self) -> str:
+        """Return the text content of the review warning alert."""
+        text = self.alert_review_warning.text_content()
+        return text.strip() if text else ""
+
+    def get_no_reviews_text(self) -> str:
+        """Return the text displayed when a product has no reviews."""
+        text = self.lbl_no_reviews.first.text_content()
+        return text.strip() if text else ""

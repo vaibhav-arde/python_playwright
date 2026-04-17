@@ -8,6 +8,9 @@ from utils.constants import TestData, UIAvailability
 from utils import messages
 
 
+@pytest.mark.ui
+@pytest.mark.regression
+@pytest.mark.sanity
 def test_validate_the_availability_status(page: Page):
     """
     Test Case ID: TC_PDP_003

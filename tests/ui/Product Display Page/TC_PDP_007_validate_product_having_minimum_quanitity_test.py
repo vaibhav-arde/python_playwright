@@ -9,6 +9,8 @@ from utils.constants import TestData, UIRoutes
 from utils import messages
 
 
+@pytest.mark.ui
+@pytest.mark.regression
 def test_validate_product_having_minimum_quantity_set(page: Page):
     """
     Test Case ID: TC_PDP_007
