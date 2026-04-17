@@ -30,7 +30,7 @@ def test_navigation_to_register_page(page):
     home_page.click_register()
 
     expect(registration_page.lbl_page_heading).to_have_text(UILabels.REGISTER_PAGE_HEADING)
-    
+
     # ---- Path 2: My Account → Login → Continue ----
     # Reset
     page.goto("")

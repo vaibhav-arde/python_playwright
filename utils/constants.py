@@ -82,8 +82,10 @@ class UILabels:
     REGISTER_PAGE_HEADING = "Register Account"
     REGISTER_BREADCRUMB = "Register"
 
+
 class UITitles:
     REGISTER_PAGE_TITLE = "Register Account"
+
 
 class TestData:
     # Test Data

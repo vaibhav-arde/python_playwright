@@ -16,8 +16,8 @@ class HomePage(BasePage):
 
         # ===== Locators =====
         self.lnk_my_account = page.locator('span:has-text("My Account")')
-        self.lnk_register = page.locator('a:has-text("Register")')
-        self.lnk_login = page.locator('a:has-text("Login")')
+        self.lnk_register = page.locator('#top-links a:has-text("Register")').first
+        self.lnk_login = page.locator('#top-links a:has-text("Login")').first
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
 
