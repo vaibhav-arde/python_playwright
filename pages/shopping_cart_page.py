@@ -10,6 +10,7 @@ from pages.checkout_page import CheckoutPage
 from pages.home_page import HomePage
 
 
+
 class ShoppingCartPage(BasePage):
     """Page Object Model for the Shopping Cart Page."""
 
