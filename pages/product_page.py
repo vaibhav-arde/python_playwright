@@ -19,7 +19,7 @@ class ProductPage(BasePage):
         self.txt_quantity = page.get_by_label("Quantity")
         self.btn_add_to_cart = page.get_by_role("button", name="Add to Cart")
         self.cnf_msg = page.get_by_role("alert")
-        self.btn_items = page.get_by_role("link", name="Cart")
+        self.btn_items = page.get_by_role("link", name="Shopping Cart")
         self.lnk_view_cart = page.get_by_role("link", name="View Cart")
 
     # ===== Quantity Methods =====

@@ -56,7 +56,7 @@ def test_register_account_details_stored_in_db(page):
     expect(confirmation_msg).to_have_text(messages.ACCOUNT_CREATED)
 
     # We click 'Continue' to go to 'My Account' dashboard or just use the nav links.
-    registration_page.click_continue()  # This takes user to My Account page from Success page.
+    registration_page.click_continue_post_account_creation()  # This takes user to My Account page from Success page.
 
     my_account_page.click_logout()
 
