@@ -27,6 +27,7 @@ class RegistrationPage(BasePage):
         self.radio_newsletter_no = page.get_by_label("No")
         self.msg_confirmation = page.get_by_role("heading", name="Your Account Has Been Created!")
         self.btn_continue = page.get_by_role("button", name="Continue")
+        self.btn_continue_post_account_creation = page.get_by_role("link", name="Continue")
         self.msg_telephone_error = (
             page.get_by_label("Telephone").locator("xpath=..").locator(".text-danger")
         )
@@ -83,6 +84,9 @@ class RegistrationPage(BasePage):
 
     def click_continue(self):
         self.click(self.btn_continue)
+
+    def click_continue_post_account_creation(self):
+        self.click(self.btn_continue_post_account_creation)
 
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
