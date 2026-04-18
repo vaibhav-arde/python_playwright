@@ -7,6 +7,8 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
+from utils.config import SORT_CONFIG
+from utils.assertions import extract_price
 
 
 class SearchResultsPage(BasePage):
@@ -17,7 +19,7 @@ class SearchResultsPage(BasePage):
 
         # ===== Locators =====
         self.search_page_header = page.locator("#content").get_by_role("heading", level=1)
-        self.search_products = page.locator("h4 > a")
+        self.search_products = page.get_by_role("heading", level=4).get_by_role("link")
         self.msg_empty_search = page.get_by_text(
             "There is no product that matches the search criteria."
         )
@@ -38,6 +40,9 @@ class SearchResultsPage(BasePage):
         self.btn_compare = page.get_by_role("button", name="Compare this Product")
         self.msg_success = page.locator(".alert-success")
         self.link_product_compare = page.get_by_role("link", name="Product Compare")
+        self.drp_sort = page.get_by_label("Sort By:")
+        self.product_prices = page.locator(".price")
+        self.drp_limit = page.get_by_role("combobox", name="Show")
 
     # ===== Page Header =====
 
@@ -165,3 +170,48 @@ class SearchResultsPage(BasePage):
 
     def click_product_compare_link(self):
         self.click(self.link_product_compare)
+
+    # ===== Sorting Methods =====
+
+    def select_sort_choice(self, sort_choice: str):
+        """Select a sorting option from the 'Sort By' dropdown."""
+        self.select_option(self.drp_sort, label=sort_choice)
+        self.page.wait_for_load_state("networkidle")
+
+    def get_product_names(self):
+        """Returns a list of product names in lowercase."""
+        return [v.strip().lower() for v in self.search_products.all_text_contents()]
+
+    def get_product_prices(self):
+        """Returns a list of numerical product prices."""
+        return [extract_price(t) for t in self.product_prices.all_text_contents()]
+
+    def get_product_ratings(self):
+        """Returns a list of product ratings based on star count."""
+        return [product.locator(".fa-star").count() for product in self.product_thumb.all()]
+
+    def verify_products_sorted(self, sort_option: str):
+        """Verify that products are sorted correctly based on the selected option."""
+        if sort_option not in SORT_CONFIG:
+            raise ValueError(f"Unsupported sort option: {sort_option}")
+
+        config = SORT_CONFIG[sort_option]
+
+        # Use refined waiting strategy: wait for product thumb visibility
+        self.product_thumb.first.wait_for(state="visible")
+
+        actual = config["getter"](self)
+
+        # Robustness check: Ensure result list is not empty
+        assert actual, f"Product list is empty, cannot verify sorting for '{sort_option}'"
+
+        expected = sorted(actual, reverse=config["reverse"])
+
+        assert actual == expected, (
+            f"Sorting failed for '{sort_option}'\n" f"Actual: {actual}\nExpected: {expected}"
+        )
+
+    def select_limit(self, value: str):
+        """Select number of products to display from 'Show' dropdown."""
+        self.select_option(self.drp_limit, label=value)
+        self.page.wait_for_load_state("networkidle")

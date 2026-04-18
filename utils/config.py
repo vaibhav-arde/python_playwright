@@ -5,6 +5,8 @@
 # and provides all configuration values in one place.
 
 import os
+from collections.abc import Callable
+from typing import Any, TypedDict
 
 # Active environment: set via ENV variable, defaults to "qa"
 ENV = os.getenv("ENV", "qa")
@@ -42,7 +44,41 @@ class Config:
     correct_category = "Mac"
     parent_category = "Desktops"
     wrong_category = "PC"
+    product_limit = "25"
 
 
 class ProductData:
     IMAC = {"description_term": "iLife", "expected_product": "iMac"}
+
+
+class SortOption(TypedDict):
+    getter: Callable[[Any], Any]
+    reverse: bool
+
+
+SORT_CONFIG: dict[str, SortOption] = {
+    "Name (A - Z)": {
+        "getter": lambda page: page.get_product_names(),
+        "reverse": False,
+    },
+    "Name (Z - A)": {
+        "getter": lambda page: page.get_product_names(),
+        "reverse": True,
+    },
+    "Price (Low > High)": {
+        "getter": lambda page: page.get_product_prices(),
+        "reverse": False,
+    },
+    "Price (High > Low)": {
+        "getter": lambda page: page.get_product_prices(),
+        "reverse": True,
+    },
+    "Rating (Highest)": {
+        "getter": lambda page: page.get_product_ratings(),
+        "reverse": True,
+    },
+    "Rating (Lowest)": {
+        "getter": lambda page: page.get_product_ratings(),
+        "reverse": False,
+    },
+}
