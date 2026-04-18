@@ -34,5 +34,5 @@ def test_navigate_to_product_compare_page_from_search_results(page, product_name
     search_results_page.click_product_compare_link()
 
     # Acceptance Criteria: User should be taken to 'Product Compare' page
-    expect(page).to_have_url(re.compile(re.escape(UIRoutes.COMPARISON)))
+    comparison_page.verify_url(re.compile(re.escape(UIRoutes.COMPARISON)))
     expect(comparison_page.get_page_heading()).to_be_visible()

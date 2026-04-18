@@ -4,9 +4,10 @@
 # Provides reusable UI interaction methods following
 # the Page Object Model (POM) pattern.
 
+import re
 import logging
 
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, Locator, expect
 
 logger = logging.getLogger(__name__)
 
@@ -110,6 +111,11 @@ class BasePage:
     def get_url(self) -> str:
         """Return the current page URL."""
         return self.page.url
+
+    def verify_url(self, expected_url: str | re.Pattern):
+        """Verify the current page URL matches the expected URL (supports regex)."""
+        expect(self.page).to_have_url(expected_url)
+        logger.info(f"Verified URL matches: {expected_url}")
 
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""
