@@ -33,7 +33,7 @@ class UIRoutes:
 
     HOME = "/"
     LOGIN = "/index.php?route=account/login"
-    REGISTER = "index.php?route=account/register"
+    REGISTER = "/index.php?route=account/register"
     MY_ACCOUNT = "/index.php?route=account/account"
     LOGOUT = "/index.php?route=account/logout"
     SEARCH = "/index.php?route=product/search"
