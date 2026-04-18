@@ -23,6 +23,7 @@ class ProductComparisonPage(BasePage):
         self.empty_comparison_text = page.locator("#content").get_by_text(
             messages.EMPTY_COMPARISON_MESSAGE
         )
+        self.btn_continue = page.get_by_role("link", name="Continue")
 
     # ===== Page Header =====
 
@@ -33,6 +34,16 @@ class ProductComparisonPage(BasePage):
     def get_empty_comparison_message_text(self) -> str:
         """Return the text displayed when no products are added for comparison."""
         return self.get_text(self.empty_comparison_text)
+
+    # ===== Continue Button =====
+
+    def get_continue_button(self):
+        """Return the 'Continue' button locator."""
+        return self.btn_continue
+
+    def click_continue(self):
+        """Click the 'Continue' button to navigate back to the Home page."""
+        self.click(self.btn_continue)
 
     # ===== Product Presence in Table =====
 
