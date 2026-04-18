@@ -13,7 +13,7 @@
 
 1. [Framework Overview](#-1-framework-overview)
 2. [Project Structure](#-2-project-structure)
-3. [Architecture & Design Principles](#-3-architecture--design-principles)
+3. [Architecture &amp; Design Principles](#-3-architecture--design-principles)
 4. [Technology Stack](#-4-technology-stack)
 5. [Core Framework Layer](#-5-core-framework-layer)
 6. [Fixtures Layer](#-6-fixtures-layer)
@@ -25,7 +25,7 @@
 12. [Configuration Files](#-12-configuration-files)
 13. [Reporting](#-13-reporting)
 14. [CI/CD Pipeline](#-14-cicd-pipeline)
-15. [Code Quality & Linting](#-15-code-quality--linting)
+15. [Code Quality &amp; Linting](#-15-code-quality--linting)
 16. [How to Run Tests](#-16-how-to-run-tests)
 17. [Dependency Graph](#-17-dependency-graph)
 18. [File Reference Index](#-18-file-reference-index)
@@ -39,18 +39,18 @@ This is a **Senior SDET / Architect level** enterprise test automation framework
 
 ### Key Capabilities
 
-| Capability               | Implementation                                     |
-| ------------------------ | -------------------------------------------------- |
-| UI Testing               | Playwright browser automation via Page Object Model |
-| API Testing              | Playwright APIRequestContext via API Client pattern  |
-| Hybrid Testing           | API creates data → UI validates → fast + reliable    |
-| Parallel Execution       | `pytest-xdist` (`-n auto`)                          |
-| Retry on Failure         | `pytest-rerunfailures` (`--reruns 2`)               |
-| Data-Driven Testing      | JSON / CSV / Excel data sources                     |
-| Multi-Browser Support    | Chromium, Firefox, WebKit via `--browser`            |
-| Reporting                | Allure + HTML Report                                |
-| CI/CD                    | GitHub Actions with Playwright Docker container      |
-| Code Quality             | Ruff (lint + format), mypy (type check), pre-commit  |
+| Capability            | Implementation                                      |
+| --------------------- | --------------------------------------------------- |
+| UI Testing            | Playwright browser automation via Page Object Model |
+| API Testing           | Playwright APIRequestContext via API Client pattern |
+| Hybrid Testing        | API creates data → UI validates → fast + reliable |
+| Parallel Execution    | `pytest-xdist` (`-n auto`)                      |
+| Retry on Failure      | `pytest-rerunfailures` (`--reruns 2`)           |
+| Data-Driven Testing   | JSON / CSV / Excel data sources                     |
+| Multi-Browser Support | Chromium, Firefox, WebKit via `--browser`         |
+| Reporting             | Allure + HTML Report                                |
+| CI/CD                 | GitHub Actions with Playwright Docker container     |
+| Code Quality          | Ruff (lint + format), mypy (type check), pre-commit |
 
 ---
 
@@ -190,27 +190,27 @@ Example:
 
 ### Runtime Dependencies
 
-| Package               | Version  | Purpose                                |
-| --------------------- | -------- | -------------------------------------- |
-| `playwright`          | ≥1.58.0  | Browser automation engine              |
-| `pytest`              | ≥9.0.2   | Test runner and framework              |
-| `pytest-playwright`   | ≥0.7.2   | Playwright-Pytest integration          |
-| `pytest-html`         | ≥4.2.0   | HTML test report generation            |
-| `pytest-xdist`        | ≥3.5.0   | Parallel test execution                |
-| `pytest-rerunfailures`| ≥14.0    | Auto-retry failed tests                |
-| `pytest-cov`          | ≥7.0.0   | Code coverage measurement              |
-| `allure-pytest`       | ≥2.15.3  | Allure reporting integration           |
-| `faker`               | ≥40.11.0 | Random test data generation            |
-| `openpyxl`            | ≥3.1.5   | Excel file reading                     |
-| `jsonschema`          | ≥4.26.0  | JSON schema validation                 |
+| Package                  | Version   | Purpose                       |
+| ------------------------ | --------- | ----------------------------- |
+| `playwright`           | ≥1.58.0  | Browser automation engine     |
+| `pytest`               | ≥9.0.2   | Test runner and framework     |
+| `pytest-playwright`    | ≥0.7.2   | Playwright-Pytest integration |
+| `pytest-html`          | ≥4.2.0   | HTML test report generation   |
+| `pytest-xdist`         | ≥3.5.0   | Parallel test execution       |
+| `pytest-rerunfailures` | ≥14.0    | Auto-retry failed tests       |
+| `pytest-cov`           | ≥7.0.0   | Code coverage measurement     |
+| `allure-pytest`        | ≥2.15.3  | Allure reporting integration  |
+| `faker`                | ≥40.11.0 | Random test data generation   |
+| `openpyxl`             | ≥3.1.5   | Excel file reading            |
+| `jsonschema`           | ≥4.26.0  | JSON schema validation        |
 
 ### Dev Dependencies
 
-| Package       | Version  | Purpose                           |
-| ------------- | -------- | --------------------------------- |
-| `ruff`        | ≥0.15.7  | Linter + formatter (replaces black/flake8) |
-| `mypy`        | ≥1.19.1  | Static type checking               |
-| `pre-commit`  | ≥4.5.1   | Git pre-commit hook runner         |
+| Package        | Version  | Purpose                                    |
+| -------------- | -------- | ------------------------------------------ |
+| `ruff`       | ≥0.15.7 | Linter + formatter (replaces black/flake8) |
+| `mypy`       | ≥1.19.1 | Static type checking                       |
+| `pre-commit` | ≥4.5.1  | Git pre-commit hook runner                 |
 
 ### Package Management
 
@@ -289,27 +289,27 @@ from fixtures.auth import *      # noqa: F401, F403
 
 ### 6.1 `fixtures/browser.py`
 
-| Fixture / Hook               | Scope    | Purpose                                              |
-| ----------------------------- | -------- | ----------------------------------------------------- |
-| `pytest_runtest_makereport`   | Hook     | Captures pass/fail result on each test phase           |
-| `navigate_to_base_url`       | function | Auto-navigates `page` to `--base-url` before each test |
-|                               |          | Captures screenshot on failure → attaches to Allure    |
-|                               |          | Captures video on failure → attaches to Allure         |
+| Fixture / Hook                | Scope    | Purpose                                                    |
+| ----------------------------- | -------- | ---------------------------------------------------------- |
+| `pytest_runtest_makereport` | Hook     | Captures pass/fail result on each test phase               |
+| `navigate_to_base_url`      | function | Auto-navigates `page` to `--base-url` before each test |
+|                               |          | Captures screenshot on failure → attaches to Allure       |
+|                               |          | Captures video on failure → attaches to Allure            |
 
 This fixture is `autouse=True`, so **every test automatically** starts at the configured base URL without needing to call `page.goto()`.
 
 ### 6.2 `fixtures/api.py`
 
-| Fixture       | Scope   | Purpose                                             |
-| ------------- | ------- | --------------------------------------------------- |
+| Fixture         | Scope   | Purpose                                                  |
+| --------------- | ------- | -------------------------------------------------------- |
 | `api_context` | session | Creates a Playwright `APIRequestContext` for API tests |
 
 Uses the `API_URL` from `utils/config.py`, keyed by the `ENV` environment variable.
 
 ### 6.3 `fixtures/auth.py`
 
-| Fixture      | Scope   | Purpose                                        |
-| ------------ | ------- | ---------------------------------------------- |
+| Fixture        | Scope   | Purpose                                        |
+| -------------- | ------- | ---------------------------------------------- |
 | `auth_token` | session | Authenticates via API once and returns a token |
 
 Session-scoped so authentication happens **only once per test run**, not before every test.
@@ -334,17 +334,17 @@ BasePage  ←──  HomePage
 
 ### Page Object Reference
 
-| Page Object           | File                      | Key Responsibilities                              |
-| --------------------- | ------------------------- | ------------------------------------------------ |
-| `HomePage`            | `pages/home_page.py`      | My Account dropdown, search box, navigation       |
-| `LoginPage`           | `pages/login_page.py`     | Email/password fields, login action, error message |
-| `RegistrationPage`    | `pages/registration_page.py` | Full registration form, privacy policy          |
-| `MyAccountPage`       | `pages/my_account_page.py`| Account heading verification, logout link          |
-| `LogoutPage`          | `pages/logout_page.py`    | Continue button after logout                       |
-| `SearchResultsPage`   | `pages/search_results_page.py` | Product search results, product selection     |
-| `ProductPage`         | `pages/product_page.py`   | Quantity, add-to-cart, confirmation, cart nav       |
-| `ShoppingCartPage`    | `pages/shopping_cart_page.py` | Total price, checkout button                   |
-| `CheckoutPage`        | `pages/checkout_page.py`  | Guest checkout, billing, shipping, order confirm   |
+| Page Object           | File                             | Key Responsibilities                               |
+| --------------------- | -------------------------------- | -------------------------------------------------- |
+| `HomePage`          | `pages/home_page.py`           | My Account dropdown, search box, navigation        |
+| `LoginPage`         | `pages/login_page.py`          | Email/password fields, login action, error message |
+| `RegistrationPage`  | `pages/registration_page.py`   | Full registration form, privacy policy             |
+| `MyAccountPage`     | `pages/my_account_page.py`     | Account heading verification, logout link          |
+| `LogoutPage`        | `pages/logout_page.py`         | Continue button after logout                       |
+| `SearchResultsPage` | `pages/search_results_page.py` | Product search results, product selection          |
+| `ProductPage`       | `pages/product_page.py`        | Quantity, add-to-cart, confirmation, cart nav      |
+| `ShoppingCartPage`  | `pages/shopping_cart_page.py`  | Total price, checkout button                       |
+| `CheckoutPage`      | `pages/checkout_page.py`       | Guest checkout, billing, shipping, order confirm   |
 
 ### Page Object Pattern
 
@@ -371,10 +371,10 @@ class SomePage(BasePage):
 
 ### Current State
 
-| File               | Contents                                        |
-| ------------------ | ----------------------------------------------- |
-| `base_api.py`      | `BaseAPI` class with GET/POST/PUT/PATCH/DELETE  |
-| `__init__.py`      | Package initializer                              |
+| File            | Contents                                         |
+| --------------- | ------------------------------------------------ |
+| `base_api.py` | `BaseAPI` class with GET/POST/PUT/PATCH/DELETE |
+| `__init__.py` | Package initializer                              |
 
 ### How to Extend — Adding a new API Client
 
@@ -431,11 +431,11 @@ class Config:
 
 ### 9.2 `utils/constants.py` — Centralized Constants
 
-| Class           | Purpose                                           |
-| --------------- | ------------------------------------------------- |
-| `APIEndpoints`  | API route paths: LOGIN, CART, ORDER, PAYMENT, etc. |
-| `Headers`       | Common HTTP headers: JSON, FORM                    |
-| `UIRoutes`      | UI route paths: HOME, LOGIN, REGISTER, etc.        |
+| Class            | Purpose                                            |
+| ---------------- | -------------------------------------------------- |
+| `APIEndpoints` | API route paths: LOGIN, CART, ORDER, PAYMENT, etc. |
+| `Headers`      | Common HTTP headers: JSON, FORM                    |
+| `UIRoutes`     | UI route paths: HOME, LOGIN, REGISTER, etc.        |
 
 ### 9.3 `utils/messages.py` — Centralized UI Strings
 
@@ -457,11 +457,11 @@ logger.info("Test started")
 
 ### 9.5 `utils/data_loader.py` — Test Data Readers
 
-| Function           | Source  | Returns        |
-| ------------------ | ------- | -------------- |
-| `read_json_data()` | `.json` | `list[tuple]`  |
-| `read_csv_data()`  | `.csv`  | `list[tuple]`  |
-| `read_excel_data()`| `.xlsx` | `list[tuple]`  |
+| Function              | Source    | Returns         |
+| --------------------- | --------- | --------------- |
+| `read_json_data()`  | `.json` | `list[tuple]` |
+| `read_csv_data()`   | `.csv`  | `list[tuple]` |
+| `read_excel_data()` | `.xlsx` | `list[tuple]` |
 
 ### 9.6 `utils/helpers.py` — Random Data Generation
 
@@ -481,15 +481,15 @@ random_data.get_random_alphanumeric(8) # "aB3kL9mN"
 
 ### 10.1 Test Suite Overview
 
-| Test File                      | Markers              | Description                                |
-| ------------------------------ | -------------------- | ------------------------------------------ |
-| `test_login.py`                | `regression`, `sanity` | Valid + invalid login scenarios            |
-| `test_login_data_driven.py`    | `datadriven`         | Parametrized login from Excel data          |
-| `test_user_registration.py`    | `sanity`, `regression`| New user registration with random data     |
-| `test_user_logout.py`          | `regression`         | Login → verify → logout → verify home page |
-| `test_product_search.py`       | `sanity`, `regression`| Search for product, verify results         |
-| `test_add_product_to_cart.py`  | `regression`         | Search → select → set qty → add to cart    |
-| `test_end_to_end.py`           | `end_to_end`         | Full flow: register → logout → login → cart |
+| Test File                       | Markers                    | Description                                    |
+| ------------------------------- | -------------------------- | ---------------------------------------------- |
+| `test_login.py`               | `regression`, `sanity` | Valid + invalid login scenarios                |
+| `test_login_data_driven.py`   | `datadriven`             | Parametrized login from Excel data             |
+| `test_user_registration.py`   | `sanity`, `regression` | New user registration with random data         |
+| `test_user_logout.py`         | `regression`             | Login → verify → logout → verify home page  |
+| `test_product_search.py`      | `sanity`, `regression` | Search for product, verify results             |
+| `test_add_product_to_cart.py` | `regression`             | Search → select → set qty → add to cart     |
+| `test_end_to_end.py`          | `end_to_end`             | Full flow: register → logout → login → cart |
 
 ### 10.2 Test Anatomy
 
@@ -512,15 +512,15 @@ def test_example(page):                    # ← page fixture from pytest-playwr
 
 ### 10.3 Custom Markers
 
-| Marker       | Purpose                                    |
-| ------------ | ------------------------------------------ |
-| `sanity`     | Quick basic checks (smoke level)            |
-| `regression` | Full end-to-end validation                  |
-| `datadriven` | Parametrized tests using external data      |
-| `end_to_end` | Complete user journey flows                 |
-| `api`        | API-only tests                              |
-| `smoke`      | Critical path verification                  |
-| `ui`         | UI-only tests                               |
+| Marker         | Purpose                                |
+| -------------- | -------------------------------------- |
+| `sanity`     | Quick basic checks (smoke level)       |
+| `regression` | Full end-to-end validation             |
+| `datadriven` | Parametrized tests using external data |
+| `end_to_end` | Complete user journey flows            |
+| `api`        | API-only tests                         |
+| `smoke`      | Critical path verification             |
+| `ui`         | UI-only tests                          |
 
 ---
 
@@ -580,6 +580,7 @@ addopts =
 ### 12.2 `pyproject.toml`
 
 Defines:
+
 - Project metadata (name, version, description)
 - Runtime dependencies (11 packages)
 - Dev dependencies (ruff, mypy, pre-commit)
@@ -619,11 +620,11 @@ allure serve reports/allure-results
 
 On test failure, the framework **automatically captures and attaches** to Allure:
 
-| Artifact    | Format | Condition          |
-| ----------- | ------ | ------------------ |
-| Screenshot  | `.png` | On test failure    |
-| Video       | `.webm`| Retained on failure |
-| Trace       | `.zip` | Retained on failure |
+| Artifact   | Format    | Condition           |
+| ---------- | --------- | ------------------- |
+| Screenshot | `.png`  | On test failure     |
+| Video      | `.webm` | Retained on failure |
+| Trace      | `.zip`  | Retained on failure |
 
 ---
 
@@ -775,66 +776,66 @@ tests/api/test_*.py  (future)
 
 ### Root Files
 
-| File                      | Lines | Purpose                                    |
-| ------------------------- | ----- | ------------------------------------------ |
-| `conftest.py`             | 12    | Fixture registry — imports only             |
-| `pytest.ini`              | 58    | Pytest configuration & CLI defaults         |
-| `pyproject.toml`          | 57    | Project metadata & dependency management    |
-| `.pre-commit-config.yaml` | 13    | Pre-commit hooks configuration              |
-| `.python-version`         | 1     | Python version pin (3.13)                   |
-| `.gitignore`              | 21    | Git ignore rules                            |
+| File                        | Lines | Purpose                                  |
+| --------------------------- | ----- | ---------------------------------------- |
+| `conftest.py`             | 12    | Fixture registry — imports only         |
+| `pytest.ini`              | 58    | Pytest configuration & CLI defaults      |
+| `pyproject.toml`          | 57    | Project metadata & dependency management |
+| `.pre-commit-config.yaml` | 13    | Pre-commit hooks configuration           |
+| `.python-version`         | 1     | Python version pin (3.13)                |
+| `.gitignore`              | 21    | Git ignore rules                         |
 
 ### Fixtures (`fixtures/`)
 
-| File          | Lines | Key Exports                                          |
-| ------------- | ----- | ---------------------------------------------------- |
-| `browser.py`  | 77    | `navigate_to_base_url`, `pytest_runtest_makereport`  |
-| `api.py`      | 27    | `api_context`                                        |
-| `auth.py`     | 34    | `auth_token`                                         |
+| File           | Lines | Key Exports                                             |
+| -------------- | ----- | ------------------------------------------------------- |
+| `browser.py` | 77    | `navigate_to_base_url`, `pytest_runtest_makereport` |
+| `api.py`     | 27    | `api_context`                                         |
+| `auth.py`    | 34    | `auth_token`                                          |
 
 ### Pages (`pages/`)
 
-| File                    | Lines | Class               | Inherits    |
-| ----------------------- | ----- | ------------------- | ----------- |
-| `base_page.py`          | 56    | `BasePage`          | —           |
-| `home_page.py`          | 50    | `HomePage`          | `BasePage`  |
-| `login_page.py`         | 48    | `LoginPage`         | `BasePage`  |
-| `registration_page.py`  | 84    | `RegistrationPage`  | `BasePage`  |
-| `my_account_page.py`    | 39    | `MyAccountPage`     | `BasePage`  |
-| `logout_page.py`        | 31    | `LogoutPage`        | `BasePage`  |
-| `search_results_page.py`| 60    | `SearchResultsPage` | `BasePage`  |
-| `product_page.py`       | 62    | `ProductPage`       | `BasePage`  |
-| `shopping_cart_page.py` | 40    | `ShoppingCartPage`  | `BasePage`  |
-| `checkout_page.py`      | 119   | `CheckoutPage`      | `BasePage`  |
+| File                       | Lines | Class                 | Inherits     |
+| -------------------------- | ----- | --------------------- | ------------ |
+| `base_page.py`           | 56    | `BasePage`          | —           |
+| `home_page.py`           | 50    | `HomePage`          | `BasePage` |
+| `login_page.py`          | 48    | `LoginPage`         | `BasePage` |
+| `registration_page.py`   | 84    | `RegistrationPage`  | `BasePage` |
+| `my_account_page.py`     | 39    | `MyAccountPage`     | `BasePage` |
+| `logout_page.py`         | 31    | `LogoutPage`        | `BasePage` |
+| `search_results_page.py` | 60    | `SearchResultsPage` | `BasePage` |
+| `product_page.py`        | 62    | `ProductPage`       | `BasePage` |
+| `shopping_cart_page.py`  | 40    | `ShoppingCartPage`  | `BasePage` |
+| `checkout_page.py`       | 119   | `CheckoutPage`      | `BasePage` |
 
 ### API Clients (`api_clients/`)
 
-| File          | Lines | Class      | Inherits |
-| ------------- | ----- | ---------- | -------- |
-| `base_api.py` | 48    | `BaseAPI`  | —        |
+| File            | Lines | Class       | Inherits |
+| --------------- | ----- | ----------- | -------- |
+| `base_api.py` | 48    | `BaseAPI` | —       |
 
 ### Utils (`utils/`)
 
-| File            | Lines | Key Exports                                           |
-| --------------- | ----- | ----------------------------------------------------- |
-| `config.py`     | 40    | `ENV`, `BASE_URL`, `API_URL`, `Config`                |
-| `constants.py`  | 42    | `APIEndpoints`, `Headers`, `UIRoutes`                 |
-| `logger.py`     | 37    | `get_logger()`                                        |
-| `data_loader.py`| 67    | `read_json_data()`, `read_csv_data()`, `read_excel_data()` |
-| `helpers.py`    | 63    | `RandomDataUtil`                                      |
-| `messages.py`   | 15    | UI validation constants (e.g. `WARN_PASSWORD`)        |
+| File               | Lines | Key Exports                                                      |
+| ------------------ | ----- | ---------------------------------------------------------------- |
+| `config.py`      | 40    | `ENV`, `BASE_URL`, `API_URL`, `Config`                   |
+| `constants.py`   | 42    | `APIEndpoints`, `Headers`, `UIRoutes`                      |
+| `logger.py`      | 37    | `get_logger()`                                                 |
+| `data_loader.py` | 67    | `read_json_data()`, `read_csv_data()`, `read_excel_data()` |
+| `helpers.py`     | 63    | `RandomDataUtil`                                               |
+| `messages.py`    | 15    | UI validation constants (e.g.`WARN_PASSWORD`)                  |
 
 ### Tests (`tests/ui/`)
 
-| File                          | Lines | Test Functions                        | Markers               |
-| ----------------------------- | ----- | ------------------------------------- | --------------------- |
+| File                            | Lines | Test Functions                                         | Markers            |
+| ------------------------------- | ----- | ------------------------------------------------------ | ------------------ |
 | `test_login.py`               | 63    | `test_invalid_user_login`, `test_valid_user_login` | regression, sanity |
-| `test_login_data_driven.py`   | 35    | `test_login_data_driven`              | datadriven            |
-| `test_user_registration.py`   | 49    | `test_user_registration`              | sanity, regression    |
-| `test_user_logout.py`         | 52    | `test_user_logout`                    | regression            |
-| `test_product_search.py`      | 35    | `test_product_search`                 | sanity, regression    |
-| `test_add_product_to_cart.py` | 43    | `test_add_product_to_cart`            | regression            |
-| `test_end_to_end.py`          | 138   | `test_end_to_end_flow`               | end_to_end            |
+| `test_login_data_driven.py`   | 35    | `test_login_data_driven`                             | datadriven         |
+| `test_user_registration.py`   | 49    | `test_user_registration`                             | sanity, regression |
+| `test_user_logout.py`         | 52    | `test_user_logout`                                   | regression         |
+| `test_product_search.py`      | 35    | `test_product_search`                                | sanity, regression |
+| `test_add_product_to_cart.py` | 43    | `test_add_product_to_cart`                           | regression         |
+| `test_end_to_end.py`          | 138   | `test_end_to_end_flow`                               | end_to_end         |
 
 ---
 
@@ -849,18 +850,22 @@ tests/api/test_*.py  (future)
 To maintain the scalable design of this architect-level framework, always adhere to these rules when adding new functions or code.
 
 ### 19.1 Where to Place Common Methods (Rule of Thumb)
+
 *If you need to import `Page` or `Locator`, it belongs in `pages/`. If it's pure standard Python logic, it belongs in `utils/`.*
 
-| Method Type | Target Location | Description & Examples |
-| ----------- | --------------- | ---------------------- |
-| **Native DOM Actions** | `pages/base_page.py` | If the method wraps a raw Playwright command to add logging, custom waits, or error handling. Examples: `click()`, `fill()`, `wait_for()`, `is_visible()`. |
-| **Business User Flows** | Specific POM (`pages/*.py`) | If the method navigates the user through a specific flow unique to a single piece of the website. Examples: `complete_registration()`, `login()`. |
-| **Data Generation / Parsing** | `utils/helpers.py` | If the method generates, formats, or calculates data and doesn't explicitly interact with the DOM via Playwright. Examples: `get_random_email()`, `generate_uuid()`. |
+| Method Type                         | Target Location               | Description & Examples                                                                                                                                                  |
+| ----------------------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Native DOM Actions**        | `pages/base_page.py`        | If the method wraps a raw Playwright command to add logging, custom waits, or error handling. Examples:`click()`, `fill()`, `wait_for()`, `is_visible()`.       |
+| **Business User Flows**       | Specific POM (`pages/*.py`) | If the method navigates the user through a specific flow unique to a single piece of the website. Examples:`complete_registration()`, `login()`.                    |
+| **Data Generation / Parsing** | `utils/helpers.py`          | If the method generates, formats, or calculates data and doesn't explicitly interact with the DOM via Playwright. Examples:`get_random_email()`, `generate_uuid()`. |
 
 ### 19.2 Where to Place Constants
-Constants should **never** be hardcoded directly inside your test files (`test_*.py`). 
+
+Constants should **never** be hardcoded directly inside your test files (`test_*.py`).
 
 1. **`utils/constants.py` ➔ Application State & Enums**: Rules of your app that rarely change. E.g. `APIEndpoints`, HTTP `Headers`, and broad groupings of static test data like `INVALID_PHONE_NUMBERS`.
 2. **`utils/messages.py` ➔ UI Verification Strings**: Every string used in `expect(...).to_have_text(...)`. E.g. `WARN_PASSWORD`, `ACCOUNT_CREATED`.
 3. **`utils/config.py` ➔ Environment & Credentials**: Anything reliant on external runtime flags (`qa` vs `prod`). E.g. Base URLs, admin users.
 4. **`test_data/` ➔ Parameterized Test Data**: Complex iteration sets. E.g. A CSV of 50 different login combinations or edge-case users.
+
+---

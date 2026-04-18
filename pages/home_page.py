@@ -46,3 +46,22 @@ class HomePage(BasePage):
     def click_search(self):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
+
+    # ===== Featured Product Methods =====
+
+    def get_featured_product_element(self, index: int = 0):
+        """Returns the product layout block locator for a featured product."""
+        return self.page.locator(".product-layout").nth(index)
+
+    def get_featured_product_name(self, index: int = 0) -> str:
+        """Returns the name of a featured product."""
+        return self.get_featured_product_element(index).locator("h4 a").inner_text()
+
+    def get_featured_product_price(self, index: int = 0) -> str:
+        """Returns the main price of a featured product."""
+        price_text = self.get_featured_product_element(index).locator(".price").inner_text()
+        return price_text.split("\n")[0].strip()
+
+    def click_featured_product(self, index: int = 0):
+        """Clicks on a featured product."""
+        self.click(self.get_featured_product_element(index).locator("h4 a"))

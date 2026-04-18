@@ -7,23 +7,23 @@
 class APIEndpoints:
     """Centralized API endpoint paths."""
 
-    BASE = "/index.php?route=api"
-    LOGIN = f"{BASE}/login"
-    CART = f"{BASE}/cart"
-    COUPON = f"{BASE}/coupon"
-    ORDER = f"{BASE}/order"
-    PAYMENT = f"{BASE}/payment"
-    SHIPPING = f"{BASE}/shipping"
+    BASE: str = "/index.php?route=api"
+    LOGIN: str = f"{BASE}/login"
+    CART: str = f"{BASE}/cart"
+    COUPON: str = f"{BASE}/coupon"
+    ORDER: str = f"{BASE}/order"
+    PAYMENT: str = f"{BASE}/payment"
+    SHIPPING: str = f"{BASE}/shipping"
 
 
 class Headers:
     """Common HTTP request headers."""
 
-    JSON = {
+    JSON: dict[str, str] = {
         "Content-Type": "application/json",
     }
 
-    FORM = {
+    FORM: dict[str, str] = {
         "Content-Type": "application/x-www-form-urlencoded",
     }
 
@@ -31,36 +31,36 @@ class Headers:
 class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
-    HOME = "/"
-    LOGIN = "/index.php?route=account/login"
-    REGISTER = "index.php?route=account/register"
-    MY_ACCOUNT = "/index.php?route=account/account"
-    LOGOUT = "/index.php?route=account/logout"
-    SEARCH = "/index.php?route=product/search"
-    CART = "/index.php?route=checkout/cart"
-    CHECKOUT = "/index.php?route=checkout/checkout"
+    HOME: str = "/"
+    LOGIN: str = "/index.php?route=account/login"
+    REGISTER: str = "index.php?route=account/register"
+    MY_ACCOUNT: str = "/index.php?route=account/account"
+    LOGOUT: str = "/index.php?route=account/logout"
+    SEARCH: str = "/index.php?route=product/search"
+    CART: str = "/index.php?route=checkout/cart"
+    CHECKOUT: str = "/index.php?route=checkout/checkout"
 
 
 class UserDetails:
     """User details for validate existing account in registration."""
 
-    first_name = "Pavan"
-    last_name = "B"
-    email = "pavanoltraining@gmail.com"
-    telephone = "814240XXXX"
-    password = "12345"
-    confirm_password = "12345"
+    first_name: str = "Pavan"
+    last_name: str = "B"
+    email: str = "pavanoltraining@gmail.com"
+    telephone: str = "814240XXXX"
+    password: str = "12345"
+    confirm_password: str = "12345"
 
 
 class InvalidPassword:
-    password = "12345"
-    confirm_password = "abcde"
+    password: str = "12345"
+    confirm_password: str = "abcde"
 
 
 class InvalidEmail:
     """Invalid email test data and expected Chromium validation tooltips."""
 
-    test_data = [
+    test_data: list[tuple[str, str]] = [
         ("pavanol", "Please include an '@' in the email address."),
         ("pavanol@", "Please enter a part following '@'."),
         ("@gmail.com", "Please enter a part followed by '@'."),

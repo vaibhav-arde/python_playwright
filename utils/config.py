@@ -26,14 +26,14 @@ class Config:
     """Centralized test data and credentials configuration."""
 
     # Valid credentials
-    email = "vitthalpatil5656@gmail.com"
-    password = "sourabh123"
+    email: str = "vitthalpatil5656@gmail.com"
+    password: str = "sourabh123"
 
     # Invalid credentials (for negative tests)
-    invalid_email = "pavanol123@abc.com"
-    invalid_password = "test@123xyz"
+    invalid_email: str = "pavanol123@abc.com"
+    invalid_password: str = "test@123xyz"
 
     # Product test data
-    product_name = "MacBook"
-    product_quantity = "2"
-    total_price = "$1,204.00"
+    product_name: str = "MacBook"
+    product_quantity: str = "2"
+    total_price: str = "$1,204.00"

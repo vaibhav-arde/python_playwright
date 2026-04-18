@@ -15,7 +15,7 @@ class LogoutPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.btn_continue = page.locator(".btn.btn-primary")
+        self.btn_continue = page.get_by_role("button", name="Continue")
 
     # ===== Action Methods =====
 

@@ -85,6 +85,8 @@ class BasePage:
         """Return the current page URL."""
         return self.page.url
 
-    def get_warning(self, field_id: str) -> Locator:
-        """Return the .text-danger warning element adjacent to a field by its ID."""
-        return self.page.locator(f"#{field_id} + .text-danger")
+    def get_warning(self, label: str) -> Locator:
+        """Return the error message locator associated with a field label."""
+        # For fields with labels, the error is usually the .text-danger sibling of the input
+        # associated with that label.
+        return self.page.get_by_label(label).locator("xpath=..").locator(".text-danger")

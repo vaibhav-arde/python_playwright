@@ -34,7 +34,7 @@ def test_user_registration_no_newsletter(page):
 
     confirmation_msg = registration_page.get_confirmation_msg()
     expect(confirmation_msg).to_have_text(messages.ACCOUNT_CREATED)
-    registration_page.click_continue()
+    registration_page.click_continue_post_account_creation()
     expect(my_account_page.get_my_account_page_heading()).to_have_text(messages.MY_ACCOUNT_HEADING)
     my_account_page.click_newsletter_subscription()
     expect(my_account_page.radio_newsletter_no).to_be_checked()

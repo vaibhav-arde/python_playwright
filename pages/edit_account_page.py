@@ -14,10 +14,10 @@ class EditAccountPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.txt_firstname = page.locator("#input-firstname")
-        self.txt_lastname = page.locator("#input-lastname")
-        self.txt_email = page.locator("#input-email")
-        self.txt_telephone = page.locator("#input-telephone")
+        self.txt_firstname = page.get_by_label("First Name")
+        self.txt_lastname = page.get_by_label("Last Name")
+        self.txt_email = page.get_by_label("E-Mail")
+        self.txt_telephone = page.get_by_label("Telephone")
 
     # ===== Accessor Methods =====
 
