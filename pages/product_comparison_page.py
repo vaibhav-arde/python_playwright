@@ -8,6 +8,7 @@ import re
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+from utils import messages
 
 
 class ProductComparisonPage(BasePage):
@@ -19,12 +20,19 @@ class ProductComparisonPage(BasePage):
         # ===== Locators =====
         # Heading: role="heading" scoped to the page content area
         self.page_heading = page.get_by_role("heading", name="Product Comparison", exact=True)
+        self.empty_comparison_text = page.locator("#content").get_by_text(
+            messages.EMPTY_COMPARISON_MESSAGE
+        )
 
     # ===== Page Header =====
 
     def get_page_heading(self):
         """Return the 'Product Comparison' heading locator."""
         return self.page_heading
+
+    def get_empty_comparison_message_text(self) -> str:
+        """Return the text displayed when no products are added for comparison."""
+        return self.get_text(self.empty_comparison_text)
 
     # ===== Product Presence in Table =====
 
