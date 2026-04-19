@@ -98,3 +98,40 @@ class ProductComparisonPage(BasePage):
         return self.page.get_by_role("cell").filter(
             has_text=re.compile(rf"^{re.escape(product_name)}$")
         )
+
+    def get_product_image_in_table(self, product_name: str):
+        """Return the product image locator scoped to the product's column.
+
+        The image alt text matches the product name, making it both a stable
+        locator and an implicit assertion that the correct product is shown.
+        """
+        return self.page.get_by_role("img", name=product_name)
+
+    def get_product_price_in_table(self):
+        """Return the price cell locator in the Product Comparison table.
+
+        Finds the table row whose header td contains 'Price', then returns
+        the adjacent td that holds the product's price value.
+        """
+        return (
+            self.page.locator("table tr")
+            .filter(has=self.page.locator("td", has_text=re.compile(r"^Price$")))
+            .locator("td")
+            .last
+        )
+
+    def get_add_to_cart_button_in_table(self):
+        """Return the 'Add to Cart' input button inside the comparison table.
+
+        The button is rendered as <input type="button" value="Add to Cart">
+        with class 'btn-primary'. CSS is the most direct locator since
+        Playwright's get_by_role('button') does not match <input type="button">.
+        """
+        return self.page.locator("table input.btn-primary[value='Add to Cart']")
+
+    def get_remove_link_in_table(self):
+        """Return the 'Remove' link locator inside the comparison table.
+
+        Rendered as <a class='btn btn-danger btn-block'>Remove</a>.
+        """
+        return self.page.locator("table").get_by_role("link", name="Remove", exact=True)
