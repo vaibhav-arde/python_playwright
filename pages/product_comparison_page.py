@@ -25,6 +25,22 @@ class ProductComparisonPage(BasePage):
         )
         self.btn_continue = page.get_by_role("link", name="Continue")
 
+        # ===== Breadcrumb Locators =====
+        # ul.breadcrumb pins the container via CSS class. We avoid get_by_role("list")
+        # because Bootstrap's "list-style: none" strips the implicit ARIA role from
+        # <ul> and <li> in Chrome/Safari — making role-based queries return nothing.
+        self.breadcrumb = page.locator("ul.breadcrumb")
+        # The Home <a> contains only a FontAwesome icon (<i class="fa fa-home">)
+        # with no text or aria-label, so get_by_role("link", name="Home") won't match.
+        # CSS :has() scopes the match by structural child — more resilient than href.
+        self.breadcrumb_home_link = self.breadcrumb.locator("li:has(a:has(i.fa-home))")
+        # Inner <a> for dispatch_event click to bypass CSS pointer-event interception.
+        self._breadcrumb_home_anchor = self.breadcrumb.locator("a:has(i.fa-home)")
+        # Current page item — scoped to <li> to avoid matching the page <h1>.
+        self.breadcrumb_current = self.breadcrumb.locator("li").filter(
+            has_text="Product Comparison"
+        )
+
     # ===== Page Header =====
 
     def get_page_heading(self):
@@ -44,6 +60,31 @@ class ProductComparisonPage(BasePage):
     def click_continue(self):
         """Click the 'Continue' button to navigate back to the Home page."""
         self.click(self.btn_continue)
+
+    # ===== Breadcrumb =====
+
+    def get_breadcrumb(self):
+        """Return the breadcrumb container locator."""
+        return self.breadcrumb
+
+    def get_breadcrumb_home_link(self):
+        """Return the Home breadcrumb link locator."""
+        return self.breadcrumb_home_link
+
+    def get_breadcrumb_current_item(self):
+        """Return the 'Product Comparison' breadcrumb item locator (current page)."""
+        return self.breadcrumb_current
+
+    def click_breadcrumb_home(self):
+        """Click the Home icon link in the breadcrumb.
+
+        Both .click() and .click(force=True) fail here: Bootstrap's breadcrumb
+        applies CSS pointer-events that swallow pointer-based events on the <li>,
+        even when Playwright's actionability checks are skipped.
+        dispatch_event("click") injects a JS MouseEvent directly into the DOM
+        event system — CSS pointer-events cannot intercept it.
+        """
+        self.dispatch_event(self._breadcrumb_home_anchor, "click")
 
     # ===== Product Presence in Table =====
 

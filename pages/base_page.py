@@ -81,6 +81,12 @@ class BasePage:
         target.hover()
         logger.info(f"Hovered over: {target}")
 
+    def dispatch_event(self, locator: str | Locator, event: str):
+        """Fire a JS-level event on an element, bypassing CSS pointer-event blocking."""
+        target = self.get_locator(locator)
+        target.dispatch_event(event)
+        logger.info(f"Dispatched '{event}' event on: {target}")
+
     def get_attribute(self, locator: str | Locator, name: str) -> str | None:
         """Get the value of an attribute for an element."""
         target = self.get_locator(locator)
