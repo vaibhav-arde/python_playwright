@@ -7,14 +7,18 @@ from pages.home_page import HomePage
 from pages.product_comparison_page import ProductComparisonPage
 from pages.search_results_page import SearchResultsPage
 from utils.constants import UIRoutes
-from utils.data_loader import read_json_data
+from utils.data_loader import load_json_file
 
 
 @pytest.mark.regression
 @pytest.mark.ui
-@pytest.mark.parametrize(("product_name",), read_json_data("test_data/comparedata.json"))
-def test_validate_product_comparison_page_with_one_product(page, product_name):
+@pytest.mark.parametrize(
+    "product_names",
+    load_json_file("test_data/product_comparison.json")["one_product"],
+)
+def test_validate_product_comparison_page_with_one_product(page, product_names):
     """TC_PC_014 — Validate the Product Comparison page when one product is added."""
+    product_name = product_names[0]
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
 

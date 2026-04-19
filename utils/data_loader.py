@@ -13,6 +13,18 @@ import openpyxl
 logger = logging.getLogger(__name__)
 
 
+def load_json_file(file_path: str):
+    """
+    Load a JSON file and return its content (dict or list) directly.
+    """
+    try:
+        with open(file_path) as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Error loading JSON file '{file_path}': {e}")
+        return None
+
+
 def read_json_data(file_path: str) -> list[tuple]:
     """
     Read test data from a JSON file and return a list of tuples.

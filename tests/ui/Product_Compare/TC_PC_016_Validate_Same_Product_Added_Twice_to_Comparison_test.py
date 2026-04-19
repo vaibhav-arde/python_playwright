@@ -7,18 +7,19 @@ from pages.home_page import HomePage
 from pages.product_comparison_page import ProductComparisonPage
 from pages.search_results_page import SearchResultsPage
 from utils.constants import UIRoutes
-from utils.data_loader import read_json_data
+from utils.data_loader import load_json_file
 from utils.messages import COMPARE_SUCCESS
 
 
 @pytest.mark.regression
 @pytest.mark.ui
 @pytest.mark.parametrize(
-    ("product_name",),
-    read_json_data("test_data/comparedata.json"),
+    "product_names",
+    load_json_file("test_data/product_comparison.json")["one_product"],
 )
-def test_validate_same_product_added_twice_to_comparison(page, product_name):
+def test_validate_same_product_added_twice_to_comparison(page, product_names):
     """TC_PC_016 — Validate the 'Product Comparison' page when the same product is added twice."""
+    product_name = product_names[0]
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     comparison_page = ProductComparisonPage(page)
