@@ -89,29 +89,20 @@ class ProductComparisonPage(BasePage):
     # ===== Product Presence in Table =====
 
     def get_product_name_in_table(self, product_name: str):
-        """Return the locator for the exact product name cell in the comparison table.
-
-        Uses get_by_role('cell') and filters with an exact-match regex
-        to avoid strict-mode violations from description cells that also
-        contain the product name.
-        """
+        """Return the locator for the exact product name cell in the comparison table."""
         return self.page.get_by_role("cell").filter(
             has_text=re.compile(rf"^{re.escape(product_name)}$")
         )
 
     def get_product_image_in_table(self, product_name: str):
-        """Return the product image locator scoped to the product's column.
-
-        The image alt text matches the product name, making it both a stable
-        locator and an implicit assertion that the correct product is shown.
-        """
+        """Return the product image locator scoped to the product's column."""
         return self.page.get_by_role("img", name=product_name)
 
     def get_product_price_in_table(self):
         """Return the price cell locator in the Product Comparison table.
 
         Finds the table row whose header td contains 'Price', then returns
-        the adjacent td that holds the product's price value.
+        the last td — sufficient when exactly one product is in the table.
         """
         return (
             self.page.locator("table tr")
@@ -120,13 +111,15 @@ class ProductComparisonPage(BasePage):
             .last
         )
 
-    def get_add_to_cart_button_in_table(self):
-        """Return the 'Add to Cart' input button inside the comparison table.
+    def get_all_price_cells_in_table(self):
+        """Return all product price td locators in the Price row."""
+        price_row = self.page.locator("table tr").filter(
+            has=self.page.locator("td", has_text=re.compile(r"^Price$"))
+        )
+        return price_row.locator("td ~ td")
 
-        The button is rendered as <input type="button" value="Add to Cart">
-        with class 'btn-primary'. CSS is the most direct locator since
-        Playwright's get_by_role('button') does not match <input type="button">.
-        """
+    def get_add_to_cart_button_in_table(self):
+        """Return the 'Add to Cart' input button inside the comparison table."""
         return self.page.locator("table input.btn-primary[value='Add to Cart']")
 
     def get_remove_link_in_table(self):
