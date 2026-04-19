@@ -31,6 +31,8 @@ class ProductPage(BasePage):
         )
         # Link inside the success alert navigating to the product comparison page.
         self.lnk_product_comparison = self.cnf_msg.get_by_role("link", name="product comparison")
+        # Link inside the success alert navigating back to the product's own display page.
+        self._cnf_msg = self.cnf_msg
         self.product_header = page.locator("#content").get_by_role("heading", level=1)
 
         # ===== Related Products Locators =====
@@ -111,6 +113,14 @@ class ProductPage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the comparison success message."""
         self.click(self.lnk_product_comparison)
+
+    def get_product_name_link_in_success_message(self, product_name: str):
+        """Return the product-name link inside the comparison success alert."""
+        return self._cnf_msg.get_by_role("link", name=product_name, exact=True)
+
+    def click_product_name_link_in_success_message(self, product_name: str):
+        """Click the product-name link in the comparison success alert."""
+        self.click(self.get_product_name_link_in_success_message(product_name))
 
     # ===== Related Products Methods =====
 
