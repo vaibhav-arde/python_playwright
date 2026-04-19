@@ -10,5 +10,8 @@
   ],
   "four_products": [
     ["iMac", "iPhone", "MacBook Air", "MacBook"]
+  ],
+  "five_products": [
+    ["iMac", "iPhone", "MacBook Air", "MacBook", "MacBook Pro"]
   ]
 }
