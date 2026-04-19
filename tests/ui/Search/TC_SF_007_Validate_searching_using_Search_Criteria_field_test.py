@@ -15,7 +15,6 @@ from pages.search_results_page import SearchResultsPage
 from utils.config import Config
 
 
-@pytest.mark.sanity
 @pytest.mark.ui
 def test_search_using_search_criteria_field(page):
     home_page = HomePage(page)

@@ -8,7 +8,7 @@ Description: Validate Search by selecting the category of product
 4. Select the Parent category of the given Product Name into 'Category' dropdown field -
 5. Click on 'Search' button (Validate ER-1)
 6. Select 'Search in subcategories' checkbox field
-Click on 'Search' button (Validate ER-2)
+7. Click on 'Search' button (Validate ER-2)
 
 """
 

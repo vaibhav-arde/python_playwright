@@ -15,7 +15,6 @@ from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 
 
-@pytest.mark.sanity
 @pytest.mark.ui
 def test_search_without_product_name(page):
     home_page = HomePage(page)

@@ -19,7 +19,6 @@ from pages.search_results_page import SearchResultsPage
 from utils.assertions import validate_placeholder
 
 
-@pytest.mark.sanity
 @pytest.mark.ui
 def test_search_page_have_placeholders(page):
     home_page = HomePage(page)

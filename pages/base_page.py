@@ -45,6 +45,12 @@ class BasePage:
         target.fill(value)
         logger.info(f"Filled {target} with value: {value}")
 
+    def press_key(self, locator: str | Locator, key: str):
+        """Press a key on an element. Accepts string selector OR Locator object."""
+        target = self.get_locator(locator)
+        target.press(key)
+        logger.info(f"Pressed key {key} on {target}")
+
     def check(self, locator: str | Locator):
         """Select a checkbox or radio button."""
         target = self.get_locator(locator)

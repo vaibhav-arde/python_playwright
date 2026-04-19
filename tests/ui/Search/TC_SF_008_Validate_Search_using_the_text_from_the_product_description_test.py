@@ -16,7 +16,6 @@ from pages.search_results_page import SearchResultsPage
 from utils.config import ProductData
 
 
-@pytest.mark.sanity
 @pytest.mark.ui
 def test_search_using_product_description(page):
     home_page = HomePage(page)

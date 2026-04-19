@@ -9,13 +9,6 @@ Description: Validate List and Grid views when only one Product is displayed in 
 5. Repeat Steps 1 to 2 and Select 'Grid' option (Validate ER-3)
 6. Click on the Image of the Product and name of the product (Validate ER-4)
 
-Acceptance Criteria:
-
-1. Single product should be displayed in the List view without any problems and all the options (Add to Cart, Wish List and Compare Product) are working
-2. User should be navigated to the Product Display Page of the product
-3. Single product should be displayed in the Grid view without any problems and all the options (Add to Cart, Wish List and Compare Product) are working
-4. User should be navigated to the Product Display Page of the product
-
 """
 
 import pytest

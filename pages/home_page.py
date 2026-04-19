@@ -20,6 +20,7 @@ class HomePage(BasePage):
         self.lnk_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
         self.txt_search_box = page.get_by_role("textbox", name="Search")
         self.btn_search = page.locator("#search").get_by_role("button")
+        self.lnk_site_map = page.get_by_role("link", name="Site Map")
 
     # ===== Action Methods =====
 
@@ -47,6 +48,14 @@ class HomePage(BasePage):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
 
+    def press_enter_key(self):
+        """Press the 'Enter' key in the search box."""
+        self.press_key(self.txt_search_box, "Enter")
+
     def get_search_box(self):
         """Returns the search input field on home page"""
         return self.txt_search_box
+
+    def click_site_map(self):
+        """Click on the Site Map link from footer"""
+        self.click(self.lnk_site_map)

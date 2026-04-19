@@ -14,7 +14,6 @@ from pages.search_results_page import SearchResultsPage
 from utils.config import Config
 
 
-@pytest.mark.sanity
 @pytest.mark.ui
 def test_search_with_non_existing_product_name(page):
     home_page = HomePage(page)

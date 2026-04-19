@@ -32,8 +32,8 @@ class SearchResultsPage(BasePage):
         self.chk_search_in_subcategories = page.get_by_role(
             "checkbox", name="Search in subcategories"
         )
-        self.btn_list_view = page.locator("#list-view")
-        self.btn_grid_view = page.locator("#grid-view")
+        self.btn_list_view = page.get_by_role("button").filter(has=page.locator("i.fa-th-list"))
+        self.btn_grid_view = page.get_by_role("button").filter(has=page.locator("i.fa-th"))
         self.product_thumb = page.locator(".product-thumb")
         self.btn_add_to_cart = page.get_by_role("button", name="Add to Cart")
         self.btn_wish_list = page.get_by_role("button", name="Add to Wish List")
@@ -43,6 +43,19 @@ class SearchResultsPage(BasePage):
         self.drp_sort = page.get_by_label("Sort By:")
         self.product_prices = page.locator(".price")
         self.drp_limit = page.get_by_role("combobox", name="Show")
+        self.breadcrumb = page.locator("ul.breadcrumb")
+        self.home_link = page.locator("ul.breadcrumb a[href*='route=common/home']")
+        self.search_link = page.get_by_role("link", name="Search")
+
+        self._product_action_locators = {
+            "cart": lambda c: c.get_by_role("button", name="Add to Cart"),
+            "wishlist": lambda c: c.get_by_role("button").filter(
+                has=self.page.locator("i.fa-heart")
+            ),
+            "compare": lambda c: c.get_by_role("button").filter(
+                has=self.page.locator("i.fa-exchange")
+            ),
+        }
 
     # ===== Page Header =====
 
@@ -57,6 +70,38 @@ class SearchResultsPage(BasePage):
     def get_empty_search_message(self):
         """Returns the locator for the empty search results message."""
         return self.msg_empty_search
+
+    def get_category_dropdown(self):
+        """Returns the locator for the category dropdown."""
+        return self.drp_category
+
+    def get_search_button(self):
+        """Returns the locator for the search button in criteria section."""
+        return self.btn_search_criteria
+
+    def get_search_in_descriptions_checkbox(self):
+        """Returns the locator for the 'Search in product descriptions' checkbox."""
+        return self.chk_search_in_descriptions
+
+    def get_search_in_subcategories_checkbox(self):
+        """Returns the locator for the 'Search in subcategories' checkbox."""
+        return self.chk_search_in_subcategories
+
+    def get_list_view_button(self):
+        """Returns the locator for the list view toggle button."""
+        return self.btn_list_view
+
+    def get_grid_view_button(self):
+        """Returns the locator for the grid view toggle button."""
+        return self.btn_grid_view
+
+    def get_sort_dropdown(self):
+        """Returns the locator for the sort by dropdown."""
+        return self.drp_sort
+
+    def get_limit_dropdown(self):
+        """Returns the locator for the limit (show) dropdown."""
+        return self.drp_limit
 
     # ===== Actions =====
 
@@ -109,9 +154,16 @@ class SearchResultsPage(BasePage):
             has=self.page.get_by_role("link", name=product_name, exact=True)
         )
 
-    def is_product_present(self, product_name: str) -> bool:
-        """Checks if a product is present in the results."""
-        return self.get_product_container(product_name).count() > 0
+    def _get_product_action_locator(self, container, action: str):
+        if action not in self._product_action_locators:
+            raise ValueError(f"Invalid action: {action}")
+
+        return self._product_action_locators[action](container)
+
+    def click_product_action(self, product_name: str, action: str):
+        container = self.get_product_container(product_name)
+        locator = self._get_product_action_locator(container, action)
+        self.click(locator)
 
     def click_add_to_cart(self, product_name: str):
         """Click 'Add to Cart' for a specific product."""
@@ -215,3 +267,8 @@ class SearchResultsPage(BasePage):
         """Select number of products to display from 'Show' dropdown."""
         self.select_option(self.drp_limit, label=value)
         self.page.wait_for_load_state("networkidle")
+
+    def validate_breadcrumb(self):
+        """Validate breadcrumb options"""
+        assert self.home_link.is_visible()
+        assert self.search_link.is_visible()

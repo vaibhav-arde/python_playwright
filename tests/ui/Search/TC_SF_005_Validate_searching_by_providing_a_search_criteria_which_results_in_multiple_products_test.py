@@ -15,7 +15,6 @@ from utils.config import Config
 from utils.assertions import assert_products_match_search
 
 
-@pytest.mark.sanity
 @pytest.mark.ui
 def test_search_with_multiple_products(page):
     home_page = HomePage(page)
