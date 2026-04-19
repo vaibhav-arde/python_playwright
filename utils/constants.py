@@ -75,3 +75,19 @@ INVALID_PHONE_NUMBERS = [
     "@@@@",  # special chars (BUG case)
     "123456789012345678901234567890123",  # too long
 ]
+
+
+class UILabels:
+    # UI Page Headings
+    REGISTER_PAGE_HEADING = "Register Account"
+    REGISTER_BREADCRUMB = "Register"
+
+
+class UITitles:
+    REGISTER_PAGE_TITLE = "Register Account"
+
+
+class TestData:
+    # Test Data
+    VALID_PASSWORD = "Test@123"
+    INVALID_PASSWORD = "123"
