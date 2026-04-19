@@ -7,16 +7,19 @@ from pages.home_page import HomePage
 from pages.product_comparison_page import ProductComparisonPage
 from pages.search_results_page import SearchResultsPage
 from utils.constants import UIRoutes
-from utils.data_loader import read_json_data
-from utils.messages import COMPARE_BUTTON_TOOLTIP, COMPARE_SUCCESS
+from utils.data_loader import load_json_file
+from utils.messages import COMPARE_SUCCESS, COMPARE_BUTTON_TOOLTIP
 
 
 @pytest.mark.regression
 @pytest.mark.ui
-@pytest.mark.parametrize(("product_name",), read_json_data("test_data/comparedata.json"))
-def test_add_product_to_comparison_pdp_verification(page, product_name):
-    """Verify that a product can be added to comparison from the product display page."""
-
+@pytest.mark.parametrize(
+    "product_names",
+    load_json_file("test_data/product_comparison.json")["one_product"],
+)
+def test_add_product_to_comparison_pdp_verification(page, product_names):
+    """TC_PC_006 — Validate 'Compare this Product' from the Product Display Page."""
+    product_name = product_names[0]
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
 

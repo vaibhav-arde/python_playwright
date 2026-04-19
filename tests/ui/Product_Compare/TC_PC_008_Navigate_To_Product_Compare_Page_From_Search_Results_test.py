@@ -6,19 +6,18 @@ from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_comparison_page import ProductComparisonPage
 from utils.constants import UIRoutes
-
-from utils.data_loader import read_json_data
+from utils.data_loader import load_json_file
 
 
 @pytest.mark.regression
 @pytest.mark.ui
-@pytest.mark.datadriven
-@pytest.mark.parametrize(("product_name",), read_json_data("test_data/comparedata.json"))
-def test_navigate_to_product_compare_page_from_search_results(page, product_name):
-    """
-    Test Case: TC_PC_008
-    Objective: Verify that user can navigate to 'Product Compare' page from Search Results page.
-    """
+@pytest.mark.parametrize(
+    "product_names",
+    load_json_file("test_data/product_comparison.json")["one_product"],
+)
+def test_navigate_to_product_compare_page_from_search_results(page, product_names):
+    """TC_PC_008 — Validate 'Product Compare' link navigation from Search Results."""
+    product_name = product_names[0]
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     comparison_page = ProductComparisonPage(page)

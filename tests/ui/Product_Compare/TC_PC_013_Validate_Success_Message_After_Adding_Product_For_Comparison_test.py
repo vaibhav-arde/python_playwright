@@ -7,15 +7,19 @@ from pages.home_page import HomePage
 from pages.product_comparison_page import ProductComparisonPage
 from pages.search_results_page import SearchResultsPage
 from utils.constants import UIRoutes
-from utils.data_loader import read_json_data
+from utils.data_loader import load_json_file
 from utils.messages import COMPARE_SUCCESS
 
 
 @pytest.mark.regression
 @pytest.mark.ui
-@pytest.mark.parametrize(("product_name",), read_json_data("test_data/comparedata.json"))
-def test_validate_success_message_after_adding_product_for_comparison(page, product_name):
-    """TC_PC_013 — Validate the success message displayed after adding a product for comparison."""
+@pytest.mark.parametrize(
+    "product_names",
+    load_json_file("test_data/product_comparison.json")["one_product"],
+)
+def test_validate_success_message_after_adding_product_for_comparison(page, product_names):
+    """TC_PC_013 — Validate success message after adding a product for comparison."""
+    product_name = product_names[0]
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
 
