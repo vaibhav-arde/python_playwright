@@ -95,8 +95,8 @@ class ProductComparisonPage(BasePage):
         )
 
     def get_product_image_in_table(self, product_name: str):
-        """Return the product image locator scoped to the product's column."""
-        return self.page.get_by_role("img", name=product_name)
+        """Return the product image locator scoped to the comparison table."""
+        return self.page.locator("table").get_by_role("img", name=product_name, exact=True)
 
     def get_product_price_in_table(self):
         """Return the price cell locator in the Product Comparison table.
