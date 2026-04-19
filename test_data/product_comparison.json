@@ -1,0 +1,11 @@
+{
+  "one_product": [
+    ["iMac"]
+  ],
+  "two_products": [
+    ["iMac", "iPhone"]
+  ],
+  "three_products": [
+    ["iMac", "iPhone", "MacBook Air"]
+  ]
+}
