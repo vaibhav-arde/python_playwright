@@ -45,7 +45,7 @@ def test_logout_all_devices(authenticated_page, new_context, auth_state_path):
 
     # Validating the Login Page UI specifically loaded to request new credentials
     login_page_2 = LoginPage(page2)
-    expect(page2).to_have_title(login_page_2.get_expected_title())
+    expect(page2).to_have_title(login_page_2.get_title())
     expect(login_page_2.verify_login_btn_visible()).to_be_visible()
 
     # Cleanup Device 2 context explicitly

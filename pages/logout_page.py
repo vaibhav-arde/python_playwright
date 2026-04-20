@@ -25,7 +25,7 @@ class LogoutPage(BasePage):
         """Return the expected title for the Logout page."""
         return "Account Logout"
 
-    def get_expected_url_pattern(self) -> str:
+    def get_url_pattern(self) -> str:
         """Return the expected URL route for the Logout page."""
         return r"route=account/logout"
 
@@ -58,7 +58,3 @@ class LogoutPage(BasePage):
     def get_breadcrumb(self):
         """Return the breadcrumb locator."""
         return self.breadcrumb
-
-    def get_logout_page_title(self) -> str:
-        """Return the precise page title for the Logout page."""
-        return self.get_title()

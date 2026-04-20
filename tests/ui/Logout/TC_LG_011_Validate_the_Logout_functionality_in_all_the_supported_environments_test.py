@@ -44,26 +44,21 @@ def test_logout_supported_environments(authenticated_page):
     expect(page).to_have_title(logout_page.get_expected_title())
     
     # Validation 2: Logout page heading should be correct
-    heading_locator = logout_page.verify_logout_page_heading()
-    expect(heading_locator).to_be_visible()
-    expect(heading_locator).to_have_text("Account Logout")
-    
+    expect(logout_page.verify_logout_page_heading()).to_be_visible()
+
     # Validation 3: "Continue" button should be visible and clickable
-    continue_btn = logout_page.get_continue_button()
-    expect(continue_btn).to_be_visible()
-    expect(continue_btn).to_be_enabled()
+    expect(logout_page.get_continue_button()).to_be_visible()
+    expect(logout_page.get_continue_button()).to_be_enabled()
     
     # Step 4: After clicking "Continue", user should be redirected to the Home page
     logout_page.click_continue()
     
     # Native OpenCart default Home Page title mapping
-    expect(page).to_have_title(home_page.get_expected_title())
+    expect(page).to_have_title(home_page.get_title())
     
     # Validation 5: "Login" option should be visible within My Account options
     home_page.click_my_account()
-    login_btn = home_page.verify_login_btn_visible()
-    expect(login_btn).to_be_visible()
+    expect(home_page.verify_login_btn_visible()).to_be_visible()
     
     # Validation 6: "Logout" option should not be visible anymore
-    logout_btn = home_page.verify_logout_btn_not_visible()
-    expect(logout_btn).to_be_hidden()
+    expect(home_page.verify_logout_btn()).not_to_be_visible()

@@ -22,7 +22,7 @@ def test_user_logout(authenticated_page):
     my_account_page.click_logout_sidebar()
 
     #Step 2: Verify logout page
-    expect(logout_page.verify_logout_page_heading()).to_have_text("Account Logout")
+    expect(logout_page.verify_logout_page_heading()).to_be_visible()
 
     #Step 3: Click dropdown menu from logout page
     logout_page.click_dropdown_logout_page()

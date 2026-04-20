@@ -30,7 +30,6 @@ class RegistrationPage(BasePage):
         self.msg_telephone_error = page.locator(
             "div.form-group:has(input[name='telephone']) div.text-danger"
         )
-        self.lnk_logout = page.locator("ul.dropdown-menu").get_by_role("link", name="Logout")
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")

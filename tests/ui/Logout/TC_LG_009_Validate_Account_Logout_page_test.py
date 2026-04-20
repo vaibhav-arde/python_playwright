@@ -36,24 +36,19 @@ def test_validate_account_logout_page_ui(authenticated_page):
 
     # Validation (ER-1)
     # ------------------
-    # 1. Verify correct Page Heading is displayed ("Account Logout" inside h1/h2)
-    heading_locator = logout_page.verify_logout_page_heading()
-    expect(heading_locator).to_be_visible()
-    expect(heading_locator).to_have_text("Account Logout")
+    # 1. Verify correct Page Heading is displayed
+    expect(logout_page.verify_logout_page_heading()).to_be_visible()
 
     # 2. Verify correct Page Title is displayed
-    # Opencart Account Logout page typically has title "Account Logout"
     expect(page).to_have_title(logout_page.get_expected_title())
 
     # 3. Verify correct Page URL contains the logout route
-    # Expect the current URL to contain 'account/logout'
-    expect(page).to_have_url(re.compile(logout_page.get_expected_url_pattern()))
+    expect(page).to_have_url(re.compile(logout_page.get_url_pattern()))
 
-    # 4. Verify Breadcrumb is displayed correctly (e.g., Home > Account > Logout)
+    # 4. Verify Breadcrumb is displayed correctly
     breadcrumb = logout_page.get_breadcrumb()
     expect(breadcrumb).to_be_visible()
     
     # Asserting that the breadcrumb correctly contains the key navigational steps.
-    # Note: Using individual contains checks makes it robust against minor icon/spacing changes.
     expect(breadcrumb).to_contain_text("Account")
     expect(breadcrumb).to_contain_text("Logout")

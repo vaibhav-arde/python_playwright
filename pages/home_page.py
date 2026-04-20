@@ -26,10 +26,6 @@ class HomePage(BasePage):
 
     # ===== Action Methods =====
 
-    def get_dropdown_menu(self) -> Locator:
-        """Return the dropdown menu container."""
-        return self.dropdown_menu
-
     def get_my_account_inner_link(self) -> Locator:
         """Return the 'My Account' link inside the dropdown."""
         return self.my_account_inner_link
@@ -38,10 +34,6 @@ class HomePage(BasePage):
         """Return the expected title for the Home Page."""
         # Opencart Default
         return "Your Store"
-
-    def get_home_page_title(self) -> str:
-        """Return the title of the Home Page."""
-        return self.get_title()
 
     def click_my_account(self):
         """Click on the 'My Account' link."""
@@ -66,5 +58,5 @@ class HomePage(BasePage):
     def verify_login_btn_visible(self):
         return self.lnk_login
         
-    def verify_logout_btn_not_visible(self):
+    def verify_logout_btn(self):
         return self.lnk_logout
