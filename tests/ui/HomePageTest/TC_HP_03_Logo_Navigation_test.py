@@ -12,7 +12,6 @@ from utils.constants import expected_title, UIRoutes
 
 
 @pytest.mark.ui
-@pytest.mark.regression
 def test_logo_navigation(page, base_url):
     home_page = HomePage(page)
 
