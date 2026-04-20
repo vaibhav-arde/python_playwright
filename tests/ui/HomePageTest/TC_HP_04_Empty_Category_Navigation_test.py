@@ -13,8 +13,8 @@
 import pytest
 from playwright.sync_api import expect
 
-from pages.home_page import HomePage
 from pages.category_page import CategoryPage
+from pages.home_page import HomePage
 from utils.constants import expected_title
 
 

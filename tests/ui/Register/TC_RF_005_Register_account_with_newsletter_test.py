@@ -14,8 +14,8 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
 from pages.registration_page import RegistrationPage
-from utils.helpers import RandomDataUtil
 from utils import messages
+from utils.helpers import RandomDataUtil
 
 
 @pytest.mark.sanity
@@ -42,17 +42,13 @@ def test_register_account_with_newsletter_yes_option(page):
     registration_page.set_password(password)
     registration_page.set_confirm_password(password)
 
-    registration_page.set_newsletter_subscription(
-        registration_page.radio_newsletter_yes
-    )
+    registration_page.set_newsletter_subscription(registration_page.radio_newsletter_yes)
     registration_page.set_privacy_policy()
     registration_page.click_continue()
 
     confirmation_msg = registration_page.get_confirmation_msg()
     expect(confirmation_msg).to_have_text(messages.ACCOUNT_CREATED)
     registration_page.click_continue()
-    expect(my_account_page.get_my_account_page_heading()).to_have_text(
-        messages.MY_ACCOUNT_HEADING
-    )
+    expect(my_account_page.get_my_account_page_heading()).to_have_text(messages.MY_ACCOUNT_HEADING)
     my_account_page.click_newsletter_subscription()
     expect(my_account_page.radio_newsletter_yes).to_be_checked()

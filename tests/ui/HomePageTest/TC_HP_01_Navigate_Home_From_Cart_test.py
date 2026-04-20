@@ -11,6 +11,7 @@ Validate navigating to Home Page from 'Shopping Cart' page
 
 import pytest
 from playwright.sync_api import expect
+
 from pages.home_page import HomePage
 from utils.config import Config
 from utils.constants import expected_title

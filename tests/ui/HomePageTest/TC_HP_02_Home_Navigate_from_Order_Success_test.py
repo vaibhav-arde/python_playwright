@@ -5,6 +5,7 @@ page 1. Open the Application URL and place an order
 Product Name: iMac"""
 
 import pytest
+
 from pages.home_page import HomePage
 from utils.config import Config
 

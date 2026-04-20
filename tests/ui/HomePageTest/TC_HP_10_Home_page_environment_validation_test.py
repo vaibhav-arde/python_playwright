@@ -14,13 +14,14 @@ in all supported browsers/environments.
 
 import pytest
 from playwright.sync_api import expect
+
 from pages.home_page import HomePage
 
 
 @pytest.mark.ui
 @pytest.mark.cross_browser
 @pytest.mark.critical
-def test_home_page_cross_browser_compatibility(page,base_url):
+def test_home_page_cross_browser_compatibility(page, base_url):
     """
     Verify Home page functionality works correctly
     across supported environments.
