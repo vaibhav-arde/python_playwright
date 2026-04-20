@@ -4,11 +4,6 @@ Description: Validate the Search functionality in all the supported environments
 
 1. Enter any existing product name into the 'Search' text box field -
 2. Click on the button having search icon (Validate ER-1)
-
-Acceptance Criteria:
-
-Search functionality should work correctly in all the supported environments
-
 """
 
 import pytest

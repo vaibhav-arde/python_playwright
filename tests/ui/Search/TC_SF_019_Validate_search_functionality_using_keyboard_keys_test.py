@@ -1,9 +1,6 @@
-"""
-Test Case ID: #63
-Description: Validate we can use all the options of Search functionality using the Keyboard keys
+"""Test Case ID: #63
 
-1.Press Tab and Enter keys to perform Search operation and select several options in the Search page (Validate ER-1)
-
+Validate we can use all the options of Search functionality using the Keyboard keys
 """
 
 import re
@@ -27,7 +24,7 @@ def test_search_functionality_using_keyboard_keys(page):
     home_page.enter_product_name(Config.product_name)
 
     # Step 3: Press the 'Enter' key on the keyboard to search
-    home_page.press_enter_key()
+    home_page.press_enter()
 
     # Step 4: Validate that we are on the Search page
     expect(search_results_page.get_search_results_page_header()).to_be_visible()
@@ -37,19 +34,15 @@ def test_search_functionality_using_keyboard_keys(page):
     search_results_page.get_search_criteria_textbox().focus()
 
     # Step 6: Tab through options and select 'Search in product descriptions'
-    page.keyboard.press(
-        "Tab"
-    )  # Move to Category dropdown (do not change value to ensure result found)
-    page.keyboard.press("Tab")  # Move to 'Search in subcategories'
-    page.keyboard.press("Tab")  # Move to 'Search in product descriptions'
-    page.keyboard.press("Space")  # Check it
+    home_page.press_tab(2)  # Category, Subcategories, Descriptions
+    home_page.press_space()  # Toggle checkbox
 
     # Verify it is checked
     expect(search_results_page.get_search_in_descriptions_checkbox())
 
     # Step 7: Use Keyboard to navigate to Search button and press Enter
-    page.keyboard.press("Tab")  # To Search button
-    page.keyboard.press("Enter")
+    home_page.press_tab()  # Move focus to Search button
+    home_page.press_enter()
 
     # Step 8: Validate that the product is displayed in the search results
     expect(search_results_page.get_search_results_page_header()).to_contain_text(

@@ -14,7 +14,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from utils.config import Config
-from utils.constants import UIRoutes
+from utils.constants import UIRoutes, PageTitles
 
 
 @pytest.mark.ui
@@ -31,4 +31,4 @@ def test_page_heading_page_url_and_page_title_of_the_search_page(page):
     # Step 3: Validate the Page Heading, Page URL and Page Title of the Search page
     expect(search_results_page.get_search_results_page_header()).to_be_visible()
     expect(page).to_have_url(re.compile(UIRoutes.SEARCH_PAGE))
-    expect(page).to_have_title(f"Search - {Config.product_name}")
+    expect(page).to_have_title(PageTitles.SEARCH.format(Config.product_name))

@@ -83,3 +83,7 @@ INVALID_PHONE_NUMBERS = [
 class SortOptions:
     NAME_ASC = "Name (A - Z)"
     PRICE_ASC = "Price (Low > High)"
+
+
+class PageTitles:
+    SEARCH = "Search - {}"
