@@ -15,6 +15,7 @@ class LogoutPage(BasePage):
 
         # ===== Locators =====
         self.btn_continue = page.locator(".btn.btn-primary")
+        self.lnk_logout = page.get_by_role("link", name="Logout").nth(1)
 
     # ===== Action Methods =====
 
@@ -28,5 +29,4 @@ class LogoutPage(BasePage):
 
     def logout(self):       
         # Click logout link from dropdown
-        self.click(self.page.locator("ul.dropdown-menu").get_by_role("link", name="Logout"))
-        self.click_continue()
+        self.click(self.lnk_logout)

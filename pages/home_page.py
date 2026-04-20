@@ -20,6 +20,7 @@ class HomePage(BasePage):
         self.lnk_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
+        self.lnk_logout = page.locator('a:has-text("Logout")')
 
     # ===== Action Methods =====
 
@@ -46,3 +47,7 @@ class HomePage(BasePage):
     def click_search(self):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
+
+    def logout_link(self):
+        """Click on the 'Logout' link."""
+        return self.lnk_logout

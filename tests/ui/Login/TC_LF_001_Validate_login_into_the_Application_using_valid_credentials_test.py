@@ -42,8 +42,6 @@ def test_valid_user_login(page, registered_user):
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.set_email(registered_user["email"])
-    login_page.set_password(registered_user["password"])
-    login_page.click_login()
+    login_page.login(registered_user['email'], registered_user['password'])
 
     expect(my_account_page.get_my_account_page_heading()).to_be_visible(timeout=5000)

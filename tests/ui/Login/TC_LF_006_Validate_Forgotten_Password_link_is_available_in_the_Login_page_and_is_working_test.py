@@ -7,14 +7,16 @@ from pages.my_account_page import MyAccountPage
 from utils.config import Config
 from utils import messages
 
+
 @pytest.mark.sanity
-def test_invalid_user_login(page):
+def test_forgotten_password_link_visibility_and_navigation(page): 
     home_page = HomePage(page)
     login_page = LoginPage(page)
 
     home_page.click_my_account()
     home_page.click_login()
+    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE, timeout=5000)
+    expect(login_page.get_forgot_password()).to_be_visible(timeout=5000)
 
-    login_page.login(Config.invalid_email, Config.invalid_password)
-
-    expect(login_page.get_login_error()).to_be_visible(timeout=5000)
+    login_page.click_forgot_password()
+    expect(page).to_have_title(messages.FORGOT_PASSWORD_PAGE_TITLE, timeout=5000)

@@ -27,7 +27,10 @@ class Config:
 
     # Valid credentials
     email = "vitthalpatil5656@gmail.com"
-    password = "sourabh123"
+    password = "vitthal123"
+
+    # Password change test data
+    password_change_new_password = "sourabh123"
 
     # Invalid credentials (for negative tests)
     invalid_email = "pavanol123@abc.com"
@@ -37,3 +40,7 @@ class Config:
     product_name = "MacBook"
     product_quantity = "2"
     total_price = "$1,204.00"
+
+    # Inactive credentials (for negative tests)
+    inactive_email = "[EMAIL_ADDRESS]"
+    inactive_password = "[PASSWORD]"

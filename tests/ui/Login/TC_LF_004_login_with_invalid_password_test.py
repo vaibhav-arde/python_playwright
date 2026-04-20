@@ -8,13 +8,13 @@ from utils.config import Config
 
 
 @pytest.mark.sanity
-def test_invalid_email_login(page):
+def test_invalid_password_login(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)
 
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.login(Config.invalid_email, Config.password)
+    login_page.login(Config.email, Config.invalid_password)
 
     expect(login_page.get_login_error()).to_be_visible(timeout=5000)
