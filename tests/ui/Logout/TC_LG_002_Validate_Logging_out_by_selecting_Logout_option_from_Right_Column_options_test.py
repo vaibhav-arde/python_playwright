@@ -10,12 +10,13 @@ from pages.my_account_page import MyAccountPage
 def test_user_logout(authenticated_page):
 
     page = authenticated_page
-    
-    page.goto(page.url.split("index.php")[0] + "index.php?route=account/account")
+    base_url = page.url.split("index.php")[0]
 
     home_page = HomePage(page)
     my_account_page = MyAccountPage(page)
     logout_page = LogoutPage(page)
+
+    my_account_page.open_my_account_page(base_url)
 
     #Step 1: Click logout from right column
     my_account_page.click_logout_sidebar()
@@ -33,4 +34,4 @@ def test_user_logout(authenticated_page):
     logout_page.click_continue()
 
     #Step 6: Verify home page
-    expect(page).to_have_title(home_page.get_home_page_title())
+    expect(page).to_have_title(home_page.get_expected_title())

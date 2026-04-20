@@ -20,6 +20,14 @@ class LoginPage(BasePage):
         self.btn_login = page.locator("input[value='Login']")
         self.msg_login_error = page.locator(".alert-danger")
 
+    def get_expected_title(self) -> str:
+        """Return the expected title for the Login page."""
+        return "Account Login"
+
+    def get_expected_url_pattern(self) -> str:
+        """Return the expected URL route for the Login page."""
+        return r".*account/login"
+
     # ===== Action Methods =====
 
     def set_email(self, email: str):

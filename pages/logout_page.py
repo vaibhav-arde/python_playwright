@@ -19,6 +19,15 @@ class LogoutPage(BasePage):
         self.btn_continue = page.locator(".btn.btn-primary")
         self.btn_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
         self.lnk_my_account = page.locator('span:has-text("My Account")')
+        self.breadcrumb = page.locator("ul.breadcrumb")
+
+    def get_expected_title(self) -> str:
+        """Return the expected title for the Logout page."""
+        return "Account Logout"
+
+    def get_expected_url_pattern(self) -> str:
+        """Return the expected URL route for the Logout page."""
+        return r"route=account/logout"
 
     # ===== Action Methods =====
 
@@ -40,7 +49,16 @@ class LogoutPage(BasePage):
         self.click_continue()
 
     def verify_logout_page_heading(self):
+        """Return the Account Logout heading locator."""
         return self.logout_heading
 
     def verify_login_btn_in_dropdown(self):
         return self.btn_login
+
+    def get_breadcrumb(self):
+        """Return the breadcrumb locator."""
+        return self.breadcrumb
+
+    def get_logout_page_title(self) -> str:
+        """Return the precise page title for the Logout page."""
+        return self.get_title()

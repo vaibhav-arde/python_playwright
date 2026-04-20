@@ -10,13 +10,13 @@ def test_user_session_persistence(authenticated_page, new_context, auth_state_pa
     base_url = page.url.split("?")[0]
     
     # 1: Navigate to account page
-    page.goto(base_url + "index.php?route=account/account")
-
     my_account_page = MyAccountPage(page)
     home_page = HomePage(page)
 
+    my_account_page.open_my_account_page(base_url)
+
     # 2: Verify user logged in
-    expect(page).to_have_title(home_page.get_home_page_title())
+    expect(page).to_have_title(my_account_page.get_expected_title())
 
     my_account_page.click_my_account_dropdown()
 
@@ -29,11 +29,11 @@ def test_user_session_persistence(authenticated_page, new_context, auth_state_pa
     reopened_context = new_context(storage_state=auth_state_path)
     new_page = reopened_context.new_page()
 
-    new_page.goto(base_url + "index.php?route=account/account")
     new_my_account_page = MyAccountPage(new_page)
+    new_my_account_page.open_my_account_page(base_url)
 
     # 5: Verify session(user still logged in by verifying page title)
-    expect(new_page).to_have_title(new_my_account_page.get_page_title())
+    expect(new_page).to_have_title(new_my_account_page.get_expected_title())
 
     new_my_account_page.click_my_account_dropdown()
 

@@ -18,6 +18,23 @@ class BasePage:
         """Initialize with a Playwright Page instance."""
         self.page = page
 
+        # ===== Shared Global Locators =====
+        self.header = page.locator("header")
+        self.footer = page.locator("footer")
+        self.right_column = page.locator("#column-right")
+
+    def get_header(self) -> Locator:
+        """Returns the locator for the global page header."""
+        return self.header
+
+    def get_footer(self) -> Locator:
+        """Returns the locator for the global page footer."""
+        return self.footer
+
+    def get_right_column(self) -> Locator:
+        """Returns the locator for the right column section."""
+        return self.right_column
+
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
         if isinstance(locator, str):
@@ -28,6 +45,11 @@ class BasePage:
         """Navigate to a path relative to the current base URL."""
         self.page.goto(path)
         logger.info(f"Navigated to: {path}")
+
+    def go_back(self):
+        """Navigate to the previous page in browser history."""
+        self.page.go_back()
+        logger.info("Navigated back in browser history.")
 
     def click(self, locator: str | Locator):
         """Click an element. Accepts string selector OR Locator object."""

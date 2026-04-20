@@ -39,6 +39,18 @@ class MyAccountPage(BasePage):
 
     # ===== Page Validation Methods =====
 
+    def open_my_account_page(self, base_url: str):
+        """Navigate to the My Account page."""
+        self.open(f"{base_url.rstrip('/')}/index.php?route=account/account")
+
+    def open_address_book_page(self, base_url: str):
+        """Navigate to the Address Book page."""
+        self.open(f"{base_url.rstrip('/')}/index.php?route=account/address")
+
+    def get_expected_title(self) -> str:
+        """Return the expected title for My Account page."""
+        return "My Account"
+
     def get_my_account_page_heading(self):
         """Returns the locator for the 'My Account' page heading."""
         return self.msg_heading

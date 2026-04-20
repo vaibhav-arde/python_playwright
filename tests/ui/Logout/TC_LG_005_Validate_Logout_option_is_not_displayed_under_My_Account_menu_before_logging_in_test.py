@@ -12,4 +12,4 @@ def test_logout_not_visible_without_login(page):
     home_page.click_my_account()
 
     # Step 2: Verify Logout button is not visible
-    expect(home_page.verify_logout_btn_not_visible()).not_to_be_visible()
+    expect(home_page.verify_logout_btn_not_visible()).to_be_hidden()
