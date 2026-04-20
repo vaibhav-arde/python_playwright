@@ -43,7 +43,7 @@ def test_validate_review_link_under_add_to_cart(page: Page):
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
         keyword=product_name
     )
-    expected_product_name = product_in_results.text_content().strip()
+    expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results

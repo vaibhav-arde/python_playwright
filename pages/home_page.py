@@ -16,9 +16,9 @@ class HomePage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lnk_my_account = page.locator("a[title='My Account']")
-        self.lnk_register = page.get_by_role("link", name="Register")
-        self.lnk_login = page.get_by_role("link", name="Login")
+        self.lnk_my_account = page.get_by_role("link", name="My Account").first
+        self.lnk_register = page.get_by_role("link", name="Register").first
+        self.lnk_login = page.get_by_role("link", name="Login").first
         self.txt_search_box = page.get_by_placeholder("Search")
         self.btn_search = page.locator("#search").get_by_role("button")
         self.lnk_logout = page.locator('a:has-text("Logout")')
@@ -50,11 +50,11 @@ class HomePage(BasePage):
 
     def enter_product_name(self, product_name: str):
         """Enter the product name into the search input box."""
-        self.txt_search_box.fill(product_name)
+        self.fill(self.txt_search_box, product_name)
 
     def click_search(self):
         """Click on the search button to initiate the product search."""
-        self.btn_search.click()
+        self.click(self.btn_search)
 
     def click_contact_us(self):
         """Click on the Contact Us link in the footer."""
@@ -77,16 +77,14 @@ class HomePage(BasePage):
         self.click(self.lnk_show_all_desktops)
 
     def open_home_page(self):
-        self.page.goto("/")
-        self.page.wait_for_load_state("networkidle")
+        """Navigate to the home page."""
+        self.open("/")
 
-    def click_my_account(self):
-        self.lnk_my_account.wait_for(state="visible")
-        self.lnk_my_account.click()
+    def click_featured_product_image(self, product_name: str):
+        """Click on the image of a product in the Featured section."""
+        # This locator finds the product-thumb container that contains the link with the product name, then finds the image inside it.
+        self.page.locator("div.product-thumb").filter(has=self.page.get_by_role("link", name=product_name, exact=True)).get_by_role("img").click()
 
-    def click_register(self):
-        self.lnk_register.click()
-
-    def click_login(self):
-        self.lnk_login.click()
-
+    def click_featured_product_name(self, product_name: str):
+        """Click on the name link of a product in the Featured section."""
+        self.page.locator("div.product-thumb").get_by_role("link", name=product_name, exact=True).click()

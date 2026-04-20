@@ -9,20 +9,22 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_submit_review_without_mandatory_fields(page: Page):
+def test_validate_review_text_character_range(page: Page):
+    
     """
-    Test Case ID: TC_PDP_017
-    Validate submitting a review without filling the mandatory fields
+    Test Case ID: TC_PDP_018
+    Validate the review text given while writing is accepted according to the specified number of characters (25 to 1000)
 
     Steps:
         1. Open the Application URL
         2. Search for a product (iMac)
         3. Select the product from search results
         4. Select the Reviews tab of the Product
-        5. Click 'Continue' without providing Name, Review, and Ratings
+        5. Provide Name and Ratings
+        6. Provide review text outside the 25-1000 range and click 'Continue'
 
     Expected Result:
-        Proper warning messages informing the User to fill the mandatory fields should be displayed.
+        Warning message 'Warning: Review Text must be between 25 and 1000 characters!' should be displayed.
     """
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
@@ -39,15 +41,22 @@ def test_validate_submit_review_without_mandatory_fields(page: Page):
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     search_results_page.select_product(expected_product_name)
 
-    expect(product_page.lbl_product_name).to_be_visible()
-
     product_page.click_review_tab()
+
+    # Test Case: Review text too short
+    product_page.enter_review_name(TestData.REVIEW_AUTHOR_NAME)
+    product_page.select_review_rating(TestData.REVIEW_RATING_VALUE)
+    product_page.enter_review_text(TestData.REVIEW_TEXT_TOO_SHORT)
     product_page.submit_review()
 
-    warning_alert = product_page.get_review_warning_alert()
-    expect(warning_alert).to_be_visible(), messages.PDP_REVIEW_WARNING_ALERT_NOT_VISIBLE
+    actual_warning_text = product_page.get_review_warning_text()
+    assert actual_warning_text == messages.WARN_REVIEW_RANGE, \
+        f"Expected '{messages.WARN_REVIEW_RANGE}', but got '{actual_warning_text}'"
+
+    # Test Case: Review text too long
+    product_page.enter_review_text(TestData.REVIEW_TEXT_TOO_LONG)
+    product_page.submit_review()
 
     actual_warning_text = product_page.get_review_warning_text()
-    assert "Warning" in actual_warning_text, messages.PDP_REVIEW_WARNING_MISSING_KEYWORD.format(
-        keyword="Warning", actual=actual_warning_text
-    )
+    assert actual_warning_text == messages.WARN_REVIEW_RANGE, \
+        f"Expected '{messages.WARN_REVIEW_RANGE}', but got '{actual_warning_text}'"
