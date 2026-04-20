@@ -34,9 +34,5 @@ def test_home_page_cross_browser_compatibility(page, base_url):
     home_page = HomePage(page)
 
     # Step 2: Validate Home Page UI + Functionality
-    home_page.verify_logo_visible()
-    home_page.verify_search_bar_visible()
-    home_page.verify_main_menu_visible()
-    home_page.verify_slider_is_visible()
-    home_page.verify_featured_section_visible()
-    home_page.verify_footer_visible()
+    home_page.verify_home_page_ui()
+    assert page.url == base_url

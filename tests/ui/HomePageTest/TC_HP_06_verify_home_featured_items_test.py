@@ -1,8 +1,7 @@
-"""TC_HP_006 "(TS_011) Home Page" 
- Validate four featured products should be displayed in the Home Page 
- 1. Open the Application URL 
- 2. Check the Featured section in the displayed Home page (Validate ER-1 and ER-2)"""
-
+"""TC_HP_006 "(TS_011) Home Page"
+Validate four featured products should be displayed in the Home Page
+1. Open the Application URL
+2. Check the Featured section in the displayed Home page (Validate ER-1 and ER-2)"""
 
 import pytest
 

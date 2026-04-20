@@ -30,6 +30,8 @@ def test_login_data_driven(page, testName, email, password, expected):
     login_page.login(email, password)
 
     if expected == "success":
-        expect(my_account_page.get_my_account_page_heading()).to_be_visible(timeout=5000)
+        expect(my_account_page.get_my_account_page_heading()).to_be_visible(
+            timeout=5000
+        )
     else:
         expect(login_page.get_login_error()).to_be_visible(timeout=5000)

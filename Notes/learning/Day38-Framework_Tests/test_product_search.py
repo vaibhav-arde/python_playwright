@@ -37,5 +37,9 @@ def test_product_search(page):
     home_page.enter_product_name(product_name)
     home_page.click_search()
 
-    expect(search_results_page.get_search_results_page_header()).to_be_visible(timeout=3000)
-    expect(search_results_page.is_product_exist(product_name)).to_be_visible(timeout=3000)
+    expect(search_results_page.get_search_results_page_header()).to_be_visible(
+        timeout=3000
+    )
+    expect(search_results_page.is_product_exist(product_name)).to_be_visible(
+        timeout=3000
+    )
