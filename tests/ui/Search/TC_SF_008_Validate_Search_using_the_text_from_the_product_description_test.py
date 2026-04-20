@@ -22,8 +22,8 @@ def test_search_using_product_description(page):
     search_results_page = SearchResultsPage(page)
 
     # Grab the dictionary properties from the grouped datastructure
-    desc_term = ProductData.IMAC["description_term"]
-    product = ProductData.IMAC["expected_product"]
+    desc_term = ProductData.IMAC.description_term
+    product = ProductData.IMAC.expected_product
 
     # Step 1: Don't enter anything into the 'Search' text box field
     # Step 2: Click on the button having search icon

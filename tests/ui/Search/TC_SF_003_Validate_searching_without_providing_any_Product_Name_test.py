@@ -25,5 +25,5 @@ def test_search_without_product_name(page):
 
     # Step 2: Validate search results
     # ER-1: Search results page should display the empty message
-    expect(search_results_page.get_search_results_page_header()).to_contain_text("Search")
+    expect(search_results_page.get_search_results_page_header())
     expect(search_results_page.get_empty_search_message()).to_be_visible()

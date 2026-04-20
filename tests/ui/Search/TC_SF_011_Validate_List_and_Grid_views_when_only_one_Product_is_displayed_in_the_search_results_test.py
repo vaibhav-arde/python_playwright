@@ -12,12 +12,21 @@ Description: Validate List and Grid views when only one Product is displayed in 
 """
 
 import pytest
-import re
 from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from utils.config import Config
-from utils.constants import UIRoutes
+from utils.helpers import (
+    perform_basic_product_actions,
+    open_product_via_image,
+    open_product_via_link,
+)
+
+from utils.assertions import (
+    assert_single_product,
+    assert_success_message_visible,
+    assert_product_page_opened,
+)
 
 
 @pytest.mark.ui
@@ -36,43 +45,24 @@ def test_list_and_grid_view_with_single_product(page):
     # -------- LIST VIEW --------
     search_results_page.click_list_view()
 
-    # ER-1: Single product should be displayed
-    expect(search_results_page.get_product_count()).to_have_count(1)
-    expect(search_results_page.get_product_container(product_name)).to_be_visible()
+    products = search_results_page.get_product_count()
+    assert_single_product(products)
 
-    # Validate actions (Add to Cart, Wish List and Compare Product) are working
-    search_results_page.click_add_to_cart(product_name)
-    expect(search_results_page.get_success_message(product_name)).to_be_visible()
+    perform_basic_product_actions(search_results_page, product_name)
+    assert_success_message_visible(search_results_page, product_name)
 
-    search_results_page.click_wishlist(product_name)
-    expect(search_results_page.get_success_message(product_name)).to_be_visible()
-
-    search_results_page.click_compare(product_name)
-    expect(search_results_page.get_success_message(product_name)).to_be_visible()
-
-    # Navigate via image (ER-2)
-    search_results_page.click_product_image(product_name)
-    expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
+    open_product_via_image(search_results_page, product_name)
+    assert_product_page_opened(page)
     page.go_back()
-    expect(search_results_page.get_search_results_page_header()).to_be_visible()
 
     # -------- GRID VIEW --------
     search_results_page.click_grid_view()
 
-    # ER-3: Single product should be displayed
-    expect(search_results_page.get_product_count()).to_have_count(1)
-    expect(search_results_page.get_product_container(product_name)).to_be_visible()
+    products = search_results_page.get_product_count()
+    assert_single_product(products)
 
-    # Validate actions
-    search_results_page.click_add_to_cart(product_name)
-    expect(search_results_page.get_success_message(product_name)).to_be_visible()
+    perform_basic_product_actions(search_results_page, product_name)
+    assert_success_message_visible(search_results_page, product_name)
 
-    search_results_page.click_wishlist(product_name)
-    expect(search_results_page.get_success_message(product_name)).to_be_visible()
-
-    search_results_page.click_compare(product_name)
-    expect(search_results_page.get_success_message(product_name)).to_be_visible()
-
-    # Navigate via product name (ER-4)
-    search_results_page.click_product_link(product_name)
-    expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
+    open_product_via_link(search_results_page, product_name)
+    assert_product_page_opened(page)

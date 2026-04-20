@@ -47,8 +47,14 @@ class Config:
     product_limit = "25"
 
 
+class Product:
+    def __init__(self, description_term, expected_product):
+        self.description_term = description_term
+        self.expected_product = expected_product
+
+
 class ProductData:
-    IMAC = {"description_term": "iLife", "expected_product": "iMac"}
+    IMAC = Product("iLife", "iMac")
 
 
 class SortOption(TypedDict):

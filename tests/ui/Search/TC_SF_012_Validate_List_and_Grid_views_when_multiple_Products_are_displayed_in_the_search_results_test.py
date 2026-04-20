@@ -12,13 +12,21 @@ Steps:
 """
 
 import pytest
-import re
 from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from utils.config import Config
-from utils.assertions import assert_products_match_search
-from utils.constants import UIRoutes
+from utils.helpers import (
+    perform_basic_product_actions,
+    open_product_via_image,
+    open_product_via_link,
+)
+
+from utils.assertions import (
+    assert_product_page_opened,
+    assert_success_message_visible,
+    assert_products_match_search,
+)
 
 
 @pytest.mark.ui
@@ -47,54 +55,31 @@ def test_list_and_grid_view_with_multiple_products(page):
 
     # -------- LIST VIEW --------
     search_results_page.click_list_view()
+
     assert_products_match_search(products, search_term)
 
-    # Validate Add to Cart
-    search_results_page.click_add_to_cart(first_product)
-    expect(search_results_page.get_success_message(first_product)).to_be_visible()
+    perform_basic_product_actions(search_results_page, first_product)
+    assert_success_message_visible(search_results_page, first_product)
 
-    # Validate Wishlist
-    search_results_page.click_wishlist(first_product)
-    expect(search_results_page.get_success_message(first_product)).to_be_visible()
-
-    # Validate Compare
-    search_results_page.click_compare(first_product)
-    expect(search_results_page.get_success_message(first_product)).to_be_visible()
-
-    # Validate navigation via image (List view)
-    search_results_page.click_product_image(first_product)
-    expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
-
+    open_product_via_image(search_results_page, first_product)
+    assert_product_page_opened(page)
     page.go_back()
 
-    # Validate navigation via product name (List view)
-    search_results_page.click_product_link(first_product)
-    expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
-
+    open_product_via_link(search_results_page, first_product)
+    assert_product_page_opened(page)
     page.go_back()
 
     # -------- GRID VIEW --------
     search_results_page.click_grid_view()
+
     assert_products_match_search(products, search_term)
 
-    # Validate Add to Cart (Grid view)
-    search_results_page.click_add_to_cart(first_product)
-    expect(search_results_page.get_success_message(first_product)).to_be_visible()
+    perform_basic_product_actions(search_results_page, first_product)
+    assert_success_message_visible(search_results_page, first_product)
 
-    # Validate Wishlist (Grid view)
-    search_results_page.click_wishlist(first_product)
-    expect(search_results_page.get_success_message(first_product)).to_be_visible()
-
-    # Validate Compare (Grid view)
-    search_results_page.click_compare(first_product)
-    expect(search_results_page.get_success_message(first_product)).to_be_visible()
-
-    # Validate navigation via image (Grid view)
-    search_results_page.click_product_image(first_product)
-    expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
-
+    open_product_via_image(search_results_page, first_product)
+    assert_product_page_opened(page)
     page.go_back()
 
-    # Validate navigation via product name (Grid view)
-    search_results_page.click_product_link(first_product)
-    expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
+    open_product_via_link(search_results_page, first_product)
+    assert_product_page_opened(page)

@@ -21,7 +21,7 @@ def test_products_limit(page):
     search_results_page = SearchResultsPage(page)
 
     search_term = Config.multiple_products_search_term
-    limit_value = Config.product_limit  # 👈 comes from config (e.g., "25")
+    limit_value = Config.product_limit
 
     # -------- Step 1: Search --------
     home_page.enter_product_name(search_term)

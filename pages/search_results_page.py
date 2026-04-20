@@ -47,16 +47,6 @@ class SearchResultsPage(BasePage):
         self.home_link = page.locator("ul.breadcrumb a[href*='route=common/home']")
         self.search_link = page.get_by_role("link", name="Search")
 
-        self._product_action_locators = {
-            "cart": lambda c: c.get_by_role("button", name="Add to Cart"),
-            "wishlist": lambda c: c.get_by_role("button").filter(
-                has=self.page.locator("i.fa-heart")
-            ),
-            "compare": lambda c: c.get_by_role("button").filter(
-                has=self.page.locator("i.fa-exchange")
-            ),
-        }
-
     # ===== Page Header =====
 
     def get_search_results_page_header(self):
@@ -153,17 +143,6 @@ class SearchResultsPage(BasePage):
         return self.product_thumb.filter(
             has=self.page.get_by_role("link", name=product_name, exact=True)
         )
-
-    def _get_product_action_locator(self, container, action: str):
-        if action not in self._product_action_locators:
-            raise ValueError(f"Invalid action: {action}")
-
-        return self._product_action_locators[action](container)
-
-    def click_product_action(self, product_name: str, action: str):
-        container = self.get_product_container(product_name)
-        locator = self._get_product_action_locator(container, action)
-        self.click(locator)
 
     def click_add_to_cart(self, product_name: str):
         """Click 'Add to Cart' for a specific product."""
