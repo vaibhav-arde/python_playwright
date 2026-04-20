@@ -34,3 +34,17 @@ EMPTY_COMPARISON_MESSAGE = "You have not chosen any products to compare."
 ADD_TO_CART_SUCCESS = "Success: You have added {product_name} to your shopping cart!"
 ERR_PRODUCT_NOT_FOUND_IN_COMPARISON = "Product '{product_name}' not found in comparison table."
 REMOVE_SUCCESS = "Success: You have modified your product comparison!"
+
+# ===== Comparison Table UI Checklist =====
+COMPARISON_TABLE_HEADERS = [
+    "Product",
+    "Image",
+    "Price",
+    "Model",
+    "Brand",
+    "Availability",
+    "Rating",
+    "Summary",
+    "Weight",
+    "Dimensions (L x W x H)",
+]

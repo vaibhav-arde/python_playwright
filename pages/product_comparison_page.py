@@ -27,20 +27,15 @@ class ProductComparisonPage(BasePage):
         self.success_message = page.locator("div.alert.alert-success.alert-dismissible")
 
         # ===== Breadcrumb Locators =====
-        # ul.breadcrumb pins the container via CSS class. We avoid get_by_role("list")
-        # because Bootstrap's "list-style: none" strips the implicit ARIA role from
-        # <ul> and <li> in Chrome/Safari — making role-based queries return nothing.
         self.breadcrumb = page.locator("ul.breadcrumb")
-        # The Home <a> contains only a FontAwesome icon (<i class="fa fa-home">)
-        # with no text or aria-label, so get_by_role("link", name="Home") won't match.
-        # CSS :has() scopes the match by structural child — more resilient than href.
         self.breadcrumb_home_link = self.breadcrumb.locator("li:has(a:has(i.fa-home))")
-        # Inner <a> for dispatch_event click to bypass CSS pointer-event interception.
         self._breadcrumb_home_anchor = self.breadcrumb.locator("a:has(i.fa-home)")
-        # Current page item — scoped to <li> to avoid matching the page <h1>.
         self.breadcrumb_current = self.breadcrumb.locator("li").filter(
             has_text="Product Comparison"
         )
+
+        # ===== Table UI Locators =====
+        self.comparison_table = page.locator("table.table-bordered")
 
     # ===== Page Header =====
 
@@ -77,14 +72,7 @@ class ProductComparisonPage(BasePage):
         return self.breadcrumb_current
 
     def click_breadcrumb_home(self):
-        """Click the Home icon link in the breadcrumb.
-
-        Both .click() and .click(force=True) fail here: Bootstrap's breadcrumb
-        applies CSS pointer-events that swallow pointer-based events on the <li>,
-        even when Playwright's actionability checks are skipped.
-        dispatch_event("click") injects a JS MouseEvent directly into the DOM
-        event system — CSS pointer-events cannot intercept it.
-        """
+        """Click the Home icon link in the breadcrumb."""
         self.dispatch_event(self._breadcrumb_home_anchor, "click")
 
     # ===== Product Presence in Table =====
@@ -100,11 +88,7 @@ class ProductComparisonPage(BasePage):
         return self.page.locator("table").get_by_role("img", name=product_name, exact=True)
 
     def get_product_price_in_table(self):
-        """Return the price cell locator in the Product Comparison table.
-
-        Finds the table row whose header td contains 'Price', then returns
-        the last td — sufficient when exactly one product is in the table.
-        """
+        """Return the price cell locator in the Product Comparison table."""
         return (
             self.page.locator("table tr")
             .filter(has=self.page.locator("td", has_text=re.compile(r"^Price$")))
@@ -115,7 +99,7 @@ class ProductComparisonPage(BasePage):
     def get_all_price_cells_in_table(self):
         """Return all product price td locators in the Price row."""
         price_row = self.page.locator("table tr").filter(
-            has=self.page.locator("td", has_text=re.compile(r"^Price$"))
+            has=self.page.locator("td", has_text=re.compile(r"^Product$"))
         )
         return price_row.locator("td ~ td")
 
@@ -124,24 +108,28 @@ class ProductComparisonPage(BasePage):
         return self.page.locator("table input.btn-primary[value='Add to Cart']")
 
     def get_remove_link_in_table(self):
-        """Return the 'Remove' link locator inside the comparison table.
-
-        Rendered as <a class='btn btn-danger btn-block'>Remove</a>.
-        """
+        """Return the 'Remove' link locator inside the comparison table."""
         return self.page.locator("table").get_by_role("link", name="Remove", exact=True)
 
     # ===== Success Message =====
 
     def get_success_message(self) -> str:
-        """Return the success message shown after a successful action (e.g., add to cart, remove)."""
+        """Return the success message shown after a successful action."""
         self.wait_for(self.success_message, state="visible")
         return self.get_text(self.success_message)
+
+    # ===== UI Checklist Methods =====
+
+    def get_row_header(self, header_name: str):
+        """Return the locator for a row header (first column) in the comparison table."""
+        return self.comparison_table.locator("tr td:first-child").filter(
+            has_text=re.compile(rf"^{re.escape(header_name)}$")
+        )
 
     # ===== Cart & Removal Interaction =====
 
     def _get_column_index_for_product(self, product_name: str) -> int:
         """Find the column index for a specific product name in the comparison table."""
-        # Find the row that contains the product names (first cell text is "Product")
         product_name_row = (
             self.page.locator("table tr")
             .filter(has=self.page.locator("td", has_text=re.compile(r"^Product$")))
