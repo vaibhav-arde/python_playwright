@@ -5,7 +5,7 @@
 
 import re
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
@@ -72,7 +72,9 @@ class SearchResultsPage(BasePage):
         except Exception:
             return None
         self.click(product)
-        return ProductPage(self.page)
+        product_page = ProductPage(self.page)
+        expect(product_page.lbl_product_name).to_be_visible(timeout=10000)
+        return product_page
 
     # ===== Product Comparison in List View =====
 

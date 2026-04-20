@@ -34,7 +34,7 @@ def test_validate_the_product_price(page: Page):
     )
     assert len(price) > 1, messages.PDP_PRODUCT_PRICE_EMPTY
 
-    # ER: Proper Ex Tax should be displayed
+    -0# ER: Proper Ex Tax should be displayed
     expect(product_page.lbl_product_ex_tax).to_be_visible()
     ex_tax = product_page.get_ex_tax_price()
     assert any(symbol in ex_tax for symbol in UIPricing.CURRENCY_SYMBOLS), messages.PDP_EX_TAX_FORMAT_INCORRECT.format(

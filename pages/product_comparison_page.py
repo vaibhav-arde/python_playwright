@@ -20,6 +20,7 @@ class ProductComparisonPage(BasePage):
         # ===== Locators =====
         # Heading: role="heading" scoped to the page content area
         self.page_heading = page.get_by_role("heading", name="Product Comparison", exact=True)
+        self.lbl_heading = page.locator("#content h1, #content h2").filter(has_text=re.compile(r"Comparison", re.IGNORECASE))
         self.empty_comparison_text = page.locator("#content").get_by_text(
             messages.EMPTY_COMPARISON_MESSAGE
         )
@@ -36,6 +37,7 @@ class ProductComparisonPage(BasePage):
 
         # ===== Table UI Locators =====
         self.comparison_table = page.locator("table.table-bordered")
+        self.comparison_table_responsive = page.locator(".table-responsive")
 
     # ===== Page Header =====
 
@@ -176,3 +178,11 @@ class ProductComparisonPage(BasePage):
             raise ValueError(
                 messages.ERR_PRODUCT_NOT_FOUND_IN_COMPARISON.format(product_name=product_name)
             )
+
+    def is_product_in_comparison(self, product_name: str) -> bool:
+        """Verify if the product name appears in the comparison table."""
+        try:
+            self.comparison_table.get_by_text(product_name).first.wait_for(state="visible", timeout=10000)
+            return True
+        except Exception:
+            return False

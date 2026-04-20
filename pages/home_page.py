@@ -22,6 +22,7 @@ class HomePage(BasePage):
         self.lnk_my_account = page.locator("a[title='My Account']")
         self.lnk_register = page.get_by_role("link", name="Register")
         self.lnk_login = page.get_by_role("link", name="Login")
+
         self.txt_search_box = page.get_by_placeholder("Search")
         self.btn_search = page.locator("#search").get_by_role("button")
         
@@ -146,7 +147,15 @@ class HomePage(BasePage):
         self.click(self.lnk_product_comparison)
 
     def open_home_page(self):
-        self.page.goto("/")
-        self.page.wait_for_load_state("networkidle")
+        """Navigate to the home page."""
+        self.open("/")
+
+    def click_featured_product_image(self, product_name: str):
+        """Click on the image of a product in the Featured section."""
+        # This locator finds the product-thumb container that contains the link with the product name, then finds the image inside it.
+        self.page.locator("div.product-thumb").filter(has=self.page.get_by_role("link", name=product_name, exact=True)).get_by_role("img").click()
 
 
+    def click_featured_product_name(self, product_name: str):
+        """Click on the name link of a product in the Featured section."""
+        self.page.locator("div.product-thumb").get_by_role("link", name=product_name, exact=True).click()
