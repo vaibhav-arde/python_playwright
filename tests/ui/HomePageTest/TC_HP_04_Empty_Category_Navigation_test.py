@@ -20,8 +20,7 @@ from utils.constants import expected_title
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_home_navigation_from_empty_category(page, base_url):
-    page.goto(base_url)
+def test_home_navigation_from_empty_category(page):
 
     home_page = HomePage(page)
     home_page.navigate_to_empty_pc_category()

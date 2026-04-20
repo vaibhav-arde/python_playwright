@@ -10,9 +10,7 @@ from pages.home_page import HomePage
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_verify_four_featured_products(page, base_url):
-    page.goto(base_url)
-
+def test_verify_four_featured_products(page):
     home_page = HomePage(page)
 
     home_page.verify_featured_section_visible()

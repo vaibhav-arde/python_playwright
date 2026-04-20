@@ -10,9 +10,7 @@ from pages.home_page import HomePage
 
 
 @pytest.mark.ui
-def test_partner_carousel(page, base_url):
-    page.goto(base_url)
-
+def test_partner_carousel(page):
     home_page = HomePage(page)
 
     home_page.verify_partner_carousel_section()

@@ -53,6 +53,12 @@ class BasePage:
     def verify_visible(self, locator: str | Locator):
         expect(self.get_locator(locator)).to_be_visible()
 
+    def wait_visible(self, locator: str | Locator, timeout=10000):
+        self.get_locator(locator).wait_for(
+            state="visible",
+            timeout=timeout
+        )
+
     def is_enabled(self, locator: str | Locator) -> bool:
         return self.get_locator(locator).is_enabled()
 
