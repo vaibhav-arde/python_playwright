@@ -34,4 +34,4 @@ def test_validate_logging_out_and_browsing_back(page, registered_user):
     page.reload()
     
     # Assert redirection to the Account Login page, proving the session is inactive
-    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE, timeout=5000)
+    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)

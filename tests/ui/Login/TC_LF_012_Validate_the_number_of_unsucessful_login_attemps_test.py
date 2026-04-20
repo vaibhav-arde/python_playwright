@@ -23,7 +23,7 @@ def test_validate_unsuccessful_login_attempts(page):
         
         # 5th attempt (i == 4) should show the exceeded attempts warning
         if i == 4:
-            expect(login_page.get_login_attempts_error()).to_be_visible(timeout=5000)
+            expect(login_page.get_login_attempts_error()).to_be_visible()
         else:
             # First 4 attempts should show the standard login error
-            expect(login_page.get_login_error()).to_be_visible(timeout=5000)
+            expect(login_page.get_login_error()).to_be_visible()

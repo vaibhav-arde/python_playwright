@@ -3,7 +3,6 @@ from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.my_account_page import MyAccountPage
 from utils.config import Config
 
 
@@ -17,4 +16,4 @@ def test_empty_credentials_login(page):
 
     login_page.login("", "")
 
-    expect(login_page.get_login_error()).to_be_visible(timeout=5000)
+    expect(login_page.get_login_error()).to_be_visible()

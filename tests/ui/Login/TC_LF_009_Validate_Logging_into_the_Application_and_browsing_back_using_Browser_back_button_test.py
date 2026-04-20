@@ -4,7 +4,6 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
-from utils import messages
 
 
 @pytest.mark.sanity
@@ -26,4 +25,4 @@ def test_validate_logging_and_browsing_back(page, registered_user):
     
     # 4. Verify session is still active by checking the "My Account" dropdown for the 'Logout' option
     home_page.click_my_account()
-    expect(my_account_page.get_logout_link()).to_be_visible(timeout=5000)
+    expect(my_account_page.get_logout_link()).to_be_visible()

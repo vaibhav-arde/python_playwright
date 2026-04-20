@@ -22,4 +22,4 @@ def test_validate_logging_into_the_Application_using_inactive_credentials(page):
     login_page.login(Config.inactive_email, Config.inactive_password)
     
     # Assert redirection to the Account Login page, proving the session is inactive
-    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE, timeout=5000)
+    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)

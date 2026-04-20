@@ -14,7 +14,7 @@ def test_validate_login_field_placeholders(page):
     # 1. Navigate to Login Page
     home_page.click_my_account()
     home_page.click_login()
-    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE, timeout=5000)
+    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)
 
     # 2. Verify E-Mail Address placeholder
     expect(login_page.get_email_field()).to_have_attribute("placeholder", messages.EMAIL_PLACEHOLDER)

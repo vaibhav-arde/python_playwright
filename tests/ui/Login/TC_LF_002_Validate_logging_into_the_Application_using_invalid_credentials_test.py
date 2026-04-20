@@ -3,9 +3,7 @@ from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
-from pages.my_account_page import MyAccountPage
 from utils.config import Config
-from utils import messages
 
 @pytest.mark.sanity
 def test_invalid_user_login(page):
@@ -17,4 +15,4 @@ def test_invalid_user_login(page):
 
     login_page.login(Config.invalid_email, Config.invalid_password)
 
-    expect(login_page.get_login_error()).to_be_visible(timeout=5000)
+    expect(login_page.get_login_error()).to_be_visible()
