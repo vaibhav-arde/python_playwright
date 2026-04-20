@@ -6,6 +6,7 @@ from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
 
+
 class ProductPage(BasePage):
     """Page Object Model class for the Product Page."""
 
@@ -16,7 +17,9 @@ class ProductPage(BasePage):
         self.txt_quantity = page.locator('input[name="quantity"]')
         self.btn_add_to_cart = page.locator("#button-cart")
         self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
-        self.lnk_shopping_cart_success_msg = self.cnf_msg.get_by_role("link", name="shopping cart")
+        self.lnk_shopping_cart_success_msg = self.cnf_msg.get_by_role(
+            "link", name="shopping cart"
+        )
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 
@@ -58,4 +61,3 @@ class ProductPage(BasePage):
         self.set_quantity(quantity)
         self.add_to_cart()
         expect(self.get_confirmation_message()).to_be_visible()
-

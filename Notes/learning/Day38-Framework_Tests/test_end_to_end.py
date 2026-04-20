@@ -130,10 +130,14 @@ def add_product_to_cart(page):
     home_page.click_search()
 
     # Verify that the search results page is displayed
-    expect(search_results_page.get_search_results_page_header()).to_be_visible(timeout=3000)
+    expect(search_results_page.get_search_results_page_header()).to_be_visible(
+        timeout=3000
+    )
 
     # Validate if the searched product appears in results
-    expect(search_results_page.is_product_exist(product_name)).to_be_visible(timeout=3000)
+    expect(search_results_page.is_product_exist(product_name)).to_be_visible(
+        timeout=3000
+    )
 
     product_page = search_results_page.select_product(product_name)
     product_page.set_quantity(quantity)

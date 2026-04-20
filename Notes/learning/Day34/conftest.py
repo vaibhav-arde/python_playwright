@@ -28,7 +28,9 @@ def pytest_runtest_makereport(item, call):
 
             # Attach to Allure report
             allure.attach.file(
-                screen_file, name="Failure Screenshot", attachment_type=allure.attachment_type.PNG
+                screen_file,
+                name="Failure Screenshot",
+                attachment_type=allure.attachment_type.PNG,
             )
 
         report.extra = extra

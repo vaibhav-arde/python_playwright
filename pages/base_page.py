@@ -3,24 +3,20 @@
 
 import re
 import logging
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, Locator, expect
 
 logger = logging.getLogger(__name__)
 
 
 class BasePage:
-    """Base class for all Page Objects. Provides common UI interaction methods."""
+    """Base class for all Page Objects."""
 
     def __init__(self, page: Page):
         self.page = page
-
-        # Common Locator
         self.img_logo = page.locator("#logo a")
 
     def get_locator(self, locator: str | Locator) -> Locator:
-        if isinstance(locator, str):
-            return self.page.locator(locator)
-        return locator
+        return self.page.locator(locator) if isinstance(locator, str) else locator
 
     def open(self, path: str = "/"):
         self.page.goto(path)
@@ -39,20 +35,23 @@ class BasePage:
     def check(self, locator: str | Locator):
         target = self.get_locator(locator)
         target.check()
-        logger.info(f"Checked element: {target}")
+        logger.info(f"Checked: {target}")
 
     def uncheck(self, locator: str | Locator):
         target = self.get_locator(locator)
         target.uncheck()
-        logger.info(f"Unchecked element: {target}")
+        logger.info(f"Unchecked: {target}")
 
     def select_option(self, locator: str | Locator, **kwargs):
         target = self.get_locator(locator)
         target.select_option(**kwargs)
-        logger.info(f"Selected option in {target} with args: {kwargs}")
+        logger.info(f"Selected option in {target}: {kwargs}")
 
     def is_visible(self, locator: str | Locator) -> bool:
         return self.get_locator(locator).is_visible()
+
+    def verify_visible(self, locator: str | Locator):
+        expect(self.get_locator(locator)).to_be_visible()
 
     def is_enabled(self, locator: str | Locator) -> bool:
         return self.get_locator(locator).is_enabled()
@@ -60,10 +59,8 @@ class BasePage:
     def get_text(self, locator: str | Locator) -> str:
         return self.get_locator(locator).inner_text()
 
-    def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
-        target = self.get_locator(locator)
-        target.wait_for(state=state, timeout=timeout)
-        logger.info(f"Element {target} reached state: {state}")
+    def wait_for(self, locator: str | Locator, state="visible", timeout=10000):
+        self.get_locator(locator).wait_for(state=state, timeout=timeout)
 
     def tab_until_focused(self, locator: str | Locator, max_tabs: int = 50):
         """Press Tab until the specified locator is focused."""
@@ -89,8 +86,5 @@ class BasePage:
     def get_warning(self, field_id: str) -> Locator:
         return self.page.locator(f"#{field_id} + .text-danger")
 
-    # ✅ FIXED: No import here
     def click_logo(self):
-        """Click on the site logo."""
         self.click(self.img_logo)
-        logger.info("Clicked on Logo (Your Store)")

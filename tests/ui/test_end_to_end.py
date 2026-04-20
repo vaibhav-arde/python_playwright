@@ -118,8 +118,12 @@ def add_product_to_cart(page):
     home_page.enter_product_name(product_name)
     home_page.click_search()
 
-    expect(search_results_page.get_search_results_page_header()).to_be_visible(timeout=5000)
-    expect(search_results_page.is_product_exist(product_name)).to_be_visible(timeout=5000)
+    expect(search_results_page.get_search_results_page_header()).to_be_visible(
+        timeout=5000
+    )
+    expect(search_results_page.is_product_exist(product_name)).to_be_visible(
+        timeout=5000
+    )
 
     product_page = search_results_page.select_product(product_name)
     product_page.set_quantity(quantity)

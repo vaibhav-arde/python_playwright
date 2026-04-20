@@ -14,6 +14,7 @@ from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_breadcrumb_home_navigation(page, base_url):

@@ -26,7 +26,10 @@ def test_authPopup(page: Page):
 # To keep pytest-playwright video/tracing features intact, we override browser_context_args
 @pytest.fixture
 def browser_context_args(browser_context_args):
-    return {**browser_context_args, "http_credentials": {"username": "admin", "password": "admin"}}
+    return {
+        **browser_context_args,
+        "http_credentials": {"username": "admin", "password": "admin"},
+    }
 
 
 def test_authPopup_context(page: Page):
