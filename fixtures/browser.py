@@ -43,6 +43,15 @@ def navigate_to_base_url(request, page):
         for attempt in range(1, BASE_NAV_RETRIES + 1):
             try:
                 page.goto(base_url)
+                page.wait_for_load_state("load")
+                
+                # Handle landing page redirect if it occurs
+                landing_link = page.get_by_role("link", name="https://tutorialsninja.com/demo")
+                if landing_link.is_visible():
+                    logger.info("Landing page detected by fixture, clicking through...")
+                    landing_link.click()
+                    page.wait_for_load_state("load")
+                
                 break
             except PlaywrightError as exc:
                 last_error = exc

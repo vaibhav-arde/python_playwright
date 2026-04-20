@@ -39,6 +39,8 @@ class UIRoutes:
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
+    WISHLIST = "/index.php?route=account/wishlist"
+    COMPARE = "/index.php?route=product/compare"
     INDEX_ENTRY = "index.php"
 
 
@@ -113,12 +115,15 @@ class TestData:
     INVALID_PASSWORD = "123"
 
     PRODUCT_NAME_IMAC = "iMac"
+    PRODUCT_NAME_HTC = "HTC Touch HD"
     PRODUCT_NAME_MACBOOK = "MacBook"
     PRODUCT_NAME_APPLE_CINEMA_30 = 'Apple Cinema 30"'
     PRODUCTS_WITH_SPECIFICATION_TAB = [PRODUCT_NAME_APPLE_CINEMA_30, PRODUCT_NAME_MACBOOK]
     REVIEW_AUTHOR_NAME = "Automation Reviewer"
     REVIEW_TEXT_VALID = "This is an automation review submitted for test validation."
     REVIEW_RATING_VALUE = "5"
+    REVIEW_TEXT_TOO_SHORT = "Short review"
+    REVIEW_TEXT_TOO_LONG = "A" * 1001
     CART_TARGET_QUANTITY = "2"
     INVALID_PRODUCT_QUANTITY = "0"
     MINIMUM_PRODUCT_QUANTITY = "2"

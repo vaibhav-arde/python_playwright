@@ -42,7 +42,7 @@ def test_validate_average_review_display(page: Page):
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
         keyword=product_name
     )
-    expected_product_name = product_in_results.text_content().strip()
+    expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
@@ -63,5 +63,5 @@ def test_validate_average_review_display(page: Page):
     expect(product_page.lbl_review_count).to_be_visible(), messages.PDP_REVIEW_COUNT_NOT_VISIBLE
     
     # Advanced assertion: grab the text to verify it contains the word "review"
-    review_count_text = product_page.lbl_review_count.text_content().strip()
+    review_count_text = product_page.get_text(product_page.lbl_review_count).strip()
     assert "review" in review_count_text.lower(), f"Expected 'reviews' count in text but got '{review_count_text}'"

@@ -34,6 +34,7 @@ class CheckoutPage(BasePage):
         self.lbl_total_price = page.locator("tr:has(td strong:has-text('Total:')) td:last-child")
         self.btn_conf_order = page.locator("#button-confirm")
         self.lbl_order_con_msg = page.get_by_role("heading", level=1)
+        self.lnk_product_name_confirm = page.locator("#collapse-checkout-confirm table tbody tr td.text-left a").first
 
     # ===== Page Validation =====
 
@@ -117,10 +118,17 @@ class CheckoutPage(BasePage):
         return self.lbl_total_price
 
     def click_confirm_order(self):
-        """Click the Confirm Order button."""
+        """Click the Confirm Order button and handle the resulting alert dialog."""
+        # Dialogs must be handled by a listener set up BEFORE the action
+        self.page.once("dialog", lambda dialog: dialog.accept())
         self.click(self.btn_conf_order)
 
     def is_order_placed(self):
         """Verify if the order confirmation message appears."""
-        self.page.on("dialog", lambda dialog: dialog.accept())
         return self.lbl_order_con_msg
+
+    def click_product_name_confirm(self) -> "ProductPage":
+        """Click on the product name link in the confirm order section and return ProductPage instance."""
+        from pages.product_page import ProductPage
+        self.click(self.lnk_product_name_confirm)
+        return ProductPage(self.page)

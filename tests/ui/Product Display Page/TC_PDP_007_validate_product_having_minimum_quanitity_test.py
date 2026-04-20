@@ -28,7 +28,7 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
 
     product_in_results = search_results_page.is_product_exist(product_name)
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
-    expected_product_name = product_in_results.text_content().strip()
+    expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
     search_results_page.select_product(expected_product_name)
 
@@ -48,7 +48,7 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     # Step 5 (ER-2): Reduce below minimum, add to cart and validate warning + cart behavior
     product_page.set_quantity(TestData.BELOW_MINIMUM_PRODUCT_QUANTITY)
     product_page.add_to_cart()
-    product_page.wait_for_cart_feedback()
+    expect(product_page.any_alert_msg.first).to_be_visible()
 
     feedback_text = " ".join(product_page.any_alert_msg.all_text_contents()).strip()
     assert feedback_text != "", messages.PDP_MIN_QTY_WARNING_NOT_VISIBLE
@@ -70,7 +70,7 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     search_results_page.select_product(product_name)
     product_page.set_quantity(TestData.ABOVE_MINIMUM_PRODUCT_QUANTITY)
     product_page.add_to_cart()
-    product_page.wait_for_cart_feedback()
+    expect(product_page.any_alert_msg.first).to_be_visible()
 
     final_feedback_text = " ".join(product_page.any_alert_msg.all_text_contents()).strip()
     assert final_feedback_text != "", messages.PDP_ADD_TO_CART_FEEDBACK_EMPTY
