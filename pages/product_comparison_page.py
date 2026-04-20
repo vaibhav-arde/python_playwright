@@ -24,6 +24,7 @@ class ProductComparisonPage(BasePage):
             messages.EMPTY_COMPARISON_MESSAGE
         )
         self.btn_continue = page.get_by_role("link", name="Continue")
+        self.cart_success_message = page.locator("div.alert.alert-success.alert-dismissible")
 
         # ===== Breadcrumb Locators =====
         # ul.breadcrumb pins the container via CSS class. We avoid get_by_role("list")
@@ -128,3 +129,46 @@ class ProductComparisonPage(BasePage):
         Rendered as <a class='btn btn-danger btn-block'>Remove</a>.
         """
         return self.page.locator("table").get_by_role("link", name="Remove", exact=True)
+
+    # ===== Cart Interaction =====
+
+    def get_cart_success_message(self) -> str:
+        """Return the success message shown after adding a product to cart."""
+        self.wait_for(self.cart_success_message, state="visible")
+        return self.get_text(self.cart_success_message)
+
+    def click_add_to_cart_for_product(self, product_name: str):
+        """Click the 'Add to Cart' button for a specific product in the comparison table.
+
+        Finds the column index for the product name and clicks the button in that column.
+        """
+        # Find the row that contains the product names (first cell text is "Product")
+        product_name_row = (
+            self.page.locator("table tr")
+            .filter(has=self.page.locator("td", has_text=re.compile(r"^Product$")))
+            .first
+        )
+
+        header_cells = product_name_row.locator("td")
+        count = header_cells.count()
+
+        target_index = -1
+        for i in range(count):
+            cell_text = header_cells.nth(i).inner_text().strip()
+            # The product name is often inside <strong> or <a>
+            if product_name in cell_text:
+                target_index = i
+                break
+
+        if target_index != -1:
+            # Find the row that contains the 'Add to Cart' buttons
+            button_row = (
+                self.page.locator("table tr")
+                .filter(has=self.page.locator("input[value='Add to Cart']"))
+                .first
+            )
+            self.click(button_row.locator("td").nth(target_index).locator("input"))
+        else:
+            raise ValueError(
+                messages.ERR_PRODUCT_NOT_FOUND_IN_COMPARISON.format(product_name=product_name)
+            )
