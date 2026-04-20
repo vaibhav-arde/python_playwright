@@ -11,13 +11,12 @@ of the Breadcrumb in different pages of the Application
 
 import pytest
 from playwright.sync_api import expect
-
 from pages.home_page import HomePage
 
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_breadcrumb_home_navigation(page, base_url):
+def test_breadcrumb_home_navigation(page,base_url):
     page.goto(base_url)
 
     home_page = HomePage(page)
@@ -41,3 +40,4 @@ def test_breadcrumb_home_navigation(page, base_url):
     home_page.click_breadcrumb_home()
 
     expect(home_page.img_logo).to_be_visible()
+    

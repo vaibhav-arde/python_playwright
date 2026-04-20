@@ -10,7 +10,6 @@ from utils.config import Config
 
 
 @pytest.mark.ui
-@pytest.mark.regression
 @pytest.mark.xfail()
 def test_navigate_home_from_cart(page):
     """Verify that clicking 'Continue Shopping' on the Shopping Cart page
@@ -18,16 +17,14 @@ def test_navigate_home_from_cart(page):
 
     product_name = Config.product_name
 
-    # Step 1: Application URL is opened via navigate_to_base_url fixture
-
-    # Step 2 & 3: Search for a product
+    # Step 1 & 2: Search for a product
     home_page = HomePage(page)
     home_page.enter_product_name(product_name)
     search_results_page = home_page.click_search()
 
-    # Step 4: Select the product and add to cart
+    # Step 3: Select the product and add to cart
     product_page = search_results_page.select_product(product_name)
     product_page.add_to_cart()
 
-    # Step 5: Click on 'shopping cart' link in the success message
+    # Step 4: Click on 'shopping cart' link in the success message
     product_page.click_shopping_cart_in_success_message()
