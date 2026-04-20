@@ -18,9 +18,7 @@ SPACES_ONLY = "   "
 
 @pytest.mark.regression
 @pytest.mark.bug
-@pytest.mark.xfail(
-    reason="Bug: Spaces are accepted as valid input, no immediate fix planned"
-)
+@pytest.mark.xfail(reason="Bug: Spaces are accepted as valid input, no immediate fix planned")
 def test_register_mandatory_fields_only_spaces(page, base_url):
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
@@ -46,29 +44,19 @@ def test_register_mandatory_fields_only_spaces(page, base_url):
     # ER-1: Validate that warning messages are displayed
 
     # First Name
-    expect(registration_page.get_warning("input-firstname")).to_have_text(
-        messages.WARN_FIRST_NAME
-    )
+    expect(registration_page.get_warning("input-firstname")).to_have_text(messages.WARN_FIRST_NAME)
 
     # Last Name
-    expect(registration_page.get_warning("input-lastname")).to_have_text(
-        messages.WARN_LAST_NAME
-    )
+    expect(registration_page.get_warning("input-lastname")).to_have_text(messages.WARN_LAST_NAME)
 
     # E-Mail
-    expect(registration_page.get_warning("input-email")).to_have_text(
-        messages.WARN_EMAIL
-    )
+    expect(registration_page.get_warning("input-email")).to_have_text(messages.WARN_EMAIL)
 
     # Telephone
-    expect(registration_page.get_warning("input-telephone")).to_have_text(
-        messages.WARN_TELEPHONE
-    )
+    expect(registration_page.get_warning("input-telephone")).to_have_text(messages.WARN_TELEPHONE)
 
     # Password
-    expect(registration_page.get_warning("input-password")).to_have_text(
-        messages.WARN_PASSWORD
-    )
+    expect(registration_page.get_warning("input-password")).to_have_text(messages.WARN_PASSWORD)
 
     # Validate that the URL remains on the registration page
     expected_url = f"{base_url}{UIRoutes.REGISTER}"

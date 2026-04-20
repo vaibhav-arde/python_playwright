@@ -6,6 +6,7 @@ Validate Partner Carousel section and its slider options in the Home page
 """
 
 import pytest
+
 from pages.home_page import HomePage
 
 

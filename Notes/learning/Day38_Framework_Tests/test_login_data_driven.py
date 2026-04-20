@@ -1,20 +1,18 @@
-"""
-Test Case: Data-Driven Login Functionality
-
-Uses test data from Excel file to run login tests with multiple
-credential sets (valid and invalid).
-"""
+import time
 
 import pytest
 from playwright.sync_api import expect
+from utilities.data_reader_util import read_csv_data, read_excel_data, read_json_data
 
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
-from utils.data_loader import read_excel_data
 
 # Load/read the data from the test data files
-excel_data = read_excel_data("test_data/logindata.xlsx")
+
+csv_data = read_csv_data("testdata/logindata.csv")
+json_data = read_json_data("testdata/logindata.json")
+excel_data = read_excel_data("testdata/logindata.xlsx")
 
 
 @pytest.mark.datadriven
@@ -28,8 +26,9 @@ def test_login_data_driven(page, testName, email, password, expected):
     home_page.click_login()
 
     login_page.login(email, password)
+    time.sleep(3)
 
     if expected == "success":
-        expect(my_account_page.get_my_account_page_heading()).to_be_visible(timeout=5000)
+        expect(my_account_page.get_my_account_page_heading()).to_be_visible(timeout=3000)
     else:
-        expect(login_page.get_login_error()).to_be_visible(timeout=5000)
+        expect(login_page.get_login_error()).to_be_visible(timeout=3000)

@@ -6,8 +6,8 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
-from pages.logout_page import LogoutPage
 from pages.edit_account_page import EditAccountPage
+from pages.logout_page import LogoutPage
 
 
 class MyAccountPage(BasePage):
@@ -24,13 +24,11 @@ class MyAccountPage(BasePage):
         )
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.lnk_edit_account = page.locator(
-            'a:has-text("Edit your account information")'
-        )
+        self.lnk_edit_account = page.locator('a:has-text("Edit your account information")')
 
-        self.lnk_subscribe_unsubscribe_to_newsletter = page.locator(
-            "#column-right"
-        ).get_by_role("link", name="Newsletter")
+        self.lnk_subscribe_unsubscribe_to_newsletter = page.locator("#column-right").get_by_role(
+            "link", name="Newsletter"
+        )
         self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
         self.lnk_change_password = page.locator("a:has-text('Change your password')")
 

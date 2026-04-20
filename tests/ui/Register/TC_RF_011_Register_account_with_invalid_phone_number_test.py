@@ -8,11 +8,12 @@
 
 import pytest
 from playwright.sync_api import expect
+
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
+from utils.constants import INVALID_PHONE_NUMBERS
 from utils.helpers import RandomDataUtil
 from utils.messages import WARN_TELEPHONE
-from utils.constants import INVALID_PHONE_NUMBERS
 
 
 @pytest.mark.bug

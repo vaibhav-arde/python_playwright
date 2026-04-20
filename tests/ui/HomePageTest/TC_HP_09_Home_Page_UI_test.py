@@ -5,6 +5,7 @@ Validate the UI of 'Home' page functionality
 """
 
 import pytest
+
 from pages.home_page import HomePage
 
 

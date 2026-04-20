@@ -7,8 +7,9 @@ Home Page"	Validate navigating to Home page from any page of the Applcation usin
 
 import pytest
 from playwright.sync_api import expect
+
 from pages.home_page import HomePage
-from utils.constants import expected_title, UIRoutes
+from utils.constants import UIRoutes, expected_title
 
 
 @pytest.mark.ui

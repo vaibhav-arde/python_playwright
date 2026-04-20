@@ -2,6 +2,7 @@
 # =====================
 
 from playwright.sync_api import Page, expect
+
 from pages.base_page import BasePage
 from pages.search_results_page import SearchResultsPage
 
@@ -17,12 +18,8 @@ class HomePage(BasePage):
         # ==================================================
         self.lnk_my_account = page.locator('span:has-text("My Account")')
         self.dropdown_menu = page.locator("li.dropdown.open ul.dropdown-menu")
-        self.lnk_register = self.dropdown_menu.get_by_role(
-            "link", name="Register"
-        )
-        self.lnk_login = self.dropdown_menu.get_by_role(
-            "link", name="Login"
-        )
+        self.lnk_register = self.dropdown_menu.get_by_role("link", name="Register")
+        self.lnk_login = self.dropdown_menu.get_by_role("link", name="Login")
         self.txt_search_box = page.get_by_placeholder("Search")
         self.btn_search = page.locator("#search").get_by_role("button")
         self.main_menu = page.locator("#menu")
@@ -31,70 +28,41 @@ class HomePage(BasePage):
         # ==================================================
         # Category Navigation
         # ==================================================
-        self.lnk_desktops = page.locator(
-            '#menu .nav > li > a:has-text("Desktops")'
-        )
-        self.lnk_pc = page.get_by_role(
-            "link", name="PC (0)", exact=True
-        )
+        self.lnk_desktops = page.locator('#menu .nav > li > a:has-text("Desktops")')
+        self.lnk_pc = page.get_by_role("link", name="PC (0)", exact=True)
 
         # ==================================================
         # Hero Slider
         # ==================================================
         self.cnt_hero_slider = page.locator("#slideshow0")
-        self.btn_slider_next = self.cnt_hero_slider.locator(
-            ".swiper-button-next"
-        )
-        self.btn_slider_prev = self.cnt_hero_slider.locator(
-            ".swiper-button-prev"
-        )
-        self.list_slider_images = self.cnt_hero_slider.locator(
-            ".swiper-slide img"
-        )
-        self.list_slider_pagination = self.cnt_hero_slider.locator(
-            ".swiper-pagination-bullet"
-        )
+        self.btn_slider_next = self.cnt_hero_slider.locator(".swiper-button-next")
+        self.btn_slider_prev = self.cnt_hero_slider.locator(".swiper-button-prev")
+        self.list_slider_images = self.cnt_hero_slider.locator(".swiper-slide img")
+        self.list_slider_pagination = self.cnt_hero_slider.locator(".swiper-pagination-bullet")
         self.img_active_hero = self.cnt_hero_slider.locator(
-            ".swiper-slide-active img, "
-            ".swiper-slide-duplicate-active img"
+            ".swiper-slide-active img, .swiper-slide-duplicate-active img"
         ).first
 
         # ==================================================
         # Featured Products
         # ==================================================
-        self.txt_featured_heading = page.get_by_role(
-            "heading", name="Featured"
-        )
-        self.list_featured_products = page.locator(
-            "#content .product-layout"
-        )
+        self.txt_featured_heading = page.get_by_role("heading", name="Featured")
+        self.list_featured_products = page.locator("#content .product-layout")
 
         # ==================================================
         # Partner Carousel
         # ==================================================
         self.partner_carousel = page.locator("#carousel0")
-        self.partner_slides = self.partner_carousel.locator(
-            ".swiper-slide"
-        )
-        self.active_partner = self.partner_carousel.locator(
-            ".swiper-slide-active"
-        ).first
-        self.btn_partner_next = self.partner_carousel.locator(
-            ".swiper-button-next"
-        )
-        self.btn_partner_prev = self.partner_carousel.locator(
-            ".swiper-button-prev"
-        )
-        self.partner_pagination = self.partner_carousel.locator(
-            ".swiper-pagination-bullet"
-        )
+        self.partner_slides = self.partner_carousel.locator(".swiper-slide")
+        self.active_partner = self.partner_carousel.locator(".swiper-slide-active").first
+        self.btn_partner_next = self.partner_carousel.locator(".swiper-button-next")
+        self.btn_partner_prev = self.partner_carousel.locator(".swiper-button-prev")
+        self.partner_pagination = self.partner_carousel.locator(".swiper-pagination-bullet")
 
         # ==================================================
         # Breadcrumb
         # ==================================================
-        self.icon_breadcrumb_home = page.locator(
-            "ul.breadcrumb li:first-child a"
-        )
+        self.icon_breadcrumb_home = page.locator("ul.breadcrumb li:first-child a")
 
     # ==================================================
     # Header Actions
@@ -143,15 +111,11 @@ class HomePage(BasePage):
 
     def verify_pagination_is_visible(self):
         if self.list_slider_pagination.count() > 0:
-            self.verify_visible(
-                self.list_slider_pagination.first
-            )
+            self.verify_visible(self.list_slider_pagination.first)
 
     def verify_partner_pagination_visible(self):
         if self.partner_pagination.count() > 0:
-            self.verify_visible(
-                self.partner_pagination.first
-            )
+            self.verify_visible(self.partner_pagination.first)
 
     # ==================================================
     # Grouped Methods
@@ -268,9 +232,7 @@ class HomePage(BasePage):
         return self.img_active_hero.get_attribute("src") or ""
 
     def verify_image_changed(self, previous_src: str):
-        expect(self.img_active_hero).not_to_have_attribute(
-            "src", previous_src
-        )
+        expect(self.img_active_hero).not_to_have_attribute("src", previous_src)
 
     # ==================================================
     # Featured Products
@@ -293,9 +255,7 @@ class HomePage(BasePage):
         assert self.get_partner_logos_count() >= 5
 
     def get_active_partner_index(self) -> str:
-        return self.active_partner.get_attribute(
-            "data-swiper-slide-index"
-        ) or ""
+        return self.active_partner.get_attribute("data-swiper-slide-index") or ""
 
     def verify_partner_navigation_buttons_visible(self):
         if self.btn_partner_next.count() > 0:

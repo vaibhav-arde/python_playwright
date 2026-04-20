@@ -7,12 +7,13 @@
 
 import pytest
 from playwright.sync_api import expect
+
 from pages.home_page import HomePage
-from pages.registration_page import RegistrationPage
-from pages.my_account_page import MyAccountPage
-from utils import messages
-from utils.random_test_data import RandomTestData
 from pages.login_page import LoginPage
+from pages.my_account_page import MyAccountPage
+from pages.registration_page import RegistrationPage
+from utils import messages
+from utils.helpers import RandomDataUtil
 
 
 @pytest.mark.ui

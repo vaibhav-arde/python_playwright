@@ -15,11 +15,9 @@ from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
-from utils.helpers import RandomDataUtil
 from utils import messages
-from utils.constants import UserDetails
-from utils.constants import InvalidEmail
-from utils.constants import InvalidPassword
+from utils.constants import InvalidEmail, InvalidPassword, UserDetails
+from utils.helpers import RandomDataUtil
 
 
 @pytest.mark.sanity
@@ -150,6 +148,6 @@ def test_account_validation_with_invalid_email(page, invalid_email, expected_msg
     registration_page.click_continue()
 
     validation_msg = registration_page.get_email_validation_message()
-    assert (
-        expected_msg in validation_msg
-    ), f"Expected '{expected_msg}' in validation message, got: '{validation_msg}'"
+    assert expected_msg in validation_msg, (
+        f"Expected '{expected_msg}' in validation message, got: '{validation_msg}'"
+    )
