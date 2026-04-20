@@ -45,12 +45,6 @@ class BasePage:
         target.fill(value)
         logger.info(f"Filled {target} with value: {value}")
 
-    # def press_key(self, locator: str | Locator, key: str):
-    #     """Press a key on an element. Accepts string selector OR Locator object."""
-    #     target = self.get_locator(locator)
-    #     target.press(key)
-    #     logger.info(f"Pressed key {key} on {target}")
-
     def check(self, locator: str | Locator):
         """Select a checkbox or radio button."""
         target = self.get_locator(locator)
@@ -99,17 +93,18 @@ class BasePage:
         """Return the .text-danger warning element adjacent to a field by its ID."""
         return self.page.locator(f"#{field_id} + .text-danger")
 
-    def press_tab(self, times: int = 1):
+    def press_tab(self, times: int = 1) -> None:
         for _ in range(times):
             self.page.keyboard.press("Tab")
 
-    def press_enter(self):
+    def press_enter(self) -> None:
         self.page.keyboard.press("Enter")
 
-    def press_space(self):
+    def press_space(self) -> None:
         self.page.keyboard.press("Space")
 
-    def tab_until_focused(self, locator, max_tabs: int = 50):
+    def tab_until_focused(self, locator, max_tabs: int = 50) -> None:
+        """It keeps pressing the Tab key until a specific element gets focus."""
         target = locator  # assuming already locator
         for _ in range(max_tabs):
             if target.evaluate("el => el === document.activeElement"):

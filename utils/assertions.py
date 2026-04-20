@@ -37,10 +37,12 @@ def extract_price(text: str) -> float:
 
 
 def assert_success_message_visible(search_results_page, product):
+    """Verify that the success message for a specific product is visible on the page."""
     expect(search_results_page.get_success_message(product)).to_be_visible()
 
 
 def assert_product_page_opened(page):
+    """Verify that the product page is opened."""
     expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
 
 

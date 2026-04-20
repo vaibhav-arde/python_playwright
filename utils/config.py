@@ -67,24 +67,8 @@ SORT_CONFIG: dict[str, SortOption] = {
         "getter": lambda page: page.get_product_names(),
         "reverse": False,
     },
-    "Name (Z - A)": {
-        "getter": lambda page: page.get_product_names(),
-        "reverse": True,
-    },
     "Price (Low > High)": {
         "getter": lambda page: page.get_product_prices(),
-        "reverse": False,
-    },
-    "Price (High > Low)": {
-        "getter": lambda page: page.get_product_prices(),
-        "reverse": True,
-    },
-    "Rating (Highest)": {
-        "getter": lambda page: page.get_product_ratings(),
-        "reverse": True,
-    },
-    "Rating (Lowest)": {
-        "getter": lambda page: page.get_product_ratings(),
         "reverse": False,
     },
 }
