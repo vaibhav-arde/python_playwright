@@ -24,7 +24,7 @@ class ProductComparisonPage(BasePage):
             messages.EMPTY_COMPARISON_MESSAGE
         )
         self.btn_continue = page.get_by_role("link", name="Continue")
-        self.cart_success_message = page.locator("div.alert.alert-success.alert-dismissible")
+        self.success_message = page.locator("div.alert.alert-success.alert-dismissible")
 
         # ===== Breadcrumb Locators =====
         # ul.breadcrumb pins the container via CSS class. We avoid get_by_role("list")
@@ -130,18 +130,17 @@ class ProductComparisonPage(BasePage):
         """
         return self.page.locator("table").get_by_role("link", name="Remove", exact=True)
 
-    # ===== Cart Interaction =====
+    # ===== Success Message =====
 
-    def get_cart_success_message(self) -> str:
-        """Return the success message shown after adding a product to cart."""
-        self.wait_for(self.cart_success_message, state="visible")
-        return self.get_text(self.cart_success_message)
+    def get_success_message(self) -> str:
+        """Return the success message shown after a successful action (e.g., add to cart, remove)."""
+        self.wait_for(self.success_message, state="visible")
+        return self.get_text(self.success_message)
 
-    def click_add_to_cart_for_product(self, product_name: str):
-        """Click the 'Add to Cart' button for a specific product in the comparison table.
+    # ===== Cart & Removal Interaction =====
 
-        Finds the column index for the product name and clicks the button in that column.
-        """
+    def _get_column_index_for_product(self, product_name: str) -> int:
+        """Find the column index for a specific product name in the comparison table."""
         # Find the row that contains the product names (first cell text is "Product")
         product_name_row = (
             self.page.locator("table tr")
@@ -152,22 +151,39 @@ class ProductComparisonPage(BasePage):
         header_cells = product_name_row.locator("td")
         count = header_cells.count()
 
-        target_index = -1
         for i in range(count):
             cell_text = header_cells.nth(i).inner_text().strip()
-            # The product name is often inside <strong> or <a>
             if product_name in cell_text:
-                target_index = i
-                break
+                return i
+        return -1
+
+    def click_add_to_cart_for_product(self, product_name: str):
+        """Click the 'Add to Cart' button for a specific product in the comparison table."""
+        target_index = self._get_column_index_for_product(product_name)
 
         if target_index != -1:
-            # Find the row that contains the 'Add to Cart' buttons
             button_row = (
                 self.page.locator("table tr")
                 .filter(has=self.page.locator("input[value='Add to Cart']"))
                 .first
             )
             self.click(button_row.locator("td").nth(target_index).locator("input"))
+        else:
+            raise ValueError(
+                messages.ERR_PRODUCT_NOT_FOUND_IN_COMPARISON.format(product_name=product_name)
+            )
+
+    def click_remove_for_product(self, product_name: str):
+        """Click the 'Remove' link for a specific product in the comparison table."""
+        target_index = self._get_column_index_for_product(product_name)
+
+        if target_index != -1:
+            remove_row = (
+                self.page.locator("table tr")
+                .filter(has=self.page.locator("a", has_text="Remove"))
+                .first
+            )
+            self.click(remove_row.locator("td").nth(target_index).locator("a"))
         else:
             raise ValueError(
                 messages.ERR_PRODUCT_NOT_FOUND_IN_COMPARISON.format(product_name=product_name)

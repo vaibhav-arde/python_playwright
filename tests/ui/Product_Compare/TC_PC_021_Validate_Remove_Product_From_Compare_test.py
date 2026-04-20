@@ -7,7 +7,7 @@ from pages.product_comparison_page import ProductComparisonPage
 from pages.search_results_page import SearchResultsPage
 from utils.constants import UIRoutes
 from utils.data_loader import load_json_file
-from utils.messages import ADD_TO_CART_SUCCESS, COMPARE_SUCCESS
+from utils.messages import COMPARE_SUCCESS, REMOVE_SUCCESS
 
 
 @pytest.mark.regression
@@ -19,20 +19,18 @@ from utils.messages import ADD_TO_CART_SUCCESS, COMPARE_SUCCESS
         *load_json_file("test_data/product_comparison.json")["two_products"],
     ],
 )
-def test_validate_add_to_cart_from_comparison_page(page, product_names):
-    """TC_PC_020 — Validate adding products to cart from the 'Product Comparison' page."""
+def test_validate_remove_product_from_comparison_page(page, product_names):
+    """TC_PC_021 — Validate removing products from the 'Product Comparison' page."""
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     comparison_page = ProductComparisonPage(page)
 
     # ===== Steps 1-3: Search and add product(s) to comparison =====
     for product in product_names:
-        # Search for the product
         home_page.enter_product_name(product)
         home_page.click_search()
         expect(search_results_page.get_search_results_page_header()).to_be_visible()
 
-        # Add to comparison
         search_results_page.click_compare_button(product)
 
         # Verify success message for comparison
@@ -47,11 +45,15 @@ def test_validate_add_to_cart_from_comparison_page(page, product_names):
     expect(page).to_have_url(re.compile(re.escape(UIRoutes.COMPARISON)))
     expect(comparison_page.get_page_heading()).to_be_visible()
 
-    # ===== Step 5: Click 'Add to Cart' button of the Product(s) from the 'Product Comparison' page =====
+    # ===== Step 5: Click 'Remove' button of the Product(s) from the 'Product Comparison' page =====
     for product in product_names:
-        comparison_page.click_add_to_cart_for_product(product)
+        comparison_page.click_remove_for_product(product)
 
-        # Verify success message for adding to cart (Validate ER-1)
-        expected_cart_msg = ADD_TO_CART_SUCCESS.format(product_name=product)
-        # We use expect().to_contain_text() to handle potential delays or multiple alerts
-        expect(comparison_page.success_message).to_contain_text(expected_cart_msg)
+        # Verify success message for removal (Validate ER-1)
+        expect(comparison_page.success_message).to_contain_text(REMOVE_SUCCESS)
+
+        # Verify the removed product is no longer in the table
+        expect(comparison_page.get_product_name_in_table(product)).to_have_count(0)
+
+    # If all products were removed, verify the empty comparison message
+    expect(comparison_page.empty_comparison_text).to_be_visible()
