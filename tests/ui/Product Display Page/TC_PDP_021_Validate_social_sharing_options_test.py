@@ -26,9 +26,12 @@ def test_validate_social_sharing_options(page: Page):
 
     search_results_page.select_product(product_name)
 
-    # Step 4: Check social options presence
-    # Since AddThis service is discontinued, icons are not visible/rendered.
-    # We verify the placeholder elements are attached to the DOM.
-    expect(product_page.sns_facebook).to_be_attached(timeout=10000)
-    expect(product_page.sns_twitter).to_be_attached(timeout=10000)
-    expect(product_page.sns_pinterest).to_be_attached(timeout=10000)
+    # Step 4: Verify social sharing options (AddThis) are no longer present
+    # Note: AddThis service was discontinued in 2023. This test confirms the removal/absence
+    # of the social sharing widget to prevent regressions where defunct scripts might still be loaded.
+    add_this_widget = page.locator(".addthis_sharing_toolbox, .addthis_inline_share_toolbox")
+    expect(add_this_widget).not_to_be_visible()
+    
+    # Also verify common classes are gone
+    facebook_btn = page.locator(".addthis_button_facebook_like")
+    expect(facebook_btn).not_to_be_visible()

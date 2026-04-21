@@ -37,6 +37,7 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     page.goto(UIRoutes.CART)
     shopping_cart_page.clear_cart()
     page.goto("/") # Go back to home for next steps
+    page.wait_for_load_state("networkidle")
 
     # Step 2-3: Enter Product Name and Click Search icon
     home_page.enter_product_name(product_name)

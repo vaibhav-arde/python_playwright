@@ -22,7 +22,8 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     comparison_page = ProductComparisonPage(page)
 
     product_name = TestData.PRODUCT_NAME_IMAC
-
+    
+    home_page.open_home_page()
     home_page.enter_product_name(product_name)
     home_page.click_search()
 

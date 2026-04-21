@@ -44,7 +44,7 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
         keyword=product_name
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
     search_results_page.select_product(expected_product_name)
@@ -65,5 +65,7 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
     
     actual_no_reviews_text = product_page.get_no_reviews_text()
     assert actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT, (
-        f"Expected text '{messages.PDP_NO_REVIEWS_TEXT}' but got '{actual_no_reviews_text}'"
+        messages.PDP_NO_REVIEWS_TEXT_MISMATCH.format(
+            expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
+        )
     )

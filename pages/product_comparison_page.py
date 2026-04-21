@@ -14,8 +14,8 @@ class ProductComparisonPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lbl_heading = page.locator("#content h1, #content h2").filter(has_text=re.compile(r"Comparison", re.IGNORECASE))
-        self.comparison_table = page.locator(".table-responsive")
+        self.lbl_heading = page.locator("#content h1")
+        self.comparison_table = page.locator("div.table-responsive")
 
     # ===== Action Methods =====
 

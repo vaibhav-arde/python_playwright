@@ -26,6 +26,7 @@ def test_navigate_to_pdp_via_wishlist_name(page: Page):
     product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Login
+    home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_login()
     login_page.login(Config.email, Config.password)

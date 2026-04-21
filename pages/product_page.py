@@ -65,7 +65,9 @@ class ProductPage(BasePage):
         
         # get_by_role: Use regex to match "Reviews (0)" vs "0 reviews" (avoid strict mode violation)
         self.lnk_review_tab = self.content.get_by_role("link", name=re.compile(r"^Reviews", re.IGNORECASE))
+        self.li_review_tab = self.lnk_review_tab.locator("xpath=..")
         self.pnl_review = self.content.locator("#tab-review")
+        self.cnt_review = self.pnl_review.locator("#review")
 
         self.txt_review_name = self.pnl_review.get_by_label("Your Name")
         self.txt_review_text = self.pnl_review.get_by_label("Your Review")
@@ -79,10 +81,6 @@ class ProductPage(BasePage):
         # ===== Social and Utility Locators =====
         self.btn_wishlist = page.locator("button").filter(has=page.locator("i.fa-heart")).first
         self.btn_compare = page.locator("button").filter(has=page.locator("i.fa-exchange")).first
-        # Note: AddThis service was discontinued. Targeting placeholder classes directly to verify integration hooks.
-        self.sns_facebook = self.content.locator(".addthis_button_facebook_like").first
-        self.sns_twitter = self.content.locator(".addthis_button_tweet").first
-        self.sns_pinterest = self.content.locator(".addthis_button_pinterest_pinit").first
         self.pnl_related_products = self.content.get_by_role("heading", name="Related Products")
         self.lnk_related_product = page.locator(".product-thumb h4 a")
 
@@ -304,19 +302,6 @@ class ProductPage(BasePage):
         self.click(self.btn_compare)
 
     # ===== Social and Related Products Methods =====
-
-    def get_social_options_visibility(self) -> dict:
-        """Check visibility of social share options."""
-        # The addthis widget is injected dynamically, wait for Facebook to be visible
-        try:
-            self.sns_facebook.wait_for(state="visible", timeout=10000)
-        except Exception:
-            pass
-        return {
-            "facebook": self.sns_facebook.is_visible(),
-            "twitter": self.sns_twitter.is_visible(),
-            "pinterest": self.sns_pinterest.is_visible(),
-        }
 
     def click_related_product(self, index: int):
         """Click the n-th related product."""

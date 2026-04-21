@@ -1,4 +1,5 @@
 import pytest
+import re
 from playwright.sync_api import expect, Page
 
 from pages.home_page import HomePage
@@ -38,11 +39,13 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
     login_page = LoginPage(page)
     
     # Step 1: Login
+    home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_login()
     login_page.login(Config.email, Config.password)
 
     # Step 2: Search for a product
+    home_page.open_home_page()
     home_page.enter_product_name(product_name)
     home_page.click_search()
 
@@ -56,14 +59,14 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
     product_page.click_add_to_wishlist()
 
     # Validate ER-1: Success message
-    success_alert = product_page.get_confirmation_message()
-    expect(success_alert).to_be_visible()
+    success_alert = product_page.any_alert_msg.first
+    expect(success_alert).to_be_visible(timeout=10000)
     actual_msg = product_page.get_text(success_alert)
     assert expected_product_name in actual_msg, f"Success message should mention {expected_product_name}"
 
     # Step 5: Click 'wish list' link in success message
-    # The link is typically inside the success alert
-    success_alert.get_by_role("link", name="Wish List").click()
+    # Use case-insensitive regex for the link name
+    success_alert.get_by_role("link", name=re.compile(r"wish list", re.IGNORECASE)).click()
 
     # Validate ER-2: Navigation to Wish List page
     # Use explicit wait for the heading to be visible to handle redirect

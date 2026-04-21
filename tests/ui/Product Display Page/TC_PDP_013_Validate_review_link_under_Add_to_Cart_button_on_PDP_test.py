@@ -44,7 +44,7 @@ def test_validate_review_link_under_add_to_cart(page: Page):
         keyword=product_name
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
     search_results_page.select_product(expected_product_name)
@@ -69,5 +69,5 @@ def test_validate_review_link_under_add_to_cart(page: Page):
     
     # Advanced assertion: Assert that the parent <li> of the review tab carries the 'active' class
     # The xpath=.. robustly fetches the immediate parent element
-    parent_li = product_page.lnk_review_tab.locator("xpath=..")
+    parent_li = product_page.li_review_tab
     expect(parent_li).to_have_class(re.compile(r"active"))

@@ -49,7 +49,7 @@ def test_validate_user_able_to_write_review(page: Page):
         keyword=product_name
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the product in search results to open the Product Display Page
     search_results_page.select_product(expected_product_name)
