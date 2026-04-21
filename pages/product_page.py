@@ -26,6 +26,10 @@ class ProductPage(BasePage):
         self.warning_msg = page.locator("div.alert.alert-danger, div.alert-danger")
         self.any_alert_msg = page.locator("div.alert, .alert-success, .alert-danger, .alert-info")
         self.btn_items = page.locator("#cart > button")
+        self.btn_cart_total = self.btn_items
+        self.pnl_cart_dropdown = page.locator("#cart .dropdown-menu")
+        self.lnk_cart_image = self.pnl_cart_dropdown.locator("table tr td.text-center a").first
+        self.lnk_cart_name = self.pnl_cart_dropdown.locator("table tr td.text-left a").first
         self.lnk_view_cart = page.get_by_role("link", name="View Cart")
 
         # ===== Product Details Locators =====
@@ -122,6 +126,24 @@ class ProductPage(BasePage):
         """Click the 'shopping cart' link from the success message."""
         self.click(self.lnk_shopping_cart_success)
         return ShoppingCartPage(self.page)
+
+    # ===== Cart Toggle Box Methods =====
+
+    def click_cart_button(self):
+        """Click the cart button to open the toggle box."""
+        self.click(self.btn_cart_total)
+
+    def click_cart_image_link(self) -> "ProductPage":
+        """Click the product image in the cart toggle box and return ProductPage."""
+        from pages.product_page import ProductPage
+        self.click(self.lnk_cart_image)
+        return ProductPage(self.page)
+
+    def click_cart_name_link(self) -> "ProductPage":
+        """Click the product name link in the cart toggle box and return ProductPage."""
+        from pages.product_page import ProductPage
+        self.click(self.lnk_cart_name)
+        return ProductPage(self.page)
 
     # ===== Combined Workflow =====
 
