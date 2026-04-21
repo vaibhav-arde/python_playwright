@@ -27,6 +27,7 @@ class ProductComparisonPage(BasePage):
         self.btn_continue = page.get_by_role("link", name="Continue")
         self.success_message = page.locator("div.alert.alert-success.alert-dismissible")
 
+
         # ===== Breadcrumb Locators =====
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.breadcrumb_home_link = self.breadcrumb.locator("li:has(a:has(i.fa-home))")

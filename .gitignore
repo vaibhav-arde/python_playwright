@@ -36,3 +36,13 @@ htmlcov/
 # Session Storage
 session_storage/auth_state.json
 session_storage/auth_user.json
+
+.claude/
+
+# Temporary scratch space & scripts
+scratch/
+refactor_script.py
+
+# Local test output logs
+*.txt
+*.xml
