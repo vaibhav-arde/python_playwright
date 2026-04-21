@@ -28,8 +28,8 @@ class Config:
     """Centralized test data and credentials configuration."""
 
     # Valid credentials
-    email = "vitthalpatil5656@gmail.com"
-    password = "sourabh123"
+    email = "prajyotbhopale@gmail.com"
+    password = "123456"
 
     # Invalid credentials (for negative tests)
     invalid_email = "pavanol123@abc.com"

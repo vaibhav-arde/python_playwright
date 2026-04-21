@@ -170,8 +170,15 @@ class SearchResultsPage(BasePage):
 
     # ===== Product Verification =====
 
-    def is_product_exist(self, product_name: str) -> bool:
-        return self.search_products.filter(has_text=product_name).count() > 0
+    def is_product_exist(self, product_name: str):
+        """Check whether a specific product is displayed in search results."""
+        count = self.search_products.count()
+        for i in range(count):
+            product = self.search_products.nth(i)
+            title = product.text_content()
+            if title and title.strip() == product_name:
+                return product
+        return None
 
     # ===== Product Selection =====
 
