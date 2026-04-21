@@ -43,7 +43,7 @@ def test_validate_review_count_in_tab(page: Page):
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
         keyword=product_name
     )
-    expected_product_name = product_in_results.text_content().strip()
+    expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
@@ -59,7 +59,7 @@ def test_validate_review_count_in_tab(page: Page):
     # Step 5: Check the count of reviews in the 'Reviews' tab label
     expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
 
-    tab_text = product_page.lnk_review_tab.text_content().strip()
+    tab_text = product_page.get_text(product_page.lnk_review_tab).strip()
 
     # Validate ER-1: Reviews tab contains the count, e.g. "Reviews (0)"
     assert re.search(

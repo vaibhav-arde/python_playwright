@@ -29,20 +29,20 @@ def test_validate_invalid_quantity(page: Page):
     product_page.set_quantity(invalid_quantity)
     product_page.add_to_cart()
 
-    # Step 5: Validate application feedback is displayed
-    # Depending on backend validation, app may show success (auto-corrected quantity)
-    # or warning (rejected quantity). Either way, feedback must be shown.
-    success_alert = product_page.get_confirmation_message()
-    warning_alert = product_page.get_warning_message()
-    product_page.wait_for_cart_feedback()
+    # Step 5: Validate application feedback (Success or Warning)
+    # The application shows either a success message or stays on the page with an alert.
+    expect(product_page.any_alert_msg.first).to_be_visible(timeout=10000)
 
-    success_visible = success_alert.is_visible()
-    warning_visible = warning_alert.is_visible()
+    # We check if it's a success or warning
+    success_visible = product_page.cnf_msg.first.is_visible()
+    warning_visible = product_page.warning_msg.first.is_visible()
 
     assert success_visible or warning_visible, messages.INVALID_QTY_ALERT_EXPECTATION
 
     if success_visible:
-        expect(success_alert).to_contain_text(messages.SUCCESS_ALERT_KEYWORD)
+        expect(product_page.cnf_msg.first).to_contain_text(messages.SUCCESS_ALERT_KEYWORD)
+    elif warning_visible:
+        expect(product_page.warning_msg.first).to_contain_text(messages.WARNING_ALERT_KEYWORD)
 
-    if warning_visible:
-        expect(warning_alert).to_contain_text(messages.WARNING_ALERT_KEYWORD)
+    # Verify quantity is kept at the value we entered (0)
+    expect(product_page.txt_quantity).to_have_value(invalid_quantity)

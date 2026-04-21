@@ -20,17 +20,15 @@ def test_validate_the_specifications(page: Page):
     product_page = ProductPage(page)
 
     # Step 1-3: Search and open the first product that exposes a Specification tab
-    selected_product_name = ""
+    selected_product_name = TestData.EMPTY_VALUE
     for product_name in TestData.PRODUCTS_WITH_SPECIFICATION_TAB:
         home_page.enter_product_name(product_name)
         home_page.click_search()
 
         product_in_results = search_results_page.is_product_exist(product_name)
-        assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-            keyword=product_name
-        )
-        expected_product_name = product_in_results.text_content().strip()
-        assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+        assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
+        expected_product_name = search_results_page.get_text(product_in_results).strip()
+        assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
         search_results_page.select_product(expected_product_name)
 
         if (
@@ -40,10 +38,8 @@ def test_validate_the_specifications(page: Page):
             selected_product_name = expected_product_name
             break
 
-    assert (
-        selected_product_name != ""
-    ), messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
-        products=", ".join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
+    assert selected_product_name != TestData.EMPTY_VALUE, messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
+        products=TestData.COMMA_SPACE_SEPARATOR.join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
     )
 
     # Step 4 (ER-1): Open Specification tab and validate specifications
@@ -54,4 +50,4 @@ def test_validate_the_specifications(page: Page):
     assert product_page.pnl_specification.is_visible(), messages.PDP_SPECIFICATION_PANEL_NOT_VISIBLE
 
     specification_text = product_page.get_specification_text()
-    assert specification_text != "", messages.PDP_SPECIFICATION_TEXT_EMPTY
+    assert specification_text != TestData.EMPTY_VALUE, messages.PDP_SPECIFICATION_TEXT_EMPTY

@@ -22,8 +22,9 @@ class ProductPage(BasePage):
         self.txt_quantity = self.content.locator('input[name="quantity"]')
         self.btn_add_to_cart = self.content.get_by_role("button", name="Add to Cart", exact=True)
         self.cnf_msg = page.locator("div.alert.alert-success, div.alert-success")
+        self.lnk_shopping_cart_success = self.cnf_msg.get_by_role("link", name="shopping cart")
         self.warning_msg = page.locator("div.alert.alert-danger, div.alert-danger")
-        self.any_alert_msg = page.locator("div.alert")
+        self.any_alert_msg = page.locator("div.alert, .alert-success, .alert-danger, .alert-info")
         self.btn_items = page.locator("#cart > button")
         self.lnk_view_cart = page.get_by_role("link", name="View Cart")
 
@@ -76,7 +77,9 @@ class ProductPage(BasePage):
         self.lnk_review_tab = self.content.get_by_role(
             "link", name=re.compile(r"^Reviews", re.IGNORECASE)
         )
+        self.li_review_tab = self.lnk_review_tab.locator("xpath=..")
         self.pnl_review = self.content.locator("#tab-review")
+        self.cnt_review = self.pnl_review.locator("#review")
 
         self.txt_review_name = self.pnl_review.get_by_label("Your Name")
         self.txt_review_text = self.pnl_review.get_by_label("Your Review")
@@ -86,6 +89,12 @@ class ProductPage(BasePage):
 
         # Container holding actual reviews or the "no reviews" message
         self.lbl_no_reviews = self.pnl_review.locator("#review p")
+
+        # ===== Social and Utility Locators =====
+        self.btn_wishlist = page.locator("button").filter(has=page.locator("i.fa-heart")).first
+        self.btn_compare = page.locator("button").filter(has=page.locator("i.fa-exchange")).first
+        self.pnl_related_products = self.content.get_by_role("heading", name="Related Products")
+        self.lnk_related_product = page.locator(".product-thumb h4 a")
 
     # ===== Quantity Methods =====
 
@@ -110,10 +119,6 @@ class ProductPage(BasePage):
         """Return the warning message element shown after add-to-cart validation."""
         return self.warning_msg
 
-    def wait_for_cart_feedback(self, timeout: int = UITimeouts.CART_ALERT_WAIT_MS):
-        """Wait until any cart feedback alert (success/warning) is displayed."""
-        self.any_alert_msg.first.wait_for(state="visible", timeout=timeout)
-
     # ===== Navigate to Shopping Cart =====
 
     def click_items_to_navigate_to_cart(self):
@@ -123,6 +128,11 @@ class ProductPage(BasePage):
     def click_view_cart(self) -> ShoppingCartPage:
         """Click 'View Cart' link and return ShoppingCartPage instance."""
         self.click(self.lnk_view_cart)
+        return ShoppingCartPage(self.page)
+
+    def click_shopping_cart_link(self) -> ShoppingCartPage:
+        """Click the 'shopping cart' link from the success message."""
+        self.click(self.lnk_shopping_cart_success)
         return ShoppingCartPage(self.page)
 
     # ===== Combined Workflow =====
@@ -149,17 +159,17 @@ class ProductPage(BasePage):
 
     def get_product_brand(self) -> str:
         """Return the product brand."""
-        text = self.lbl_product_brand.text_content()
+        text = self.get_text(self.lbl_product_brand)
         return text.replace("Brand:", "").strip() if text else ""
 
     def get_product_code(self) -> str:
         """Return the product code."""
-        text = self.lbl_product_code.text_content()
+        text = self.get_text(self.lbl_product_code)
         return text.replace("Product Code:", "").strip() if text else ""
 
     def get_product_availability(self) -> str:
         """Return the product availability status."""
-        text = self.lbl_product_availability.text_content()
+        text = self.get_text(self.lbl_product_availability)
         return text.replace("Availability:", "").strip() if text else ""
 
     def get_default_quantity_value(self) -> str:
@@ -168,7 +178,7 @@ class ProductPage(BasePage):
 
     def get_minimum_quantity_info_text(self) -> str:
         """Return minimum quantity helper/info text from PDP."""
-        text = self.lbl_minimum_quantity_info.first.text_content()
+        text = self.get_text(self.lbl_minimum_quantity_info.first)
         return text.strip() if text else ""
 
     def click_description_tab(self):
@@ -177,7 +187,7 @@ class ProductPage(BasePage):
 
     def get_description_text(self) -> str:
         """Return product description text from Description tab panel."""
-        text = self.pnl_description.text_content()
+        text = self.get_text(self.pnl_description)
         return text.strip() if text else ""
 
     def click_specification_tab(self):
@@ -186,7 +196,7 @@ class ProductPage(BasePage):
 
     def get_specification_text(self) -> str:
         """Return product specification text from Specification tab panel."""
-        text = self.pnl_specification.text_content()
+        text = self.get_text(self.pnl_specification)
         return text.strip() if text else ""
 
     def verify_product_page_ui(self):
@@ -227,7 +237,7 @@ class ProductPage(BasePage):
 
     def get_ex_tax_price(self) -> str:
         """Return the ex-tax price text."""
-        text = self.lbl_product_ex_tax.text_content()
+        text = self.get_text(self.lbl_product_ex_tax)
         return text.replace("Ex Tax:", "").strip() if text else ""
 
     # ===== Thumbnail and Lightbox Methods =====
@@ -314,7 +324,7 @@ class ProductPage(BasePage):
 
     def get_review_success_text(self) -> str:
         """Return the text content of the review success alert."""
-        text = self.alert_review_success.text_content()
+        text = self.get_text(self.alert_review_success)
         return text.strip() if text else ""
 
     def get_review_warning_alert(self):
@@ -323,10 +333,30 @@ class ProductPage(BasePage):
 
     def get_review_warning_text(self) -> str:
         """Return the text content of the review warning alert."""
-        text = self.alert_review_warning.text_content()
+        text = self.get_text(self.alert_review_warning)
         return text.strip() if text else ""
 
     def get_no_reviews_text(self) -> str:
         """Return the text displayed when a product has no reviews."""
-        text = self.lbl_no_reviews.first.text_content()
+        text = self.get_text(self.lbl_no_reviews.first)
         return text.strip() if text else ""
+
+    # ===== Wishlist and Comparison Methods =====
+
+    def click_add_to_wishlist(self):
+        """Click the 'Add to Wish List' button."""
+        self.click(self.btn_wishlist)
+
+    def click_compare(self):
+        """Click the 'Compare' button."""
+        self.click(self.btn_compare)
+
+    # ===== Social and Related Products Methods =====
+
+    def click_related_product(self, index: int):
+        """Click the n-th related product."""
+        self.click(self.lnk_related_product.nth(index))
+
+    def get_related_products_count(self) -> int:
+        """Get the total count of related products."""
+        return self.lnk_related_product.count()
