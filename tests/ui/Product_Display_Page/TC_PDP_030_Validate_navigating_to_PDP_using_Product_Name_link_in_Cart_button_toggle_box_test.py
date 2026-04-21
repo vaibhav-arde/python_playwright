@@ -39,10 +39,10 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_cart_button_toggl
     expect(product_page.get_confirmation_message()).to_be_visible()
 
     # Step 5: Click on 'Cart' button which is in black color beside the search icon button on the top of the page
-    home_page.click_cart_button()
+    product_page.click_cart_button()
 
     # Step 6 (ER-1): Click on the Product Name link in the displayed toggle box
-    new_product_page = home_page.click_cart_name_link()
+    new_product_page = product_page.click_cart_name_link()
 
     # Validation: User should be taken to the Product Display page of the Product
     expect(new_product_page.lbl_product_name).to_be_visible()
