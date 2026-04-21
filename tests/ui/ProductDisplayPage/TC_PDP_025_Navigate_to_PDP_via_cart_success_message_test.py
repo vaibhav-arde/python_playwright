@@ -7,6 +7,7 @@ from pages.product_page import ProductPage
 from utils.constants import TestData
 from utils import messages
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_navigate_to_pdp_via_cart_success_message(page: Page):

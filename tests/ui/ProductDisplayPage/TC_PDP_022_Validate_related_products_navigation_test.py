@@ -7,6 +7,7 @@ from pages.product_page import ProductPage
 from utils.constants import TestData, TestData
 from utils import messages
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_validate_related_products_navigation(page: Page):
@@ -26,7 +27,9 @@ def test_validate_related_products_navigation(page: Page):
     home_page.click_search()
 
     product_in_results = search_results_page.is_product_exist(product_name)
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
+    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
+        keyword=product_name
+    )
 
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     search_results_page.select_product(expected_product_name)

@@ -12,16 +12,16 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_page(page: Page):
+def test_validate_navigating_to_pdp_using_product_image_in_cart_button_toggle_box(page: Page):
     """
-    Test Case ID: TC_PDP_027
-    Validate navigating to the Product Display page by using the Product Name link in the 'Shopping Cart' page.
+    Test Case ID: TC_PDP_029
+    Validate navigating to the Product Display page by using the Product Image in the 'Cart' button toggle box.
     """
     home_page = HomePage(page)
     login_page = LoginPage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
-    
+
     product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Open the Application URL and Login
@@ -33,18 +33,19 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_pag
     home_page.enter_product_name(product_name)
     home_page.click_search()
 
-    # Step 4: Click on the Product displayed in the Search results
+    # Step 4: Click on 'Add to Cart' option on the product that is displayed in the Search Results
+    # Wait, search_results_page doesn't have add_to_cart_directly. I'll navigate to product page first.
+    # Actually, let's see if search_results_page has it. No.
+    # I'll select the product then add to cart.
     search_results_page.select_product(product_name)
-
-    # Step 5: Click on 'Add to Cart' button
     product_page.add_to_cart()
-    
-    # Step 6: Click on 'shopping cart!' link from the displayed success page
     expect(product_page.get_confirmation_message()).to_be_visible()
-    shopping_cart_page = product_page.click_shopping_cart_link()
 
-    # Step 7 (ER-1): Click on the Product Name link from the displayed Shopping Cart page
-    new_product_page = shopping_cart_page.click_product_name()
+    # Step 5: Click on 'Cart' button which is in black color beside the search icon button on the top of the page
+    product_page.click_cart_button()
+
+    # Step 6 (ER-1): Click on the Product Image in the displayed toggle box
+    new_product_page = product_page.click_cart_image_link()
 
     # Validation: User should be taken to the Product Display page of the Product
     expect(new_product_page.lbl_product_name).to_be_visible()

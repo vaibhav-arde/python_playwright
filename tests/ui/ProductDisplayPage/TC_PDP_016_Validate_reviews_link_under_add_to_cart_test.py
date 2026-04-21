@@ -1,3 +1,4 @@
+import re
 import pytest
 from playwright.sync_api import expect, Page
 
@@ -10,22 +11,21 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_reviews_tab_with_no_reviews(page: Page):
+def test_validate_reviews_link_under_add_to_cart(page: Page):
     """
-    Test Case ID: TC_PDP_011
-    Validate the 'Reviews' tab when there are no reviews or zero reviews added.
+    Test Case ID: TC_PDP_016
+    Validate 'reviews' link under the 'Add to Cart' button of Product Display Page
 
     Steps:
         1. Open the Application URL (handled by navigate_to_base_url fixture)
-        2. Enter any existing Product name into the Search text box field for which there are no existing reviews
+        2. Enter any existing Product name into the Search text box field
         3. Click on the button having search icon
         4. Click on the Product displayed in the Search results
-        5. Click on the Reviews(0) tab of the Product in the displayed 'Product Display' page
+        5. Click on the 'x reviews' link in the Product Display page
 
     Expected Result:
-        'There are no reviews for this product.' text should be displayed under the 'Reviews' tab
+        Reviews given by the User so far should be displayed under the 'Reviews' tab of the Product Display Page.
     """
-    # Initialize Page Objects
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
@@ -56,16 +56,21 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
         expected=expected_product_name, actual=actual_product_name
     )
 
-    # Step 5: Click on the Reviews(0) tab
-    expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
-    product_page.click_review_tab()
+    # Step 5: Click on the 'x reviews' link
+    expect(product_page.lbl_review_count).to_be_visible()
+    product_page.click_review_count_link()
 
-    # Validate ER-1: 'There are no reviews for this product.' text should be displayed
-    expect(product_page.lbl_no_reviews.first).to_be_visible()
-    
-    actual_no_reviews_text = product_page.get_no_reviews_text()
-    assert actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT, (
-        messages.PDP_NO_REVIEWS_TEXT_MISMATCH.format(
-            expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
-        )
-    )
+    # Validate ER-1: Reviews given by the User so far should be displayed under the 'Reviews' tab
+    # Focus visually in OpenCart implies the #tab-review panel becomes fully visible and active
+    try:
+        expect(product_page.pnl_review).to_be_visible(timeout=5000)
+    except AssertionError:
+        pytest.fail(messages.PDP_REVIEW_PANEL_NOT_VISIBLE)
+
+    # Advanced assertion: Assert that the parent <li> of the review tab carries the 'active' class
+    # The xpath=.. robustly fetches the immediate parent element
+    parent_li = product_page.li_review_tab
+    expect(parent_li).to_have_class(re.compile(r"active"))
+
+    # Check that the interior review container is actually loaded and visible for proper reading
+    expect(product_page.cnt_review).to_be_visible()

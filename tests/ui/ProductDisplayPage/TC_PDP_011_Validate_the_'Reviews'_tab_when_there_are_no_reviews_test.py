@@ -1,4 +1,3 @@
-import re
 import pytest
 from playwright.sync_api import expect, Page
 
@@ -11,21 +10,22 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_review_count_in_tab(page: Page):
+def test_validate_reviews_tab_with_no_reviews(page: Page):
     """
-    Test Case ID: TC_PDP_015
-    Validate the count of reviews should be displayed in the 'Reviews' tab label of the Product Display page
+    Test Case ID: TC_PDP_011
+    Validate the 'Reviews' tab when there are no reviews or zero reviews added.
 
     Steps:
         1. Open the Application URL (handled by navigate_to_base_url fixture)
-        2. Enter any existing Product name into the Search text box field
+        2. Enter any existing Product name into the Search text box field for which there are no existing reviews
         3. Click on the button having search icon
         4. Click on the Product displayed in the Search results
-        5. Check the count of reviews in the 'Reviews' tab label in the Product Display page
+        5. Click on the Reviews(0) tab of the Product in the displayed 'Product Display' page
 
     Expected Result:
-        Correct count of reviews should be displayed in the 'Reviews' tab label of the Product Display Page.
+        'There are no reviews for this product.' text should be displayed under the 'Reviews' tab
     """
+    # Initialize Page Objects
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
@@ -44,7 +44,7 @@ def test_validate_review_count_in_tab(page: Page):
         keyword=product_name
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
     search_results_page.select_product(expected_product_name)
@@ -56,12 +56,16 @@ def test_validate_review_count_in_tab(page: Page):
         expected=expected_product_name, actual=actual_product_name
     )
 
-    # Step 5: Check the count of reviews in the 'Reviews' tab label
+    # Step 5: Click on the Reviews(0) tab
     expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
-    
-    tab_text = product_page.get_text(product_page.lnk_review_tab).strip()
-    
-    # Validate ER-1: Reviews tab contains the count, e.g. "Reviews (0)"
-    assert re.search(r"Reviews \(\d+\)", tab_text, re.IGNORECASE), (
-        f"{messages.PDP_REVIEW_TAB_COUNT_MISSING}. Actual text: '{tab_text}'"
+    product_page.click_review_tab()
+
+    # Validate ER-1: 'There are no reviews for this product.' text should be displayed
+    expect(product_page.lbl_no_reviews.first).to_be_visible()
+
+    actual_no_reviews_text = product_page.get_no_reviews_text()
+    assert (
+        actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT
+    ), messages.PDP_NO_REVIEWS_TEXT_MISMATCH.format(
+        expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
     )

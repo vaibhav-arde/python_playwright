@@ -25,7 +25,7 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     product_page = ProductPage(page)
     shopping_cart_page = ShoppingCartPage(page)
     checkout_page = CheckoutPage(page)
-    
+
     product_name = TestData.PRODUCT_NAME_HTC
 
     # Step 1: Open the Application URL and Login
@@ -36,7 +36,7 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     # Clear Cart to handle previous test data
     page.goto(UIRoutes.CART)
     shopping_cart_page.clear_cart()
-    page.goto("/") # Go back to home for next steps
+    page.goto("/")  # Go back to home for next steps
     page.wait_for_load_state("networkidle")
 
     # Step 2-3: Enter Product Name and Click Search icon
@@ -51,7 +51,7 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     expect(product_page.get_confirmation_message()).to_be_visible()
 
     # Step 5: Click on 'Checkout' button in the displayed 'Shopping Cart' page
-    # Instead of shopping cart page, I'll go directly to checkout if possible, 
+    # Instead of shopping cart page, I'll go directly to checkout if possible,
     # but the instructions say "in the displayed Shopping Cart page".
     shopping_cart_page = product_page.click_shopping_cart_link()
     checkout_page = shopping_cart_page.click_on_checkout()
@@ -59,19 +59,19 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     # Step 6: Click on 'Continue' buttons and select any mandatory checkboxes until you reach the 'Confirm Order' section
     # Stage 1: Billing Details
     checkout_page.click_continue_after_billing_address()
-    
+
     # Stage 2: Delivery Details
     checkout_page.click_continue_after_delivery_address()
-    
+
     # Stage 3: Delivery Method
     checkout_page.click_continue_after_delivery_method()
-    
+
     # Stage 4: Payment Method
     checkout_page.select_terms_and_conditions()
     checkout_page.click_continue_after_payment_method()
 
     # Step 7 (ER-1): Click on 'Product Name' link in the 'Confirm Order' section
-    # Wait, if the method wasn't added, I'll use a direct locator here for now to ensure test works, 
+    # Wait, if the method wasn't added, I'll use a direct locator here for now to ensure test works,
     # but I'll try to add it again after.
     # Actually, I'll use the method I intended to add.
     new_product_page = checkout_page.click_product_name_confirm()

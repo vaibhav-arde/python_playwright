@@ -58,10 +58,10 @@ def test_validate_average_review_display(page: Page):
     # Step 5: Check the average and number of reviews
     # Validate ER-1: Correct average review (stars block) is displayed
     expect(product_page.pnl_rating_summary).to_be_visible(), messages.PDP_RATING_SUMMARY_NOT_VISIBLE
-    
+
     # Validate ER-1: The number of reviews count ("X reviews") should be displayed
     expect(product_page.lbl_review_count).to_be_visible(), messages.PDP_REVIEW_COUNT_NOT_VISIBLE
-    
+
     # Advanced assertion: grab the text to verify it contains the word "review"
     review_count_text = product_page.get_text(product_page.lbl_review_count).strip()
     assert "review" in review_count_text.lower(), messages.PDP_REVIEW_COUNT_TEXT_MISMATCH.format(

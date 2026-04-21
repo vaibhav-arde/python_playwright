@@ -10,12 +10,13 @@ from utils.constants import TestData, UIRoutes
 from utils.config import Config
 from utils import messages
 
+
 @pytest.mark.ui
 @pytest.mark.regression
-def test_navigate_to_pdp_via_wishlist_image(page: Page):
+def test_navigate_to_pdp_via_wishlist_name(page: Page):
     """
-    Test Case ID: TC_PDP_023
-    Validate navigating to the Product Display page by using the Product image in the 'Wish List' page
+    Test Case ID: TC_PDP_024
+    Validate navigating to the Product Display page by using the Product name in the 'Wish List' page
     """
     home_page = HomePage(page)
     login_page = LoginPage(page)
@@ -42,10 +43,12 @@ def test_navigate_to_pdp_via_wishlist_image(page: Page):
     page.goto(UIRoutes.WISHLIST)
     expect(wishlist_page.lbl_heading).to_be_visible()
 
-    # Step 4: Click image in Wish List
-    wishlist_page.click_product_image(product_name)
+    # Step 4: Click name in Wish List
+    wishlist_page.click_product_name(product_name)
 
     # Validate navigation to PDP
     expect(product_page.lbl_product_name).to_be_visible()
     actual_name = product_page.get_product_name()
-    assert actual_name == product_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(expected=product_name, actual=actual_name)
+    assert actual_name == product_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(
+        expected=product_name, actual=actual_name
+    )

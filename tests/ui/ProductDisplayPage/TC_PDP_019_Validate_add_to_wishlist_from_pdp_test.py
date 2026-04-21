@@ -5,28 +5,29 @@ from faker import Faker
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
-from pages.product_comparison_page import ProductComparisonPage
+from pages.wishlist_page import WishListPage
 from pages.registration_page import RegistrationPage
 from utils.constants import TestData
 from utils import messages
 
+
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_add_to_comparison_from_pdp(page: Page):
+def test_validate_add_to_wishlist_from_pdp(page: Page):
     """
-    Test Case ID: TC_PDP_020
-    Validate adding the product for comparison from the Product Display page
+    Test Case ID: TC_PDP_019
+    Validate adding the product to 'Wish List' from the Product Display page
     """
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
-    comparison_page = ProductComparisonPage(page)
+    wishlist_page = WishListPage(page)
     registration_page = RegistrationPage(page)
     fake = Faker()
 
     product_name = TestData.PRODUCT_NAME_IMAC
-    
-    # Step 1: Register a new account to ensure active session and clean context
+
+    # Step 1: Register a new account to ensure active session
     home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_register()
@@ -50,30 +51,32 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     home_page.click_search()
 
     product_in_results = search_results_page.is_product_exist(product_name)
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
+    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
+        keyword=product_name
+    )
 
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     search_results_page.select_product(expected_product_name)
 
-    # Step 4: Add to Comparison
-    product_page.click_compare()
+    # Step 4: Add to Wish List
+    product_page.click_add_to_wishlist()
 
     # Validate ER-1: Success message
     success_alert = product_page.get_any_alert_message()
     expect(success_alert).to_be_visible(timeout=10000)
     
     actual_msg = product_page.get_text(success_alert)
-    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, f"Expected success but got: {actual_msg}"
+    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, f"Expected success message but got: {actual_msg}"
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
     )
 
-    # Step 5: Click 'product comparison' link
-    product_page.click_comparison_link_on_success_msg()
+    # Step 5: Click 'wish list' link in success message
+    product_page.click_wishlist_link_on_success_msg()
 
-    # Validate ER-2: Navigation to Comparison page
-    expect(comparison_page.lbl_heading).to_be_visible(timeout=10000)
-    
-    # Validation: Product is in the table
-    assert comparison_page.is_product_in_comparison(expected_product_name), \
-        f"Product {expected_product_name} should be in the comparison table"
+    # Validate ER-2: Navigation to Wish List page
+    expect(wishlist_page.lbl_heading).to_be_visible(timeout=10000)
+
+    # Validate product presence in wishlist
+    row = wishlist_page.get_product_row_by_name(expected_product_name)
+    expect(row).to_be_visible(), f"Product {expected_product_name} not found in Wish List"

@@ -21,7 +21,7 @@ def test_validate_navigating_to_pdp_using_product_image_in_shopping_cart_page(pa
     login_page = LoginPage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
-    
+
     product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Open the Application URL and Login
@@ -38,7 +38,7 @@ def test_validate_navigating_to_pdp_using_product_image_in_shopping_cart_page(pa
 
     # Step 4: Click on 'Add to Cart' button
     product_page.add_to_cart()
-    
+
     # Step 5: Click on 'shopping cart!' link from the displayed success page
     expect(product_page.get_confirmation_message()).to_be_visible()
     shopping_cart_page = product_page.click_shopping_cart_link()
