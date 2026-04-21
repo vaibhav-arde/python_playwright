@@ -17,26 +17,7 @@ class BasePage:
     def __init__(self, page: Page):
         """Initialize with a Playwright Page instance."""
         self.page = page
-        self.btn_cart_total = page.locator("#cart > button")
-        self.pnl_cart_dropdown = page.locator("#cart .dropdown-menu")
-        self.lnk_cart_image = self.pnl_cart_dropdown.locator("table tr td.text-center a").first
-        self.lnk_cart_name = self.pnl_cart_dropdown.locator("table tr td.text-left a").first
 
-    def click_cart_button(self):
-        """Click the cart button to open the toggle box."""
-        self.click(self.btn_cart_total)
-
-    def click_cart_image_link(self) -> "ProductPage":
-        """Click the product image in the cart toggle box and return ProductPage."""
-        from pages.product_page import ProductPage
-        self.click(self.lnk_cart_image)
-        return ProductPage(self.page)
-
-    def click_cart_name_link(self) -> "ProductPage":
-        """Click the product name link in the cart toggle box and return ProductPage."""
-        from pages.product_page import ProductPage
-        self.click(self.lnk_cart_name)
-        return ProductPage(self.page)
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
