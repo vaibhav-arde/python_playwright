@@ -206,6 +206,15 @@ class ProductPage(BasePage):
         if self.lnk_specification_tab.count() > 0:
             expect(self.lnk_specification_tab.first).to_be_visible()
 
+    def verify_product_page_functionality(self):
+        # Reuse UI validation
+        self.verify_product_page_ui()
+
+        # Functional behavior
+        self.set_quantity("1")
+        expect(self.txt_quantity).to_have_value("1")
+        expect(self.btn_add_to_cart).to_be_enabled()
+
     # ===== Price Methods =====
 
     def get_product_price(self) -> str:
