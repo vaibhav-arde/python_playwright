@@ -44,7 +44,7 @@ def test_validate_fields_in_review_tab_mandatory(page: Page):
         keyword=product_name
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
     search_results_page.select_product(expected_product_name)

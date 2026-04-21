@@ -15,8 +15,8 @@ class WishListPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lbl_heading = page.locator("#content h2, #content h1").filter(has_text=re.compile(r"Wish List", re.IGNORECASE))
-        self.product_items = page.locator(".table tr")
+        self.lbl_heading = page.locator("#content h2")
+        self.product_items = page.locator("div.table-responsive table tbody tr")
         self.lnk_product_image = self.product_items.locator("td.image a")
         self.lnk_product_name = self.product_items.locator("td.name a")
         self.btn_remove = self.product_items.locator("td.button a")
@@ -25,7 +25,7 @@ class WishListPage(BasePage):
 
     def get_product_row_by_name(self, product_name: str):
         """Find the row containing the specified product name."""
-        return self.product_items.filter(has_text=product_name).first
+        return self.product_items.filter(has_text=product_name).filter(visible=True).first
 
     def click_product_image(self, product_name: str) -> ProductPage:
         """Click the image of the specified product in the Wish List."""

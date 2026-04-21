@@ -19,6 +19,7 @@ class ShoppingCartPage(BasePage):
         self.txt_cart_quantity = page.locator("#content input[name^='quantity']")
         self.lnk_product_image = page.locator(".table-responsive table tbody tr td.text-center a").first
         self.lnk_product_name = page.locator(".table-responsive table tbody tr td.text-left a").first
+        self.lbl_empty_cart_msg = page.locator("#content p")
 
     # ===== Methods =====
 

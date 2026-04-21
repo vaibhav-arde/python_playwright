@@ -30,11 +30,10 @@ def test_validate_invalid_quantity(page: Page):
     product_page.add_to_cart()
 
     # Step 5: Validate application feedback (Success or Warning)
-    # The application shows either a success message (bug?) or 
-    # stays on the page with an alert.
-    product_page.any_alert_msg.first.wait_for(state="visible", timeout=10000)
-    expect(product_page.any_alert_msg.first).to_be_visible()
+    # The application shows either a success message or stays on the page with an alert.
+    expect(product_page.any_alert_msg.first).to_be_visible(timeout=10000)
 
+    # We check if it's a success or warning
     success_visible = product_page.cnf_msg.first.is_visible()
     warning_visible = product_page.warning_msg.first.is_visible()
 
@@ -42,8 +41,7 @@ def test_validate_invalid_quantity(page: Page):
 
     if success_visible:
         expect(product_page.cnf_msg.first).to_contain_text(messages.SUCCESS_ALERT_KEYWORD)
-
-    if warning_visible:
+    elif warning_visible:
         expect(product_page.warning_msg.first).to_contain_text(messages.WARNING_ALERT_KEYWORD)
 
     # Verify quantity is kept at the value we entered (0)
