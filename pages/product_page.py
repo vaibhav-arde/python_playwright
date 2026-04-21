@@ -54,7 +54,7 @@ class ProductPage(BasePage):
         self.thumbnail_items = self.content.get_by_role("listitem").filter(
             has=page.get_by_role("img")
         )
-        self.img_main_thumbnail = self.thumbnail_items.first.get_by_role("link")
+        self.img_main_thumbnail = self.content.locator(".thumbnails img").first
         self.lightbox = page.locator("div.mfp-container")
         self.lightbox_image = self.lightbox.get_by_role("img")
         self.btn_lightbox_next = page.get_by_title("Next (Right arrow key)")
@@ -135,8 +135,6 @@ class ProductPage(BasePage):
 
     # ===== Product Details Methods =====
 
-    # ===== Product Details Methods =====
-
     def get_page_heading(self):
         """Return Product Display Page heading locator."""
         return self.lbl_product_name
@@ -190,6 +188,23 @@ class ProductPage(BasePage):
         """Return product specification text from Specification tab panel."""
         text = self.pnl_specification.text_content()
         return text.strip() if text else ""
+
+    def verify_product_page_ui(self):
+        # Core mandatory UI
+        expect(self.lbl_product_name).to_be_visible()
+        expect(self.lbl_product_price).to_be_visible()
+        expect(self.btn_add_to_cart).to_be_visible()
+        expect(self.txt_quantity).to_be_visible()
+
+        # Optional elements
+        if self.img_main_thumbnail.count() > 0:
+            expect(self.img_main_thumbnail).to_be_visible()
+
+        if self.lnk_description_tab.count() > 0:
+            expect(self.lnk_description_tab.first).to_be_visible()
+
+        if self.lnk_specification_tab.count() > 0:
+            expect(self.lnk_specification_tab.first).to_be_visible()
 
     # ===== Price Methods =====
 
