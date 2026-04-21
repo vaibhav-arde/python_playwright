@@ -38,6 +38,7 @@ class Config:
 
     # Product test data
     product_name = "MacBook"
+    imac_product = "iMac"
     product_quantity = "2"
     total_price = "$1,204.00"
 
