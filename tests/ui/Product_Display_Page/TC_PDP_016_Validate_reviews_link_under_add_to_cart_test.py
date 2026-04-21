@@ -61,16 +61,16 @@ def test_validate_reviews_link_under_add_to_cart(page: Page):
     product_page.click_review_count_link()
 
     # Validate ER-1: Reviews given by the User so far should be displayed under the 'Reviews' tab
-    # Focus visually in OpenCart implies the #tab-review panel becomes fully visible and active 
+    # Focus visually in OpenCart implies the #tab-review panel becomes fully visible and active
     try:
         expect(product_page.pnl_review).to_be_visible(timeout=5000)
     except AssertionError:
         pytest.fail(messages.PDP_REVIEW_PANEL_NOT_VISIBLE)
-    
+
     # Advanced assertion: Assert that the parent <li> of the review tab carries the 'active' class
     # The xpath=.. robustly fetches the immediate parent element
     parent_li = product_page.li_review_tab
     expect(parent_li).to_have_class(re.compile(r"active"))
-    
+
     # Check that the interior review container is actually loaded and visible for proper reading
     expect(product_page.cnt_review).to_be_visible()

@@ -76,9 +76,9 @@ def test_validate_user_able_to_write_review(page: Page):
 
     # Validate ER-1: Success alert text should match the expected confirmation message
     actual_success_text = product_page.get_review_success_text()
-    assert actual_success_text == messages.PDP_REVIEW_SUCCESS_TEXT, (
-        messages.PDP_REVIEW_SUCCESS_TEXT_MISMATCH.format(
-            expected=messages.PDP_REVIEW_SUCCESS_TEXT,
-            actual=actual_success_text,
-        )
+    assert (
+        actual_success_text == messages.PDP_REVIEW_SUCCESS_TEXT
+    ), messages.PDP_REVIEW_SUCCESS_TEXT_MISMATCH.format(
+        expected=messages.PDP_REVIEW_SUCCESS_TEXT,
+        actual=actual_success_text,
     )

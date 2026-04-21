@@ -6,6 +6,7 @@ from pages.product_page import ProductPage
 from utils.constants import TestData, UITimeouts
 from utils import messages
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 @pytest.mark.sanity
