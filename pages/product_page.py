@@ -85,6 +85,9 @@ class ProductPage(BasePage):
         # ===== Social and Utility Locators =====
         self.btn_wishlist = page.locator("button").filter(has=page.locator("i.fa-heart")).first
         self.btn_compare = page.locator("button").filter(has=page.locator("i.fa-exchange")).first
+        self.pnl_social_sharing = page.locator(".addthis_sharing_toolbox, .addthis_inline_share_toolbox")
+        self.btn_facebook_like = page.locator(".addthis_button_facebook_like")
+        
         self.pnl_related_products = self.content.get_by_role("heading", name="Related Products")
         self.lnk_related_product = page.locator(".product-thumb h4 a")
 
@@ -111,6 +114,10 @@ class ProductPage(BasePage):
         """Return the warning message element shown after add-to-cart validation."""
         return self.warning_msg
 
+    def get_any_alert_message(self):
+        """Return the first alert/success message locator found on the page."""
+        return self.any_alert_msg.first
+
     # ===== Navigate to Shopping Cart =====
 
     def click_items_to_navigate_to_cart(self):
@@ -126,6 +133,15 @@ class ProductPage(BasePage):
         """Click the 'shopping cart' link from the success message."""
         self.click(self.lnk_shopping_cart_success)
         return ShoppingCartPage(self.page)
+
+    def click_wishlist_link_on_success_msg(self):
+        """Click the 'wish list' link within any visible alert message."""
+        # This uses self.any_alert_msg from locators to find the embedded link
+        self.any_alert_msg.first.get_by_role("link", name=re.compile(r"wish list", re.IGNORECASE)).click()
+
+    def click_comparison_link_on_success_msg(self):
+        """Click the 'product comparison' link within any visible alert message."""
+        self.any_alert_msg.first.get_by_role("link", name=re.compile(r"product comparison", re.IGNORECASE)).click()
 
     # ===== Cart Toggle Box Methods =====
 
@@ -323,6 +339,14 @@ class ProductPage(BasePage):
         """Click the 'Compare' button."""
         self.click(self.btn_compare)
 
+    def get_social_sharing_widget(self):
+        """Return the locator for the AddThis social sharing widget."""
+        return self.pnl_social_sharing
+
+    def get_facebook_like_button(self):
+        """Return the locator for the Facebook Like button."""
+        return self.btn_facebook_like
+
     # ===== Social and Related Products Methods =====
 
     def click_related_product(self, index: int):
@@ -332,3 +356,11 @@ class ProductPage(BasePage):
     def get_related_products_count(self) -> int:
         """Get the total count of related products."""
         return self.lnk_related_product.count()
+
+    def scroll_to_related_products(self):
+        """Scroll the related products section into view."""
+        self.pnl_related_products.scroll_into_view_if_needed()
+
+    def get_related_product_name(self, index: int) -> str:
+        """Return the name of the n-th related product."""
+        return self.get_text(self.lnk_related_product.nth(index)).strip()
