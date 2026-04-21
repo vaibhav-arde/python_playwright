@@ -1,6 +1,5 @@
 from playwright.sync_api import expect
 import pytest
-from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
 
 @pytest.mark.ui
@@ -11,7 +10,6 @@ def test_user_session_persistence(authenticated_page, new_context, auth_state_pa
     
     # 1: Navigate to account page
     my_account_page = MyAccountPage(page)
-    home_page = HomePage(page)
 
     my_account_page.open_my_account_page(base_url)
 
