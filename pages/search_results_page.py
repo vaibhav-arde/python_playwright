@@ -245,9 +245,9 @@ class SearchResultsPage(BasePage):
 
         expected = sorted(actual, reverse=config["reverse"])
 
-        assert actual == expected, (
-            f"Sorting failed for '{sort_option}'\n" f"Actual: {actual}\nExpected: {expected}"
-        )
+        assert (
+            actual == expected
+        ), f"Sorting failed for '{sort_option}'\nActual: {actual}\nExpected: {expected}"
 
     def select_limit(self, value: str):
         """Select number of products to display from 'Show' dropdown."""
