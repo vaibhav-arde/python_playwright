@@ -28,6 +28,7 @@ class ProductComparisonPage(BasePage):
         self.success_message = page.locator("div.alert.alert-success.alert-dismissible")
 
 
+
         # ===== Breadcrumb Locators =====
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.breadcrumb_home_link = self.breadcrumb.locator("li:has(a:has(i.fa-home))")
@@ -181,9 +182,11 @@ class ProductComparisonPage(BasePage):
             )
 
     def is_product_in_comparison(self, product_name: str) -> bool:
-        """Verify if the product name appears in the comparison table."""
+        """Verify if the product name appears in the comparison table rows."""
+        # Use a more robust check that looks specifically at the product names in the table
+        product_link = self.comparison_table.get_by_role("link", name=product_name).first
         try:
-            self.comparison_table.get_by_text(product_name).first.wait_for(state="visible", timeout=10000)
+            product_link.wait_for(state="visible", timeout=10000)
             return True
         except Exception:
             return False

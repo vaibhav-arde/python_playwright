@@ -5,7 +5,6 @@ from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
 from utils.constants import TestData
-from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
@@ -29,9 +28,9 @@ def test_validate_social_sharing_options(page: Page):
     # Step 4: Verify social sharing options (AddThis) are no longer present
     # Note: AddThis service was discontinued in 2023. This test confirms the removal/absence
     # of the social sharing widget to prevent regressions where defunct scripts might still be loaded.
-    add_this_widget = page.locator(".addthis_sharing_toolbox, .addthis_inline_share_toolbox")
-    expect(add_this_widget).not_to_be_visible()
+    
+    # Use POM methods instead of direct locator objects or CSS strings in test case
+    expect(product_page.get_social_sharing_widget()).not_to_be_visible()
     
     # Also verify common classes are gone
-    facebook_btn = page.locator(".addthis_button_facebook_like")
-    expect(facebook_btn).not_to_be_visible()
+    expect(product_page.get_facebook_like_button()).not_to_be_visible()
