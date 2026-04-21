@@ -24,10 +24,7 @@ def auth_state_path(launch_browser, request):
     Provides a valid auth state file path.
     Ensures login/registration is done before tests.
     """
-    base_url = (
-        request.config.getoption("--base-url", default=DEFAULT_BASE_URL)
-        or DEFAULT_BASE_URL
-    )
+    base_url = request.config.getoption("--base-url", default=DEFAULT_BASE_URL) or DEFAULT_BASE_URL
     return get_auth_state_path(launch_browser, base_url)
 
 
@@ -36,10 +33,7 @@ def authenticated_page(new_context, auth_state_path, request, launch_browser):
     """
     Returns a Playwright page already logged in using storage state.
     """
-    base_url = (
-        request.config.getoption("--base-url", default=DEFAULT_BASE_URL)
-        or DEFAULT_BASE_URL
-    )
+    base_url = request.config.getoption("--base-url", default=DEFAULT_BASE_URL) or DEFAULT_BASE_URL
 
     context = new_context(storage_state=auth_state_path)
     page = context.new_page()

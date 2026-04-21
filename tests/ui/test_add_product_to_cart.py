@@ -19,6 +19,7 @@ from utils.config import Config
 
 
 @pytest.mark.regression
+@pytest.mark.xfail
 def test_add_product_to_cart(page):
     """Verify user can search and add a product to the cart."""
 

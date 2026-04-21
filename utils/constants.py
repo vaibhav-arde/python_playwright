@@ -34,13 +34,14 @@ class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
     HOME = "/"
-    LOGIN = "/index.php?route=account/login"
-    REGISTER = "index.php?route=account/register"
-    MY_ACCOUNT = "index.php?route=account/account"
-    LOGOUT = "/index.php?route=account/logout"
-    SEARCH = "/index.php?route=product/search"
-    CART = "/index.php?route=checkout/cart"
-    CHECKOUT = "/index.php?route=checkout/checkout"
+    BASE_URL = "https://tutorialsninja.com/demo/"
+    LOGIN = f"{BASE_URL}index.php?route=account/login"
+    REGISTER = f"{BASE_URL}index.php?route=account/register"
+    MY_ACCOUNT = f"{BASE_URL}index.php?route=account/account"
+    LOGOUT = f"{BASE_URL}index.php?route=account/logout"
+    SEARCH = f"{BASE_URL}index.php?route=product/search"
+    CART = f"{BASE_URL}index.php?route=checkout/cart"
+    CHECKOUT = f"{BASE_URL}index.php?route=checkout/checkout"
 
 
 class UserDetails:

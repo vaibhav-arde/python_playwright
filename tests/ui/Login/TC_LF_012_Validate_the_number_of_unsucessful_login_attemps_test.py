@@ -7,7 +7,7 @@ from utils.config import Config
 
 
 @pytest.mark.xfail
-@pytest.mark.sanity
+@pytest.mark.ui
 def test_validate_unsuccessful_login_attempts(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)
@@ -20,7 +20,7 @@ def test_validate_unsuccessful_login_attempts(page):
     for i in range(5):
         # Enter invalid email and password, then click login
         login_page.login(Config.invalid_email, Config.invalid_password)
-        
+
         # 5th attempt (i == 4) should show the exceeded attempts warning
         if i == 4:
             expect(login_page.get_login_attempts_error()).to_be_visible()

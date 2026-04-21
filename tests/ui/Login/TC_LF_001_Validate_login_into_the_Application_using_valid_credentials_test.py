@@ -22,9 +22,6 @@ Test Case 2: Verify Login with Valid Credentials
 5. Verify "My Account" page heading is visible.
 """
 
-import json
-from pathlib import Path
-
 import pytest
 from playwright.sync_api import expect
 
@@ -33,7 +30,7 @@ from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
 
 
-@pytest.mark.sanity
+@pytest.mark.ui
 def test_valid_user_login(page, registered_user):
     home_page = HomePage(page)
     login_page = LoginPage(page)
@@ -42,6 +39,6 @@ def test_valid_user_login(page, registered_user):
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.login(registered_user['email'], registered_user['password'])
+    login_page.login(registered_user["email"], registered_user["password"])
 
     expect(my_account_page.get_my_account_page_heading()).to_be_visible()

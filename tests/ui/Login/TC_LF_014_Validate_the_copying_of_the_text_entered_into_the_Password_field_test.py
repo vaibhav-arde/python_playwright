@@ -6,7 +6,7 @@ from pages.login_page import LoginPage
 from utils.config import Config
 
 
-@pytest.mark.sanity
+@pytest.mark.ui
 def test_validate_the_copying_of_the_text_entered_into_the_Password_field(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)
@@ -21,10 +21,10 @@ def test_validate_the_copying_of_the_text_entered_into_the_Password_field(page):
     # 3. Select the text entered into the 'Password' field via mouse, right click to select 'Copy' option (ER-1)
     login_page.select_password_text_using_mouse()
     login_page.right_click_password_field()
-    
+
     # Acceptance Criteria: Copy option in the Right click menu should be disabled
-    # Playwright cannot physically interact with or inspect native OS context menus. 
-    # To fulfill this Acceptance Criteria programmatically, we inject JavaScript to verify 
+    # Playwright cannot physically interact with or inspect native OS context menus.
+    # To fulfill this Acceptance Criteria programmatically, we inject JavaScript to verify
     # that the browser natively flags the 'copy' command as unsupported or blocked for this field.
     is_copy_allowed = login_page.is_copy_allowed_from_password_field()
     assert not is_copy_allowed, "Copy option should be disabled in the Right click menu"

@@ -6,9 +6,7 @@
 
 import json
 import logging
-from pathlib import Path
 
-import pytest
 from playwright.sync_api import expect
 
 from pages.home_page import HomePage
@@ -177,11 +175,11 @@ def ensure_auth_state_silently(launch_browser, base_url: str) -> None:
         temp_browser.close()
 
 
-
 def get_auth_state_path(launch_browser, base_url: str) -> str:
     FilePaths.SESSION_STORAGE_DIR.mkdir(parents=True, exist_ok=True)
     ensure_auth_state_silently(launch_browser, base_url)
     return str(FilePaths.AUTH_STATE_PATH)
+
 
 def get_registered_user() -> dict:
     user_data = load_registered_user()

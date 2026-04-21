@@ -7,6 +7,7 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 
+
 class LogoutPage(BasePage):
     """Page Object Model class for the Logout Page."""
 
@@ -27,6 +28,6 @@ class LogoutPage(BasePage):
         """Return the Continue button locator."""
         return self.btn_continue
 
-    def logout(self):       
+    def logout(self):
         # Click logout link from dropdown
         self.click(self.lnk_logout)

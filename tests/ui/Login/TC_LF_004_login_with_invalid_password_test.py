@@ -5,7 +5,8 @@ from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from utils.config import Config
 
-@pytest.mark.sanity
+
+@pytest.mark.ui
 def test_invalid_password_login(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)

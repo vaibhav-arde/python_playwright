@@ -6,7 +6,7 @@ from pages.login_page import LoginPage
 from utils.config import Config
 
 
-@pytest.mark.sanity
+@pytest.mark.ui
 def test_validate_the_text_into_the_Password_field_is_toggled_to_hide_its_visibility(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)

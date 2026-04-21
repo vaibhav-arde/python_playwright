@@ -7,7 +7,7 @@ from utils.config import Config
 
 
 @pytest.mark.xfail
-@pytest.mark.sanity 
+@pytest.mark.ui
 def test_validate_the_password_is_not_visible_in_the_page_source(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)

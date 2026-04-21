@@ -9,7 +9,7 @@ from pages.logout_page import LogoutPage
 from utils.config import Config
 
 
-@pytest.mark.sanity
+@pytest.mark.ui
 def test_validate_logging_into_the_application_after_changing_the_password(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)
@@ -48,3 +48,11 @@ def test_validate_logging_into_the_application_after_changing_the_password(page)
     login_page.login(Config.email, Config.password_change_new_password)
 
     expect(page).to_have_title("My Account")
+
+    # --- Teardown: Revert password back to original to maintain test isolation ---
+    my_account_page.click_change_password_link()
+    change_password_page.fill_new_password_details(Config.password)
+
+    # Logout after reverting password
+    my_account_page.click_logout()
+    logout_page.click_continue()

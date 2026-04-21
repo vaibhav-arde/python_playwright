@@ -1,6 +1,7 @@
 from playwright.sync_api import Page
 from pages.base_page import BasePage
 
+
 class ChangePasswordPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
@@ -19,7 +20,7 @@ class ChangePasswordPage(BasePage):
     def get_success_message(self):
         """Return the success message locator."""
         return self.msg_success
-    
+
     def click_continue(self):
         """Click the Continue button."""
         self.click(self.btn_continue)

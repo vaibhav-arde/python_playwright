@@ -6,8 +6,8 @@ from pages.login_page import LoginPage
 from utils import messages
 
 
-@pytest.mark.sanity
-def test_forgotten_password_link_visibility_and_navigation(page): 
+@pytest.mark.ui
+def test_forgotten_password_link_visibility_and_navigation(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)
 
