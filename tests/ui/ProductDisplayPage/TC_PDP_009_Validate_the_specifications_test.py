@@ -26,9 +26,13 @@ def test_validate_the_specifications(page: Page):
         home_page.click_search()
 
         product_in_results = search_results_page.is_product_exist(product_name)
-        assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
+        assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
+            keyword=product_name
+        )
         expected_product_name = search_results_page.get_text(product_in_results).strip()
-        assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+        assert (
+            expected_product_name != TestData.EMPTY_VALUE
+        ), messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
         search_results_page.select_product(expected_product_name)
 
         if (
@@ -38,7 +42,9 @@ def test_validate_the_specifications(page: Page):
             selected_product_name = expected_product_name
             break
 
-    assert selected_product_name != TestData.EMPTY_VALUE, messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
+    assert (
+        selected_product_name != TestData.EMPTY_VALUE
+    ), messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
         products=TestData.COMMA_SPACE_SEPARATOR.join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
     )
 

@@ -32,7 +32,9 @@ def test_validate_name_brand_product_code_displayed(page: Page):
 
     # Step 3: Capture product name dynamically from Search Results and open it
     product_in_results = search_results_page.is_product_exist(search_keyword)
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=search_keyword)
+    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
+        keyword=search_keyword
+    )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
     search_results_page.select_product(expected_product_name)

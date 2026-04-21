@@ -64,8 +64,8 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
     expect(product_page.lbl_no_reviews.first).to_be_visible()
 
     actual_no_reviews_text = product_page.get_no_reviews_text()
-    assert actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT, (
-        messages.PDP_NO_REVIEWS_TEXT_MISMATCH.format(
-            expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
-        )
+    assert (
+        actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT
+    ), messages.PDP_NO_REVIEWS_TEXT_MISMATCH.format(
+        expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
     )
