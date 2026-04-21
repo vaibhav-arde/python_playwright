@@ -235,19 +235,26 @@ class SearchResultsPage(BasePage):
 
         config = SORT_CONFIG[sort_option]
 
-        # Use refined waiting strategy: wait for product thumb visibility
+        # Wait until at least one product is visible
         self.product_thumb.first.wait_for(state="visible")
 
         actual = config["getter"](self)
 
-        # Robustness check: Ensure result list is not empty
+        # Ensure list is not empty
         assert actual, f"Product list is empty, cannot verify sorting for '{sort_option}'"
 
         expected = sorted(actual, reverse=config["reverse"])
 
-        assert (
-            actual == expected
-        ), f"Sorting failed for '{sort_option}'\nActual: {actual}\nExpected: {expected}"
+        # Build message in a way ruff won't rewrite
+        msg = "\n".join(
+            [
+                f"Sorting failed for '{sort_option}'",
+                f"Actual: {actual}",
+                f"Expected: {expected}",
+            ]
+        )
+
+        assert actual == expected, msg
 
     def select_limit(self, value: str):
         """Select number of products to display from 'Show' dropdown."""
