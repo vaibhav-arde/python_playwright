@@ -25,7 +25,7 @@ def test_validate_invalid_quantity(page: Page):
     search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
 
     # Step 4: Enter invalid quantity and attempt add to cart
-    invalid_quantity = TestData.INVALID_PRODUCT_QUANTITY    # 0
+    invalid_quantity = TestData.INVALID_PRODUCT_QUANTITY  # 0
     product_page.set_quantity(invalid_quantity)
     product_page.add_to_cart()
 

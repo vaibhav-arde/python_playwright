@@ -58,10 +58,16 @@ def test_validate_review_count_in_tab(page: Page):
 
     # Step 5: Check the count of reviews in the 'Reviews' tab label
     expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
+<<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_015_Validate_review_count_in_tab_test.py
     
     tab_text = product_page.get_text(product_page.lnk_review_tab).strip()
     
+========
+
+    tab_text = product_page.lnk_review_tab.text_content().strip()
+
+>>>>>>>> a50202b (style: fix formatting issues):tests/ui/ProductDisplayPage/TC_PDP_015_Validate_review_count_in_tab_test.py
     # Validate ER-1: Reviews tab contains the count, e.g. "Reviews (0)"
-    assert re.search(r"Reviews \(\d+\)", tab_text, re.IGNORECASE), (
-        f"{messages.PDP_REVIEW_TAB_COUNT_MISSING}. Actual text: '{tab_text}'"
-    )
+    assert re.search(
+        r"Reviews \(\d+\)", tab_text, re.IGNORECASE
+    ), f"{messages.PDP_REVIEW_TAB_COUNT_MISSING}. Actual text: '{tab_text}'"

@@ -66,7 +66,7 @@ def test_validate_fields_in_review_tab_mandatory(page: Page):
     # Validate ER-1: Warning message displayed indicating fields are mandatory
     warning_alert = product_page.get_review_warning_alert()
     expect(warning_alert).to_be_visible(), messages.PDP_REVIEW_WARNING_ALERT_NOT_VISIBLE
-    
+
     actual_warning_text = product_page.get_review_warning_text()
     assert "Warning" in actual_warning_text, messages.PDP_REVIEW_WARNING_MISSING_KEYWORD.format(
         keyword="Warning", actual=actual_warning_text
