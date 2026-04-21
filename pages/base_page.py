@@ -18,9 +18,7 @@ class BasePage:
     def __init__(self, page: Page):
         """Initialize with a Playwright Page instance."""
         self.page = page
-<<<<<<< HEAD
         self.lnk_site_map = page.get_by_role("link", name="Site Map")
-=======
         self.btn_cart_total = page.locator("#cart > button")
         self.pnl_cart_dropdown = page.locator("#cart .dropdown-menu")
         self.lnk_cart_image = self.pnl_cart_dropdown.locator("table tr td.text-center a").first
@@ -41,7 +39,6 @@ class BasePage:
         from pages.product_page import ProductPage
         self.click(self.lnk_cart_name)
         return ProductPage(self.page)
->>>>>>> 049d203 (WIP: Staging changes for rebase)
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
@@ -176,4 +173,3 @@ class BasePage:
             str | None: Attribute value if present, else None
         """
         return element.get_attribute(attribute_name)
-
