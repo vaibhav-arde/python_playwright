@@ -1,3 +1,4 @@
+import re
 import pytest
 from playwright.sync_api import expect, Page
 
@@ -10,20 +11,20 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_average_review_display(page: Page):
+def test_validate_review_count_in_tab(page: Page):
     """
-    Test Case ID: TC_PDP_014
-    Validate average of the user reviews should be dispalyed under the 'Add to Cart' button of the Product Display page
+    Test Case ID: TC_PDP_015
+    Validate the count of reviews should be displayed in the 'Reviews' tab label of the Product Display page
 
     Steps:
         1. Open the Application URL (handled by navigate_to_base_url fixture)
         2. Enter any existing Product name into the Search text box field
         3. Click on the button having search icon
         4. Click on the Product displayed in the Search results
-        5. Check the average and number of reviews on the Product Display page
+        5. Check the count of reviews in the 'Reviews' tab label in the Product Display page
 
     Expected Result:
-        Correct average review and the number of reviews count should be displayed
+        Correct count of reviews should be displayed in the 'Reviews' tab label of the Product Display Page.
     """
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
@@ -55,13 +56,12 @@ def test_validate_average_review_display(page: Page):
         expected=expected_product_name, actual=actual_product_name
     )
 
-    # Step 5: Check the average and number of reviews
-    # Validate ER-1: Correct average review (stars block) is displayed
-    expect(product_page.pnl_rating_summary).to_be_visible(), messages.PDP_RATING_SUMMARY_NOT_VISIBLE
-    
-    # Validate ER-1: The number of reviews count ("X reviews") should be displayed
-    expect(product_page.lbl_review_count).to_be_visible(), messages.PDP_REVIEW_COUNT_NOT_VISIBLE
-    
-    # Advanced assertion: grab the text to verify it contains the word "review"
-    review_count_text = product_page.lbl_review_count.text_content().strip()
-    assert "review" in review_count_text.lower(), f"Expected 'reviews' count in text but got '{review_count_text}'"
+    # Step 5: Check the count of reviews in the 'Reviews' tab label
+    expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
+
+    tab_text = product_page.lnk_review_tab.text_content().strip()
+
+    # Validate ER-1: Reviews tab contains the count, e.g. "Reviews (0)"
+    assert re.search(
+        r"Reviews \(\d+\)", tab_text, re.IGNORECASE
+    ), f"{messages.PDP_REVIEW_TAB_COUNT_MISSING}. Actual text: '{tab_text}'"

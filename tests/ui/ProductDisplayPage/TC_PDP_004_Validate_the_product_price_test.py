@@ -29,15 +29,15 @@ def test_validate_the_product_price(page: Page):
     # ER: Proper Product Price should be displayed
     expect(product_page.lbl_product_price).to_be_visible()
     price = product_page.get_product_price()
-    assert any(symbol in price for symbol in UIPricing.CURRENCY_SYMBOLS), messages.PDP_PRICE_FORMAT_INCORRECT.format(
-        price=price
-    )
+    assert any(
+        symbol in price for symbol in UIPricing.CURRENCY_SYMBOLS
+    ), messages.PDP_PRICE_FORMAT_INCORRECT.format(price=price)
     assert len(price) > 1, messages.PDP_PRODUCT_PRICE_EMPTY
 
     # ER: Proper Ex Tax should be displayed
     expect(product_page.lbl_product_ex_tax).to_be_visible()
     ex_tax = product_page.get_ex_tax_price()
-    assert any(symbol in ex_tax for symbol in UIPricing.CURRENCY_SYMBOLS), messages.PDP_EX_TAX_FORMAT_INCORRECT.format(
-        ex_tax=ex_tax
-    )
+    assert any(
+        symbol in ex_tax for symbol in UIPricing.CURRENCY_SYMBOLS
+    ), messages.PDP_EX_TAX_FORMAT_INCORRECT.format(ex_tax=ex_tax)
     assert len(ex_tax) > 1, messages.PDP_EX_TAX_PRICE_EMPTY

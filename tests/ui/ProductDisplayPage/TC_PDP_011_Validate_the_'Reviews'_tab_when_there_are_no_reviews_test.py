@@ -10,22 +10,22 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_fields_in_review_tab_mandatory(page: Page):
+def test_validate_reviews_tab_with_no_reviews(page: Page):
     """
-    Test Case ID: TC_PDP_012
-    Validate all the fields in the 'Review' tab are mandatory fields
+    Test Case ID: TC_PDP_011
+    Validate the 'Reviews' tab when there are no reviews or zero reviews added.
 
     Steps:
         1. Open the Application URL (handled by navigate_to_base_url fixture)
-        2. Enter any existing Product name into the Search text box field
+        2. Enter any existing Product name into the Search text box field for which there are no existing reviews
         3. Click on the button having search icon
         4. Click on the Product displayed in the Search results
-        5. Click on the Reviews tab of the Product
-        6. Click the 'Continue' button without entering any details
+        5. Click on the Reviews(0) tab of the Product in the displayed 'Product Display' page
 
     Expected Result:
-        All the fields in the Reviews tab should be mandatory fields (warning alert displayed)
+        'There are no reviews for this product.' text should be displayed under the 'Reviews' tab
     """
+    # Initialize Page Objects
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
@@ -56,18 +56,14 @@ def test_validate_fields_in_review_tab_mandatory(page: Page):
         expected=expected_product_name, actual=actual_product_name
     )
 
-    # Step 5: Click on the Reviews tab
+    # Step 5: Click on the Reviews(0) tab
     expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
     product_page.click_review_tab()
 
-    # Step 6: Click Continue WITHOUT entering any information
-    product_page.submit_review()
+    # Validate ER-1: 'There are no reviews for this product.' text should be displayed
+    expect(product_page.lbl_no_reviews.first).to_be_visible()
 
-    # Validate ER-1: Warning message displayed indicating fields are mandatory
-    warning_alert = product_page.get_review_warning_alert()
-    expect(warning_alert).to_be_visible(), messages.PDP_REVIEW_WARNING_ALERT_NOT_VISIBLE
-    
-    actual_warning_text = product_page.get_review_warning_text()
-    assert "Warning" in actual_warning_text, messages.PDP_REVIEW_WARNING_MISSING_KEYWORD.format(
-        keyword="Warning", actual=actual_warning_text
-    )
+    actual_no_reviews_text = product_page.get_no_reviews_text()
+    assert (
+        actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT
+    ), f"Expected text '{messages.PDP_NO_REVIEWS_TEXT}' but got '{actual_no_reviews_text}'"

@@ -11,20 +11,20 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_review_count_in_tab(page: Page):
+def test_validate_reviews_link_under_add_to_cart(page: Page):
     """
-    Test Case ID: TC_PDP_015
-    Validate the count of reviews should be displayed in the 'Reviews' tab label of the Product Display page
+    Test Case ID: TC_PDP_016
+    Validate 'reviews' link under the 'Add to Cart' button of Product Display Page
 
     Steps:
         1. Open the Application URL (handled by navigate_to_base_url fixture)
         2. Enter any existing Product name into the Search text box field
         3. Click on the button having search icon
         4. Click on the Product displayed in the Search results
-        5. Check the count of reviews in the 'Reviews' tab label in the Product Display page
+        5. Click on the 'x reviews' link in the Product Display page
 
     Expected Result:
-        Correct count of reviews should be displayed in the 'Reviews' tab label of the Product Display Page.
+        Reviews given by the User so far should be displayed under the 'Reviews' tab of the Product Display Page.
     """
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
@@ -56,12 +56,21 @@ def test_validate_review_count_in_tab(page: Page):
         expected=expected_product_name, actual=actual_product_name
     )
 
-    # Step 5: Check the count of reviews in the 'Reviews' tab label
-    expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
-    
-    tab_text = product_page.lnk_review_tab.text_content().strip()
-    
-    # Validate ER-1: Reviews tab contains the count, e.g. "Reviews (0)"
-    assert re.search(r"Reviews \(\d+\)", tab_text, re.IGNORECASE), (
-        f"{messages.PDP_REVIEW_TAB_COUNT_MISSING}. Actual text: '{tab_text}'"
-    )
+    # Step 5: Click on the 'x reviews' link
+    expect(product_page.lbl_review_count).to_be_visible()
+    product_page.click_review_count_link()
+
+    # Validate ER-1: Reviews given by the User so far should be displayed under the 'Reviews' tab
+    # Focus visually in OpenCart implies the #tab-review panel becomes fully visible and active
+    try:
+        expect(product_page.pnl_review).to_be_visible(timeout=5000)
+    except AssertionError:
+        pytest.fail(messages.PDP_REVIEW_PANEL_NOT_VISIBLE)
+
+    # Advanced assertion: Assert that the parent <li> of the review tab carries the 'active' class
+    # The xpath=.. robustly fetches the immediate parent element
+    parent_li = product_page.lnk_review_tab.locator("xpath=..")
+    expect(parent_li).to_have_class(re.compile(r"active"))
+
+    # Check that the interior review container is actually loaded and visible for proper reading
+    expect(product_page.pnl_review.locator("#review")).to_be_visible()

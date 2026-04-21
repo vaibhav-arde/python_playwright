@@ -18,7 +18,7 @@ class ProductPage(BasePage):
         super().__init__(page)
         self.content = page.locator("#content")
 
-    # ===== Locators =====
+        # ===== Locators =====
         self.txt_quantity = self.content.locator('input[name="quantity"]')
         self.btn_add_to_cart = self.content.get_by_role("button", name="Add to Cart", exact=True)
         self.cnf_msg = page.locator("div.alert.alert-success, div.alert-success")
@@ -30,12 +30,18 @@ class ProductPage(BasePage):
         # ===== Product Details Locators =====
         self.lbl_product_name = self.content.get_by_role("heading", level=1)
         self.lbl_product_brand = self.content.locator("ul.list-unstyled li", has_text="Brand:")
-        self.lbl_product_code = self.content.locator("ul.list-unstyled li", has_text="Product Code:")
-        self.lbl_product_availability = self.content.locator("ul.list-unstyled li", has_text="Availability:")
+        self.lbl_product_code = self.content.locator(
+            "ul.list-unstyled li", has_text="Product Code:"
+        )
+        self.lbl_product_availability = self.content.locator(
+            "ul.list-unstyled li", has_text="Availability:"
+        )
         self.lbl_minimum_quantity_info = page.locator(
             "#content div.alert.alert-info:has-text('minimum quantity'), #content div:has-text('minimum quantity')"
         )
-        self.lnk_description_tab = self.content.locator("a[href='#tab-description'], li > a:has-text('Description')")
+        self.lnk_description_tab = self.content.locator(
+            "a[href='#tab-description'], li > a:has-text('Description')"
+        )
         self.pnl_description = self.content.locator("#tab-description")
         self.lnk_specification_tab = self.content.locator("a[href='#tab-specification']").first
         self.pnl_specification = self.content.locator("#tab-specification")
@@ -45,7 +51,9 @@ class ProductPage(BasePage):
         self.lbl_product_ex_tax = self.content.locator("ul.list-unstyled li", has_text="Ex Tax:")
 
         # ===== Thumbnail and Lightbox Locators =====
-        self.thumbnail_items = self.content.get_by_role("listitem").filter(has=page.get_by_role("img"))
+        self.thumbnail_items = self.content.get_by_role("listitem").filter(
+            has=page.get_by_role("img")
+        )
         self.img_main_thumbnail = self.thumbnail_items.first.get_by_role("link")
         self.lightbox = page.locator("div.mfp-container")
         self.lightbox_image = self.lightbox.get_by_role("img")
@@ -57,13 +65,17 @@ class ProductPage(BasePage):
         # ===== Review Tab Locators =====
         # get_by_role: resolves via ARIA link role + accessible name for the quick link near the top
         self.lnk_write_review = self.content.get_by_role("link", name="Write a review")
-        
+
         # Summary block for stars and review links above Add to Cart
         self.pnl_rating_summary = self.content.locator(".rating").first
-        self.lbl_review_count = self.pnl_rating_summary.get_by_role("link", name=re.compile(r"^\d+\s+reviews?$", re.IGNORECASE))
-        
+        self.lbl_review_count = self.pnl_rating_summary.get_by_role(
+            "link", name=re.compile(r"^\d+\s+reviews?$", re.IGNORECASE)
+        )
+
         # get_by_role: Use regex to match "Reviews (0)" vs "0 reviews" (avoid strict mode violation)
-        self.lnk_review_tab = self.content.get_by_role("link", name=re.compile(r"^Reviews", re.IGNORECASE))
+        self.lnk_review_tab = self.content.get_by_role(
+            "link", name=re.compile(r"^Reviews", re.IGNORECASE)
+        )
         self.pnl_review = self.content.locator("#tab-review")
 
         self.txt_review_name = self.pnl_review.get_by_label("Your Name")
@@ -71,7 +83,7 @@ class ProductPage(BasePage):
         self.btn_review_submit = self.pnl_review.get_by_role("button", name="Continue")
         self.alert_review_success = self.pnl_review.locator(".alert-success")
         self.alert_review_warning = self.pnl_review.locator(".alert-danger")
-        
+
         # Container holding actual reviews or the "no reviews" message
         self.lbl_no_reviews = self.pnl_review.locator("#review p")
 
@@ -123,9 +135,19 @@ class ProductPage(BasePage):
 
     # ===== Product Details Methods =====
 
+    # ===== Product Details Methods =====
+
+    def get_page_heading(self):
+        """Return Product Display Page heading locator."""
+        return self.lbl_product_name
+
     def get_product_name(self) -> str:
         """Return the product name."""
-        return self.lbl_product_name.text_content().strip() if self.lbl_product_name.is_visible() else ""
+        return (
+            self.lbl_product_name.text_content().strip()
+            if self.lbl_product_name.is_visible()
+            else ""
+        )
 
     def get_product_brand(self) -> str:
         """Return the product brand."""
@@ -173,7 +195,11 @@ class ProductPage(BasePage):
 
     def get_product_price(self) -> str:
         """Return the main product price."""
-        return self.lbl_product_price.text_content().strip() if self.lbl_product_price.is_visible() else ""
+        return (
+            self.lbl_product_price.text_content().strip()
+            if self.lbl_product_price.is_visible()
+            else ""
+        )
 
     def get_ex_tax_price(self) -> str:
         """Return the ex-tax price text."""
@@ -188,7 +214,7 @@ class ProductPage(BasePage):
 
     def click_additional_thumbnail(self, index: int):
         """Click on a normal sized Thumbnail image by its index (0-based).
-        
+
         Since index 0 of the full list is the main thumbnail, we offset by 1.
         """
         self.click(self.thumbnail_items.nth(index + 1).get_by_role("link"))
@@ -247,8 +273,8 @@ class ProductPage(BasePage):
     def select_review_rating(self, rating_value: str):
         """Select a star rating by value (e.g. '5' for 5 stars).
 
-        Since OpenCart rating radios lack standard <label> wrappers, 
-        we compute the 0-based index from the 1-5 rating value safely 
+        Since OpenCart rating radios lack standard <label> wrappers,
+        we compute the 0-based index from the 1-5 rating value safely
         using pure role locators.
         """
         index = int(rating_value) - 1

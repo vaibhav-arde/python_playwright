@@ -27,7 +27,9 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     home_page.click_search()
 
     product_in_results = search_results_page.is_product_exist(product_name)
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
+    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
+        keyword=product_name
+    )
     expected_product_name = product_in_results.text_content().strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
     search_results_page.select_product(expected_product_name)
@@ -35,13 +37,17 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     # Step 4 (ER-1): Default quantity and minimum quantity info should be shown
     expect(product_page.txt_quantity).to_be_visible()
     actual_default_qty = product_page.get_default_quantity_value()
-    assert actual_default_qty == TestData.MINIMUM_PRODUCT_QUANTITY, messages.PDP_DEFAULT_QTY_MISMATCH.format(
+    assert (
+        actual_default_qty == TestData.MINIMUM_PRODUCT_QUANTITY
+    ), messages.PDP_DEFAULT_QTY_MISMATCH.format(
         expected=TestData.MINIMUM_PRODUCT_QUANTITY, actual=actual_default_qty
     )
 
     minimum_qty_info = product_page.get_minimum_quantity_info_text()
     assert minimum_qty_info != "", messages.PDP_MIN_QTY_INFO_EMPTY
-    assert TestData.MINIMUM_PRODUCT_QUANTITY in minimum_qty_info, messages.PDP_MIN_QTY_INFO_MISSING_VALUE.format(
+    assert (
+        TestData.MINIMUM_PRODUCT_QUANTITY in minimum_qty_info
+    ), messages.PDP_MIN_QTY_INFO_MISSING_VALUE.format(
         expected=TestData.MINIMUM_PRODUCT_QUANTITY, actual=minimum_qty_info
     )
 
@@ -52,12 +58,14 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
 
     feedback_text = " ".join(product_page.any_alert_msg.all_text_contents()).strip()
     assert feedback_text != "", messages.PDP_MIN_QTY_WARNING_NOT_VISIBLE
-    assert TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text, messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(
+    assert (
+        TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text
+    ), messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(
         qty=TestData.MINIMUM_PRODUCT_QUANTITY, actual=feedback_text
     )
-    assert messages.PDP_MIN_QTY_KEYWORD in feedback_text.lower(), messages.PDP_MIN_QTY_WARNING_MISSING_KEYWORD.format(
-        actual=feedback_text
-    )
+    assert (
+        messages.PDP_MIN_QTY_KEYWORD in feedback_text.lower()
+    ), messages.PDP_MIN_QTY_WARNING_MISSING_KEYWORD.format(actual=feedback_text)
 
     shopping_cart_page = ShoppingCartPage(page)
     app_base_url = page.url.split(UIRoutes.INDEX_ENTRY)[0]

@@ -18,7 +18,9 @@ class LoginPage(BasePage):
         self.txt_email_address = page.get_by_label("E-Mail Address")
         self.txt_password = page.get_by_label("Password")
         self.btn_login = page.get_by_role("button", name="Login")
-        self.txt_error_message = page.locator("#account-login .alert.alert-danger, .alert.alert-danger.alert-dismissible")
+        self.txt_error_message = page.locator(
+            "#account-login .alert.alert-danger, .alert.alert-danger.alert-dismissible"
+        )
         self.btn_continue = page.get_by_role("link", name="Continue")
         self.lnk_register_right = page.get_by_role("link", name="Register")
 
