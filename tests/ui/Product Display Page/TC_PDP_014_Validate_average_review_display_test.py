@@ -43,7 +43,7 @@ def test_validate_average_review_display(page: Page):
         keyword=product_name
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
     search_results_page.select_product(expected_product_name)
@@ -64,4 +64,6 @@ def test_validate_average_review_display(page: Page):
     
     # Advanced assertion: grab the text to verify it contains the word "review"
     review_count_text = product_page.get_text(product_page.lbl_review_count).strip()
-    assert "review" in review_count_text.lower(), f"Expected 'reviews' count in text but got '{review_count_text}'"
+    assert "review" in review_count_text.lower(), messages.PDP_REVIEW_COUNT_TEXT_MISMATCH.format(
+        actual=review_count_text
+    )
