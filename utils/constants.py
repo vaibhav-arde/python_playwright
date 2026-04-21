@@ -112,6 +112,8 @@ class UIAttributes:
 class TestData:
     # Test Data
     VALID_PASSWORD = "Test@123"
+    DEFAULT_PASSWORD = "Password123"
+    DEFAULT_TELEPHONE = "1234567890"
     INVALID_PASSWORD = "123"
 
     PRODUCT_NAME_IMAC = "iMac"

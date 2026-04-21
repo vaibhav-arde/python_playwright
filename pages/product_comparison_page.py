@@ -14,15 +14,17 @@ class ProductComparisonPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lbl_heading = page.locator("#content h1")
-        self.comparison_table = page.locator("div.table-responsive")
+        self.lbl_heading = page.get_by_role("heading", name="Product Comparison")
+        self.comparison_table = page.locator("table.table-bordered")
 
     # ===== Action Methods =====
 
     def is_product_in_comparison(self, product_name: str) -> bool:
-        """Verify if the product name appears in the comparison table."""
+        """Verify if the product name appears in the comparison table rows."""
+        # Use a more robust check that looks specifically at the product names in the table
+        product_link = self.comparison_table.get_by_role("link", name=product_name).first
         try:
-            self.comparison_table.get_by_text(product_name).first.wait_for(state="visible", timeout=10000)
+            product_link.wait_for(state="visible", timeout=10000)
             return True
         except Exception:
             return False

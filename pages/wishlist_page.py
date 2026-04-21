@@ -15,7 +15,7 @@ class WishListPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lbl_heading = page.locator("#content h2")
+        self.lbl_heading = page.get_by_role("heading", name="My Wish List")
         self.product_items = page.locator("div.table-responsive table tbody tr")
         self.lnk_product_image = self.product_items.locator("td.image a")
         self.lnk_product_name = self.product_items.locator("td.name a")
