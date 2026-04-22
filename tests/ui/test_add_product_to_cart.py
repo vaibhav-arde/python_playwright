@@ -1,23 +1,23 @@
 """
-Test Case: Add Product to Cart
+TC_CART_001
+(TS_001) Add Product to Cart
 
-===========================================
-Test Steps
-===========================================
-1. Search for a product by name.
-2. Select the product from results.
-3. Set quantity and click Add to Cart.
-4. Verify success confirmation message.
+Validate user can add product to the Shopping Cart
+
+1. Search for a product by name
+2. Select the product from results
+3. Set quantity and click Add to Cart
+4. Verify success confirmation message
 """
 
 import pytest
-from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from utils.config import Config
 
 
+@pytest.mark.ui
 @pytest.mark.regression
 @pytest.mark.xfail
 def test_add_product_to_cart(page):
@@ -29,16 +29,16 @@ def test_add_product_to_cart(page):
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
 
-    # Search for a product
+    # Step 1: Search for product
     home_page.enter_product_name(product_name)
     home_page.click_search()
 
-    # Select the product
+    # Step 2: Select product
     product_page = search_results_page.select_product(product_name)
 
-    # Set quantity and add to cart
+    # Step 3: Set quantity and add to cart
     product_page.set_quantity(quantity)
     product_page.add_to_cart()
 
-    # Verify confirmation message
-    expect(product_page.get_confirmation_message()).to_be_visible(timeout=10000)
+    # Step 4: Verify confirmation message
+    product_page.verify_product_added_successfully()
