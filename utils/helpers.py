@@ -59,20 +59,3 @@ class RandomDataUtil:
 
     def get_random_uuid(self) -> str:
         return str(self.faker.uuid4())
-
-
-def perform_basic_product_actions(search_results_page, product):
-    """Perform common actions on a product."""
-    search_results_page.click_add_to_cart(product)
-    search_results_page.click_wishlist(product)
-    search_results_page.click_compare(product)
-
-
-def open_product_via_image(search_results_page, product):
-    """Open product using image."""
-    search_results_page.click_product_image(product)
-
-
-def open_product_via_link(search_results_page, product):
-    """Open product using product name."""
-    search_results_page.click_product_link(product)

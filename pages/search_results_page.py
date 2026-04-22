@@ -3,7 +3,7 @@
 # Page Object for the Search Results Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
@@ -265,3 +265,21 @@ class SearchResultsPage(BasePage):
         """Validate breadcrumb options"""
         assert self.home_link.is_visible()
         assert self.search_link.is_visible()
+
+    def assert_success_message_visible(self, product):
+        """Verify that the success message for a specific product is visible on the page."""
+        expect(self.get_success_message(product)).to_be_visible()
+
+    def open_product_via_image(self, product):
+        """Open product using image."""
+        self.click_product_image(product)
+
+    def open_product_via_link(self, product):
+        """Open product using product name."""
+        self.click_product_link(product)
+
+    def perform_basic_product_actions(self, product):
+        """Perform common actions on a product."""
+        self.click_add_to_cart(product)
+        self.click_wishlist(product)
+        self.click_compare(product)

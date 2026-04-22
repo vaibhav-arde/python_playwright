@@ -2,11 +2,12 @@
 # =====================
 # Page Object for the Product Page.
 # Inherits from BasePage for reusable UI interaction methods.
-
+import re
 from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
+from utils.constants import UIRoutes
 
 
 class ProductPage(BasePage):
@@ -60,3 +61,7 @@ class ProductPage(BasePage):
         self.set_quantity(quantity)
         self.add_to_cart()
         expect(self.get_confirmation_message()).to_be_visible()
+
+    def assert_product_page_opened(self):
+        """Verify that the product page is opened."""
+        expect(self.page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))

@@ -15,24 +15,16 @@ import pytest
 from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
+from pages.product_page import ProductPage
 from utils.config import Config
-from utils.helpers import (
-    perform_basic_product_actions,
-    open_product_via_image,
-    open_product_via_link,
-)
-
-from utils.assertions import (
-    assert_single_product,
-    assert_success_message_visible,
-    assert_product_page_opened,
-)
+from utils.assertions import assert_single_product
 
 
 @pytest.mark.ui
 def test_list_and_grid_view_with_single_product(page):
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
+    product_page = ProductPage(page)
 
     product_name = Config.product_name
 
@@ -48,11 +40,11 @@ def test_list_and_grid_view_with_single_product(page):
     products = search_results_page.get_product_count()
     assert_single_product(products)
 
-    perform_basic_product_actions(search_results_page, product_name)
-    assert_success_message_visible(search_results_page, product_name)
+    search_results_page.perform_basic_product_actions(product_name)
+    search_results_page.assert_success_message_visible(product_name)
 
-    open_product_via_image(search_results_page, product_name)
-    assert_product_page_opened(page)
+    search_results_page.open_product_via_image(product_name)
+    product_page.assert_product_page_opened()
     page.go_back()
 
     # -------- GRID VIEW --------
@@ -61,8 +53,8 @@ def test_list_and_grid_view_with_single_product(page):
     products = search_results_page.get_product_count()
     assert_single_product(products)
 
-    perform_basic_product_actions(search_results_page, product_name)
-    assert_success_message_visible(search_results_page, product_name)
+    search_results_page.perform_basic_product_actions(product_name)
+    search_results_page.assert_success_message_visible(product_name)
 
-    open_product_via_link(search_results_page, product_name)
-    assert_product_page_opened(page)
+    search_results_page.open_product_via_link(product_name)
+    product_page.assert_product_page_opened()

@@ -1,6 +1,5 @@
 import re
 from playwright.sync_api import expect, Locator
-from utils.constants import UIRoutes
 
 
 def assert_products_match_search(products, search_term):
@@ -34,16 +33,6 @@ def extract_price(text: str) -> float:
     clean = text.split("\n")[0].replace(",", "").replace("$", "")
     match = re.search(r"(\d+\.?\d*)", clean)
     return float(match.group(1)) if match else 0.0
-
-
-def assert_success_message_visible(search_results_page, product):
-    """Verify that the success message for a specific product is visible on the page."""
-    expect(search_results_page.get_success_message(product)).to_be_visible()
-
-
-def assert_product_page_opened(page):
-    """Verify that the product page is opened."""
-    expect(page).to_have_url(re.compile(UIRoutes.PRODUCT_PAGE))
 
 
 def assert_single_product(products):
