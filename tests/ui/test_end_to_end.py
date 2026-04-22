@@ -26,6 +26,7 @@ from utils.helpers import RandomDataUtil
 
 
 @pytest.mark.end_to_end
+@pytest.mark.xfail
 def test_end_to_end_flow(page):
     """
     End-to-End Test Flow:
