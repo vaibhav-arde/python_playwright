@@ -38,6 +38,4 @@ def test_validate_empty_product_compare_page(page):
 
     # 2. 'You have not chosen any products to compare.' should be displayed on the page
     actual_message = comparison_page.get_empty_comparison_message_text()
-    assert (
-        actual_message == EMPTY_COMPARISON_MESSAGE
-    ), f"Expected message '{EMPTY_COMPARISON_MESSAGE}', but got '{actual_message}'"
+    assert actual_message == EMPTY_COMPARISON_MESSAGE

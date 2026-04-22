@@ -97,7 +97,6 @@ class HomePage(BasePage):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
 
-<<<<<<< HEAD
     def click_contact_us(self):
         """Click on the Contact Us link in the footer."""
         self.click(self.lnk_contact_us)
@@ -114,10 +113,6 @@ class HomePage(BasePage):
         """Check if the dropdown menu is visible."""
         return self.dropdown
 
-    def click_show_all_desktops(self):
-        """Click on the 'Show All Desktops' link."""
-        self.click(self.lnk_show_all_desktops)
-=======
     # ===== Featured Section Methods =====
 
     def get_first_featured_product_name(self) -> str:
@@ -144,4 +139,3 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
->>>>>>> 5f87fe6 (Add Test : Validate adding product from featured section of Home Page for comparison)
