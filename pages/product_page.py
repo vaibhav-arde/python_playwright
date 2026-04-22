@@ -16,29 +16,32 @@ class ProductPage(BasePage):
 
         # ===== Locators =====
         self.txt_quantity = page.locator('input[name="quantity"]')
-        self.btn_add_to_cart = page.locator("#button-cart")
-        self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
+        self.btn_add_to_cart = page.get_by_role("button", name="Add to Cart", exact=True)
+        self.cnf_msg = page.locator("div.alert.alert-success").get_by_text("Success:")
         self.lnk_shopping_cart_success_msg = self.cnf_msg.get_by_role("link", name="shopping cart")
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
 
-        # ===== Quantity Methods =====
-
+    # ===== Quantity Methods =====
     def set_quantity(self, qty: str):
         """Set the desired product quantity."""
         self.fill(self.txt_quantity, "")
         self.fill(self.txt_quantity, qty)
 
-        # ===== Add to Cart Methods =====
-
+    # ===== Add to Cart Methods =====
     def add_to_cart(self):
         """Click the 'Add to Cart' button."""
-        self.click(self.btn_add_to_cart)
+        self.btn_add_to_cart.wait_for(state="visible")
+        self.btn_add_to_cart.click()
 
     # ===== Confirmation Message =====
     def get_confirmation_message(self):
         """Return the confirmation message element."""
         return self.cnf_msg
+
+    def verify_product_added_successfully(self):
+        """Verify success confirmation message is visible."""
+        expect(self.get_confirmation_message()).to_be_visible(timeout=15000)
 
     def click_shopping_cart_in_success_message(self) -> ShoppingCartPage:
         """Click the 'shopping cart' link within the success message."""
@@ -59,4 +62,4 @@ class ProductPage(BasePage):
     def add_product_to_cart(self, quantity: str):
         self.set_quantity(quantity)
         self.add_to_cart()
-        expect(self.get_confirmation_message()).to_be_visible()
+        self.verify_product_added_successfully()
