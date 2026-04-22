@@ -26,7 +26,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     checkout_page = CheckoutPage(page)
     registration_page = RegistrationPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Register a new account to ensure active session and clean state
     home_page.open_home_page()
@@ -40,11 +39,11 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     home_page.open_home_page()
 
     # Step 2-3: Enter Product Name and Click Search icon
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
 
     # Step 4: Click on the Product displayed in the Search results
-    search_results_page.select_product(product_name)
+    search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
 
     # Step 4 continued: Click on 'Add to Cart' button
     product_page.add_to_cart()
@@ -67,6 +66,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     # Validation: User should be taken to the Product Display page of the Product
     expect(product_page.get_page_heading()).to_be_visible()
     actual_product_name = product_page.get_product_name()
-    assert actual_product_name == product_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(
-        expected=product_name, actual=actual_product_name
+    assert actual_product_name == TestData.PRODUCT_NAME_IMAC, messages.PDP_PRODUCT_NAME_MISMATCH.format(
+        expected=TestData.PRODUCT_NAME_IMAC, actual=actual_product_name
     )

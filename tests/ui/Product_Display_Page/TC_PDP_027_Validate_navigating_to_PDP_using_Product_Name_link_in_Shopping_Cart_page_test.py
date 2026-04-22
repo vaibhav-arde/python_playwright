@@ -23,7 +23,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_pag
     shopping_cart_page = ShoppingCartPage(page)
     registration_page = RegistrationPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
@@ -36,9 +35,9 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_pag
 
     # Step 2: Add product to cart
     home_page.open_home_page()
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
-    search_results_page.select_product(product_name)
+    search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
     
     expected_name = product_page.get_product_name()
     product_page.add_to_cart()
