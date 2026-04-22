@@ -3,9 +3,15 @@
 # Page Object for the Checkout Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+from __future__ import annotations
+
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pages.product_page import ProductPage
 
 
 class CheckoutPage(BasePage):
@@ -131,7 +137,7 @@ class CheckoutPage(BasePage):
         """Verify if the order confirmation message appears."""
         return self.lbl_order_con_msg
 
-    def click_product_name_confirm(self) -> "ProductPage":
+    def click_product_name_confirm(self) -> ProductPage:
         """Click on the product name link in the confirm order section and return ProductPage instance."""
         from pages.product_page import ProductPage
         self.click(self.lnk_product_name_confirm)
