@@ -11,6 +11,7 @@ from pages.base_page import BasePage
 from utils import messages
 
 
+
 class ProductComparisonPage(BasePage):
     """Page Object Model class for the Product Comparison page."""
 

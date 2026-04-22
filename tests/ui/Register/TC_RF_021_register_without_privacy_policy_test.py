@@ -1,7 +1,7 @@
 """
 1. Click on 'My Account' Drop menu
 2. Click on 'Register' option
-3. Enter new Account Details into all the Fields 
+3. Enter new Account Details into all the Fields
    (First Name, Last Name, E-Mail, Telephone, Password, Password Confirm, Newsletter)
 4. Don't select the 'Privacy Policy' checkbox option
 5. Click on 'Continue' button (ER-1)
@@ -15,12 +15,11 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from utils.helpers import RandomDataUtil
-from utils.constants import UIRoutes
 from utils.messages import PRIVACY_POLICY_WARNING_MSG
+
 
 @pytest.mark.sanity
 def test_register_without_privacy_policy(page):
-
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
 
