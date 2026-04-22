@@ -3,11 +3,11 @@
 # Page Object for the Wish List Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-import re
 from playwright.sync_api import Page
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
 from utils.constants import UILabels
+
 
 class WishListPage(BasePage):
     """Page Object Model class for the Wish List Page."""

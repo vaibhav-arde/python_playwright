@@ -10,6 +10,7 @@ from utils.constants import TestData
 from utils import messages
 from utils.random_test_data import RandomTestData
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_validate_add_to_wishlist_from_pdp(page: Page):
@@ -23,12 +24,13 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
     wishlist_page = WishListPage(page)
     registration_page = RegistrationPage(page)
 
+    product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Register a new account to ensure active session
     home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_register()
-    
+
     # Use the POM helper and method to complete registration dynamically
     unique_user = RandomTestData.get_user()
     registration_page.complete_registration(unique_user)
@@ -36,18 +38,13 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
 
     # Step 2: Search for a product
     home_page.open_home_page()
-    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
+    home_page.enter_product_name(product_name)
     home_page.click_search()
 
-<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_019_Validate_add_to_wishlist_from_pdp_test.py
     product_in_results = search_results_page.is_product_exist(product_name)
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
-=======
-    product_in_results = search_results_page.is_product_exist(TestData.PRODUCT_NAME_IMAC)
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-        keyword=TestData.PRODUCT_NAME_IMAC
+        keyword=product_name
     )
->>>>>>> 93d3e1a (TC -031 ia added and some changes are done):tests/ui/ProductDisplayPage/TC_PDP_019_Validate_add_to_wishlist_from_pdp_test.py
 
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     search_results_page.select_product(expected_product_name)
@@ -58,11 +55,11 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
     # Validate ER-1: Success message
     success_alert = product_page.get_any_alert_message()
     expect(success_alert).to_be_visible(timeout=10000)
-    
+
     actual_msg = product_page.get_text(success_alert)
-    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, messages.GENERIC_SUCCESS_ALERT_MISMATCH.format(
-        expected=messages.SUCCESS_ALERT_KEYWORD, actual=actual_msg
-    )
+    assert (
+        messages.SUCCESS_ALERT_KEYWORD in actual_msg
+    ), f"Expected success message but got: {actual_msg}"
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
     )
@@ -75,4 +72,4 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
 
     # Validate product presence in wishlist
     row = wishlist_page.get_product_row_by_name(expected_product_name)
-    expect(row).to_be_visible(), messages.PRODUCT_NOT_IN_WISHLIST.format(product=expected_product_name)
+    expect(row).to_be_visible(), f"Product {expected_product_name} not found in Wish List"

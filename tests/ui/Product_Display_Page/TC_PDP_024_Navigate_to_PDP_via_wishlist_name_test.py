@@ -6,12 +6,10 @@ from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
 from pages.wishlist_page import WishListPage
 from pages.registration_page import RegistrationPage
-from utils.constants import TestData, UIRoutes
+from utils.constants import TestData
 from utils import messages
-<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_024_Navigate_to_PDP_via_wishlist_name_test.py
-=======
 from utils.random_test_data import RandomTestData
->>>>>>> 6193c1f (updated Insted of login regester is used):tests/ui/ProductDisplayPage/TC_PDP_024_Navigate_to_PDP_via_wishlist_name_test.py
+
 
 @pytest.mark.ui
 @pytest.mark.regression
@@ -26,22 +24,23 @@ def test_navigate_to_pdp_via_wishlist_name(page: Page):
     wishlist_page = WishListPage(page)
     registration_page = RegistrationPage(page)
 
+    product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Register a new account to ensure active session and clean wishlist
     home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_register()
-    
+
     unique_user = RandomTestData.get_user()
     registration_page.complete_registration(unique_user)
     expect(registration_page.get_confirmation_msg()).to_be_visible()
 
     # Step 2: Add product to wishlist
     home_page.open_home_page()
-    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
+    home_page.enter_product_name(product_name)
     home_page.click_search()
-    search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
-    
+    search_results_page.select_product(product_name)
+
     # Capture name for validation
     expected_name = product_page.get_product_name()
     product_page.click_add_to_wishlist()
@@ -57,10 +56,6 @@ def test_navigate_to_pdp_via_wishlist_name(page: Page):
     # Validation: Navigate to PDP
     expect(product_page.get_page_heading()).to_be_visible()
     actual_name = product_page.get_product_name()
-<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_024_Navigate_to_PDP_via_wishlist_name_test.py
-    assert actual_name == product_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(expected=product_name, actual=actual_name)
-=======
     assert expected_name in actual_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_name, actual=actual_name
     )
->>>>>>> 6193c1f (updated Insted of login regester is used):tests/ui/ProductDisplayPage/TC_PDP_024_Navigate_to_PDP_via_wishlist_name_test.py

@@ -23,7 +23,9 @@ for i in range(50): # Limit to 50 iterations to be safe
     if "Unmerged paths:" in status.stdout:
         print("Resolving conflicts...")
         # Resolve core files with --ours (keep upstream version)
-        run_cmd("git checkout --ours pages/*.py utils/*.py pytest.ini")
+        run_cmd("git checkout --ours pages/*.py pytest.ini")
+        # For messages and constants, we likely want feature branch changes (PDP constants)
+        run_cmd("git checkout --theirs utils/messages.py utils/constants.py")
         # Resolve tests with --theirs (keep feature branch version)
         run_cmd("git checkout --theirs tests/*.py tests/**/*.py")
         # Add all
