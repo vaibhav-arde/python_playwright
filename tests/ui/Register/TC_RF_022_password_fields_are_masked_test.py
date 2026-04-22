@@ -1,6 +1,6 @@
 """
 1. Click on 'My Account' Drop menu
-2. Click on 'Register' option 
+2. Click on 'Register' option
 3. Enter some Password text into the 'Password' and 'Password Confirm' fields
 
 Expected Result:
@@ -8,14 +8,13 @@ Password text should be hidden (input type = password)
 """
 
 import pytest
-from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.registration_page import RegistrationPage
 from utils.constants import TestData
 
+
 @pytest.mark.sanity
 def test_password_fields_are_masked(page):
-
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
 
