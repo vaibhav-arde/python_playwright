@@ -15,6 +15,7 @@ from utils.messages import (
 
 @pytest.mark.regression
 @pytest.mark.ui
+@pytest.mark.cross_browser
 @pytest.mark.parametrize(
     "product_names",
     load_json_file("test_data/product_comparison.json")["one_product"],
