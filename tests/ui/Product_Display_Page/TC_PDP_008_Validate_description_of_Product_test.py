@@ -26,14 +26,9 @@ def test_validate_description_of_product(page: Page):
     home_page.click_search()
 
     product_in_results = search_results_page.is_product_exist(product_name)
-<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_008_Validate_description_of_Product_test.py
-<<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_008_Validate_description_of_Product_test.py
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
-=======
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
         keyword=product_name
     )
->>>>>>> 387ee9d (style: apply ruff formatting to resolved test files):tests/ui/ProductDisplayPage/TC_PDP_008_Validate_description_of_Product_test.py
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 ========

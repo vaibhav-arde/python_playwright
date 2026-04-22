@@ -53,6 +53,8 @@ class HomePage(BasePage):
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
         )
+        self.lnk_wishlist = page.locator("#wishlist-total")
+
 
     # ===== Action Methods =====
 
@@ -145,6 +147,10 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def click_wishlist(self):
+        """Click on the 'Wish List' link."""
+        self.click(self.lnk_wishlist)
 
     def open_home_page(self):
         """Navigate to the home page."""

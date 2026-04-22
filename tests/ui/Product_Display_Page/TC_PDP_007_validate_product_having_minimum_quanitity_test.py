@@ -27,14 +27,9 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     home_page.click_search()
 
     product_in_results = search_results_page.is_product_exist(product_name)
-<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
-<<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
-=======
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
         keyword=product_name
     )
->>>>>>> 387ee9d (style: apply ruff formatting to resolved test files):tests/ui/ProductDisplayPage/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 ========
@@ -56,12 +51,7 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     )
 
     minimum_qty_info = product_page.get_minimum_quantity_info_text()
-<<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
-    assert minimum_qty_info != TestData.EMPTY_VALUE, messages.PDP_MIN_QTY_INFO_EMPTY
-<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
-    assert TestData.MINIMUM_PRODUCT_QUANTITY in minimum_qty_info, messages.PDP_MIN_QTY_INFO_MISSING_VALUE.format(
-========
-    assert minimum_qty_info != "", messages.PDP_MIN_QTY_INFO_EMPTY
+<    assert minimum_qty_info != "", messages.PDP_MIN_QTY_INFO_EMPTY
     assert (
         TestData.MINIMUM_PRODUCT_QUANTITY in minimum_qty_info
     ), messages.PDP_MIN_QTY_INFO_MISSING_VALUE.format(
@@ -70,7 +60,6 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     assert (
         TestData.MINIMUM_PRODUCT_QUANTITY in minimum_qty_info
     ), messages.PDP_MIN_QTY_INFO_MISSING_VALUE.format(
->>>>>>> 387ee9d (style: apply ruff formatting to resolved test files):tests/ui/ProductDisplayPage/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
         expected=TestData.MINIMUM_PRODUCT_QUANTITY, actual=minimum_qty_info
     )
 
@@ -80,12 +69,7 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     expect(product_page.any_alert_msg.first).to_be_visible()
 
     feedback_text = " ".join(product_page.any_alert_msg.all_text_contents()).strip()
-<<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
-    assert feedback_text != TestData.EMPTY_VALUE, messages.PDP_MIN_QTY_WARNING_NOT_VISIBLE
-<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
-    assert TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text, messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(
-========
-    assert feedback_text != "", messages.PDP_MIN_QTY_WARNING_NOT_VISIBLE
+<    assert feedback_text != "", messages.PDP_MIN_QTY_WARNING_NOT_VISIBLE
     assert (
         TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text
     ), messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(
@@ -94,7 +78,6 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
     assert (
         TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text
     ), messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(
->>>>>>> 387ee9d (style: apply ruff formatting to resolved test files):tests/ui/ProductDisplayPage/TC_PDP_007_validate_product_having_minimum_quanitity_test.py
         qty=TestData.MINIMUM_PRODUCT_QUANTITY, actual=feedback_text
     )
     assert (

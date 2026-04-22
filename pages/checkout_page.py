@@ -85,10 +85,12 @@ class CheckoutPage(BasePage):
 
     def click_continue_after_billing_address(self):
         """Click Continue after entering billing address."""
+        self.wait_for(self.btn_continue_billing_address)
         self.click(self.btn_continue_billing_address)
 
     def click_continue_after_delivery_address(self):
         """Click Continue after confirming delivery address."""
+        self.wait_for(self.btn_continue_delivery_address)
         self.click(self.btn_continue_delivery_address)
 
     # ===== Delivery Method =====
@@ -99,6 +101,7 @@ class CheckoutPage(BasePage):
 
     def click_continue_after_delivery_method(self):
         """Click Continue after setting delivery method."""
+        self.wait_for(self.btn_continue_shipping_address)
         self.click(self.btn_continue_shipping_address)
 
     # ===== Payment Method =====
@@ -109,6 +112,7 @@ class CheckoutPage(BasePage):
 
     def click_continue_after_payment_method(self):
         """Click Continue after selecting payment method."""
+        self.wait_for(self.btn_continue_payment_method)
         self.click(self.btn_continue_payment_method)
 
     # ===== Order Confirmation =====
