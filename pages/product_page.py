@@ -10,7 +10,6 @@ from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
-from utils.constants import UITimeouts
 
 
 class ProductPage(BasePage):
@@ -63,6 +62,7 @@ class ProductPage(BasePage):
             has=page.get_by_role("img")
         )
         self.img_main_thumbnail = self.content.locator(".thumbnails img").first
+
         self.lightbox = page.locator("div.mfp-container")
         self.lightbox_image = self.lightbox.get_by_role("img")
         self.btn_lightbox_next = page.get_by_title("Next (Right arrow key)")
@@ -100,11 +100,31 @@ class ProductPage(BasePage):
         # ===== Social and Utility Locators =====
         self.btn_wishlist = page.locator("button").filter(has=page.locator("i.fa-heart")).first
         self.btn_compare = page.locator("button").filter(has=page.locator("i.fa-exchange")).first
-        self.pnl_social_sharing = page.locator(".addthis_sharing_toolbox, .addthis_inline_share_toolbox")
+        self.pnl_social_sharing = page.locator(
+            ".addthis_sharing_toolbox, .addthis_inline_share_toolbox"
+        )
         self.btn_facebook_like = page.locator(".addthis_button_facebook_like")
-        
+
         self.pnl_related_products = self.content.get_by_role("heading", name="Related Products")
         self.lnk_related_product = page.locator(".product-thumb h4 a")
+
+        self.ddl_select_option = self.content.get_by_label("Select")
+
+        self.txt_text_option = self.content.get_by_label("Text")
+
+        self.txt_textarea_option = self.content.get_by_label("Textarea")
+
+        self.radio_option = self.content.get_by_role("radio")
+
+        self.checkbox_option = self.content.locator("input[type='checkbox']")
+
+        self.file_upload_button = self.content.get_by_role("button", name="Upload File")
+
+        self.date_option = page.locator("#input-option219")
+
+        self.datetime_option = page.locator("#input-option220")
+
+        self.time_option = page.locator("#input-option221")
 
     # ===== Quantity Methods =====
 
@@ -152,11 +172,15 @@ class ProductPage(BasePage):
     def click_wishlist_link_on_success_msg(self):
         """Click the 'wish list' link within any visible alert message."""
         # This uses self.any_alert_msg from locators to find the embedded link
-        self.any_alert_msg.first.get_by_role("link", name=re.compile(r"wish list", re.IGNORECASE)).click()
+        self.any_alert_msg.first.get_by_role(
+            "link", name=re.compile(r"wish list", re.IGNORECASE)
+        ).click()
 
     def click_comparison_link_on_success_msg(self):
         """Click the 'product comparison' link within any visible alert message."""
-        self.any_alert_msg.first.get_by_role("link", name=re.compile(r"product comparison", re.IGNORECASE)).click()
+        self.any_alert_msg.first.get_by_role(
+            "link", name=re.compile(r"product comparison", re.IGNORECASE)
+        ).click()
 
     def click_product_link_on_success_msg(self, product_name: str):
         """Click on the product name link within any visible alert message."""
@@ -171,12 +195,14 @@ class ProductPage(BasePage):
     def click_cart_image_link(self) -> ProductPage:
         """Click the product image in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
+
         self.click(self.lnk_cart_image)
         return ProductPage(self.page)
 
     def click_cart_name_link(self) -> ProductPage:
         """Click the product name link in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
+
         self.click(self.lnk_cart_name)
         return ProductPage(self.page)
 
@@ -289,6 +315,39 @@ class ProductPage(BasePage):
         """Return the ex-tax price text."""
         text = self.get_text(self.lbl_product_ex_tax)
         return text.replace("Ex Tax:", "").strip() if text else ""
+
+    def verify_bulk_prices(self):
+        """Validate bulk discount prices on Product Display Page."""
+        expect(self.page.locator("text=10 or more")).to_be_visible()
+        expect(self.page.locator("text=20 or more")).to_be_visible()
+        expect(self.page.locator("text=30 or more")).to_be_visible()
+
+    def verify_available_options(self):
+        """Validate available product options."""
+
+        option_locators = [
+            self.ddl_select_option.first,
+            self.txt_text_option.first,
+            self.txt_textarea_option.first,
+            self.radio_option.first,
+            self.checkbox_option.first,
+            self.file_upload_button.first,
+            self.date_option.first,
+            self.datetime_option.first,
+            self.time_option.first,
+        ]
+
+        visible_count = 0
+
+        for option in option_locators:
+            if option.count() > 0:
+                option.first.scroll_into_view_if_needed()
+
+                if option.first.is_visible():
+                    expect(option.first).to_be_visible()
+                    visible_count += 1
+
+        assert visible_count > 0
 
     # ===== Thumbnail and Lightbox Methods =====
 
