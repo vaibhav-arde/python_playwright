@@ -12,6 +12,8 @@ from utils.data_loader import load_json_file
 
 
 @pytest.mark.regression
+@pytest.mark.ui
+@pytest.mark.critical
 @pytest.mark.parametrize(
     "product_names",
     load_json_file("test_data/product_comparison.json")["one_product"],

@@ -12,6 +12,7 @@ from utils.messages import COMPARE_SUCCESS, REMOVE_SUCCESS
 
 @pytest.mark.regression
 @pytest.mark.ui
+@pytest.mark.critical
 @pytest.mark.parametrize(
     "product_names",
     [

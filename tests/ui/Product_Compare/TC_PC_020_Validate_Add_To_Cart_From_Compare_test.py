@@ -12,6 +12,7 @@ from utils.messages import ADD_TO_CART_SUCCESS, COMPARE_SUCCESS
 
 @pytest.mark.regression
 @pytest.mark.ui
+@pytest.mark.critical
 @pytest.mark.parametrize(
     "product_names",
     [
