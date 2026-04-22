@@ -30,8 +30,11 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
 =======
     registration_page = RegistrationPage(page)
 
+<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_028_Validate_navigating_to_PDP_using_Product_Name_link_in_Confirm_Order_sectioon_of_Checkout_page_test.py
     product_name = TestData.PRODUCT_NAME_IMAC
 >>>>>>> 6193c1f (updated Insted of login regester is used):tests/ui/ProductDisplayPage/TC_PDP_028_Validate_navigating_to_PDP_using_Product_Name_link_in_Confirm_Order_sectioon_of_Checkout_page_test.py
+=======
+>>>>>>> 93d3e1a (TC -031 ia added and some changes are done):tests/ui/ProductDisplayPage/TC_PDP_028_Validate_navigating_to_PDP_using_Product_Name_link_in_Confirm_Order_sectioon_of_Checkout_page_test.py
 
     # Step 1: Register a new account to ensure active session and clean state
     home_page.open_home_page()
@@ -56,11 +59,11 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
 >>>>>>> 6193c1f (updated Insted of login regester is used):tests/ui/ProductDisplayPage/TC_PDP_028_Validate_navigating_to_PDP_using_Product_Name_link_in_Confirm_Order_sectioon_of_Checkout_page_test.py
 
     # Step 2-3: Enter Product Name and Click Search icon
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
 
     # Step 4: Click on the Product displayed in the Search results
-    search_results_page.select_product(product_name)
+    search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
 
     # Step 4 continued: Click on 'Add to Cart' button
     product_page.add_to_cart()
@@ -108,6 +111,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(pag
     # Validation: User should be taken to the Product Display page of the Product
     expect(product_page.get_page_heading()).to_be_visible()
     actual_product_name = product_page.get_product_name()
-    assert actual_product_name == product_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(
-        expected=product_name, actual=actual_product_name
+    assert actual_product_name == TestData.PRODUCT_NAME_IMAC, messages.PDP_PRODUCT_NAME_MISMATCH.format(
+        expected=TestData.PRODUCT_NAME_IMAC, actual=actual_product_name
     )

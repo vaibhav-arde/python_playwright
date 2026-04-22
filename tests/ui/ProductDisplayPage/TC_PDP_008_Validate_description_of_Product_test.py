@@ -19,19 +19,22 @@ def test_validate_description_of_product(page: Page):
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1-3: Search and open product
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
 
+<<<<<<< HEAD
     product_in_results = search_results_page.is_product_exist(product_name)
 <<<<<<< HEAD
 <<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_008_Validate_description_of_Product_test.py
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
 =======
+=======
+    product_in_results = search_results_page.is_product_exist(TestData.PRODUCT_NAME_IMAC)
+>>>>>>> 93d3e1a (TC -031 ia added and some changes are done)
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-        keyword=product_name
+        keyword=TestData.PRODUCT_NAME_IMAC
     )
 >>>>>>> 387ee9d (style: apply ruff formatting to resolved test files)
     expected_product_name = search_results_page.get_text(product_in_results).strip()
