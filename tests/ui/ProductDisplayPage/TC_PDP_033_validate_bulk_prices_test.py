@@ -1,0 +1,61 @@
+"""
+TC_PDP_033
+(TS_007) Product Display Page
+
+Validate the prices of the Product when purchased in bulk
+
+Steps:
+1. Open the Application URL and Login
+2. Enter any existing Product name into Search text box
+3. Click search icon
+4. Click Product displayed in Search results
+5. Validate bulk pricing on Product Display Page
+
+Test Data:
+Product Name: Apple Cinema 30"
+"""
+
+import pytest
+from playwright.sync_api import Page
+
+from pages.home_page import HomePage
+from pages.search_results_page import SearchResultsPage
+from pages.product_page import ProductPage
+from pages.registration_page import RegistrationPage
+from utils.constants import TestData
+from utils.random_test_data import RandomTestData
+
+
+@pytest.mark.ui
+@pytest.mark.regression
+def test_validate_bulk_prices(page: Page):
+    home_page = HomePage(page)
+    search_results_page = SearchResultsPage(page)
+    product_page = ProductPage(page)
+    registration_page = RegistrationPage(page)
+
+    product_name = TestData.PRODUCT_NAME_APPLE_CINEMA_30
+
+    # Step 1: Open Application URL and Register new account
+    # Register new account (user is auto-logged in after successful registration)
+    home_page.open_home_page()
+    home_page.click_my_account()
+    home_page.click_register()
+
+    unique_user = RandomTestData.get_user()
+    registration_page.complete_registration(unique_user)
+
+    # Navigate back to Home Page
+    home_page.open_home_page()
+
+    # Step 2: Enter Product Name
+    home_page.enter_product_name(product_name)
+
+    # Step 3: Click Search icon
+    home_page.click_search()
+
+    # Step 4: Click Product displayed in Search Results
+    search_results_page.select_product(product_name)
+
+    # Step 5: Validate Bulk Prices on Product Display Page
+    product_page.verify_bulk_prices()
