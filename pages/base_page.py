@@ -7,6 +7,7 @@
 import logging
 
 from playwright.sync_api import Page, Locator
+from urllib.parse import urljoin
 
 logger = logging.getLogger(__name__)
 
@@ -14,9 +15,10 @@ logger = logging.getLogger(__name__)
 class BasePage:
     """Base class for all Page Objects. Provides common UI interaction methods."""
 
-    def __init__(self, page: Page):
+    def __init__(self, page: Page, base_url=None):
         """Initialize with a Playwright Page instance."""
         self.page = page
+        self.base_url = base_url
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
@@ -25,9 +27,11 @@ class BasePage:
         return locator
 
     def open(self, path: str = "/"):
-        """Navigate to a path relative to the current base URL."""
-        self.page.goto(path)
-        logger.info(f"Navigated to: {path}")
+        """Navigate to a path relative to the current base URL"""
+        clean_path = path.lstrip("/")
+        url = urljoin(self.base_url, clean_path)
+        self.page.goto(url)
+        logger.info(f"Navigated to: {url}")
 
     def click(self, locator: str | Locator):
         """Click an element. Accepts string selector OR Locator object."""
@@ -88,3 +92,23 @@ class BasePage:
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""
         return self.page.locator(f"#{field_id} + .text-danger")
+
+    def press_tab(self, times: int = 1) -> None:
+        for _ in range(times):
+            self.page.keyboard.press("Tab")
+
+    def press_enter(self) -> None:
+        self.page.keyboard.press("Enter")
+
+    def press_space(self) -> None:
+        self.page.keyboard.press("Space")
+
+    def tab_until_focused(self, locator, max_tabs: int = 50) -> None:
+        """It keeps pressing the Tab key until a specific element gets focus."""
+        target = locator  # assuming already locator
+        for _ in range(max_tabs):
+            if target.evaluate("el => el === document.activeElement"):
+                return
+            self.page.keyboard.press("Tab")
+
+        raise RuntimeError("Element not reachable using Tab")
