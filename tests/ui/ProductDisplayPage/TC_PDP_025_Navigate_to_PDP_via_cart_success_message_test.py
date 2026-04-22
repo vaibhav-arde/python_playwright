@@ -42,15 +42,9 @@ def test_navigate_to_pdp_via_cart_success_message(page: Page):
     product_page.add_to_cart()
 
     # Step 5: Click product name link in success message
-    success_alert = product_page.get_confirmation_message()
-    expect(success_alert).to_be_visible()
-
-    # The success message contains a link with the product name
-    product_link = success_alert.get_by_role("link", name=expected_product_name)
-    expect(product_link).to_be_visible(), messages.ADD_TO_CART_LINK_NOT_FOUND
-    product_link.click()
-    page.wait_for_timeout(2000)
+    expect(product_page.get_confirmation_message()).to_be_visible()
+    product_page.click_product_link_on_success_msg(expected_product_name)
 
     # Validate navigation to PDP
-    expect(product_page.lbl_product_name).to_be_visible()
+    expect(product_page.get_page_heading()).to_be_visible()
     assert product_page.get_product_name() == expected_product_name

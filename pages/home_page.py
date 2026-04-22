@@ -20,6 +20,7 @@ class HomePage(BasePage):
         self.lnk_login = page.get_by_role("link", name="Login").first
         self.txt_search_box = page.get_by_placeholder("Search")
         self.btn_search = page.locator("#search").get_by_role("button")
+        self.lnk_wishlist = page.locator("#wishlist-total")
 
     # ===== Action Methods =====
 
@@ -47,6 +48,10 @@ class HomePage(BasePage):
     def click_search(self):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
+
+    def click_wishlist(self):
+        """Click on the 'Wish List' link."""
+        self.click(self.lnk_wishlist)
 
     def open_home_page(self):
         """Navigate to the home page."""

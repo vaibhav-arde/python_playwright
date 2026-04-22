@@ -26,7 +26,7 @@ class RegistrationPage(BasePage):
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.btn_continue = page.locator('input[value="Continue"]')
-        self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
+        self.msg_confirmation = page.locator(f'h1:has-text("{messages.SUCCESS_REGISTER_MSG}")')
         self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
         self.msg_privacy_policy_warning = page.locator(".alert-danger")
         self.lnk_breadcrumb = page.locator("#account-register ul.breadcrumb")

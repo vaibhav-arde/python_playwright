@@ -1,6 +1,5 @@
 import pytest
 from playwright.sync_api import expect, Page
-from faker import Faker
 
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
@@ -9,6 +8,7 @@ from pages.product_comparison_page import ProductComparisonPage
 from pages.registration_page import RegistrationPage
 from utils.constants import TestData
 from utils import messages
+from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
@@ -23,7 +23,6 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     product_page = ProductPage(page)
     comparison_page = ProductComparisonPage(page)
     registration_page = RegistrationPage(page)
-    fake = Faker()
 
     product_name = TestData.PRODUCT_NAME_IMAC
     
@@ -32,16 +31,8 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     home_page.click_my_account()
     home_page.click_register()
     
-    # Use TestData and Faker to avoid any hardcoded values
-    unique_user = {
-        "firstName": fake.first_name(),
-        "lastName": fake.last_name(),
-        "email": fake.email(),
-        "telephone": TestData.DEFAULT_TELEPHONE,
-        "password": TestData.DEFAULT_PASSWORD
-    } 
-    
-    # Use the POM method to complete registration dynamically
+    # Use the POM helper and method to complete registration dynamically
+    unique_user = RandomTestData.get_user()
     registration_page.complete_registration(unique_user)
     expect(registration_page.get_confirmation_msg()).to_be_visible()
 

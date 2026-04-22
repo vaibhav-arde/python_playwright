@@ -84,6 +84,8 @@ class UILabels:
     # UI Page Headings
     REGISTER_PAGE_HEADING = "Register Account"
     REGISTER_BREADCRUMB = "Register"
+    WISHLIST_PAGE_HEADING = "My Wish List"
+    CART_PAGE_HEADING = "Shopping Cart"
 
 class UITitles:
     REGISTER_PAGE_TITLE = "Register Account"

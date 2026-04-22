@@ -155,6 +155,10 @@ class ProductPage(BasePage):
         """Click the 'product comparison' link within any visible alert message."""
         self.any_alert_msg.first.get_by_role("link", name=re.compile(r"product comparison", re.IGNORECASE)).click()
 
+    def click_product_link_on_success_msg(self, product_name: str):
+        """Click on the product name link within any visible alert message."""
+        self.any_alert_msg.first.get_by_role("link", name=product_name, exact=True).click()
+
     # ===== Cart Toggle Box Methods =====
 
     def click_cart_button(self):
