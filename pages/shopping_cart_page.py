@@ -9,6 +9,7 @@ from playwright.sync_api import Page
 from pages.base_page import BasePage
 from utils.constants import UILabels
 
+
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from pages.product_page import ProductPage

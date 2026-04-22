@@ -29,18 +29,16 @@ def test_validate_average_review_display(page: Page):
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
-
     # Step 2: Enter Product name into the Search text box field
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
 
     # Step 3: Click Search button
     home_page.click_search()
 
     # Verify product in search results and capture its name
-    product_in_results = search_results_page.is_product_exist(product_name)
+    product_in_results = search_results_page.is_product_exist(TestData.PRODUCT_NAME_IMAC)
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-        keyword=product_name
+        keyword=TestData.PRODUCT_NAME_IMAC
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY

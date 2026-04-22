@@ -24,7 +24,6 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     comparison_page = ProductComparisonPage(page)
     registration_page = RegistrationPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
     
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
@@ -38,12 +37,12 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
 
     # Step 2: Search for a product
     home_page.open_home_page()
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
 
-    product_in_results = search_results_page.is_product_exist(product_name)
+    product_in_results = search_results_page.is_product_exist(TestData.PRODUCT_NAME_IMAC)
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-        keyword=product_name
+        keyword=TestData.PRODUCT_NAME_IMAC
     )
 
     expected_product_name = search_results_page.get_text(product_in_results).strip()

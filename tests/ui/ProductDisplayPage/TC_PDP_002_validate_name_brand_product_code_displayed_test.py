@@ -24,16 +24,15 @@ def test_validate_name_brand_product_code_displayed(page: Page):
     # Note: conftest.py's navigate_to_base_url fixture already navigates to the base URL
 
     # Step 1: Enter any existing Product name into the Search text box field
-    search_keyword = TestData.PRODUCT_NAME_IMAC
-    home_page.enter_product_name(search_keyword)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
 
     # Step 2: Click on the button having search icon
     home_page.click_search()
 
     # Step 3: Capture product name dynamically from Search Results and open it
-    product_in_results = search_results_page.is_product_exist(search_keyword)
+    product_in_results = search_results_page.is_product_exist(TestData.PRODUCT_NAME_IMAC)
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-        keyword=search_keyword
+        keyword=TestData.PRODUCT_NAME_IMAC
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY

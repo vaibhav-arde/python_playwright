@@ -36,6 +36,7 @@ class ProductPage(BasePage):
 
         # ===== Product Details Locators =====
         self.lbl_product_name = self.content.get_by_role("heading", level=1)
+        self.lbl_reward_points = self.content.locator("ul.list-unstyled li", has_text="Reward Points:").first
         self.lbl_product_brand = self.content.locator("ul.list-unstyled li", has_text="Brand:")
         self.lbl_product_code = self.content.locator(
             "ul.list-unstyled li", has_text="Product Code:"
@@ -210,6 +211,11 @@ class ProductPage(BasePage):
         """Return the product code."""
         text = self.get_text(self.lbl_product_code)
         return text.replace("Product Code:", "").strip() if text else ""
+
+    def get_reward_points(self) -> str:
+        """Return the reward points displayed on the Product Display Page."""
+        text = self.get_text(self.lbl_reward_points)
+        return text.replace("Reward Points:", "").strip() if text else ""
 
     def get_product_availability(self) -> str:
         """Return the product availability status."""

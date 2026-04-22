@@ -12,13 +12,13 @@ in all supported environments
 5. Validate PDP works correctly
 
 Test Data:
-Product Name: iMac
+Product Name: Apple Cinema 30"
 """
 
 import pytest
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
-from utils.config import Config
+from utils.constants import TestData
 
 
 @pytest.mark.ui
@@ -28,9 +28,9 @@ def test_product_page_cross_browser(page):
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
 
-    home_page.enter_product_name(Config.imac_product)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_APPLE_CINEMA_30)
     home_page.click_search()
 
-    product_page = search_results_page.select_product(Config.imac_product)
+    product_page = search_results_page.select_product(TestData.PRODUCT_NAME_APPLE_CINEMA_30)
 
     product_page.verify_product_page_functionality()

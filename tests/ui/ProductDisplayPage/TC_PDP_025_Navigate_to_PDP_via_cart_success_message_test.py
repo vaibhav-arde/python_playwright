@@ -29,12 +29,11 @@ def test_navigate_to_pdp_via_cart_success_message(page: Page):
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
 
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
 
-    product_in_results = search_results_page.is_product_exist(product_name)
+    product_in_results = search_results_page.is_product_exist(TestData.PRODUCT_NAME_IMAC)
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     search_results_page.select_product(expected_product_name)
 

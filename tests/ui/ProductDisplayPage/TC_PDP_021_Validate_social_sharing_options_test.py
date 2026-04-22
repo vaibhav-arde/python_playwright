@@ -17,13 +17,11 @@ def test_validate_social_sharing_options(page: Page):
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
-
     home_page.open_home_page()
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
 
-    search_results_page.select_product(product_name)
+    search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
 
     # Step 4: Verify social sharing options (AddThis) are no longer present
     # Note: AddThis service was discontinued in 2023. This test confirms the removal/absence
