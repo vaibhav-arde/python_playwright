@@ -3,6 +3,8 @@
 # Page Object for the Product Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+from __future__ import annotations
+
 import re
 from playwright.sync_api import Page, expect
 
@@ -165,13 +167,13 @@ class ProductPage(BasePage):
         """Click the cart button to open the toggle box."""
         self.click(self.btn_cart_total)
 
-    def click_cart_image_link(self) -> "ProductPage":
+    def click_cart_image_link(self) -> ProductPage:
         """Click the product image in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
         self.click(self.lnk_cart_image)
         return ProductPage(self.page)
 
-    def click_cart_name_link(self) -> "ProductPage":
+    def click_cart_name_link(self) -> ProductPage:
         """Click the product name link in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
         self.click(self.lnk_cart_name)

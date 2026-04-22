@@ -3,9 +3,16 @@
 # Page Object for the Shopping Cart Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+from __future__ import annotations
+
 from playwright.sync_api import Page
 from pages.base_page import BasePage
 from utils.constants import UILabels
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pages.product_page import ProductPage
+    from pages.checkout_page import CheckoutPage
 
 class ShoppingCartPage(BasePage):
     """Page Object Model for the Shopping Cart Page."""
@@ -34,14 +41,14 @@ class ShoppingCartPage(BasePage):
         """Find the row containing the specified product name."""
         return self.product_items.filter(has_text=product_name).filter(visible=True).first
 
-    def click_product_image(self, product_name: str) -> "ProductPage":
+    def click_product_image(self, product_name: str) -> ProductPage:
         """Click on the product image link in the shopping cart."""
         from pages.product_page import ProductPage
         row = self.get_product_row_by_name(product_name)
         self.click(row.locator("td.text-center a, td.image a").first)
         return ProductPage(self.page)
 
-    def click_product_name(self, product_name: str) -> "ProductPage":
+    def click_product_name(self, product_name: str) -> ProductPage:
         """Click on the product name link in the shopping cart."""
         from pages.product_page import ProductPage
         row = self.get_product_row_by_name(product_name)
