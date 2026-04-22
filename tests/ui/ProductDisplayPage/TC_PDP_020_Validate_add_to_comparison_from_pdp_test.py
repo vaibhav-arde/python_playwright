@@ -25,12 +25,12 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     registration_page = RegistrationPage(page)
 
     product_name = TestData.PRODUCT_NAME_IMAC
-    
+
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_register()
-    
+
     # Use the POM helper and method to complete registration dynamically
     unique_user = RandomTestData.get_user()
     registration_page.complete_registration(unique_user)
@@ -55,7 +55,7 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     # Validate ER-1: Success message
     success_alert = product_page.get_any_alert_message()
     expect(success_alert).to_be_visible(timeout=10000)
-    
+
     actual_msg = product_page.get_text(success_alert)
     assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, f"Expected success but got: {actual_msg}"
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
@@ -67,7 +67,8 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
 
     # Validate ER-2: Navigation to Comparison page
     expect(comparison_page.lbl_heading).to_be_visible(timeout=10000)
-    
+
     # Validation: Product is in the table
-    assert comparison_page.is_product_in_comparison(expected_product_name), \
-        f"Product {expected_product_name} should be in the comparison table"
+    assert comparison_page.is_product_in_comparison(
+        expected_product_name
+    ), f"Product {expected_product_name} should be in the comparison table"

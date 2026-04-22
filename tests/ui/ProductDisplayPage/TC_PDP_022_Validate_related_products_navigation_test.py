@@ -4,7 +4,7 @@ from playwright.sync_api import expect, Page
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
-from utils.constants import TestData, TestData
+from utils.constants import TestData
 from utils import messages
 
 
@@ -37,7 +37,7 @@ def test_validate_related_products_navigation(page: Page):
     # Step 4: Validate Related Products
     # Use POM methods instead of direct locator interactions
     product_page.scroll_to_related_products()
-    
+
     # Validation using POM objects via expect
     expect(product_page.pnl_related_products).to_be_visible(), messages.RELATED_PRODUCT_NOT_FOUND
 
@@ -47,11 +47,11 @@ def test_validate_related_products_navigation(page: Page):
     # Click the first related product (index 0)
     related_product_name = product_page.get_related_product_name(0)
     product_page.click_related_product(0)
-    
+
     # Verify navigation to the new PDP by checking product name
     expect(product_page.lbl_product_name).to_be_visible(timeout=10000)
     actual_name = product_page.get_product_name()
-    
+
     assert related_product_name in actual_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=related_product_name, actual=actual_name
     )

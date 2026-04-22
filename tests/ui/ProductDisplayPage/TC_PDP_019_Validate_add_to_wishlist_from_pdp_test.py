@@ -30,7 +30,7 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
     home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_register()
-    
+
     # Use the POM helper and method to complete registration dynamically
     unique_user = RandomTestData.get_user()
     registration_page.complete_registration(unique_user)
@@ -55,9 +55,11 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
     # Validate ER-1: Success message
     success_alert = product_page.get_any_alert_message()
     expect(success_alert).to_be_visible(timeout=10000)
-    
+
     actual_msg = product_page.get_text(success_alert)
-    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, f"Expected success message but got: {actual_msg}"
+    assert (
+        messages.SUCCESS_ALERT_KEYWORD in actual_msg
+    ), f"Expected success message but got: {actual_msg}"
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
     )

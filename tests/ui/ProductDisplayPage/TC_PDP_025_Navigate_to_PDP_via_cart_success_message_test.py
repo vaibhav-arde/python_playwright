@@ -5,7 +5,6 @@ from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
 from utils.constants import TestData
-from utils import messages
 
 
 @pytest.mark.ui

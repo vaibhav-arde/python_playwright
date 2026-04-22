@@ -10,7 +10,6 @@ from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
-from utils.constants import UITimeouts
 
 
 class ProductPage(BasePage):
@@ -99,11 +98,17 @@ class ProductPage(BasePage):
         # ===== Social and Utility Locators =====
         self.btn_wishlist = page.locator("button").filter(has=page.locator("i.fa-heart")).first
         self.btn_compare = page.locator("button").filter(has=page.locator("i.fa-exchange")).first
-        self.pnl_social_sharing = page.locator(".addthis_sharing_toolbox, .addthis_inline_share_toolbox")
+        self.pnl_social_sharing = page.locator(
+            ".addthis_sharing_toolbox, .addthis_inline_share_toolbox"
+        )
         self.btn_facebook_like = page.locator(".addthis_button_facebook_like")
-        
+
         self.pnl_related_products = self.content.get_by_role("heading", name="Related Products")
         self.lnk_related_product = page.locator(".product-thumb h4 a")
+        # Price locators based on OpenCart DOM structure
+        self.new_price = self.content.locator("ul.list-unstyled li h2")
+        self.current_price = self.new_price
+        self.old_price = self.content.locator('xpath=//span[contains(@style, "line-through")]')
 
     # ===== Quantity Methods =====
 
@@ -151,11 +156,15 @@ class ProductPage(BasePage):
     def click_wishlist_link_on_success_msg(self):
         """Click the 'wish list' link within any visible alert message."""
         # This uses self.any_alert_msg from locators to find the embedded link
-        self.any_alert_msg.first.get_by_role("link", name=re.compile(r"wish list", re.IGNORECASE)).click()
+        self.any_alert_msg.first.get_by_role(
+            "link", name=re.compile(r"wish list", re.IGNORECASE)
+        ).click()
 
     def click_comparison_link_on_success_msg(self):
         """Click the 'product comparison' link within any visible alert message."""
-        self.any_alert_msg.first.get_by_role("link", name=re.compile(r"product comparison", re.IGNORECASE)).click()
+        self.any_alert_msg.first.get_by_role(
+            "link", name=re.compile(r"product comparison", re.IGNORECASE)
+        ).click()
 
     def click_product_link_on_success_msg(self, product_name: str):
         """Click on the product name link within any visible alert message."""
@@ -170,12 +179,14 @@ class ProductPage(BasePage):
     def click_cart_image_link(self) -> ProductPage:
         """Click the product image in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
+
         self.click(self.lnk_cart_image)
         return ProductPage(self.page)
 
     def click_cart_name_link(self) -> ProductPage:
         """Click the product name link in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
+
         self.click(self.lnk_cart_name)
         return ProductPage(self.page)
 
@@ -285,6 +296,10 @@ class ProductPage(BasePage):
         return text.replace("Ex Tax:", "").strip() if text else ""
 
     # ===== Thumbnail and Lightbox Methods =====
+
+    def get_current_price(self):
+        """Return the current (new) price locator."""
+        return self.current_price.first
 
     def click_main_thumbnail(self):
         """Click on the main bigger sized Thumbnail image."""
@@ -420,3 +435,18 @@ class ProductPage(BasePage):
     def get_related_product_name(self, index: int) -> str:
         """Return the name of the n-th related product."""
         return self.get_text(self.lnk_related_product.nth(index)).strip()
+
+    def validate_discounted_price(self):
+        new_price = self.get_current_price()
+        old_price = self.old_price.first
+
+        # Verify both price elements are visible
+        assert new_price.is_visible(), "New price not visible"
+        assert old_price.is_visible(), "Old price not visible"
+
+        # Verify new price has a dollar symbol
+        new_text = new_price.inner_text().strip()
+        assert "$" in new_text, "New price missing currency symbol"
+
+        # Verify old price is displayed with strike-through style
+        expect(old_price).to_have_css("text-decoration", re.compile(r"line-through"))
