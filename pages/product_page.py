@@ -61,6 +61,7 @@ class ProductPage(BasePage):
             has=page.get_by_role("img")
         )
         self.img_main_thumbnail = self.content.locator(".thumbnails img").first
+
         self.lightbox = page.locator("div.mfp-container")
         self.lightbox_image = self.lightbox.get_by_role("img")
         self.btn_lightbox_next = page.get_by_title("Next (Right arrow key)")
@@ -109,6 +110,24 @@ class ProductPage(BasePage):
         self.new_price = self.content.locator("ul.list-unstyled li h2")
         self.current_price = self.new_price
         self.old_price = self.content.locator('xpath=//span[contains(@style, "line-through")]')
+
+        self.ddl_select_option = self.content.get_by_label("Select")
+
+        self.txt_text_option = self.content.get_by_label("Text")
+
+        self.txt_textarea_option = self.content.get_by_label("Textarea")
+
+        self.radio_option = self.content.get_by_role("radio")
+
+        self.checkbox_option = self.content.locator("input[type='checkbox']")
+
+        self.file_upload_button = self.content.get_by_role("button", name="Upload File")
+
+        self.date_option = page.locator("#input-option219")
+
+        self.datetime_option = page.locator("#input-option220")
+
+        self.time_option = page.locator("#input-option221")
 
     # ===== Quantity Methods =====
 
@@ -294,6 +313,39 @@ class ProductPage(BasePage):
         """Return the ex-tax price text."""
         text = self.get_text(self.lbl_product_ex_tax)
         return text.replace("Ex Tax:", "").strip() if text else ""
+
+    def verify_bulk_prices(self):
+        """Validate bulk discount prices on Product Display Page."""
+        expect(self.page.locator("text=10 or more")).to_be_visible()
+        expect(self.page.locator("text=20 or more")).to_be_visible()
+        expect(self.page.locator("text=30 or more")).to_be_visible()
+
+    def verify_available_options(self):
+        """Validate available product options."""
+
+        option_locators = [
+            self.ddl_select_option.first,
+            self.txt_text_option.first,
+            self.txt_textarea_option.first,
+            self.radio_option.first,
+            self.checkbox_option.first,
+            self.file_upload_button.first,
+            self.date_option.first,
+            self.datetime_option.first,
+            self.time_option.first,
+        ]
+
+        visible_count = 0
+
+        for option in option_locators:
+            if option.count() > 0:
+                option.first.scroll_into_view_if_needed()
+
+                if option.first.is_visible():
+                    expect(option.first).to_be_visible()
+                    visible_count += 1
+
+        assert visible_count > 0
 
     # ===== Thumbnail and Lightbox Methods =====
 
