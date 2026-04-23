@@ -110,7 +110,7 @@ class RegistrationPage(BasePage):
 
     # ===== Combined Workflow =====
 
-    def complete_registration(self, user_data: dict):
+    def complete_registration(self, user_data: dict, newsletter_locator: str | Locator = None):
         """Complete the full registration process using a data dictionary."""
         self.set_first_name(user_data["firstName"])
         self.set_last_name(user_data["lastName"])
@@ -118,6 +118,8 @@ class RegistrationPage(BasePage):
         self.set_telephone(user_data["telephone"])
         self.set_password(user_data["password"])
         self.set_confirm_password(user_data["password"])
+        if newsletter_locator:
+            self.set_newsletter_subscription(newsletter_locator)
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
