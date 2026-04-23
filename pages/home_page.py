@@ -54,6 +54,8 @@ class HomePage(BasePage):
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
         )
+        self.lnk_sitemap = page.get_by_role("link", name="Site Map")
+        self.lnk_account_information = page.get_by_role("link", name="Account Information")
 
     # ===== Action Methods =====
 
@@ -144,3 +146,11 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def click_sitemap(self):
+        """Click on the 'Site Map' link in the footer."""
+        self.click(self.lnk_sitemap)
+
+    def click_account_information(self):
+        """Click on the 'Account Information' link in the footer."""
+        self.click(self.lnk_account_information)
