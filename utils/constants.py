@@ -81,3 +81,4 @@ class TestData:
     """Test data values for scenarios."""
 
     PRODUCT_IMAC = "iMac"
+    PRODUCT_MACBOOK = "MacBook"
