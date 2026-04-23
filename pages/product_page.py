@@ -8,7 +8,7 @@ from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
 from pages.wishlist_page import WishlistPage
-from utils.constants import ButtonNames
+from utils.constants import ButtonNames, HeaderOptionNames
 
 
 class ProductPage(BasePage):
@@ -26,6 +26,9 @@ class ProductPage(BasePage):
         self.btn_add_to_wishlist = page.locator(
             f"button[data-original-title='{ButtonNames.ADD_TO_WISH_LIST}']"
         ).first
+        self.lnk_wishlist_header = page.locator("#top-links").get_by_role(
+            "link", name=HeaderOptionNames.WISH_LIST, exact=False
+        )
 
         # Related Products
         self.related_products_section = page.locator(".product-thumb")
@@ -92,4 +95,9 @@ class ProductPage(BasePage):
     def click_wishlist_link_in_message(self) -> WishlistPage:
         """Click the 'wish list!' link in the success message."""
         self.click(self.wishlist_link_in_msg)
+        return WishlistPage(self.page)
+
+    def click_wishlist_header_option(self) -> WishlistPage:
+        """Click the header 'Wish List' option."""
+        self.click(self.lnk_wishlist_header)
         return WishlistPage(self.page)

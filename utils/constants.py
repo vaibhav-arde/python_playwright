@@ -48,6 +48,12 @@ class ButtonNames:
     ADD_TO_WISH_LIST = "Add to Wish List"
 
 
+class HeaderOptionNames:
+    """Common header option accessible names."""
+
+    WISH_LIST = "Wish List"
+
+
 class UserDetails:
     """User details for validate existing account in registration."""
 
