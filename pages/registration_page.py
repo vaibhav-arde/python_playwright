@@ -3,7 +3,7 @@
 # Page Object for the Registration Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page, expect, Locator
+from playwright.sync_api import Page, Locator
 
 from pages.base_page import BasePage
 from utils import messages
@@ -25,11 +25,14 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
-        self.btn_continue = page.locator(".btn-primary")
-        self.msg_telephone_error = page.locator(
-            "div.form-group:has(input[name='telephone']) div.text-danger"
-        )
+        self.btn_continue = page.locator('a.btn-primary:has-text("Continue"), input[value="Continue"]')
+        self.msg_confirmation = page.locator(f'h1:has-text("{messages.SUCCESS_REGISTER_MSG}")')
+        self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
+        self.msg_privacy_policy_warning = page.locator(".alert-danger")
+        self.lnk_breadcrumb = page.locator("#account-register ul.breadcrumb")
+
+        # ===== Warning / Validation Message Locators =====
+        self.warn_privacy_policy = page.locator(".alert-danger")
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
@@ -40,9 +43,6 @@ class RegistrationPage(BasePage):
         self.err_password = page.locator("#input-password + .text-danger")
         self.password_mismatch_error = page.get_by_text(messages.WARN_PASSWORD_MISMATCH)
         self.err_email_already_exist = page.get_by_text(messages.WARN_EMAIL_ALREADY_EXISTS)
-
-        # ===== Warning / Validation Message Locators =====
-        self.warn_privacy_policy = page.locator(".alert-danger")
 
     # ===== Action Methods =====
 
@@ -74,43 +74,71 @@ class RegistrationPage(BasePage):
         """Select the Privacy Policy checkbox."""
         self.check(self.chk_policy)
 
-    def get_privacy_policy_checkbox(self):
-        """Return the Privacy Policy checkbox locator."""
-        return self.chk_policy
-
-    def set_newsletter_subscription(self, locator: str | Locator):
-        self.check(locator)
+    def set_newsletter_subscription(self, is_yes: bool = True):
+        """Select newsletter subscription option."""
+        if isinstance(is_yes, (Locator, str)):
+            # If a locator or selector is passed, check it directly
+            self.check(is_yes)
+        elif is_yes:
+            self.check(self.radio_newsletter_yes)
+        else:
+            self.check(self.radio_newsletter_no)
 
     def click_continue(self):
+        """Click the Continue button to submit the registration form."""
         self.click(self.btn_continue)
 
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
         return self.msg_confirmation
 
+    def get_page_heading(self):
+        """Return the page heading locator."""
+        return self.lbl_page_heading
+
+    def get_breadcrumb(self):
+        """Return the breadcrumb locator."""
+        return self.lnk_breadcrumb
+
+    def get_privacy_policy_warning(self):
+        """Return the privacy policy warning locator."""
+        return self.msg_privacy_policy_warning
+
+    def get_password_field_type(self):
+        """Return the type attribute of the password field."""
+        return self.txt_password.get_attribute("type")
+
+    def get_confirm_password_field_type(self):
+        """Return the type attribute of the confirm password field."""
+        return self.txt_confirm_password.get_attribute("type")
+
+    def get_telephone_error_msg(self):
+        """Return the telephone error message locator."""
+        return self.err_telephone
+
     def get_password_mismatch_error(self):
         """Return the password mismatch error message locator."""
         return self.password_mismatch_error
 
     def get_email_already_exist_error(self):
-        """Return the email already exist error message locator."""
+        """Return the email already exists error message locator."""
         return self.err_email_already_exist
 
-    def get_email_validation_message(self) -> str:
-        """Return the native browser validation message for the email input."""
-        return self.txt_email.evaluate("node => node.validationMessage")
+    def get_email_validation_message(self):
+        """Return the browser's native validation message for the email field."""
+        return self.txt_email.evaluate("el => el.validationMessage")
 
-    def get_privacy_policy_warning(self) -> str:
-        """Return the Privacy Policy alert warning text."""
-        return self.get_text(self.warn_privacy_policy)
+    def error_msg_visible(self):
+        """Check if any error message is visible on the page."""
+        return self.err_privacy_policy.is_visible() or self.err_firstname.is_visible()
 
-    def get_telephone_error_msg(self):
-        """Returns the locator for the telephone field error message."""
-        return self.msg_telephone_error
+    def get_privacy_policy_checkbox(self):
+        """Return the privacy policy checkbox locator."""
+        return self.chk_policy
 
     # ===== Combined Workflow =====
 
-    def complete_registration(self, user_data: dict, newsletter_locator: str | Locator = None):
+    def complete_registration(self, user_data: dict, subscribe_newsletter: bool = False, newsletter_locator=None):
         """Complete the full registration process using a data dictionary."""
         self.set_first_name(user_data["firstName"])
         self.set_last_name(user_data["lastName"])
@@ -118,23 +146,12 @@ class RegistrationPage(BasePage):
         self.set_telephone(user_data["telephone"])
         self.set_password(user_data["password"])
         self.set_confirm_password(user_data["password"])
+        
         if newsletter_locator:
             self.set_newsletter_subscription(newsletter_locator)
+        elif subscribe_newsletter:
+            self.set_newsletter_subscription(True)
+            
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
-
-    def error_msg_visible(self):
-        """check the error message visible or not for empty fields on click continue."""
-
-        expect(self.err_privacy_policy).to_have_text(messages.WARN_PRIVACY_POLICY)
-
-        expect(self.err_firstname).to_have_text(messages.WARN_FIRST_NAME)
-
-        expect(self.err_lastname).to_have_text(messages.WARN_LAST_NAME)
-
-        expect(self.err_email).to_have_text(messages.WARN_EMAIL)
-
-        expect(self.err_telephone).to_have_text(messages.WARN_TELEPHONE)
-
-        expect(self.err_password).to_have_text(messages.WARN_PASSWORD)

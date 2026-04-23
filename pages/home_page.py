@@ -15,16 +15,18 @@ class HomePage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lnk_my_account = page.locator('span:has-text("My Account")')
-        self.lnk_register = page.locator('a:has-text("Register")')
-        self.lnk_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
-        self.txt_search_box = page.locator('input[placeholder="Search"]')
-        self.btn_search = page.locator('#search button[type="button"]')
+        self.lnk_my_account = page.get_by_role("link", name="My Account").first
+        self.lnk_register = page.get_by_role("link", name="Register").first
+        self.lnk_login = page.get_by_role("link", name="Login").first
+        self.txt_search_box = page.get_by_placeholder("Search")
+        self.btn_search = page.locator("#search").get_by_role("button")
+        self.lnk_wishlist = page.locator("#wishlist-total")
 
     # ===== Action Methods =====
 
     def get_home_page_title(self) -> str:
         """Return the title of the Home Page."""
+        self.lnk_my_account.wait_for(state="visible")
         return self.get_title()
 
     def click_my_account(self):
@@ -46,3 +48,20 @@ class HomePage(BasePage):
     def click_search(self):
         """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
+
+    def click_wishlist(self):
+        """Click on the 'Wish List' link."""
+        self.click(self.lnk_wishlist)
+
+    def open_home_page(self):
+        """Navigate to the home page."""
+        self.open("/")
+
+    def click_featured_product_image(self, product_name: str):
+        """Click on the image of a product in the Featured section."""
+        # This locator finds the product-thumb container that contains the link with the product name, then finds the image inside it.
+        self.page.locator("div.product-thumb").filter(has=self.page.get_by_role("link", name=product_name, exact=True)).get_by_role("img").click()
+
+    def click_featured_product_name(self, product_name: str):
+        """Click on the name link of a product in the Featured section."""
+        self.page.locator("div.product-thumb").get_by_role("link", name=product_name, exact=True).click()

@@ -39,6 +39,9 @@ class UIRoutes:
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
+    WISHLIST = "/index.php?route=account/wishlist"
+    COMPARE = "/index.php?route=product/compare"
+    INDEX_ENTRY = "index.php"
 
 
 class UserDetails:
@@ -75,3 +78,60 @@ INVALID_PHONE_NUMBERS = [
     "@@@@",  # special chars (BUG case)
     "123456789012345678901234567890123",  # too long
 ]
+
+
+class UILabels:
+    # UI Page Headings
+    REGISTER_PAGE_HEADING = "Register Account"
+    REGISTER_BREADCRUMB = "Register"
+    WISHLIST_PAGE_HEADING = "My Wish List"
+    CART_PAGE_HEADING = "Shopping Cart"
+
+class UITitles:
+    REGISTER_PAGE_TITLE = "Register Account"
+
+
+class UITimeouts:
+    CART_ALERT_WAIT_MS = 5000
+
+
+class UIAvailability:
+    VALID_PRODUCT_STATUSES = ["In Stock", "Out Of Stock", "Pre-Order", "2-3 Days"]
+
+
+class UIPricing:
+    CURRENCY_SYMBOLS = ["$", "\u20ac", "\u00a3"]
+
+
+class UIIndexes:
+    FIRST_ADDITIONAL_THUMBNAIL = 0
+
+
+class UIAttributes:
+    IMAGE_SOURCE = "src"
+
+
+class TestData:
+    # Test Data
+    VALID_PASSWORD = "Test@123"
+    DEFAULT_PASSWORD = "Password123"
+    DEFAULT_TELEPHONE = "1234567890"
+    INVALID_PASSWORD = "123"
+
+    PRODUCT_NAME_IMAC = "iMac"
+    PRODUCT_NAME_HTC = "HTC Touch HD"
+    PRODUCT_NAME_MACBOOK = "MacBook"
+    PRODUCT_NAME_APPLE_CINEMA_30 = 'Apple Cinema 30"'
+    PRODUCTS_WITH_SPECIFICATION_TAB = [PRODUCT_NAME_APPLE_CINEMA_30, PRODUCT_NAME_MACBOOK]
+    REVIEW_AUTHOR_NAME = "Automation Reviewer"
+    REVIEW_TEXT_VALID = "This is an automation review submitted for test validation."
+    REVIEW_RATING_VALUE = "5"
+    REVIEW_TEXT_TOO_SHORT = "Short review"
+    REVIEW_TEXT_TOO_LONG = "A" * 1001
+    CART_TARGET_QUANTITY = "2"
+    INVALID_PRODUCT_QUANTITY = "0"
+    MINIMUM_PRODUCT_QUANTITY = "2"
+    BELOW_MINIMUM_PRODUCT_QUANTITY = "1"
+    ABOVE_MINIMUM_PRODUCT_QUANTITY = "3"
+    EMPTY_VALUE = ""
+    COMMA_SPACE_SEPARATOR = ", "
