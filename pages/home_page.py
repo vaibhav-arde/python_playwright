@@ -26,6 +26,8 @@ class HomePage(BasePage):
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
         self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
+        self.lnk_sitemap = page.get_by_role("link", name="Site Map")
+        self.lnk_account_information = page.get_by_role("link", name="Account Information")
 
     # ===== Action Methods =====
 
@@ -73,3 +75,11 @@ class HomePage(BasePage):
     def click_show_all_desktops(self):
         """Click on the 'Show All Desktops' link."""
         self.click(self.lnk_show_all_desktops)
+
+    def click_sitemap(self):
+        """Click on the 'Site Map' link in the footer."""
+        self.click(self.lnk_sitemap)
+
+    def click_account_information(self):
+        """Click on the 'Account Information' link in the footer."""
+        self.click(self.lnk_account_information)
