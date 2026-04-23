@@ -94,3 +94,10 @@ class FilePaths:
     SESSION_STORAGE_DIR = Path("session_storage")
     AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
+
+
+class CategoryNames:
+    """Category and Subcategory names."""
+
+    DESKTOPS = "Desktops"
+    MAC = "Mac"
