@@ -32,6 +32,7 @@ class MyAccountPage(BasePage):
         self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
         self.lnk_change_password = page.locator("a:has-text('Change your password')")
         self.lnk_edit_right_column = page.get_by_role("link", name="Edit Account")
+        self.lnk_my_account_option = page.locator("a:has-text('My Account')")
 
     # ===== Page Validation Methods =====
 

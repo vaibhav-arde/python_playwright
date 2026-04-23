@@ -83,3 +83,7 @@ class HomePage(BasePage):
     def click_account_information(self):
         """Click on the 'Account Information' link in the footer."""
         self.click(self.lnk_account_information)
+
+    def click_my_account_option(self):
+        """Click on the 'My Account' option in the dropdown."""
+        self.click(self.dropdown)

@@ -19,6 +19,8 @@ class EditAccountPage(BasePage):
         self.txt_email = page.locator("#input-email")
         self.txt_telephone = page.locator("#input-telephone")
         self.msg_heading = page.get_by_role("heading", name="My Account Information")
+        self.btn_continue = page.get_by_role("button", name="Continue")
+        self.msg_success = page.locator("div.alert-success")
 
     def get_page_heading(self):
         """Returns the page heading locator."""
@@ -43,5 +45,20 @@ class EditAccountPage(BasePage):
         return self.txt_email.input_value()
 
     def get_telephone(self) -> str:
-        """Returns the value in the Telephone field."""
         return self.txt_telephone.input_value()
+
+    # ===== Actions =====
+
+    def update_account_information(self, user):
+        self.txt_firstname.fill(user["firstName"])
+        self.txt_lastname.fill(user["lastName"])
+        self.txt_email.fill(user["email"])
+        self.txt_telephone.fill(user["telephone"])
+
+    def click_continue(self):
+        """Click on the Continue button."""
+        self.click(self.btn_continue)
+
+    def get_success_message(self):
+        """Returns the success message locator."""
+        return self.msg_success
