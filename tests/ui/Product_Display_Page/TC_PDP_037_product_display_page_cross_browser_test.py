@@ -39,5 +39,5 @@ def test_product_page_cross_browser(page: Page):
 
     # Explicit expectation in test script as per user requirement
     expect(product_page.lbl_product_name).to_be_visible()
-    
+
     product_page.verify_product_page_functionality()

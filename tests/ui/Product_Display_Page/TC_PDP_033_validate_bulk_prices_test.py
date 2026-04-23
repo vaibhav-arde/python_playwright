@@ -59,5 +59,5 @@ def test_validate_bulk_prices(page: Page):
     # Step 5: Validate Bulk Prices on Product Display Page
     # Explicit expectation in test script as per user requirement
     expect(product_page.lbl_product_name).to_be_visible()
-    
+
     product_page.verify_bulk_prices()
