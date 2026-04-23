@@ -26,7 +26,7 @@ def test_clear_account_info_fields(page, registered_user):
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.login_user(registered_user)
     expect(my_account_page.get_my_account_page_heading()).to_be_visible()
 
     home_page.click_my_account()
