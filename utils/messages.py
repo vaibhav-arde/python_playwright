@@ -74,6 +74,7 @@ PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS = (
     "Specification tab was not visible for any candidate products: {products}"
 )
 PDP_ADD_TO_CART_SUCCESS_PREFIX = "Success: You have added"
+PDP_ADD_TO_CART_SUCCESS_SUFFIX = "to your shopping cart!"
 PDP_MIN_QTY_KEYWORD = "minimum quantity"
 PDP_PRICE_FORMAT_INCORRECT = "Price format incorrect: {price}"
 PDP_PRODUCT_PRICE_EMPTY = "Product price should not be empty"
