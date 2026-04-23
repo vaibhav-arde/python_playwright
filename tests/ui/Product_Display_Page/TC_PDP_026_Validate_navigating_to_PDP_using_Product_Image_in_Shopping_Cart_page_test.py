@@ -38,7 +38,8 @@ def test_validate_navigating_to_pdp_using_product_image_in_shopping_cart_page(pa
     home_page.open_home_page()
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
-    search_results_page.select_product(product_name)
+
+    search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
 
     expected_name = product_page.get_product_name()
     product_page.add_to_cart()

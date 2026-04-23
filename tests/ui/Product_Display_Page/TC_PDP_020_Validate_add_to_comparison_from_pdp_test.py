@@ -23,7 +23,7 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     comparison_page = ProductComparisonPage(page)
     registration_page = RegistrationPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
+
 
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
