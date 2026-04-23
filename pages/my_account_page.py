@@ -31,6 +31,7 @@ class MyAccountPage(BasePage):
         )
         self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
         self.lnk_change_password = page.locator("a:has-text('Change your password')")
+        self.lnk_edit_right_column = page.get_by_role("link", name="Edit Account")
 
     # ===== Page Validation Methods =====
 
@@ -74,3 +75,8 @@ class MyAccountPage(BasePage):
     def click_change_password_link(self):
         """Click on 'Change your password' link."""
         self.click(self.lnk_change_password)
+
+    def click_edit_right_column_option(self) -> EditAccountPage:
+        """Click on 'Edit your account information' and return EditAccountPage instance."""
+        self.click(self.lnk_edit_right_column)
+        return EditAccountPage(self.page)
