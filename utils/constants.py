@@ -16,6 +16,7 @@ class APIEndpoints:
     ORDER = f"{BASE}/order"
     PAYMENT = f"{BASE}/payment"
     SHIPPING = f"{BASE}/shipping"
+    EDIT_ACCOUNT_INFORMATION = f"{BASE}/account/edit"
 
 
 class Headers:
@@ -34,13 +35,15 @@ class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
     HOME = "/"
-    LOGIN = "index.php?route=account/login"
-    REGISTER = "index.php?route=account/register"
-    MY_ACCOUNT = "/index.php?route=account/account"
-    LOGOUT = "/index.php?route=account/logout"
-    SEARCH = "/index.php?route=product/search"
-    CART = "/index.php?route=checkout/cart"
-    CHECKOUT = "/index.php?route=checkout/checkout"
+    BASE_URL = "https://tutorialsninja.com/demo/"
+    LOGIN = f"{BASE_URL}index.php?route=account/login"
+    REGISTER = f"{BASE_URL}index.php?route=account/register"
+    MY_ACCOUNT = f"{BASE_URL}index.php?route=account/account"
+    LOGOUT = f"{BASE_URL}index.php?route=account/logout"
+    SEARCH = f"{BASE_URL}index.php?route=product/search"
+    CART = f"{BASE_URL}index.php?route=checkout/cart"
+    CHECKOUT = f"{BASE_URL}index.php?route=checkout/checkout"
+    EDIT_ACCOUNT_INFORMATION = f"{BASE_URL}index.php?route=account/edit"
     COMPARISON = "index.php?route=product/compare"
     CHANGE_PASSWORD = "index.php?route=account/password"
 
