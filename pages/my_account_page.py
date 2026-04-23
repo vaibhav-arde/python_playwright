@@ -35,6 +35,7 @@ class MyAccountPage(BasePage):
             "link", name="Password"
         )
         self.lnk_edit_right_column = page.get_by_role("link", name="Edit Account")
+        self.lnk_my_account_option = page.locator("a:has-text('My Account')")
 
     # ===== Page Validation Methods =====
 
