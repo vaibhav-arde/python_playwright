@@ -24,7 +24,7 @@ class ShoppingCartPage(BasePage):
         self.lbl_heading = page.get_by_role("heading", name=UILabels.CART_PAGE_HEADING).first
         self.product_items = page.locator(".table-responsive table tbody tr")
         self.lbl_total_price = page.locator(
-            "#content tr:has(td strong:has-text('Total:')) td:last-child"
+            "#content tr:has(td strong:text-is('Total:')) td:last-child"
         )
         self.btn_checkout = page.locator("#content").get_by_role("link", name="Checkout")
         self.warning_msg = page.locator(
