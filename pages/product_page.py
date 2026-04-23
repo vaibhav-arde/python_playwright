@@ -517,3 +517,12 @@ class ProductPage(BasePage):
 
         # Verify old price is displayed with strike-through style
         expect(old_price).to_have_css("text-decoration", re.compile(r"line-through"))
+
+    def click_add_to_cart_for_related_product(self, product_name: str):
+        """Click 'Add to Cart' for a specific product in the Related Products section."""
+        # Related products are usually in the next row after the Related Products heading
+        related_section = self.page.locator("h3:has-text('Related Products') + div.row")
+        product_thumb = related_section.locator(".product-thumb").filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        )
+        self.click(product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE)))
