@@ -17,9 +17,9 @@ class MyAccountPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.msg_heading = page.get_by_role("heading", name="My Account")
-        self.lnk_logout = page.get_by_role("link", name="Logout").nth(1)
-        self.newsletter_subscription = page.get_by_role("link", name="Subscribe / unsubscribe to newsletter")
+        self.msg_heading = page.locator("#content h2:has-text('My Account')")
+        self.lnk_logout = page.locator("#column-right a:has-text('Logout')").or_(page.get_by_role("link", name="Logout").last)
+        self.newsletter_subscription = page.locator("#content a:has-text('Newsletter')").or_(page.get_by_role("link", name="Subscribe / unsubscribe to newsletter"))
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.lnk_edit_account = page.get_by_role("link", name="Edit your account information")
