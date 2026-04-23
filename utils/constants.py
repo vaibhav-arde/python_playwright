@@ -82,3 +82,10 @@ class TestData:
 
     PRODUCT_IMAC = "iMac"
     PRODUCT_MACBOOK = "MacBook"
+
+
+class CategoryNames:
+    """Category and Subcategory names."""
+
+    DESKTOPS = "Desktops"
+    MAC = "Mac"

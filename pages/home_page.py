@@ -7,6 +7,7 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.wishlist_page import WishlistPage
+from pages.category_page import CategoryPage
 
 
 class HomePage(BasePage):
@@ -82,3 +83,20 @@ class HomePage(BasePage):
         """Click on the 'wish list!' link in the success message."""
         self.click(self.lnk_wishlist_success)
         return WishlistPage(self.page)
+
+    def open_category_menu(self, category_name: str):
+        """Open a main category dropdown in the top navigation menu by clicking it."""
+        locator = self.page.get_by_role("link", name=category_name, exact=True)
+        self.click(locator)
+
+    def click_show_all_in_category(self, category_name: str):
+        """Click on the 'Show All [Category]' link in the dropdown menu."""
+        # Using a CSS selector for the 'See All' link to be more robust against text spacing issues
+        locator = self.page.locator("a.see-all").filter(has_text=f"Show All {category_name}")
+        # If the exact text filter fails due to spacing, fall back to just the visible see-all link
+        if not locator.is_visible():
+            locator = self.page.locator("a.see-all").filter(has_text=category_name)
+
+        locator.wait_for(state="visible")
+        self.click(locator)
+        return CategoryPage(self.page)
