@@ -4,16 +4,15 @@
 # Inherits from BasePage for reusable UI interaction methods.
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 
 from playwright.sync_api import Page
 from pages.base_page import BasePage
 from utils.constants import UILabels
+from pages.checkout_page import CheckoutPage
 
-
-from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from pages.product_page import ProductPage
-    from pages.checkout_page import CheckoutPage
 
 class ShoppingCartPage(BasePage):
     """Page Object Model for the Shopping Cart Page."""
@@ -62,7 +61,6 @@ class ShoppingCartPage(BasePage):
 
     def click_on_checkout(self):
         """Click on the Checkout button and navigate to CheckoutPage."""
-        from pages.checkout_page import CheckoutPage
         self.click(self.btn_checkout)
         return CheckoutPage(self.page)
 
@@ -82,8 +80,8 @@ class ShoppingCartPage(BasePage):
         """Remove all items from the shopping cart."""
         # Use selector for remove button (cross icon)
         remove_buttons = self.page.locator("button[data-original-title='Remove'], button[title='Remove']")
-        while remove_buttons.count() > 0:
+        while self.get_count(remove_buttons) > 0:
             target = remove_buttons.first
-            target.click()
+            self.click(target)
             # Wait for the element to be detached from DOM instead of full page load
             target.wait_for(state="detached", timeout=5000)

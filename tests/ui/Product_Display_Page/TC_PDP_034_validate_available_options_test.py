@@ -18,7 +18,7 @@ Product Name: Apple Cinema 30"
 """
 
 import pytest
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
@@ -36,7 +36,6 @@ def test_validate_available_options(page: Page):
     product_page = ProductPage(page)
     registration_page = RegistrationPage(page)
 
-    product_name = TestData.PRODUCT_NAME_APPLE_CINEMA_30
 
     # Step 1: Open Application URL and Register new account
     # User is auto-logged in after successful registration
@@ -51,13 +50,16 @@ def test_validate_available_options(page: Page):
     home_page.open_home_page()
 
     # Step 2: Enter Product Name
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_APPLE_CINEMA_30)
 
     # Step 3: Click Search icon
     home_page.click_search()
 
     # Step 4: Click Product displayed in Search Results
-    search_results_page.select_product(product_name)
+    search_results_page.select_product(TestData.PRODUCT_NAME_APPLE_CINEMA_30)
 
     # Step 5: Validate Available Options
+    # Explicit expectation in test script as per user requirement
+    expect(product_page.lbl_product_name).to_be_visible()
+    
     product_page.verify_available_options()

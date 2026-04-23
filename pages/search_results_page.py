@@ -4,11 +4,10 @@
 # Inherits from BasePage for reusable UI interaction methods.
 
 import re
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
-
 
 class SearchResultsPage(BasePage):
     """Page Object Model class for the Search Results Page."""
@@ -41,7 +40,6 @@ class SearchResultsPage(BasePage):
 
     def select_product(self, product_name: str) -> ProductPage | None:
         """Select a product from search results by name."""
-        from playwright.sync_api import expect
         product = self.search_products.filter(has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")).first
         self.click(product)
         product_page = ProductPage(self.page)
