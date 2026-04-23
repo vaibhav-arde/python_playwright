@@ -29,7 +29,7 @@ def test_update_my_account_information_successfully(page, registered_user):
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.login_user(registered_user)
     expect(my_account_page.get_my_account_page_heading()).to_be_visible()
     home_page.click_my_account()
     home_page.click_my_account_option()
@@ -62,7 +62,7 @@ def test_update_my_account_information_successfully(page, registered_user):
 
     home_page.click_my_account()
     home_page.click_login()
-    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.login_user(registered_user)
 
     expect(login_page.get_login_error()).to_be_visible()
 

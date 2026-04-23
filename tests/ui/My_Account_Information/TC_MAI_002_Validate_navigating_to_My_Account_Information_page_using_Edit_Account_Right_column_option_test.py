@@ -23,7 +23,7 @@ def test_edit_account_info_right_column(page, registered_user):
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.login_user(registered_user)
     expect(my_account_page.get_my_account_page_heading()).to_be_visible()
     my_account_page.click_edit_right_column_option()
 
