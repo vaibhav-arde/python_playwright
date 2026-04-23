@@ -65,7 +65,5 @@ def test_validate_review_link_under_add_to_cart(page: Page):
     except AssertionError:
         pytest.fail(messages.PDP_REVIEW_PANEL_NOT_VISIBLE)
 
-    # Advanced assertion: Assert that the parent <li> of the review tab carries the 'active' class
-    # The xpath=.. robustly fetches the immediate parent element
-    parent_li = product_page.li_review_tab
-    expect(parent_li).to_have_class(re.compile(r"active"))
+    # Advanced assertion: Assert that the review tab is active/selected
+    assert product_page.is_review_tab_active(), messages.PDP_REVIEW_TAB_NOT_SELECTED

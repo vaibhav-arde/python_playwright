@@ -21,9 +21,11 @@ for i in range(50): # Limit to 50 iterations to be safe
     print(status.stdout)
     
     if "Unmerged paths:" in status.stdout:
-        print("Resolving conflicts in core files...")
-        # Resolve core files with --ours
+        print("Resolving conflicts...")
+        # Resolve core files with --ours (keep upstream version)
         run_cmd("git checkout --ours pages/*.py utils/*.py pytest.ini")
+        # Resolve tests with --theirs (keep feature branch version)
+        run_cmd("git checkout --theirs tests/*.py tests/**/*.py")
         # Add all
         run_cmd("git add .")
     else:

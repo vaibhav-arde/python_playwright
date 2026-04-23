@@ -95,6 +95,10 @@ class BasePage:
         logger.info(f"Got attribute '{name}' from {target}: '{value}'")
         return value
 
+    def get_count(self, locator: str | Locator) -> int:
+        """Get the number of elements matching the locator."""
+        return self.get_locator(locator).count()
+
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
         target = self.get_locator(locator)

@@ -12,6 +12,7 @@ Test Data:
 Product Name: iMac"""
 
 import pytest
+from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from utils.constants import TestData
@@ -19,10 +20,9 @@ from utils.constants import TestData
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_pdp_ui_validation(page, base_url):
-    page.goto(base_url)
-
+def test_pdp_ui_validation(page):
     home_page = HomePage(page)
+    home_page.open_home_page()
     search_results_page = SearchResultsPage(page)
 
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
@@ -30,4 +30,7 @@ def test_pdp_ui_validation(page, base_url):
 
     product_page = search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
 
+    # Explicit expectation in test script as per user requirement
+    expect(product_page.lbl_product_name).to_be_visible()
+    
     product_page.verify_product_page_ui()

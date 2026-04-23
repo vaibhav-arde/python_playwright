@@ -49,5 +49,5 @@ class TestProductDisplayPage:
         reward_points = product_page.get_reward_points()
 
         # Validate that reward points are displayed (not empty)
-        assert reward_points != "", f"Reward points should be displayed for product {product_name}"
+        assert reward_points != TestData.EMPTY_VALUE, f"Reward points should be displayed for product {product_name}"
         print(f"Verified reward points for {product_name}: {reward_points}")
