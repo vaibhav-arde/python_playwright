@@ -10,7 +10,6 @@ from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
 
-
 class SearchResultsPage(BasePage):
     """Page Object Model class for the Search Results Page."""
 
@@ -71,6 +70,7 @@ class SearchResultsPage(BasePage):
             self.wait_for(product, state="visible")
         except Exception:
             return None
+
         self.click(product)
         product_page = ProductPage(self.page)
         expect(product_page.lbl_product_name).to_be_visible(timeout=10000)
