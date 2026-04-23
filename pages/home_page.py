@@ -9,6 +9,7 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.login_page import LoginPage
+from pages.wishlist_page import WishlistPage
 
 
 class HomePage(BasePage):
@@ -54,6 +55,10 @@ class HomePage(BasePage):
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
         )
+        self.lnk_logo = page.locator("#logo a")
+        self.featured_section = page.locator("h3:has-text('Featured')")
+        self.success_msg = page.locator(".alert-success")
+        self.lnk_wishlist_success = self.success_msg.get_by_role("link", name="wish list")
 
     # ===== Action Methods =====
 
@@ -144,3 +149,34 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def click_logo(self):
+        """Click on the 'Store logo' (Your Store)."""
+        self.click(self.lnk_logo)
+
+    def scroll_to_featured_section(self):
+        """Scroll down to the 'Featured' section."""
+        self.featured_section.scroll_into_view_if_needed()
+
+    def add_featured_product_to_wishlist(self, product_name: str):
+        """
+        Click on 'Add to Wish List' option for a product in the 'Featured' section.
+        Identifies the product container by name and then clicks the heart icon.
+        """
+        # Locating the product container that contains the product name link
+        product_container = self.page.locator(".product-layout").filter(
+            has=self.page.get_by_role("link", name=product_name)
+        )
+        # Clicking the wishlist button (usually the second button in the group: cart, wishlist, compare)
+        # We can use the title or the icon class. OpenCart uses title="Add to Wish List"
+        btn_wishlist = product_container.get_by_role("button").nth(1)
+        self.click(btn_wishlist)
+
+    def get_success_message(self):
+        """Return the success message locator."""
+        return self.success_msg
+
+    def click_wishlist_link_in_success_message(self):
+        """Click on the 'wish list!' link in the success message."""
+        self.click(self.lnk_wishlist_success)
+        return WishlistPage(self.page)
