@@ -41,6 +41,12 @@ class UIRoutes:
     CHECKOUT = "/index.php?route=checkout/checkout"
 
 
+class ButtonNames:
+    """Common UI button accessible names."""
+
+    ADD_TO_WISH_LIST = "Add to Wish List"
+
+
 class UserDetails:
     """User details for validate existing account in registration."""
 
