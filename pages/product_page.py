@@ -8,6 +8,7 @@ from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
 from pages.wishlist_page import WishlistPage
+from utils.constants import ButtonNames
 
 
 class ProductPage(BasePage):
@@ -75,9 +76,9 @@ class ProductPage(BasePage):
         product = self.related_products_section.nth(index)
         product_name = product.locator("h4 a").text_content()
         # Find the wishlist button for this specific related product
-        wishlist_btn = product.get_by_role("button", name="Add to Wish List", exact=False).or_(
-            product.locator("button[data-original-title='Add to Wish List']")
-        )
+        wishlist_btn = product.get_by_role(
+            "button", name=ButtonNames.ADD_TO_WISH_LIST, exact=False
+        ).or_(product.locator(f"button[data-original-title='{ButtonNames.ADD_TO_WISH_LIST}']"))
         self.click(wishlist_btn)
         return product_name.strip() if product_name else ""
 
