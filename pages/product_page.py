@@ -23,6 +23,9 @@ class ProductPage(BasePage):
         self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
+        self.btn_add_to_wishlist = page.locator(
+            f"button[data-original-title='{ButtonNames.ADD_TO_WISH_LIST}']"
+        ).first
 
         # Related Products
         self.related_products_section = page.locator(".product-thumb")
@@ -147,6 +150,10 @@ class ProductPage(BasePage):
         self.click(self.btn_compare_related)
 
     # ===== Wishlist Methods =====
+
+    def add_product_to_wishlist(self) -> None:
+        """Click 'Add to Wish List' on the displayed product."""
+        self.click(self.btn_add_to_wishlist)
 
     def add_related_product_to_wishlist(self, index: int = 0) -> str:
         """
