@@ -39,7 +39,7 @@ def test_navigate_to_pdp_via_wishlist_image(page: Page):
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
     search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)
-    
+
     # Capture name for validation
     expected_name = product_page.get_product_name()
     product_page.click_add_to_wishlist()

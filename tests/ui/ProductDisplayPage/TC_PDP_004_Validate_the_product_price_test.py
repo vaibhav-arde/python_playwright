@@ -35,7 +35,7 @@ def test_validate_the_product_price(page: Page):
     ), messages.PDP_PRICE_FORMAT_INCORRECT.format(price=price)
     assert len(price) > 1, messages.PDP_PRODUCT_PRICE_EMPTY
 
-    -0  # ER: Proper Ex Tax should be displayed
+    # ER: Proper Ex Tax should be displayed
     expect(product_page.lbl_product_ex_tax).to_be_visible()
     ex_tax = product_page.get_ex_tax_price()
     assert any(
