@@ -24,7 +24,6 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     comparison_page = ProductComparisonPage(page)
     registration_page = RegistrationPage(page)
 
-    product_name = TestData.PRODUCT_NAME_IMAC
 
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
@@ -38,12 +37,12 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
 
     # Step 2: Search for a product
     home_page.open_home_page()
-    home_page.enter_product_name(product_name)
+    home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
 
-    product_in_results = search_results_page.is_product_exist(product_name)
+    product_in_results = search_results_page.is_product_exist(TestData.PRODUCT_NAME_IMAC)
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-        keyword=product_name
+        keyword=TestData.PRODUCT_NAME_IMAC
     )
 
     expected_product_name = search_results_page.get_text(product_in_results).strip()
@@ -57,7 +56,9 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     expect(success_alert).to_be_visible(timeout=10000)
 
     actual_msg = product_page.get_text(success_alert)
-    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, f"Expected success but got: {actual_msg}"
+    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, messages.GENERIC_SUCCESS_ALERT_MISMATCH.format(
+        expected=messages.SUCCESS_ALERT_KEYWORD, actual=actual_msg
+    )
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
     )
@@ -69,6 +70,5 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     expect(comparison_page.lbl_heading).to_be_visible(timeout=10000)
 
     # Validation: Product is in the table
-    assert comparison_page.is_product_in_comparison(
-        expected_product_name
-    ), f"Product {expected_product_name} should be in the comparison table"
+    assert comparison_page.is_product_in_comparison(expected_product_name), \
+        messages.PRODUCT_NOT_IN_COMPARISON.format(product=expected_product_name)

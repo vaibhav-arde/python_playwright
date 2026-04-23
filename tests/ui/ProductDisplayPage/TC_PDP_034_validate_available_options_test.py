@@ -61,5 +61,5 @@ def test_validate_available_options(page: Page):
     # Step 5: Validate Available Options
     # Explicit expectation in test script as per user requirement
     expect(product_page.lbl_product_name).to_be_visible()
-    
+
     product_page.verify_available_options()
