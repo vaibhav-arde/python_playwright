@@ -72,3 +72,6 @@ class EditAccountPage(BasePage):
         self.txt_lastname.clear()
         self.txt_email.clear()
         self.txt_telephone.clear()
+
+    def get_placeholder(self, field_id: str) -> str:
+        return self.page.locator(f"#{field_id}").get_attribute("placeholder")

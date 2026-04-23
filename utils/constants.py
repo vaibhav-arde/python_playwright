@@ -88,3 +88,13 @@ class FilePaths:
     SESSION_STORAGE_DIR = Path("session_storage")
     AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
+
+
+# utils/constants.py
+
+PLACEHOLDERS = {
+    "input-firstname": "First Name",
+    "input-lastname": "Last Name",
+    "input-email": "E-Mail",
+    "input-telephone": "Telephone",
+}
