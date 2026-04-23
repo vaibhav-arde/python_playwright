@@ -81,6 +81,12 @@ INVALID_PHONE_NUMBERS = [
 ]
 
 
+class TestData:
+    """Test data values for scenarios."""
+
+    PRODUCT_IMAC = "iMac"
+
+
 class FilePaths:
     """Centralized file and directory paths."""
 
