@@ -1,51 +1,62 @@
-"""
-1. Enter any existing Product name into the Search text box field -
-2. Click on the button having search icon
-3. Click on the Product displayed in the Search results
-4. Check the original price of the Product without offer in the displayed 'Product Display' page (Validate ER-1)
-"""
-
 import pytest
-from playwright.sync_api import expect, Page
+from playwright.sync_api import Page, expect
 
 from pages.home_page import HomePage
+from pages.registration_page import RegistrationPage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
-from pages.registration_page import RegistrationPage
-from utils.constants import TestData
+from utils.constants import TestData, UIPricing
 from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
-@pytest.mark.regression
-def test_validate_discounted_price_on_pdp(page: Page):
-    """
-    TC_PDP_0033
-    Validate discounted price (new + old + strike) on PDP
-    """
+class TestProductDisplayPage:
+    """Test suite for Product Display Page (PDP) validations."""
 
-    home_page = HomePage(page)
-    search_results_page = SearchResultsPage(page)
-    product_page = ProductPage(page)
-    registration_page = RegistrationPage(page)
+    def test_validate_original_price_without_offer(self, page: Page):
+        """
+        TC_PDP_0032: Validate the original price of the Product without offer in the Product Display page.
 
-    product_name = TestData.PRODUCT_NAME_APPLE_CINEMA_30
+        Steps:
+        1. Open Application URL and Register a new account.
+        2. Enter any existing Product name into the Search text box field.
+        3. Click on the button having search icon.
+        4. Click on the Product displayed in the Search results.
+        5. Check the original price of the Product without offer in the displayed 'Product Display' page.
+        """
+        home_page = HomePage(page)
+        registration_page = RegistrationPage(page)
 
-    # Step 1: Register user
-    home_page.click_my_account()
-    home_page.click_register()
+        # 1. Register a new account to ensure active session
+        home_page.open_home_page()
+        home_page.click_my_account()
+        home_page.click_register()
 
-    user = RandomTestData.get_user()
-    registration_page.complete_registration(user)
-    expect(registration_page.get_confirmation_msg()).to_be_visible()
+        unique_user = RandomTestData.get_user()
+        registration_page.complete_registration(unique_user)
+        expect(registration_page.get_confirmation_msg()).to_be_visible()
 
-    # Step 2: Search product
-    home_page.open_home_page()
-    home_page.enter_product_name(product_name)
-    home_page.click_search()
+        # 2 & 3. Search for Product
+        home_page.open_home_page()
+        product_name = TestData.PRODUCT_NAME_APPLE_CINEMA_30
+        home_page.enter_product_name(product_name)
+        home_page.click_search()
 
-    # Step 3: Open PDP
-    search_results_page.select_product(product_name)
+        # 4. Select Product from Results
+        search_results_page = SearchResultsPage(page)
+        search_results_page.select_product(product_name)
+        product_page = ProductPage(page)
 
-    # Step 4: Validate discounted pricing
-    product_page.validate_discounted_price()
+        # 5. Check the original price of the Product
+        # ER: Proper Product Price should be displayed
+        expect(product_page.lbl_product_price).to_be_visible()
+
+        price = product_page.get_product_price()
+
+        # Validate that price is not empty and contains a currency symbol
+        assert price != TestData.EMPTY_VALUE, "Product price should not be empty"
+        assert any(
+            symbol in price for symbol in UIPricing.CURRENCY_SYMBOLS
+        ), f"Price '{price}' does not contain a valid currency symbol"
+
+
