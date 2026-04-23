@@ -9,6 +9,8 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
+from pages.wishlist_page import WishlistPage
+from utils.constants import ButtonNames
 
 
 class SearchResultsPage(BasePage):
@@ -29,6 +31,8 @@ class SearchResultsPage(BasePage):
         )
         self.product_links = page.locator(".product-layout").get_by_role("link")
         self.lnk_product_compare = page.get_by_role("link", name=re.compile(r"Product Compare"))
+        self.success_msg = page.locator(".alert-success")
+        self.lnk_wishlist_success = self.success_msg.get_by_role("link", name="wish list")
 
     # ===== Page Header =====
 
@@ -110,8 +114,33 @@ class SearchResultsPage(BasePage):
         """Click the 'Product Compare' link displayed above the search results."""
         self.click(self.lnk_product_compare)
 
+    def add_product_to_wishlist(self, product_name: str):
+        """Click 'Add to Wish List' for a specific product in search results."""
+        product_container = self.page.locator(".product-layout").filter(
+            has=self.page.get_by_role("link", name=product_name)
+        )
+        btn_wishlist = product_container.get_by_role(
+            "button", name=ButtonNames.ADD_TO_WISH_LIST, exact=False
+        ).or_(
+            product_container.locator(
+                f"button[data-original-title='{ButtonNames.ADD_TO_WISH_LIST}']"
+            )
+        )
+        self.click(btn_wishlist.first)
+        return product_name
+
+    def get_success_message(self):
+        """Return the success message locator."""
+        return self.success_msg
+
+    def click_wishlist_link_in_success_message(self):
+        """Click on the 'wish list!' link in the success message."""
+        self.click(self.lnk_wishlist_success)
+        return WishlistPage(self.page)
+
     # ===== Product Count =====
 
     def get_product_count(self):
         """Returns product link locators found in search results."""
         return self.product_links
+
