@@ -23,9 +23,13 @@ class ShoppingCartPage(BasePage):
         # ===== Locators =====
         self.lbl_heading = page.get_by_role("heading", name=UILabels.CART_PAGE_HEADING).first
         self.product_items = page.locator(".table-responsive table tbody tr")
-        self.lbl_total_price = page.locator("#content tr:has(td strong:has-text('Total:')) td:last-child")
+        self.lbl_total_price = page.locator(
+            "#content tr:has(td strong:has-text('Total:')) td:last-child"
+        )
         self.btn_checkout = page.locator("#content").get_by_role("link", name="Checkout")
-        self.warning_msg = page.locator("div.alert.alert-danger.alert-dismissible, div.alert.alert-danger")
+        self.warning_msg = page.locator(
+            "div.alert.alert-danger.alert-dismissible, div.alert.alert-danger"
+        )
         self.txt_cart_quantity = page.locator("#content input[name^='quantity']")
         self.lnk_product_image = self.product_items.locator("td.text-center a, td.image a")
         self.lnk_product_name = self.product_items.locator("td.text-left a, td.name a")
@@ -44,6 +48,7 @@ class ShoppingCartPage(BasePage):
     def click_product_image(self, product_name: str) -> ProductPage:
         """Click on the product image link in the shopping cart."""
         from pages.product_page import ProductPage
+
         row = self.get_product_row_by_name(product_name)
         self.click(row.locator("td.text-center a, td.image a").first)
         return ProductPage(self.page)
@@ -51,6 +56,7 @@ class ShoppingCartPage(BasePage):
     def click_product_name(self, product_name: str) -> ProductPage:
         """Click on the product name link in the shopping cart."""
         from pages.product_page import ProductPage
+
         row = self.get_product_row_by_name(product_name)
         self.click(row.locator("td.text-left a, td.name a").first)
         return ProductPage(self.page)

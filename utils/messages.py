@@ -13,7 +13,7 @@ WARN_PRIVACY_POLICY = "Warning: You must agree to the Privacy Policy!"
 WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
 WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
 
-# =======  
+# =======
 INVALID_LOGIN_MSG = "Warning: No match for E-Mail Address and/or Password."
 PRIVACY_POLICY_WARNING_MSG = "Warning: You must agree to the Privacy Policy!"
 SUCCESS_REGISTER_MSG = "Your Account Has Been Created!"
@@ -34,21 +34,41 @@ THUMBNAIL_SRC_SHOULD_CHANGE_ON_NEXT = "Lightbox image source should change after
 
 PDP_DEFAULT_QTY_MISMATCH = "Expected default quantity '{expected}', but got '{actual}'"
 PDP_MIN_QTY_INFO_EMPTY = "Minimum quantity information text should not be empty"
-PDP_MIN_QTY_INFO_MISSING_VALUE = "Minimum quantity info should contain '{expected}', but got '{actual}'"
-PDP_MIN_QTY_WARNING_NOT_VISIBLE = "Minimum quantity warning message should be visible in shopping cart"
-PDP_MIN_QTY_WARNING_MISSING_PRODUCT = "Warning should mention product '{product}', but got '{actual}'"
-PDP_MIN_QTY_WARNING_MISSING_QTY = "Warning should mention minimum quantity '{qty}', but got '{actual}'"
+PDP_MIN_QTY_INFO_MISSING_VALUE = (
+    "Minimum quantity info should contain '{expected}', but got '{actual}'"
+)
+PDP_MIN_QTY_WARNING_NOT_VISIBLE = (
+    "Minimum quantity warning message should be visible in shopping cart"
+)
+PDP_MIN_QTY_WARNING_MISSING_PRODUCT = (
+    "Warning should mention product '{product}', but got '{actual}'"
+)
+PDP_MIN_QTY_WARNING_MISSING_QTY = (
+    "Warning should mention minimum quantity '{qty}', but got '{actual}'"
+)
 PDP_CART_QTY_MISMATCH = "Expected cart quantity '{expected}', but got '{actual}'"
-PDP_MIN_QTY_WARNING_MISSING_KEYWORD = "Warning should mention minimum quantity rule, but got '{actual}'"
-CART_EMPTY_MESSAGE_MISSING = "Shopping cart should show empty-cart message after below-minimum quantity add"
+PDP_MIN_QTY_WARNING_MISSING_KEYWORD = (
+    "Warning should mention minimum quantity rule, but got '{actual}'"
+)
+CART_EMPTY_MESSAGE_MISSING = (
+    "Shopping cart should show empty-cart message after below-minimum quantity add"
+)
 CART_EMPTY_TEXT = "Your shopping cart is empty!"
-PDP_ADD_TO_CART_FEEDBACK_EMPTY = "Add-to-cart feedback should be displayed for above-minimum quantity"
-PDP_ADD_TO_CART_FEEDBACK_UNEXPECTED = "Expected success or minimum-quantity feedback, but got '{actual}'"
+PDP_ADD_TO_CART_FEEDBACK_EMPTY = (
+    "Add-to-cart feedback should be displayed for above-minimum quantity"
+)
+PDP_ADD_TO_CART_FEEDBACK_UNEXPECTED = (
+    "Expected success or minimum-quantity feedback, but got '{actual}'"
+)
 PDP_DESCRIPTION_TAB_NOT_VISIBLE = "Description tab should be visible on Product Display Page"
-PDP_DESCRIPTION_PANEL_NOT_VISIBLE = "Description panel should be visible after clicking Description tab"
+PDP_DESCRIPTION_PANEL_NOT_VISIBLE = (
+    "Description panel should be visible after clicking Description tab"
+)
 PDP_DESCRIPTION_TEXT_EMPTY = "Product description should not be empty"
 PDP_SPECIFICATION_TAB_NOT_VISIBLE = "Specification tab should be visible on Product Display Page"
-PDP_SPECIFICATION_PANEL_NOT_VISIBLE = "Specification panel should be visible after clicking Specification tab"
+PDP_SPECIFICATION_PANEL_NOT_VISIBLE = (
+    "Specification panel should be visible after clicking Specification tab"
+)
 PDP_SPECIFICATION_TEXT_EMPTY = "Product specification should not be empty"
 PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS = (
     "Specification tab was not visible for any candidate products: {products}"
@@ -64,12 +84,18 @@ PDP_REVIEW_TAB_NOT_SELECTED = "Review tab should be selected/active"
 PDP_REVIEW_PANEL_NOT_VISIBLE = "Review panel should be visible after clicking the write review link"
 PDP_RATING_SUMMARY_NOT_VISIBLE = "Product rating summary (stars and review count) should be visible"
 PDP_REVIEW_COUNT_NOT_VISIBLE = "The number of reviews count (e.g. '0 reviews') should be displayed"
-PDP_REVIEW_TAB_COUNT_MISSING = "Review tab label should contain a valid reviews count (e.g., 'Reviews (0)')"
+PDP_REVIEW_TAB_COUNT_MISSING = (
+    "Review tab label should contain a valid reviews count (e.g., 'Reviews (0)')"
+)
 PDP_REVIEW_ALERT_NOT_VISIBLE = "Review submission feedback should be visible"
 PDP_REVIEW_WARNING_ALERT_NOT_VISIBLE = "Review validation warning feedback should be visible"
-PDP_REVIEW_SUCCESS_TEXT = "Thank you for your review. It has been submitted to the webmaster for approval."
+PDP_REVIEW_SUCCESS_TEXT = (
+    "Thank you for your review. It has been submitted to the webmaster for approval."
+)
 PDP_REVIEW_SUCCESS_TEXT_MISMATCH = "Expected review success text '{expected}', but got '{actual}'"
-PDP_REVIEW_WARNING_MISSING_KEYWORD = "Review warning text should contain '{keyword}', but got '{actual}'"
+PDP_REVIEW_WARNING_MISSING_KEYWORD = (
+    "Review warning text should contain '{keyword}', but got '{actual}'"
+)
 PDP_NO_REVIEWS_TEXT = "There are no reviews for this product."
 WARN_REVIEW_RANGE = "Warning: Review Text must be between 25 and 1000 characters!"
 WISHLIST_PAGE_NOT_VISIBLE = "Wish List page heading not visible"

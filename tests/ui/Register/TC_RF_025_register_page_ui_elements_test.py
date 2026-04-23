@@ -10,7 +10,6 @@ Expected:
 """
 
 import pytest
-import re
 
 from playwright.sync_api import expect
 from pages.home_page import HomePage
@@ -18,10 +17,8 @@ from pages.registration_page import RegistrationPage
 from utils.constants import UILabels, UITitles, UIRoutes
 
 
-
 @pytest.mark.sanity
 def test_register_page_ui_elements(page):
-
     home_page = HomePage(page)
     registration_page = RegistrationPage(page)
 

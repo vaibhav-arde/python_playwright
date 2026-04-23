@@ -3,9 +3,9 @@
 # Page Object for the Product Comparison Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-import re
 from playwright.sync_api import Page
 from pages.base_page import BasePage
+
 
 class ProductComparisonPage(BasePage):
     """Page Object Model class for the Product Comparison Page."""

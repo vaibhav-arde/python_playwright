@@ -109,6 +109,10 @@ class ProductPage(BasePage):
 
         self.pnl_related_products = self.content.get_by_role("heading", name="Related Products")
         self.lnk_related_product = page.locator(".product-thumb h4 a")
+        # Price locators based on OpenCart DOM structure
+        self.new_price = self.content.locator("ul.list-unstyled li h2")
+        self.current_price = self.new_price
+        self.old_price = self.content.locator('xpath=//span[contains(@style, "line-through")]')
 
         self.ddl_select_option = self.content.get_by_label("Select")
 
@@ -354,6 +358,10 @@ class ProductPage(BasePage):
 
     # ===== Thumbnail and Lightbox Methods =====
 
+    def get_current_price(self):
+        """Return the current (new) price locator."""
+        return self.current_price.first
+
     def click_main_thumbnail(self):
         """Click on the main bigger sized Thumbnail image."""
         self.click(self.img_main_thumbnail)
@@ -494,3 +502,18 @@ class ProductPage(BasePage):
     def get_related_product_name(self, index: int) -> str:
         """Return the name of the n-th related product."""
         return self.get_text(self.lnk_related_product.nth(index)).strip()
+
+    def validate_discounted_price(self):
+        new_price = self.get_current_price()
+        old_price = self.old_price.first
+
+        # Verify both price elements are visible
+        assert new_price.is_visible(), "New price not visible"
+        assert old_price.is_visible(), "Old price not visible"
+
+        # Verify new price has a dollar symbol
+        new_text = new_price.inner_text().strip()
+        assert "$" in new_text, "New price missing currency symbol"
+
+        # Verify old price is displayed with strike-through style
+        expect(old_price).to_have_css("text-decoration", re.compile(r"line-through"))

@@ -6,9 +6,10 @@ from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
 from pages.wishlist_page import WishListPage
 from pages.registration_page import RegistrationPage
-from utils.constants import TestData, UIRoutes
+from utils.constants import TestData
 from utils import messages
 from utils.random_test_data import RandomTestData
+
 
 @pytest.mark.ui
 @pytest.mark.regression
@@ -28,7 +29,7 @@ def test_navigate_to_pdp_via_wishlist_name(page: Page):
     home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_register()
-    
+
     unique_user = RandomTestData.get_user()
     registration_page.complete_registration(unique_user)
     expect(registration_page.get_confirmation_msg()).to_be_visible()

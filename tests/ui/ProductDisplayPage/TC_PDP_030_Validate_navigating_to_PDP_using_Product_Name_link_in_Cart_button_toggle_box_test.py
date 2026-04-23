@@ -9,6 +9,7 @@ from utils.constants import TestData
 from utils import messages
 from utils.random_test_data import RandomTestData
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_validate_navigating_to_pdp_using_product_name_link_in_cart_button_toggle_box(page: Page):
@@ -26,7 +27,7 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_cart_button_toggl
     home_page.open_home_page()
     home_page.click_my_account()
     home_page.click_register()
-    
+
     unique_user = RandomTestData.get_user()
     registration_page.complete_registration(unique_user)
     expect(registration_page.get_confirmation_msg()).to_be_visible()
@@ -43,7 +44,7 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_cart_button_toggl
 
     # Step 3: Click on Cart button to open toggle box
     product_page.click_cart_button()
-    
+
     # Step 4: Click name link in the toggle box
     product_page.click_cart_name_link()
 
