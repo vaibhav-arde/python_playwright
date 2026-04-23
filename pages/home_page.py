@@ -54,6 +54,7 @@ class HomePage(BasePage):
             "link", name="product comparison"
         )
         self.lnk_wishlist = page.locator("#wishlist-total")
+        self.lnk_shopping_cart = page.get_by_role("link", name="Shopping Cart").first
 
 
     # ===== Action Methods =====
@@ -151,6 +152,10 @@ class HomePage(BasePage):
     def click_wishlist(self):
         """Click on the 'Wish List' link."""
         self.click(self.lnk_wishlist)
+
+    def click_shopping_cart(self):
+        """Click on the 'Shopping Cart' link in the top bar."""
+        self.click(self.lnk_shopping_cart)
 
     def open_home_page(self):
         """Navigate to the home page."""
