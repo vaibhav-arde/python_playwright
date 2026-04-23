@@ -7,6 +7,7 @@ from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
+from pages.wishlist_page import WishlistPage
 
 
 class ProductPage(BasePage):
@@ -21,6 +22,10 @@ class ProductPage(BasePage):
         self.cnf_msg = page.locator("div.alert.alert-success.alert-dismissible")
         self.btn_items = page.locator("#cart")
         self.lnk_view_cart = page.locator('strong:has-text("View Cart")')
+
+        # Related Products
+        self.related_products_section = page.locator(".product-thumb")
+        self.wishlist_link_in_msg = self.cnf_msg.get_by_role("link", name="wish list")
 
     # ===== Quantity Methods =====
 
@@ -59,3 +64,24 @@ class ProductPage(BasePage):
         self.set_quantity(quantity)
         self.add_to_cart()
         expect(self.get_confirmation_message()).to_be_visible()
+
+    # ===== Wishlist Methods =====
+
+    def add_related_product_to_wishlist(self, index: int = 0) -> str:
+        """
+        Click 'Add to Wish List' on a related product by index.
+        Returns the name of the product that was added.
+        """
+        product = self.related_products_section.nth(index)
+        product_name = product.locator("h4 a").text_content()
+        # Find the wishlist button for this specific related product
+        wishlist_btn = product.get_by_role("button", name="Add to Wish List", exact=False).or_(
+            product.locator("button[data-original-title='Add to Wish List']")
+        )
+        self.click(wishlist_btn)
+        return product_name.strip() if product_name else ""
+
+    def click_wishlist_link_in_message(self) -> WishlistPage:
+        """Click the 'wish list!' link in the success message."""
+        self.click(self.wishlist_link_in_msg)
+        return WishlistPage(self.page)
