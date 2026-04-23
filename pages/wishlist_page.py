@@ -15,10 +15,15 @@ class WishlistPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
+        self.wishlist_page_heading = page.locator("#content h2")
         self.wishlist_table = page.locator("table.table-bordered.table-hover")
         self.wishlist_rows = self.wishlist_table.locator("tbody tr")
 
     # ===== Wishlist Interactions =====
+
+    def get_wishlist_page_heading(self) -> Locator:
+        """Return the My Wish List page heading locator."""
+        return self.wishlist_page_heading
 
     def is_product_in_wishlist(self, product_name: str) -> Locator:
         """Check if a specific product is displayed in the wishlist and return its locator."""
