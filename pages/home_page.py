@@ -22,6 +22,8 @@ class HomePage(BasePage):
         self.btn_search = page.locator("#search").get_by_role("button")
         self.lnk_wishlist = page.locator("#wishlist-total")
         self.lnk_shopping_cart = page.get_by_role("link", name="Shopping Cart").first
+        self.btn_cart_total = page.locator("#cart > button")
+        self.lnk_view_cart = page.get_by_role("link", name="View Cart")
 
     # ===== Action Methods =====
 
@@ -57,6 +59,14 @@ class HomePage(BasePage):
     def click_shopping_cart(self):
         """Click on the 'Shopping Cart' link in the top bar."""
         self.click(self.lnk_shopping_cart)
+
+    def click_cart_total_button(self):
+        """Click the black cart button to open the dropdown."""
+        self.click(self.btn_cart_total)
+
+    def click_view_cart(self):
+        """Click 'View Cart' link from the cart dropdown."""
+        self.click(self.lnk_view_cart)
 
     def open_home_page(self):
         """Navigate to the home page."""
