@@ -13,7 +13,7 @@ from pages.registration_page import RegistrationPage
 @pytest.fixture(scope="session")
 def dynamic_second_user(launch_browser, request):
     """
-    Dynamically register a second user in a hidden browser context 
+    Dynamically register a second user in a hidden browser context
     to be used as valid 'different account' credentials.
     """
     base_url = request.config.getoption("--base-url", default=DEFAULT_BASE_URL) or DEFAULT_BASE_URL

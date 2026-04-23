@@ -28,7 +28,7 @@ def test_logout_and_login_immediate_same_account(authenticated_page, registered_
     my_account_page = MyAccountPage(page)
     logout_page = LogoutPage(page)
     login_page = LoginPage(page)
-    
+
     my_account_page.open_my_account_page(base_url)
 
     # Step 1: Navigate to "My Account" dropdown
@@ -46,7 +46,7 @@ def test_logout_and_login_immediate_same_account(authenticated_page, registered_
     # Step 5: Immediately perform login again using Option A: Same account credentials
     home_page.click_my_account()
     home_page.click_login()
-    
+
     # Login with the same registered user's credentials
     login_page.login(registered_user["email"], registered_user["password"])
 
@@ -95,7 +95,7 @@ def test_logout_and_login_immediate_different_account(authenticated_page, dynami
     # Step 5: Immediately perform login again using Option B: Different account credentials
     home_page.click_my_account()
     home_page.click_login()
-    
+
     # Login with dynamically generated different user's credentials
     login_page.login(dynamic_second_user["email"], dynamic_second_user["password"])
 

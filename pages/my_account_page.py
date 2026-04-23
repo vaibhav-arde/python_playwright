@@ -32,10 +32,9 @@ class MyAccountPage(BasePage):
 
         # Add My Account dropdown locator
         self.lnk_my_account = page.locator('span:has-text("My Account")')
-        
-        #Add Link logout sidebar
+
+        # Add Link logout sidebar
         self.lnk_logout_sidebar = page.locator("#column-right").get_by_role("link", name="Logout")
-        
 
     # ===== Page Validation Methods =====
 

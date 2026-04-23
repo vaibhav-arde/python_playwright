@@ -14,14 +14,14 @@ from pages.my_account_page import MyAccountPage
 def test_validate_account_logout_page_ui(authenticated_page):
     """
     Test Scenario: Logout Page UI and Navigation Validation
-    Validates various UI elements (heading, title, URL, breadcrumbs) 
+    Validates various UI elements (heading, title, URL, breadcrumbs)
     of the Account Logout page after a user logs out.
     """
     page = authenticated_page
 
     # Prerequisite: Navigate to account page where the 'My Account' dropdown is available
     base_url = page.url.split("index.php")[0]
-    
+
     # Initialize Page Objects
     my_account_page = MyAccountPage(page)
     logout_page = LogoutPage(page)
@@ -48,7 +48,7 @@ def test_validate_account_logout_page_ui(authenticated_page):
     # 4. Verify Breadcrumb is displayed correctly
     breadcrumb = logout_page.get_breadcrumb()
     expect(breadcrumb).to_be_visible()
-    
+
     # Asserting that the breadcrumb correctly contains the key navigational steps.
     expect(breadcrumb).to_contain_text("Account")
     expect(breadcrumb).to_contain_text("Logout")

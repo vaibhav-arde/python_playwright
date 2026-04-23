@@ -139,4 +139,3 @@ class RegistrationPage(BasePage):
 
     def verify_logout_btn_not_visible(self):
         return self.lnk_logout
-        

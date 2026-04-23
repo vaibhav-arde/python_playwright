@@ -2,6 +2,7 @@ from playwright.sync_api import expect
 import pytest
 from pages.home_page import HomePage
 
+
 @pytest.mark.ui
 def test_logout_not_visible_without_login(page):
 

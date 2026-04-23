@@ -57,6 +57,6 @@ class HomePage(BasePage):
 
     def verify_login_btn_visible(self):
         return self.lnk_login
-        
+
     def verify_logout_btn(self):
         return self.lnk_logout

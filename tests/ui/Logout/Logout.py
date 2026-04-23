@@ -17,7 +17,6 @@ from playwright.sync_api import expect
 from pages.my_account_page import MyAccountPage
 
 
-
 @pytest.mark.regression
 def test_user_logout(authenticated_page):
     """Verify that a logged-in user can successfully log out.

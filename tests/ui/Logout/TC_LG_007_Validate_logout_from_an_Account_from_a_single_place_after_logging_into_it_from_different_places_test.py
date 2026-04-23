@@ -4,6 +4,7 @@ from pages.my_account_page import MyAccountPage
 from pages.logout_page import LogoutPage
 from pages.login_page import LoginPage
 
+
 @pytest.mark.ui
 def test_logout_all_devices(authenticated_page, new_context, auth_state_path):
     # 🔹 Device 1 (Existing authenticated browser context from pytest)
@@ -30,7 +31,7 @@ def test_logout_all_devices(authenticated_page, new_context, auth_state_path):
     # -------------------------------
     my_account_page_1.click_my_account_dropdown()
     my_account_page_1.click_logout()
-    
+
     # Optional checking to ensure Device 1 hit the logout page successfully
     logout_page_1 = LogoutPage(page1)
     expect(logout_page_1.verify_logout_page_heading()).to_be_visible()

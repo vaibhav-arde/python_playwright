@@ -2,14 +2,16 @@ from playwright.sync_api import expect
 import pytest
 from pages.home_page import HomePage
 
+
 @pytest.mark.ui
 def test_logout_not_visible_without_login(page):
 
     # Open application URL
     home_page = HomePage(page)
-    
+
     # Initialize MyAccountPage to evaluate the right-column generic navigation sidebar
     from pages.my_account_page import MyAccountPage
+
     my_account_page = MyAccountPage(page)
 
     # Step 1: Click My Account dropdown
