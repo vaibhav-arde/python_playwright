@@ -135,3 +135,12 @@ class TestData:
     ABOVE_MINIMUM_PRODUCT_QUANTITY = "3"
     EMPTY_VALUE = ""
     COMMA_SPACE_SEPARATOR = ", "
+
+    # Menu Categories
+    MENU_DESKTOPS = "Desktops"
+    MENU_LAPTOPS = "Laptops & Notebooks"
+    MENU_COMPONENTS = "Components"
+
+    # Sub-categories
+    SUB_MENU_SHOW_ALL_DESKTOPS = "Show All Desktops"
+    SUB_MENU_MAC = "Mac"

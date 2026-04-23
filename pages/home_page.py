@@ -3,6 +3,7 @@
 # Page Object for the Home Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+import re
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
@@ -24,6 +25,7 @@ class HomePage(BasePage):
         self.lnk_shopping_cart = page.get_by_role("link", name="Shopping Cart").first
         self.btn_cart_total = page.locator("#cart > button")
         self.lnk_view_cart = page.get_by_role("link", name="View Cart")
+        self.nav_menu = page.locator("#menu")
 
     # ===== Action Methods =====
 
@@ -80,3 +82,20 @@ class HomePage(BasePage):
     def click_featured_product_name(self, product_name: str):
         """Click on the name link of a product in the Featured section."""
         self.page.locator("div.product-thumb").get_by_role("link", name=product_name, exact=True).click()
+
+    def hover_menu(self, menu_name: str):
+        """Hover over or click a top-level menu item to reveal sub-menus."""
+        target = self.nav_menu.get_by_role("link", name=menu_name, exact=True)
+        target.hover()
+        # Using a more specific locator to avoid strict mode violation if checking visibility
+        # or simply click to ensure the dropdown is triggered.
+        target.click()
+
+    def click_sub_menu(self, sub_menu_name: str):
+        """Click on a sub-menu item with flexible matching."""
+        # Create a regex that allows optional whitespace between words
+        parts = sub_menu_name.split()
+        pattern = r"\s*".join([re.escape(p) for p in parts])
+        regex_name = re.compile(pattern, re.IGNORECASE)
+        self.nav_menu.get_by_role("link", name=regex_name).first.click()
+        self.page.wait_for_load_state("load")

@@ -21,7 +21,7 @@ class ShoppingCartPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lbl_heading = page.get_by_role("heading", name=UILabels.CART_PAGE_HEADING).first
+        self.lbl_cart_page_header = page.get_by_role("heading", name=UILabels.CART_PAGE_HEADING).first
         self.product_items = page.locator(".table-responsive table tbody tr")
         self.lbl_total_price = page.locator(
             "#content tr:has(td strong:text-is('Total:')) td:last-child"
@@ -39,7 +39,7 @@ class ShoppingCartPage(BasePage):
 
     def get_page_heading(self):
         """Return the page heading locator."""
-        return self.lbl_heading
+        return self.lbl_cart_page_header
 
     def get_product_row_by_name(self, product_name: str):
         """Find the row containing the specified product name."""
@@ -91,3 +91,7 @@ class ShoppingCartPage(BasePage):
             self.click(target)
             # Wait for the element to be detached from DOM instead of full page load
             target.wait_for(state="detached", timeout=5000)
+
+    def is_product_in_cart(self, product_name: str) -> bool:
+        """Check if a product is present in the shopping cart table."""
+        return self.get_product_row_by_name(product_name).is_visible()
