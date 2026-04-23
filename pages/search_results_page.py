@@ -18,6 +18,8 @@ class SearchResultsPage(BasePage):
         # ===== Locators =====
         self.search_page_header = page.get_by_role("heading", name=re.compile(r"^Search -"))
         self.search_products = page.locator("#content h4 > a")
+        self.product_thumbs = page.locator(".product-thumb")
+        self.cnf_msg = page.locator(".alert-success")
 
     # ===== Page Header =====
 
@@ -51,3 +53,15 @@ class SearchResultsPage(BasePage):
     def get_product_count(self):
         """Returns all product locators found in search results."""
         return self.search_products
+
+    def click_add_to_cart(self, product_name: str):
+        """Click 'Add to Cart' for a specific product in search results."""
+        product_thumb = self.product_thumbs.filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        )
+        # Using a regex to find the button with "Add to Cart" text
+        self.click(product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE)))
+
+    def get_confirmation_message(self):
+        """Return the confirmation message locator."""
+        return self.cnf_msg
