@@ -54,6 +54,6 @@ def test_validate_submit_review_without_mandatory_fields(page: Page):
     expect(warning_alert).to_be_visible(), messages.PDP_REVIEW_WARNING_ALERT_NOT_VISIBLE
 
     actual_warning_text = product_page.get_review_warning_text()
-    assert "Warning" in actual_warning_text, messages.PDP_REVIEW_WARNING_MISSING_KEYWORD.format(
-        keyword="Warning", actual=actual_warning_text
+    assert messages.WARNING_ALERT_KEYWORD in actual_warning_text, messages.PDP_REVIEW_WARNING_MISSING_KEYWORD.format(
+        keyword=messages.WARNING_ALERT_KEYWORD, actual=actual_warning_text
     )

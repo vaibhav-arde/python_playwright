@@ -11,6 +11,7 @@ from utils import messages
 @pytest.mark.ui
 @pytest.mark.regression
 @pytest.mark.sanity
+@pytest.mark.critical
 def test_product_display_page_validate_thumbnails(page: Page):
     """
     Test Case ID: TC_PDP_001
@@ -49,7 +50,7 @@ def test_product_display_page_validate_thumbnails(page: Page):
     next_image_src = product_page.get_element_attribute(
         product_page.get_lightbox_image(), UIAttributes.IMAGE_SOURCE
     )
-    assert next_image_src != (initial_image_src or ""), messages.THUMBNAIL_SRC_SHOULD_CHANGE_ON_NEXT
+    assert next_image_src != (initial_image_src or TestData.EMPTY_VALUE), messages.THUMBNAIL_SRC_SHOULD_CHANGE_ON_NEXT
 
     # Click prev to ensure dual navigation works
     product_page.click_lightbox_prev()

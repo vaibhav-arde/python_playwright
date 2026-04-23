@@ -56,7 +56,9 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
     expect(success_alert).to_be_visible(timeout=10000)
     
     actual_msg = product_page.get_text(success_alert)
-    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, f"Expected success message but got: {actual_msg}"
+    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, messages.GENERIC_SUCCESS_ALERT_MISMATCH.format(
+        expected=messages.SUCCESS_ALERT_KEYWORD, actual=actual_msg
+    )
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
     )
@@ -69,4 +71,4 @@ def test_validate_add_to_wishlist_from_pdp(page: Page):
 
     # Validate product presence in wishlist
     row = wishlist_page.get_product_row_by_name(expected_product_name)
-    expect(row).to_be_visible(), f"Product {expected_product_name} not found in Wish List"
+    expect(row).to_be_visible(), messages.PRODUCT_NOT_IN_WISHLIST.format(product=expected_product_name)

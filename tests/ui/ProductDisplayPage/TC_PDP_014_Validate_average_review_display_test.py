@@ -62,6 +62,6 @@ def test_validate_average_review_display(page: Page):
 
     # Advanced assertion: grab the text to verify it contains the word "review"
     review_count_text = product_page.get_text(product_page.lbl_review_count).strip()
-    assert "review" in review_count_text.lower(), messages.PDP_REVIEW_COUNT_TEXT_MISMATCH.format(
+    assert messages.REVIEW_KEYWORD in review_count_text.lower(), messages.PDP_REVIEW_COUNT_TEXT_MISMATCH.format(
         actual=review_count_text
     )

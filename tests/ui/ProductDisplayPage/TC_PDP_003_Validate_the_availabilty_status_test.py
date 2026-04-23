@@ -41,7 +41,7 @@ def test_validate_the_availability_status(page: Page):
     actual_availability = product_page.get_product_availability()
 
     # Check that availability is populated and follows supported status values.
-    assert actual_availability != "", messages.AVAILABILITY_STATUS_EMPTY
+    assert actual_availability != TestData.EMPTY_VALUE, messages.AVAILABILITY_STATUS_EMPTY
     assert (
         actual_availability in UIAvailability.VALID_PRODUCT_STATUSES
     ), messages.AVAILABILITY_STATUS_UNEXPECTED.format(status=actual_availability)

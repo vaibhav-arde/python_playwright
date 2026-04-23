@@ -11,6 +11,7 @@ from utils import messages
 @pytest.mark.ui
 @pytest.mark.regression
 @pytest.mark.sanity
+@pytest.mark.critical
 def test_validate_name_brand_product_code_displayed(page: Page):
     """
     Test Case ID: TC_PDP_002
@@ -35,7 +36,7 @@ def test_validate_name_brand_product_code_displayed(page: Page):
         keyword=TestData.PRODUCT_NAME_IMAC
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
     search_results_page.select_product(expected_product_name)
 
     # Step 4: Check the Product Name, Brand and Product Code in the displayed Product Display Page
@@ -50,9 +51,9 @@ def test_validate_name_brand_product_code_displayed(page: Page):
     # Validate ER-1: Proper Brand should be displayed
     expect(product_page.lbl_product_brand).to_be_visible()
     actual_brand = product_page.get_product_brand()
-    assert actual_brand != "", messages.PDP_PRODUCT_BRAND_EMPTY
+    assert actual_brand != TestData.EMPTY_VALUE, messages.PDP_PRODUCT_BRAND_EMPTY
 
     # Validate ER-1: Proper Product Code should be displayed
     expect(product_page.lbl_product_code).to_be_visible()
     actual_product_code = product_page.get_product_code()
-    assert actual_product_code != "", messages.PDP_PRODUCT_CODE_EMPTY
+    assert actual_product_code != TestData.EMPTY_VALUE, messages.PDP_PRODUCT_CODE_EMPTY

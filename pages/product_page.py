@@ -1,15 +1,17 @@
+from __future__ import annotations
 # pages/product_page.py
 # =====================
 # Page Object for the Product Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from __future__ import annotations
-
 import re
 from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
-from pages.shopping_cart_page import ShoppingCartPage
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pages.shopping_cart_page import ShoppingCartPage
 
 
 class ProductPage(BasePage):
@@ -161,30 +163,35 @@ class ProductPage(BasePage):
 
     def click_view_cart(self) -> ShoppingCartPage:
         """Click 'View Cart' link and return ShoppingCartPage instance."""
+        from pages.shopping_cart_page import ShoppingCartPage
         self.click(self.lnk_view_cart)
         return ShoppingCartPage(self.page)
 
     def click_shopping_cart_link(self) -> ShoppingCartPage:
         """Click the 'shopping cart' link from the success message."""
+        from pages.shopping_cart_page import ShoppingCartPage
         self.click(self.lnk_shopping_cart_success)
         return ShoppingCartPage(self.page)
 
     def click_wishlist_link_on_success_msg(self):
         """Click the 'wish list' link within any visible alert message."""
         # This uses self.any_alert_msg from locators to find the embedded link
-        self.any_alert_msg.first.get_by_role(
+        target = self.any_alert_msg.first.get_by_role(
             "link", name=re.compile(r"wish list", re.IGNORECASE)
-        ).click()
+        )
+        self.click(target)
 
     def click_comparison_link_on_success_msg(self):
         """Click the 'product comparison' link within any visible alert message."""
-        self.any_alert_msg.first.get_by_role(
+        target = self.any_alert_msg.first.get_by_role(
             "link", name=re.compile(r"product comparison", re.IGNORECASE)
-        ).click()
+        )
+        self.click(target)
 
     def click_product_link_on_success_msg(self, product_name: str):
         """Click on the product name link within any visible alert message."""
-        self.any_alert_msg.first.get_by_role("link", name=product_name, exact=True).click()
+        target = self.any_alert_msg.first.get_by_role("link", name=product_name, exact=True)
+        self.click(target)
 
     # ===== Cart Toggle Box Methods =====
 
@@ -194,17 +201,13 @@ class ProductPage(BasePage):
 
     def click_cart_image_link(self) -> ProductPage:
         """Click the product image in the cart toggle box and return ProductPage."""
-        from pages.product_page import ProductPage
-
         self.click(self.lnk_cart_image)
-        return ProductPage(self.page)
+        return self
 
     def click_cart_name_link(self) -> ProductPage:
         """Click the product name link in the cart toggle box and return ProductPage."""
-        from pages.product_page import ProductPage
-
         self.click(self.lnk_cart_name)
-        return ProductPage(self.page)
+        return self
 
     # ===== Combined Workflow =====
 
@@ -283,13 +286,13 @@ class ProductPage(BasePage):
         expect(self.txt_quantity).to_be_visible()
 
         # Optional elements
-        if self.img_main_thumbnail.count() > 0:
+        if self.get_count(self.img_main_thumbnail) > 0:
             expect(self.img_main_thumbnail).to_be_visible()
 
-        if self.lnk_description_tab.count() > 0:
+        if self.get_count(self.lnk_description_tab) > 0:
             expect(self.lnk_description_tab.first).to_be_visible()
 
-        if self.lnk_specification_tab.count() > 0:
+        if self.get_count(self.lnk_specification_tab) > 0:
             expect(self.lnk_specification_tab.first).to_be_visible()
 
     def verify_product_page_functionality(self):
@@ -340,7 +343,7 @@ class ProductPage(BasePage):
         visible_count = 0
 
         for option in option_locators:
-            if option.count() > 0:
+            if self.get_count(option) > 0:
                 option.first.scroll_into_view_if_needed()
 
                 if option.first.is_visible():
@@ -363,9 +366,9 @@ class ProductPage(BasePage):
         self.click(self.thumbnail_items.nth(index + 1).get_by_role("link"))
 
     def get_additional_thumbnails_count(self) -> int:
-        """Get the total count of additional thumbnails."""
-        total = self.thumbnail_items.count()
-        return max(0, total - 1)
+        """Return the number of additional thumbnails on the page."""
+        total = self.get_count(self.thumbnail_items)
+        return total - 1 if total > 0 else 0
 
     def get_lightbox(self):
         """Return the Lightbox container locator."""
@@ -450,6 +453,12 @@ class ProductPage(BasePage):
         text = self.get_text(self.lbl_no_reviews.first)
         return text.strip() if text else ""
 
+    def is_review_tab_active(self) -> bool:
+        """Checks if the review tab is visually marked as active/selected."""
+        # This keeps the CSS 'active' class knowledge inside the POM
+        class_attr = self.get_element_attribute(self.li_review_tab, "class") or ""
+        return "active" in class_attr.split()
+
     # ===== Wishlist and Comparison Methods =====
 
     def click_add_to_wishlist(self):
@@ -475,8 +484,8 @@ class ProductPage(BasePage):
         self.click(self.lnk_related_product.nth(index))
 
     def get_related_products_count(self) -> int:
-        """Get the total count of related products."""
-        return self.lnk_related_product.count()
+        """Return the count of related products displayed."""
+        return self.get_count(self.lnk_related_product)
 
     def scroll_to_related_products(self):
         """Scroll the related products section into view."""

@@ -81,6 +81,10 @@ class BasePage:
         """Get the inner text of an element."""
         return self.get_locator(locator).inner_text()
 
+    def get_count(self, locator: str | Locator) -> int:
+        """Get the number of elements matching the locator."""
+        return self.get_locator(locator).count()
+
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
         target = self.get_locator(locator)
