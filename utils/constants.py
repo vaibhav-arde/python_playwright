@@ -16,6 +16,7 @@ class APIEndpoints:
     ORDER = f"{BASE}/order"
     PAYMENT = f"{BASE}/payment"
     SHIPPING = f"{BASE}/shipping"
+    EDIT_ACCOUNT_INFORMATION = f"{BASE}/account/edit"
 
 
 class Headers:
@@ -42,6 +43,7 @@ class UIRoutes:
     SEARCH = f"{BASE_URL}index.php?route=product/search"
     CART = f"{BASE_URL}index.php?route=checkout/cart"
     CHECKOUT = f"{BASE_URL}index.php?route=checkout/checkout"
+    EDIT_ACCOUNT_INFORMATION = f"{BASE_URL}index.php?route=account/edit"
 
 
 class UserDetails:

@@ -18,6 +18,15 @@ class EditAccountPage(BasePage):
         self.txt_lastname = page.locator("#input-lastname")
         self.txt_email = page.locator("#input-email")
         self.txt_telephone = page.locator("#input-telephone")
+        self.msg_heading = page.get_by_role("heading", name="My Account Information")
+
+    def get_page_heading(self):
+        """Returns the page heading locator."""
+        return self.msg_heading
+
+    def get_page_title(self) -> str:
+        """Returns the page title."""
+        return self.get_title()
 
     # ===== Accessor Methods =====
 
