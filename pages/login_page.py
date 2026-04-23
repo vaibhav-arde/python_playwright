@@ -51,6 +51,9 @@ class LoginPage(BasePage):
         """Click the Login button."""
         self.click(self.btn_login)
 
+    def login_user(self, user):
+        self.login(user["email"], user["password"])
+
     def get_login_button(self):
         """Return the label for the Login button."""
         return self.btn_login

@@ -21,6 +21,10 @@ class EditAccountPage(BasePage):
         self.msg_heading = page.get_by_role("heading", name="My Account Information")
         self.btn_continue = page.get_by_role("button", name="Continue")
         self.msg_success = page.locator("div.alert-success")
+        self.err_firstname = self.get_warning("input-firstname")
+        self.err_lastname = self.get_warning("input-lastname")
+        self.err_email = self.get_warning("input-email")
+        self.err_telephone = self.get_warning("input-telephone")
 
     def get_page_heading(self):
         """Returns the page heading locator."""
@@ -62,3 +66,9 @@ class EditAccountPage(BasePage):
     def get_success_message(self):
         """Returns the success message locator."""
         return self.msg_success
+
+    def clear_account_info_fields(self):
+        self.txt_firstname.clear()
+        self.txt_lastname.clear()
+        self.txt_email.clear()
+        self.txt_telephone.clear()
