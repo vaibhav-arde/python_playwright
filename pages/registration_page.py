@@ -3,7 +3,7 @@
 # Page Object for the Registration Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, Locator
 
 from pages.base_page import BasePage
 from utils import messages
@@ -25,7 +25,7 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator('input[value="Continue"]')
+        self.btn_continue = page.locator('a.btn-primary:has-text("Continue"), input[value="Continue"]')
         self.msg_confirmation = page.locator(f'h1:has-text("{messages.SUCCESS_REGISTER_MSG}")')
         self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
         self.msg_privacy_policy_warning = page.locator(".alert-danger")
@@ -76,7 +76,10 @@ class RegistrationPage(BasePage):
 
     def set_newsletter_subscription(self, is_yes: bool = True):
         """Select newsletter subscription option."""
-        if is_yes:
+        if isinstance(is_yes, (Locator, str)):
+            # If a locator or selector is passed, check it directly
+            self.check(is_yes)
+        elif is_yes:
             self.check(self.radio_newsletter_yes)
         else:
             self.check(self.radio_newsletter_no)
@@ -109,9 +112,33 @@ class RegistrationPage(BasePage):
         """Return the type attribute of the confirm password field."""
         return self.txt_confirm_password.get_attribute("type")
 
+    def get_telephone_error_msg(self):
+        """Return the telephone error message locator."""
+        return self.err_telephone
+
+    def get_password_mismatch_error(self):
+        """Return the password mismatch error message locator."""
+        return self.password_mismatch_error
+
+    def get_email_already_exist_error(self):
+        """Return the email already exists error message locator."""
+        return self.err_email_already_exist
+
+    def get_email_validation_message(self):
+        """Return the browser's native validation message for the email field."""
+        return self.txt_email.evaluate("el => el.validationMessage")
+
+    def error_msg_visible(self):
+        """Check if any error message is visible on the page."""
+        return self.err_privacy_policy.is_visible() or self.err_firstname.is_visible()
+
+    def get_privacy_policy_checkbox(self):
+        """Return the privacy policy checkbox locator."""
+        return self.chk_policy
+
     # ===== Combined Workflow =====
 
-    def complete_registration(self, user_data: dict, subscribe_newsletter: bool = False):
+    def complete_registration(self, user_data: dict, subscribe_newsletter: bool = False, newsletter_locator=None):
         """Complete the full registration process using a data dictionary."""
         self.set_first_name(user_data["firstName"])
         self.set_last_name(user_data["lastName"])
@@ -119,8 +146,12 @@ class RegistrationPage(BasePage):
         self.set_telephone(user_data["telephone"])
         self.set_password(user_data["password"])
         self.set_confirm_password(user_data["password"])
-        if subscribe_newsletter:
+        
+        if newsletter_locator:
+            self.set_newsletter_subscription(newsletter_locator)
+        elif subscribe_newsletter:
             self.set_newsletter_subscription(True)
+            
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
