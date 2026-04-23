@@ -16,6 +16,7 @@ dependencies = [
     "pytest-playwright>=0.7.2",
     "pytest-xdist>=3.5.0",
     "pytest-rerunfailures>=14.0",
+    "python-slugify>=8.0.4",
 ]
 
 [dependency-groups]

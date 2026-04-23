@@ -138,3 +138,6 @@ class RegistrationPage(BasePage):
         expect(self.err_telephone).to_have_text(messages.WARN_TELEPHONE)
 
         expect(self.err_password).to_have_text(messages.WARN_PASSWORD)
+
+    def verify_logout_btn_not_visible(self):
+        return self.lnk_logout
