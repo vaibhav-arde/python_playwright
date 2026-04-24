@@ -62,6 +62,22 @@ class SearchResultsPage(BasePage):
         # Using a regex to find the button with "Add to Cart" text
         self.click(product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE)))
 
+    def click_compare_this_product(self, product_name: str):
+        """Click 'Compare this Product' for a specific product in search results."""
+        # Find the product container first
+        product_container = self.page.locator(".product-layout").filter(
+            has=self.page.get_by_role("link", name=re.compile(rf"^\s*{re.escape(product_name)}\s*$", re.IGNORECASE))
+        ).first
+        
+        # Click the compare button using title or data-original-title
+        compare_btn = product_container.locator("button[title*='Compare'], button[data-original-title*='Compare']")
+        self.click(compare_btn)
+
+    def click_comparison_link_in_success_msg(self):
+        """Click on the 'product comparison' link in the success message."""
+        # Success message usually has a link with text 'product comparison'
+        self.cnf_msg.get_by_role("link", name="product comparison").click()
+
     def get_confirmation_message(self):
         """Return the confirmation message locator."""
         return self.cnf_msg
