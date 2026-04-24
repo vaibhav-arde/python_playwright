@@ -14,10 +14,10 @@ class EditAccountPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.txt_firstname = page.locator("#input-firstname")
-        self.txt_lastname = page.locator("#input-lastname")
-        self.txt_email = page.locator("#input-email")
-        self.txt_telephone = page.locator("#input-telephone")
+        self.txt_firstname = page.get_by_label("First Name")
+        self.txt_lastname = page.get_by_label("Last Name")
+        self.txt_email = page.get_by_label("E-Mail")
+        self.txt_telephone = page.get_by_label("Telephone")
         self.msg_heading = page.get_by_role("heading", name="My Account Information")
         self.btn_continue = page.get_by_role("button", name="Continue")
         self.msg_success = page.locator("div.alert-success")
@@ -26,6 +26,10 @@ class EditAccountPage(BasePage):
         self.err_email = self.get_warning("input-email")
         self.err_telephone = self.get_warning("input-telephone")
         self.btn_back = page.get_by_role("link", name="Back", exact=True)
+        self.lbl_firstname = page.locator("label[for='input-firstname']")
+        self.lbl_lastname = page.locator("label[for='input-lastname']")
+        self.lbl_email = page.locator("label[for='input-email']")
+        self.lbl_telephone = page.locator("label[for='input-telephone']")
         # Breadcrumb container
         self.breadcrumb = page.locator(".breadcrumb")
 
