@@ -102,6 +102,11 @@ class WishlistPage(BasePage):
         self.click(self.get_remove_link(product_name))
         return self
 
+    def add_product_to_cart(self, product_name: str) -> "WishlistPage":
+        """Add a product to the cart from the wishlist and return self."""
+        self.click(self.get_add_to_cart_button(product_name))
+        return self
+
     def get_empty_wishlist_message(self) -> Locator:
         """Return the empty wishlist message locator."""
         return self.msg_empty_wishlist
