@@ -19,6 +19,7 @@ WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
 # ===== Wishlist Messages =====
 SUCCESS_WISH_LIST = "Success: You have added {product_name} to your wish list!"
 SUCCESS_WISH_LIST_MODIFIED = "Success: You have modified your wish list!"
+SUCCESS_ADD_TO_CART = "Success: You have added {product_name} to your shopping cart!"
 
 # ===== Assertion Error Messages =====
 ERR_PRODUCT_NOT_FOUND = "Product {product_name} not found in search results"
