@@ -6,8 +6,9 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
-from pages.wishlist_page import WishlistPage
 from pages.category_page import CategoryPage
+from pages.wishlist_page import WishlistPage
+from utils.constants import FooterOptionNames
 
 
 class HomePage(BasePage):
@@ -26,6 +27,9 @@ class HomePage(BasePage):
         self.featured_section = page.locator("h3:has-text('Featured')")
         self.success_msg = page.locator(".alert-success")
         self.lnk_wishlist_success = self.success_msg.get_by_role("link", name="wish list")
+        self.lnk_wishlist_footer = page.locator("footer").get_by_role(
+            "link", name=FooterOptionNames.WISH_LIST, exact=True
+        )
 
     # ===== Action Methods =====
 
@@ -82,6 +86,11 @@ class HomePage(BasePage):
     def click_wishlist_link_in_success_message(self):
         """Click on the 'wish list!' link in the success message."""
         self.click(self.lnk_wishlist_success)
+        return WishlistPage(self.page)
+
+    def click_wishlist_footer_option(self):
+        """Click the footer 'Wish List' link."""
+        self.click(self.lnk_wishlist_footer)
         return WishlistPage(self.page)
 
     def open_category_menu(self, category_name: str):
