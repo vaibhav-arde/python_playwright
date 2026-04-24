@@ -61,6 +61,12 @@ class WishlistPage(BasePage):
             has=self.page.get_by_role("link", name=product_name, exact=True)
         ).first
 
+    def get_product_count_in_wishlist(self, product_name: str) -> int:
+        """Return the count of a specific product in the wishlist table."""
+        return self.wishlist_rows.filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        ).count()
+
     def get_product_image_link(self, product_name: str) -> Locator:
         """Return the product image link locator for a wishlist row."""
         return self.get_wishlist_row(product_name).locator("td").nth(0).locator("a")
