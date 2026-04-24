@@ -3,6 +3,7 @@
 ACCOUNT_CREATED = "Your Account Has Been Created!"
 MY_ACCOUNT_HEADING = "My Account"
 MY_WISHLIST_HEADING = "My Wish List"
+MY_WISHLIST_PAGE_TITLE = "My Wish List"
 
 # ===== Registration Field Validation Warnings =====
 WARN_FIRST_NAME = "First Name must be between 1 and 32 characters!"
