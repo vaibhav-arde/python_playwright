@@ -20,7 +20,17 @@ ACCOUNT_PAGE_TITLE = "My Account"
 FORGOT_PASSWORD = "Forgotten Password"
 LOGIN_PAGE_TITLE = "Account Login"
 FORGOT_PASSWORD_PAGE_TITLE = "Forgot Your Password?"
+CHANGE_PASSWORD_PAGE_TITLE = "Change Password" 
 EMAIL_PLACEHOLDER = "E-Mail Address"
 PASSWORD_PLACEHOLDER = "Password"
 WARN_LOGIN_ATTEMPTS_EXCEEDED = "Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour."
 SUCCESS_PASSWORD_UPDATED = "Success: Your password has been successfully updated."
+
+# Change Password Field error message 
+WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!" 
+WARN_PASSWORD_REQUIRED = "Password must be between 4 and 20 characters!"
+
+
+# Change Password Field assert message 
+ASSERT_PASSWORD_REQUIRED = "Password field should be marked as mandatory with a red asterisk"
+ASSERT_PASSWORD_CONFIRM_REQUIRED = "Password Confirm field should be marked as mandatory with a red asterisk"
