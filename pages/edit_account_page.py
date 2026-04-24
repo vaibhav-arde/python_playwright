@@ -59,6 +59,10 @@ class EditAccountPage(BasePage):
         self.txt_email.fill(user["email"])
         self.txt_telephone.fill(user["telephone"])
 
+    def update_email(self, email: str):
+        self.txt_email.fill(email)
+        self.click(self.btn_continue)
+
     def click_continue(self):
         """Click on the Continue button."""
         self.click(self.btn_continue)
@@ -72,6 +76,9 @@ class EditAccountPage(BasePage):
         self.txt_lastname.clear()
         self.txt_email.clear()
         self.txt_telephone.clear()
+
+    def clear_email_field(self):
+        self.txt_email.clear()
 
     def get_placeholder(self, field_id: str) -> str:
         return self.page.locator(f"#{field_id}").get_attribute("placeholder")
@@ -88,3 +95,6 @@ class EditAccountPage(BasePage):
                 assert self.is_field_mandatory(
                     field_id
                 ), f"{data['label']} is not marked as mandatory"
+
+    def get_email_validation_message(self) -> str:
+        return self.txt_email.evaluate("el => el.validationMessage")
