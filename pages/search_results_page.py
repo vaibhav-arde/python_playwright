@@ -68,7 +68,7 @@ class SearchResultsPage(BasePage):
         product_container = self.page.locator(".product-layout").filter(
             has=self.page.get_by_role("link", name=re.compile(rf"^\s*{re.escape(product_name)}\s*$", re.IGNORECASE))
         ).first
-        
+
         # Click the compare button using title or data-original-title
         compare_btn = product_container.locator("button[title*='Compare'], button[data-original-title*='Compare']")
         self.click(compare_btn)

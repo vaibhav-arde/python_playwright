@@ -4,7 +4,7 @@
 # Inherits from BasePage for reusable UI interaction methods.
 
 import re
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage

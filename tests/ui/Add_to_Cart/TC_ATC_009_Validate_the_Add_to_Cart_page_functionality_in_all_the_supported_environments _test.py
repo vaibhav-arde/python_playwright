@@ -12,13 +12,13 @@ from utils.constants import TestData
 def test_atc_009_validate_add_to_cart_functionality_in_all_environments(page):
     """
     Test Case: TC_ATC_009 - Validate the 'Add to Cart' page functionality in all the supported environments
-    
+
     Pre-requisites:
     1. Open the Application URL in any supported browser
-    
+
     Test Steps:
     1. Check the 'Add to Cart' functionality in all the supported environments (Validate ER-1)
-    
+
     Expected Result:
     1. 'Add to Cart' functionality should work correctly in all the supported environments
     """
@@ -44,11 +44,11 @@ def test_atc_009_validate_add_to_cart_functionality_in_all_environments(page):
     # Step 4: Validate the success message
     expect(product_page.get_confirmation_message()).to_be_visible()
     expect(product_page.get_confirmation_message()).to_contain_text(TestData.PRODUCT_NAME_IMAC)
-    
+
     # Step 5: Navigate to Shopping Cart and verify product presence
     # This ensures the product was actually added to the backend/session cart
     shopping_cart_page = product_page.click_shopping_cart_link()
-    
+
     # Verify page heading and product in cart
     expect(shopping_cart_page.get_page_heading()).to_be_visible()
 
