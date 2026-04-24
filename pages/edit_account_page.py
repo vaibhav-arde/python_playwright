@@ -25,6 +25,7 @@ class EditAccountPage(BasePage):
         self.err_lastname = self.get_warning("input-lastname")
         self.err_email = self.get_warning("input-email")
         self.err_telephone = self.get_warning("input-telephone")
+        self.btn_back = page.get_by_role("link", name="Back", exact=True)
 
     def get_page_heading(self):
         """Returns the page heading locator."""
@@ -98,3 +99,16 @@ class EditAccountPage(BasePage):
 
     def get_email_validation_message(self) -> str:
         return self.txt_email.evaluate("el => el.validationMessage")
+
+    def click_back(self):
+        """Click on the Back button."""
+        self.click(self.btn_back)
+
+    def get_account_information(self) -> dict:
+        """Return current values of account fields."""
+        return {
+            "firstName": self.txt_firstname.input_value(),
+            "lastName": self.txt_lastname.input_value(),
+            "email": self.txt_email.input_value(),
+            "telephone": self.txt_telephone.input_value(),
+        }
