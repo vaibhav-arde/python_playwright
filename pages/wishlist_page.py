@@ -29,6 +29,7 @@ class WishlistPage(BasePage):
         self.lnk_breadcrumb_wishlist = self.breadcrumb.get_by_role(
             "link", name=BreadcrumbOptionNames.MY_WISH_LIST, exact=True
         )
+        self.alert_success = page.locator("div.alert.alert-success")
 
     # ===== Wishlist Interactions =====
 
@@ -91,6 +92,15 @@ class WishlistPage(BasePage):
         return self.get_wishlist_row(product_name).locator(
             f"a[data-original-title='{ButtonNames.REMOVE}']"
         )
+
+    def get_success_message(self) -> Locator:
+        """Return the success message locator."""
+        return self.alert_success
+
+    def remove_product(self, product_name: str) -> "WishlistPage":
+        """Remove a product from the wishlist and return self."""
+        self.click(self.get_remove_link(product_name))
+        return self
 
     def get_empty_wishlist_message(self) -> Locator:
         """Return the empty wishlist message locator."""
