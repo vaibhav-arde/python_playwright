@@ -24,3 +24,4 @@ SUCCESS_ADD_TO_CART = "Success: You have added {product_name} to your shopping c
 # ===== Assertion Error Messages =====
 ERR_PRODUCT_NOT_FOUND = "Product {product_name} not found in search results"
 ERR_RELATED_PRODUCT_NAME_NOT_FOUND = "Related product name could not be determined"
+ERR_DUPLICATE_PRODUCT_IN_WISHLIST = "Expected 1 entry for {product_name}, but found {product_count}"
