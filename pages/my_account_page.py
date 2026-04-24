@@ -9,7 +9,7 @@ from pages.base_page import BasePage
 from pages.edit_account_page import EditAccountPage
 from pages.logout_page import LogoutPage
 from pages.wishlist_page import WishlistPage
-from utils.constants import HeaderOptionNames
+from utils.constants import AccountOptionNames, HeaderOptionNames
 
 
 class MyAccountPage(BasePage):
@@ -27,6 +27,9 @@ class MyAccountPage(BasePage):
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.lnk_edit_account = page.locator('a:has-text("Edit your account information")')
+        self.lnk_modify_wishlist = page.get_by_role(
+            "link", name=AccountOptionNames.MODIFY_WISH_LIST, exact=True
+        )
 
         self.lnk_subscribe_unsubscribe_to_newsletter = page.locator("#column-right").get_by_role(
             "link", name="Newsletter"
@@ -69,6 +72,11 @@ class MyAccountPage(BasePage):
         """Click on 'Edit your account information' and return EditAccountPage instance."""
         self.click(self.lnk_edit_account)
         return EditAccountPage(self.page)
+
+    def click_modify_wishlist_option(self) -> WishlistPage:
+        """Click 'Modify your wish list' and return WishlistPage instance."""
+        self.click(self.lnk_modify_wishlist)
+        return WishlistPage(self.page)
 
     def click_wishlist_right_column_option(self) -> WishlistPage:
         """Click the right column 'Wish List' option and return WishlistPage instance."""

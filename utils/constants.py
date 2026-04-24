@@ -54,6 +54,12 @@ class HeaderOptionNames:
     WISH_LIST = "Wish List"
 
 
+class AccountOptionNames:
+    """Common account page option accessible names."""
+
+    MODIFY_WISH_LIST = "Modify your wish list"
+
+
 class UserDetails:
     """User details for validate existing account in registration."""
 
