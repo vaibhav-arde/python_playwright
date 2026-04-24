@@ -10,24 +10,17 @@ import pytest
 from playwright.sync_api import expect
 
 from pages.home_page import HomePage
-from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
 from pages.edit_account_page import EditAccountPage
 from utils import messages
 
 
 @pytest.mark.ui
-def test_clear_account_info_fields(page, registered_user):
+def test_clear_account_info_fields(authenticated_page):
+    page = authenticated_page
     home_page = HomePage(page)
-    login_page = LoginPage(page)
     my_account_page = MyAccountPage(page)
     edit_account_page = EditAccountPage(page)
-
-    home_page.click_my_account()
-    home_page.click_login()
-
-    login_page.login_user(registered_user)
-    expect(my_account_page.get_my_account_page_heading()).to_be_visible()
 
     home_page.click_my_account()
     home_page.click_my_account_option()
