@@ -26,6 +26,17 @@ class EditAccountPage(BasePage):
         self.err_email = self.get_warning("input-email")
         self.err_telephone = self.get_warning("input-telephone")
         self.btn_back = page.get_by_role("link", name="Back", exact=True)
+        # Breadcrumb container
+        self.breadcrumb = page.locator(".breadcrumb")
+
+        # Home (icon link → no name, so use CSS)
+        self.lnk_home = self.breadcrumb.locator("li:first-child a")
+
+        # Account (role-based)
+        self.lnk_account = self.breadcrumb.get_by_role("link", name="Account", exact=True)
+
+        # Edit Information (role-based)
+        self.lnk_edit_info = self.breadcrumb.get_by_role("link", name="Edit Information")
 
     def get_page_heading(self):
         """Returns the page heading locator."""
@@ -112,3 +123,12 @@ class EditAccountPage(BasePage):
             "email": self.txt_email.input_value(),
             "telephone": self.txt_telephone.input_value(),
         }
+
+    def validate_breadcrumb(self):
+        """Validate breadcrumb links on My Account Information page."""
+        from playwright.sync_api import expect
+
+        expect(self.breadcrumb).to_be_visible()
+        expect(self.lnk_home).to_be_visible()
+        expect(self.lnk_account).to_be_visible()
+        expect(self.lnk_edit_info).to_be_visible()
