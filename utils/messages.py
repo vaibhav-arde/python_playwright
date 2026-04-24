@@ -25,3 +25,4 @@ SUCCESS_ADD_TO_CART = "Success: You have added {product_name} to your shopping c
 ERR_PRODUCT_NOT_FOUND = "Product {product_name} not found in search results"
 ERR_RELATED_PRODUCT_NAME_NOT_FOUND = "Related product name could not be determined"
 ERR_DUPLICATE_PRODUCT_IN_WISHLIST = "Expected 1 entry for {product_name}, but found {product_count}"
+ERR_WISHLIST_HEADERS_MISMATCH = "Expected headers {expected}, but got {actual}"
