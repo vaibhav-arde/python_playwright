@@ -11,7 +11,7 @@ from pages.base_page import BasePage
 from pages.category_page import CategoryPage
 from pages.login_page import LoginPage
 from pages.wishlist_page import WishlistPage
-from utils.constants import FooterOptionNames
+from utils.constants import FooterOptionNames, HeaderOptionNames
 
 
 class HomePage(BasePage):
@@ -29,6 +29,9 @@ class HomePage(BasePage):
         self.lnk_login = page.locator(
             "#top-links ul.dropdown-menu.dropdown-menu-right"
         ).get_by_text("Login", exact=True)
+        self.lnk_my_account_option = page.locator("ul.dropdown-menu").get_by_role(
+            "link", name=HeaderOptionNames.MY_ACCOUNT, exact=True
+        )
         self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
         # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
         self.lnk_show_all_desktops = page.get_by_role(
@@ -103,6 +106,10 @@ class HomePage(BasePage):
     def click_show_all_desktops(self):
         """Click on the 'Show All Desktops' option under Desktops."""
         self.click(self.lnk_show_all_desktops)
+
+    def click_my_account_option(self):
+        """Click the logged-in 'My Account' option."""
+        self.click(self.lnk_my_account_option)
 
     def enter_product_name(self, product_name: str):
         """Enter the product name into the search input box."""
