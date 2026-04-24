@@ -38,6 +38,7 @@ class HomePage(BasePage):
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
         self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
+        self.lnk_change_password = page.get_by_role("link", name="Change your password")
 
         # ===== Featured Section Locators =====
         self.featured_products_section = page.locator(
@@ -63,6 +64,10 @@ class HomePage(BasePage):
     def click_my_account(self):
         """Click on the 'My Account' link."""
         self.click(self.lnk_my_account)
+
+    def click_change_password(self):
+        """Click on the 'Change your password' link."""
+        self.click(self.lnk_change_password)
 
     def click_register(self):
         """Click on the 'Register' link under My Account."""

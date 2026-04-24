@@ -18,6 +18,7 @@ class BasePage:
     def __init__(self, page: Page):
         """Initialize with a Playwright Page instance."""
         self.page = page
+        self.lnk_site_map = page.get_by_role("link", name="Site Map")
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
@@ -126,3 +127,7 @@ class BasePage:
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""
         return self.page.locator(f"#{field_id} + .text-danger")
+
+    def click_site_map(self):
+        """Click on the 'Site Map' link in the footer."""
+        self.click(self.lnk_site_map)
