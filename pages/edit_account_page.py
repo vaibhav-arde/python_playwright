@@ -75,3 +75,16 @@ class EditAccountPage(BasePage):
 
     def get_placeholder(self, field_id: str) -> str:
         return self.page.locator(f"#{field_id}").get_attribute("placeholder")
+
+    def is_field_mandatory(self, field_id: str) -> bool:
+        field = self.page.locator(f"#{field_id}")
+        parent = field.locator("xpath=ancestor::div[contains(@class,'form-group')]")
+        classes = parent.get_attribute("class")
+        return "required" in classes
+
+    def verify_mandatory_fields(self, account_fields: dict):
+        for field_id, data in account_fields.items():
+            if data.get("mandatory"):
+                assert self.is_field_mandatory(
+                    field_id
+                ), f"{data['label']} is not marked as mandatory"

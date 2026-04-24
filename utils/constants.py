@@ -92,9 +92,9 @@ class FilePaths:
 
 # utils/constants.py
 
-PLACEHOLDERS = {
-    "input-firstname": "First Name",
-    "input-lastname": "Last Name",
-    "input-email": "E-Mail",
-    "input-telephone": "Telephone",
+ACCOUNT_FIELDS = {
+    "input-firstname": {"label": "First Name", "placeholder": "First Name", "mandatory": True},
+    "input-lastname": {"label": "Last Name", "placeholder": "Last Name", "mandatory": True},
+    "input-email": {"label": "Email", "placeholder": "E-Mail", "mandatory": True},
+    "input-telephone": {"label": "Telephone", "placeholder": "Telephone", "mandatory": True},
 }
