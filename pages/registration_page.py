@@ -146,12 +146,12 @@ class RegistrationPage(BasePage):
         self.set_telephone(user_data["telephone"])
         self.set_password(user_data["password"])
         self.set_confirm_password(user_data["password"])
-        
+
         if newsletter_locator:
             self.set_newsletter_subscription(newsletter_locator)
         elif subscribe_newsletter:
             self.set_newsletter_subscription(True)
-            
+
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation

@@ -32,8 +32,8 @@ class ProductComparisonPage(BasePage):
     def click_add_to_cart(self, product_name: str):
         """Click 'Add to Cart' for a specific product in the comparison table."""
         # Find the column index for the product
-        # However, for simplicity and following Playwright advanced locators, 
-        # we can just use get_by_role("button", name="Add to Cart") 
+        # However, for simplicity and following Playwright advanced locators,
+        # we can just use get_by_role("button", name="Add to Cart")
         # but if there are multiple, we need to be careful.
         # Given the task description, we can assume iMac is there.
         # A more robust way is to filter by column, but let's try the simple one first
