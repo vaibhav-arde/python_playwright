@@ -34,7 +34,9 @@ class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
     HOME = "/"
-    LOGIN = "index.php?route=account/login"
+    LOGIN = "/index.php?route=account/login"
+    COMMON_HOME = "/index.php?route=common/home"
+
     REGISTER = "index.php?route=account/register"
     MY_ACCOUNT = "/index.php?route=account/account"
     LOGOUT = "/index.php?route=account/logout"
@@ -62,6 +64,13 @@ class FooterOptionNames:
     """Common footer option accessible names."""
 
     WISH_LIST = "Wish List"
+
+
+class BreadcrumbOptionNames:
+    """Common breadcrumb accessible names."""
+
+    ACCOUNT = "Account"
+    MY_WISH_LIST = "My Wish List"
 
 
 class AccountOptionNames:
