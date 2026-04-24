@@ -98,3 +98,6 @@ ACCOUNT_FIELDS = {
     "input-email": {"label": "Email", "placeholder": "E-Mail", "mandatory": True},
     "input-telephone": {"label": "Telephone", "placeholder": "Telephone", "mandatory": True},
 }
+
+
+MAI_TITLE = "My Account Information"
