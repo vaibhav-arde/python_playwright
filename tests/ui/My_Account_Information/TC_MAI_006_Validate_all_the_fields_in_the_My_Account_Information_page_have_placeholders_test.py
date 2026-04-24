@@ -9,24 +9,17 @@ import pytest
 from playwright.sync_api import expect
 
 from pages.home_page import HomePage
-from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
 from pages.edit_account_page import EditAccountPage
-from utils.constants import PLACEHOLDERS
+from utils.constants import ACCOUNT_FIELDS
 
 
 @pytest.mark.ui
-def test_edit_account_info_placeholders(page, registered_user):
+def test_edit_account_info_placeholders(authenticated_page):
+    page = authenticated_page
     home_page = HomePage(page)
-    login_page = LoginPage(page)
     my_account_page = MyAccountPage(page)
     edit_account_page = EditAccountPage(page)
-
-    home_page.click_my_account()
-    home_page.click_login()
-
-    login_page.login_user(registered_user)
-    expect(my_account_page.get_my_account_page_heading()).to_be_visible()
 
     home_page.click_my_account()
     home_page.click_my_account_option()
@@ -35,8 +28,9 @@ def test_edit_account_info_placeholders(page, registered_user):
 
     edit_account_page.clear_account_info_fields()
 
-    for field_id, expected in PLACEHOLDERS.items():
+    for field_id, expected in ACCOUNT_FIELDS.items():
         actual = edit_account_page.get_placeholder(field_id)
+        expected_placeholder = expected["placeholder"]
         assert (
-            actual == expected
-        ), f"{field_id} placeholder mismatch: expected '{expected}', got '{actual}'"
+            actual == expected_placeholder
+        ), f"{field_id} placeholder mismatch: expected '{expected_placeholder}', got '{actual}'"
