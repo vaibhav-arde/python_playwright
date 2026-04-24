@@ -55,4 +55,4 @@ def test_atc_005_validate_adding_product_to_cart_from_category_page(page: Page):
     
     # Verify the product is in the cart table
     is_present = shopping_cart_page.is_product_in_cart(product_name)
-    assert is_present, f"Product '{product_name}' should be present in the shopping cart"
+    assert is_present, messages.PRODUCT_NOT_IN_CART.format(product=product_name)

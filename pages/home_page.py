@@ -7,6 +7,7 @@ import re
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+from utils import messages
 
 
 class HomePage(BasePage):
@@ -26,8 +27,13 @@ class HomePage(BasePage):
         self.btn_cart_total = page.locator("#cart > button")
         self.lnk_view_cart = page.get_by_role("link", name="View Cart")
         self.nav_menu = page.locator("#menu")
+        self.cnf_msg = page.locator("div.alert").filter(has_text=messages.SUCCESS_ALERT_KEYWORD)
 
     # ===== Action Methods =====
+
+    def get_confirmation_message(self):
+        """Return the confirmation message locator."""
+        return self.cnf_msg
 
     def get_home_page_title(self) -> str:
         """Return the title of the Home Page."""
@@ -99,3 +105,13 @@ class HomePage(BasePage):
         regex_name = re.compile(pattern, re.IGNORECASE)
         self.nav_menu.get_by_role("link", name=regex_name).first.click()
         self.page.wait_for_load_state("load")
+
+    def click_add_to_cart_of_featured_product(self, product_name: str):
+        """Click on the 'Add to Cart' button of a product in the Featured section."""
+        self.page.locator("div.product-thumb").filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        ).get_by_role("button", name="Add to Cart").click()
+
+    def click_shopping_cart_link_in_success_msg(self):
+        """Click on the 'shopping cart!' link in the success message."""
+        self.cnf_msg.get_by_role("link", name="shopping cart").click()

@@ -109,3 +109,4 @@ PDP_REVIEW_COUNT_TEXT_MISMATCH = "Expected 'reviews' count in text but got '{act
 GENERIC_SUCCESS_ALERT_MISMATCH = "Expected success message containing '{expected}', but got '{actual}'"
 PRODUCT_NOT_IN_WISHLIST = "Product '{product}' not found in Wish List"
 PRODUCT_NOT_IN_COMPARISON = "Product '{product}' should be in the comparison table"
+PRODUCT_NOT_IN_CART = "Product '{product}' should be present in the shopping cart"
