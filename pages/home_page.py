@@ -28,6 +28,9 @@ class HomePage(BasePage):
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
         self.lnk_sitemap = page.get_by_role("link", name="Site Map")
         self.lnk_account_information = page.get_by_role("link", name="Account Information")
+        self.lnk_my_account_option = page.locator("ul.dropdown-menu").get_by_role(
+            "link", name="My Account"
+        )
 
     # ===== Action Methods =====
 
@@ -86,4 +89,4 @@ class HomePage(BasePage):
 
     def click_my_account_option(self):
         """Click on the 'My Account' option in the dropdown."""
-        self.click(self.dropdown)
+        self.click(self.lnk_my_account_option)
