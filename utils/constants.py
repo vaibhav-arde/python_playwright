@@ -28,6 +28,12 @@ class Headers:
     }
 
 
+class CommonValues:
+    """Common reusable literal values."""
+
+    EMPTY = ""
+
+
 class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
@@ -37,6 +43,7 @@ class UIRoutes:
     REGISTER = "index.php?route=account/register"
     MY_ACCOUNT = "/index.php?route=account/account"
     LOGOUT = "/index.php?route=account/logout"
+    PRODUCT_DISPLAY = "/index.php?route=product/product"
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
@@ -46,12 +53,15 @@ class UIRoutes:
 class ButtonNames:
     """Common UI button accessible names."""
 
+    ADD_TO_CART = "Add to Cart"
     ADD_TO_WISH_LIST = "Add to Wish List"
+    REMOVE = "Remove"
 
 
 class HeaderOptionNames:
     """Common header option accessible names."""
 
+    MY_ACCOUNT = "My Account"
     WISH_LIST = "Wish List"
 
 
@@ -72,6 +82,24 @@ class AccountOptionNames:
     """Common account page option accessible names."""
 
     MODIFY_WISH_LIST = "Modify your wish list"
+
+
+class ProductDetailLabels:
+    """Common product detail labels shown on product display pages."""
+
+    PRODUCT_CODE = "Product Code:"
+    AVAILABILITY = "Availability:"
+
+
+class WishlistColumnNames:
+    """Common wishlist table column names."""
+
+    IMAGE = "Image"
+    PRODUCT_NAME = "Product Name"
+    MODEL = "Model"
+    STOCK = "Stock"
+    UNIT_PRICE = "Unit Price"
+    ACTION = "Action"
 
 
 class UserDetails:

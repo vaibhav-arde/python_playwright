@@ -8,7 +8,7 @@ from playwright.sync_api import Page
 from pages.base_page import BasePage
 from pages.category_page import CategoryPage
 from pages.wishlist_page import WishlistPage
-from utils.constants import FooterOptionNames
+from utils.constants import FooterOptionNames, HeaderOptionNames
 
 
 class HomePage(BasePage):
@@ -21,6 +21,9 @@ class HomePage(BasePage):
         self.lnk_my_account = page.locator('span:has-text("My Account")')
         self.lnk_register = page.locator('a:has-text("Register")')
         self.lnk_login = page.locator("ul.dropdown-menu").get_by_role("link", name="Login")
+        self.lnk_my_account_option = page.locator("ul.dropdown-menu").get_by_role(
+            "link", name=HeaderOptionNames.MY_ACCOUNT, exact=True
+        )
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
         self.lnk_logo = page.locator("#logo a")
@@ -48,6 +51,10 @@ class HomePage(BasePage):
     def click_login(self):
         """Click on the 'Login' link under My Account."""
         self.click(self.lnk_login)
+
+    def click_my_account_option(self):
+        """Click the logged-in 'My Account' option."""
+        self.click(self.lnk_my_account_option)
 
     def enter_product_name(self, product_name: str):
         """Enter the product name into the search input box."""
