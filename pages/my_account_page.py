@@ -6,8 +6,10 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
-from pages.logout_page import LogoutPage
 from pages.edit_account_page import EditAccountPage
+from pages.logout_page import LogoutPage
+from pages.wishlist_page import WishlistPage
+from utils.constants import HeaderOptionNames
 
 
 class MyAccountPage(BasePage):
@@ -28,6 +30,9 @@ class MyAccountPage(BasePage):
 
         self.lnk_subscribe_unsubscribe_to_newsletter = page.locator("#column-right").get_by_role(
             "link", name="Newsletter"
+        )
+        self.lnk_wishlist_right_column = page.locator("#column-right").get_by_role(
+            "link", name=HeaderOptionNames.WISH_LIST, exact=True
         )
         self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
         self.lnk_change_password = page.locator("a:has-text('Change your password')")
@@ -77,6 +82,11 @@ class MyAccountPage(BasePage):
     def click_change_password_link(self):
         """Click on 'Change your password' link."""
         self.click(self.lnk_change_password)
+
+    def click_wishlist_right_column_option(self) -> WishlistPage:
+        """Click the right column 'Wish List' option and return WishlistPage instance."""
+        self.click(self.lnk_wishlist_right_column)
+        return WishlistPage(self.page)
 
     def click_password_right_column(self):
         """Click on the 'Password' link in the right column."""
