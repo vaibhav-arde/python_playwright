@@ -58,6 +58,12 @@ class HeaderOptionNames:
     WISH_LIST = "Wish List"
 
 
+class FooterOptionNames:
+    """Common footer option accessible names."""
+
+    WISH_LIST = "Wish List"
+
+
 class AccountOptionNames:
     """Common account page option accessible names."""
 
