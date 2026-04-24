@@ -44,7 +44,7 @@ def test_atc_007_validate_adding_product_to_cart_from_product_comparison_page(pa
 
     # Add to comparison
     search_results_page.click_compare_this_product(TestData.PRODUCT_NAME_IMAC)
-    
+
     # Navigate to Comparison Page via success message link
     search_results_page.click_comparison_link_in_success_msg()
     expect(comparison_page.lbl_heading).to_be_visible()
