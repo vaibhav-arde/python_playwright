@@ -1,3 +1,6 @@
+from utils.helpers import RandomDataUtil
+from utils.config import Config
+
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
@@ -15,6 +18,7 @@ class ContactUsPage(BasePage):
         self.input_email = page.locator("#input-email")
         self.input_enquiry = page.locator("#input-enquiry")
         self.btn_submit = page.locator('input[type="submit"]')
+        self.breadcrumb = page.locator("ul.breadcrumb")
 
         # Success Page
         self.success_heading = page.locator("#content h1")
@@ -45,6 +49,33 @@ class ContactUsPage(BasePage):
         assert self.is_visible(self.success_heading)
         assert self.is_visible(self.btn_continue)
 
+    def verify_invalid_email_validation(self):
+        """Verify invalid email prevents form submission."""
+        assert self.is_visible(self.heading_contact_us)
+
+    def verify_contact_us_breadcrumb(self):
+        """Verify Contact Us breadcrumb is displayed."""
+        assert self.is_visible(self.breadcrumb)
+
+    def verify_contact_us_page_details(self, page):
+        """Verify Contact Us page URL, title and heading."""
+        assert "contact" in page.url.lower()
+        assert "Contact Us" in page.title()
+        assert self.heading_contact_us.text_content().strip() == "Contact Us"
+
+    def verify_contact_us_page_ui(self):
+        """Verify Contact Us page UI elements."""
+        assert self.is_visible(self.heading_contact_us)
+        assert self.is_visible(self.input_name)
+        assert self.is_visible(self.input_email)
+        assert self.is_visible(self.input_enquiry)
+        assert self.is_visible(self.btn_submit)
+        assert self.is_visible(self.breadcrumb)
+
+    def verify_contact_us_page_functionality(self):
+        """Verify Contact Us page functionality."""
+        self.verify_contact_us_page_ui()
+
     # ===== Action Methods =====
 
     def enter_name(self, name: str):
@@ -68,6 +99,19 @@ class ContactUsPage(BasePage):
         self.enter_name(name)
         self.enter_email(email)
         self.enter_enquiry(enquiry)
+        self.click_submit()
+
+    def submit_contact_form_with_invalid_email(self, email: str):
+        """Submit Contact Us form using invalid email."""
+        random_data = RandomDataUtil()
+        self.enter_name(random_data.get_first_name())
+        self.enter_email(email)
+        self.enter_enquiry("Need product information")
+        self.click_submit()
+
+    def submit_contact_form_after_login(self):
+        """Submit Contact Us form after login."""
+        self.enter_enquiry(Config.contact_enquiry)
         self.click_submit()
 
     def submit_empty_contact_form(self):

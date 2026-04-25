@@ -44,3 +44,6 @@ class Config:
     # Inactive credentials (for negative tests)
     inactive_email = "[EMAIL_ADDRESS]"
     inactive_password = "[PASSWORD]"
+
+    # Contact Us test data
+    contact_enquiry = "Need support for my account"
