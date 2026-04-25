@@ -5,6 +5,7 @@ from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
 from utils import messages
+from utils import change_password_constants
 
 
 @pytest.mark.ui
@@ -21,7 +22,10 @@ def test_login_using_keyboard_keys(page, registered_user):
     expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)
 
     # 3. Perform login using keyboard interactions (refactored to POM)
-    login_page.login_with_keyboard(registered_user["email"], registered_user["password"])
+    login_page.login_with_keyboard(
+        registered_user[change_password_constants.EMAIL_TXT],
+        registered_user[change_password_constants.PASSWORD_FIELD_TYPE],
+    )
 
     # (ER-1) Verify navigation to My Account page
     expect(page).to_have_title(messages.ACCOUNT_PAGE_TITLE)

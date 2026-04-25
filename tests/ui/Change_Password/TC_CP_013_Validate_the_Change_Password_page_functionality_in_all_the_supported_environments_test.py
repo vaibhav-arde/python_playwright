@@ -9,9 +9,10 @@ from utils import change_password_constants
 
 
 @pytest.mark.ui
-def test_validate_password_field_display_toggled(page):
+@pytest.mark.critical
+def test_validate_the_change_password_page_functionality_in_all_the_supported_environments(page):
     """
-    Test Case: TC_CP_008 - Validate the text entered into the fields in Change Password field is toggled to hide its display
+    Test Case: TC_CP_013 - Validate the Change Password page functionality in all the supported environments
     """
     HomePage(page)
     my_account_page = MyAccountPage(page)
@@ -23,19 +24,18 @@ def test_validate_password_field_display_toggled(page):
     register_user(page, user_data)
 
     # After registration, click continue to go to My Account
-
     registration_page.click_continue()
 
+    # Step 2: Navigate to Change Password page
     # 1. Click on 'Password' Right Column option
     my_account_page.click_password_right_column()
 
-    change_password_page.fill_new_password(user_data[change_password_constants.PASSWORD_FIELD_TYPE])
+    # Step 3: Check the 'Change Password' page functionality (Validate ER-1)
+    new_password_data = generate_user_data()
+    new_password = new_password_data[change_password_constants.PASSWORD_FIELD_TYPE]
+    change_password_page.fill_new_password_details(new_password)
 
-    # 2. Check whether the Password fields in the displayed 'Change Password' page are marked as mandatory
-    # Acceptance Criteria: All the fields in the 'Change Password' page should be marked as mandatory using the Red color * symbol
-    expect(change_password_page.get_password_field()).to_have_attribute(
-        change_password_constants.TYPE_ATTRIBUTE, change_password_constants.PASSWORD_FIELD_TYPE
-    )
-    expect(change_password_page.get_confirm_password_field()).to_have_attribute(
-        change_password_constants.TYPE_ATTRIBUTE, change_password_constants.PASSWORD_FIELD_TYPE
+    # Acceptance Criteria: 'Change Password' page functionality should work correctly
+    expect(change_password_page.get_success_message()).to_have_text(
+        change_password_constants.SUCCESS_PASSWORD_UPDATED
     )

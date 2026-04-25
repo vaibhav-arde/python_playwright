@@ -42,6 +42,7 @@ class UIRoutes:
     SEARCH = f"{BASE_URL}index.php?route=product/search"
     CART = f"{BASE_URL}index.php?route=checkout/cart"
     CHECKOUT = f"{BASE_URL}index.php?route=checkout/checkout"
+    CHANGE_PASSWORD = f"{BASE_URL}index.php?route=account/password"
 
 
 class UserDetails:

@@ -4,6 +4,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from utils.config import Config
+from utils import change_password_constants
 
 
 @pytest.mark.ui
@@ -20,4 +21,6 @@ def test_validate_the_text_into_the_Password_field_is_toggled_to_hide_its_visibi
 
     # 3. Acceptance Criteria: Text entered into the Password field should be toggled to hide its visibility
     # This is verified by checking that the input field has type="password"
-    expect(login_page.get_password_field()).to_have_attribute("type", "password")
+    expect(login_page.get_password_field()).to_have_attribute(
+        change_password_constants.TYPE_ATTRIBUTE, change_password_constants.PASSWORD_FIELD_TYPE
+    )

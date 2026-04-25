@@ -28,6 +28,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
+from utils import change_password_constants
 
 
 @pytest.mark.ui
@@ -39,6 +40,9 @@ def test_valid_user_login(page, registered_user):
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.login(
+        registered_user[change_password_constants.EMAIL_TXT],
+        registered_user[change_password_constants.PASSWORD_FIELD_TYPE],
+    )
 
     expect(my_account_page.get_my_account_page_heading()).to_be_visible()

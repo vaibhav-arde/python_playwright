@@ -3,15 +3,16 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
 from pages.change_password_page import ChangePasswordPage
-from pages.registration_page import RegistrationPage
 from utils.user_registration import generate_user_data, register_user
+from pages.registration_page import RegistrationPage
 from utils import change_password_constants
+from utils import messages
 
 
 @pytest.mark.ui
-def test_validate_change_password_with_different_password(page):
+def test_validate_back_button_in_change_password(page):
     """
-    Test Case: TC_CP_004 - Validate changing the password using credentials from Config
+    Test Case: TC_CP_008 - Validate the text entered into the fields in Change Password field is toggled to hide its display
     """
     HomePage(page)
     my_account_page = MyAccountPage(page)
@@ -26,12 +27,17 @@ def test_validate_change_password_with_different_password(page):
 
     registration_page.click_continue()
 
+    # 1. Click on 'Password' Right Column option
     my_account_page.click_password_right_column()
 
-    different_password_data = generate_user_data()
-    different_password = different_password_data[change_password_constants.PASSWORD_FIELD_TYPE]
+    change_password_page.fill_new_password(user_data[change_password_constants.PASSWORD_FIELD_TYPE])
 
-    change_password_page.fill_different_password_details(
-        user_data[change_password_constants.PASSWORD_FIELD_TYPE], different_password
-    )
-    expect(change_password_page.get_pass_mismatch_error()).to_be_visible()
+    change_password_page.click_back()
+
+    expect(page).to_have_title(messages.ACCOUNT_PAGE_TITLE)
+
+    my_account_page.click_change_password_link()
+
+    assert change_password_page.get_password_field_value() == messages.EMPTY_FIELDS
+
+    assert change_password_page.get_confirm_password_field_value() == messages.EMPTY_FIELDS

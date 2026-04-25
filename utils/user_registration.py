@@ -7,6 +7,11 @@
 import logging
 
 from utils.helpers import RandomDataUtil
+from playwright.sync_api import Page, expect
+
+from pages.home_page import HomePage
+from pages.registration_page import RegistrationPage
+from utils import messages
 
 logger = logging.getLogger(__name__)
 
@@ -29,12 +34,6 @@ def generate_user_data() -> dict:
     logger.info(f"Generated user data — email: {user_data['email']}")
     return user_data
 
-
-from playwright.sync_api import Page, expect
-
-from pages.home_page import HomePage
-from pages.registration_page import RegistrationPage
-from utils import messages
 
 def register_user(page: Page, user_data: dict) -> None:
     """
@@ -68,4 +67,3 @@ def register_user(page: Page, user_data: dict) -> None:
     expect(confirmation_msg).to_have_text(messages.ACCOUNT_CREATED, timeout=10000)
 
     logger.info(f"User registered successfully — email: {user_data['email']}")
-
