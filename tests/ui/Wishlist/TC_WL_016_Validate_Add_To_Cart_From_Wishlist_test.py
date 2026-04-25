@@ -14,6 +14,7 @@ from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
+@pytest.mark.critical
 def test_validate_add_to_cart_from_wishlist_page(page):
     """
     TC_WL_016: Validate adding the product to Cart from the 'My Wish List' page
