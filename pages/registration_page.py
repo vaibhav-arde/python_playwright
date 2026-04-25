@@ -120,7 +120,9 @@ class RegistrationPage(BasePage):
 
     # ===== Combined Workflow =====
 
-    def complete_registration(self, user_data: dict, newsletter_locator: str | Locator = None):
+    def complete_registration(
+        self, user_data: dict, newsletter_locator: str | Locator | None = None
+    ):
         """Complete the full registration process using a data dictionary."""
         self.set_first_name(user_data["firstName"])
         self.set_last_name(user_data["lastName"])

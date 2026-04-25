@@ -10,7 +10,7 @@ def test_handle_tabs(playwright: Playwright):
 
     # register an event for handle tab
 
-    parentpage.on("page", lambda page: page.wait_for_load_state())
+    parentpage.on("popup", lambda page: page.wait_for_load_state())
 
     parentpage.locator("button:has-text('New Tab')").click()
     parentpage.wait_for_timeout(5000)

@@ -16,7 +16,8 @@ class HomePage:
         count = products.count()
 
         for i in range(count):
-            name = products.nth(i).text_content().strip()
+            text = products.nth(i).text_content()
+            name = text.strip() if text else ""
             if name == product_name:
                 products.nth(i).click()
                 break

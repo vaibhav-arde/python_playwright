@@ -6,6 +6,8 @@
 
 import logging
 
+from typing import Literal
+
 from playwright.sync_api import Page, Locator
 
 logger = logging.getLogger(__name__)
@@ -71,7 +73,12 @@ class BasePage:
         """Get the inner text of an element."""
         return self.get_locator(locator).inner_text()
 
-    def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
+    def wait_for(
+        self,
+        locator: str | Locator,
+        state: Literal["attached", "detached", "hidden", "visible"] | None = "visible",
+        timeout: int = 10000,
+    ):
         """Wait for an element to reach a specific state."""
         target = self.get_locator(locator)
         target.wait_for(state=state, timeout=timeout)
