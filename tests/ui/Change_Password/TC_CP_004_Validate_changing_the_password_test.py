@@ -6,8 +6,9 @@ from pages.my_account_page import MyAccountPage
 from pages.change_password_page import ChangePasswordPage
 from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage
-from utils import messages
+from utils import change_password_constants
 from utils.user_registration import generate_user_data, register_user
+from utils import messages
 
 
 @pytest.mark.ui
@@ -35,12 +36,12 @@ def test_change_password(page):
 
     # Step 3: Generate a NEW password for the change
     new_password_data = generate_user_data()
-    new_password = new_password_data["password"]
+    new_password = new_password_data[change_password_constants.PASSWORD_FIELD_TYPE]
 
     # Step 4: Perform password change
     change_password_page.fill_new_password_details(new_password)
     expect(change_password_page.get_success_message()).to_have_text(
-        messages.SUCCESS_PASSWORD_UPDATED
+        change_password_constants.SUCCESS_PASSWORD_UPDATED
     )
 
     # Step 5: Verify login with OLD password fails
@@ -49,9 +50,12 @@ def test_change_password(page):
     home_page.click_my_account()
     home_page.click_login()
 
-    login_page.login(user_data["email"], user_data["password"])
+    login_page.login(
+        user_data[change_password_constants.EMAIL_TXT],
+        user_data[change_password_constants.PASSWORD_FIELD_TYPE],
+    )
     expect(login_page.get_login_error()).to_contain_text(messages.WARN_LOGIN_ERROR)
 
     # Step 6: Verify login with NEW password succeeds
-    login_page.login(user_data["email"], new_password)
+    login_page.login(user_data[change_password_constants.EMAIL_TXT], new_password)
     expect(page).to_have_title(messages.ACCOUNT_PAGE_TITLE)

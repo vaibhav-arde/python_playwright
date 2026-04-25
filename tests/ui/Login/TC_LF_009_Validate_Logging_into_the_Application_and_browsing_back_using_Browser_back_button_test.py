@@ -4,6 +4,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
+from utils import change_password_constants
 
 
 @pytest.mark.ui
@@ -18,7 +19,10 @@ def test_validate_logging_and_browsing_back(page, registered_user):
 
     # 2. Enter valid credentials and login
     # Data is provided by the registered_user fixture
-    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.login(
+        registered_user[change_password_constants.EMAIL_TXT],
+        registered_user[change_password_constants.PASSWORD_FIELD_TYPE],
+    )
 
     # 3. Click on Browser back button
     page.go_back()

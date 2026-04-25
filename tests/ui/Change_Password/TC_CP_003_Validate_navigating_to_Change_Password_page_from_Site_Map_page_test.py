@@ -4,7 +4,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.sitemap_page import SitemapPage
 from pages.registration_page import RegistrationPage
-from utils.messages import CHANGE_PASSWORD_PAGE_TITLE
+from utils.change_password_constants import CHANGE_PASSWORD_PAGE_TITLE
 from utils.user_registration import generate_user_data, register_user
 
 

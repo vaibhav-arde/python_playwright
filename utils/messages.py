@@ -29,6 +29,9 @@ FORGOT_PASSWORD_PAGE_TITLE = "Forgot Your Password?"
 CHANGE_PASSWORD_PAGE_TITLE = "Change Password"
 EMAIL_PLACEHOLDER = "E-Mail Address"
 PASSWORD_PLACEHOLDER = "Password"
+ACCOUNT_LOGIN_BREADCRUMB = "Account    Login"
+ACCOUNT_CHANGE_PASSWORD_BREADCRUMB = "Account    Change Password"
+EMPTY_FIELDS = ""
 WARN_LOGIN_ATTEMPTS_EXCEEDED = "Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour."
 SUCCESS_PASSWORD_UPDATED = "Success: Your password has been successfully updated."
 EMPTY_COMPARISON_MESSAGE = "You have not chosen any products to compare."
@@ -60,3 +63,13 @@ ASSERT_PASSWORD_REQUIRED = "Password field should be marked as mandatory with a 
 ASSERT_PASSWORD_CONFIRM_REQUIRED = (
     "Password Confirm field should be marked as mandatory with a red asterisk"
 )
+COPY_OPTION_DISABLED_MESSAGE = "Copy option should be disabled in the Right click menu"
+
+# Register Account Page
+REGISTER_ACCOUNT_PAGE_TITLE = "Register Account"
+DESKTOPS_PAGE_TITLE = "Desktops"
+CONTACT_US_PAGE_TITLE = "Contact Us"
+
+# KEYBOARDSHORTCUTS
+COPY_shortcut = "Control+C"
+PASTE_SHORTCUT = "Control+V"

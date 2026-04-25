@@ -4,7 +4,7 @@ from pages.my_account_page import MyAccountPage
 from pages.change_password_page import ChangePasswordPage
 from pages.registration_page import RegistrationPage
 from utils.user_registration import generate_user_data, register_user
-from utils import messages
+from utils import change_password_constants
 
 
 @pytest.mark.ui
@@ -30,7 +30,9 @@ def test_validate_all_the_password_fields_in_the_Change_Password_page_are_marked
 
     # 2. Check whether the Password fields in the displayed 'Change Password' page are marked as mandatory
     # Acceptance Criteria: All the fields in the 'Change Password' page should be marked as mandatory using the Red color * symbol
-    assert change_password_page.is_field_mandatory("password"), messages.ASSERT_PASSWORD_REQUIRED
-    assert change_password_page.is_field_mandatory("confirm"), (
-        messages.ASSERT_PASSWORD_CONFIRM_REQUIRED
+    assert change_password_page.is_field_mandatory(change_password_constants.PASSWORD_FIELD_TYPE), (
+        change_password_constants.ASSERT_PASSWORD_REQUIRED
     )
+    assert change_password_page.is_field_mandatory(
+        change_password_constants.CONFIRM_PASSWORD_FIELD_TYPE
+    ), change_password_constants.ASSERT_PASSWORD_CONFIRM_REQUIRED

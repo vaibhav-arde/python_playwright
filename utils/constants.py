@@ -42,6 +42,7 @@ class UIRoutes:
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
     COMPARISON = "index.php?route=product/compare"
+    CHANGE_PASSWORD = "index.php?route=account/password"
 
 
 class UserDetails:
