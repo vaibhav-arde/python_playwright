@@ -20,6 +20,7 @@ from utils.random_test_data import RandomTestData, update_registered_user
 
 
 @pytest.mark.ui
+@pytest.mark.critical
 def test_update_my_account_information_successfully(page, registered_user):
     home_page = HomePage(page)
     login_page = LoginPage(page)
