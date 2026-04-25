@@ -13,6 +13,7 @@ from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
+@pytest.mark.critical
 def test_validate_single_product_wishlist_page(page):
     home_page = HomePage(page)
     my_account_page = MyAccountPage(page)

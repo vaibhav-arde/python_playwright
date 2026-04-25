@@ -15,6 +15,7 @@ from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
+@pytest.mark.critical
 def test_validate_remove_product_wishlist_page(page):
     """
     TC_WL_015: Validate the removing the Product from 'My Wish List' page
