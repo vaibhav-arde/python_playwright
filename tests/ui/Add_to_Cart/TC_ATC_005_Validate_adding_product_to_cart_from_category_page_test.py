@@ -7,6 +7,7 @@ from utils import messages
 from utils.constants import TestData, UILabels
 
 @pytest.mark.ui
+@pytest.mark.critical
 @pytest.mark.regression
 @pytest.mark.add_to_cart
 def test_atc_005_validate_adding_product_to_cart_from_category_page(page: Page):

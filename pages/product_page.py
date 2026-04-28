@@ -508,8 +508,8 @@ class ProductPage(BasePage):
         old_price = self.old_price.first
 
         # Verify both price elements are visible
-        assert new_price.is_visible(), "New price not visible"
-        assert old_price.is_visible(), "Old price not visible"
+        assert new_price.is_visible(), f"New price is not visible for product '{self.get_product_name()}'"
+        assert old_price.is_visible(), f"Old price is not visible for product '{self.get_product_name()}'"
 
         # Verify new price has a dollar symbol
         new_text = new_price.inner_text().strip()
@@ -520,8 +520,9 @@ class ProductPage(BasePage):
 
     def click_add_to_cart_for_related_product(self, product_name: str):
         """Click 'Add to Cart' for a specific product in the Related Products section."""
-        # Related products are usually in the next row after the Related Products heading
-        related_section = self.page.locator("h3:has-text('Related Products') + div.row")
+        # Identify the related products heading semantically and locate the subsequent product row
+        related_heading = self.page.get_by_role("heading", name="Related Products")
+        related_section = related_heading.locator("xpath=following-sibling::div[contains(@class, 'row')][1]")
         product_thumb = related_section.locator(".product-thumb").filter(
             has=self.page.get_by_role("link", name=product_name, exact=True)
         )
