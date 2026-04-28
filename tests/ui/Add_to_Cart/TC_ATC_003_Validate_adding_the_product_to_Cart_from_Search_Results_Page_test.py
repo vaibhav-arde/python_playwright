@@ -8,6 +8,7 @@ from utils.constants import TestData
 from utils.messages import PDP_ADD_TO_CART_SUCCESS_PREFIX, PDP_ADD_TO_CART_SUCCESS_SUFFIX
 
 
+@pytest.mark.critical
 @pytest.mark.regression
 @pytest.mark.ui
 def test_atc_003_validate_adding_product_to_cart_from_search_results(page):
