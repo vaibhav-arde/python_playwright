@@ -3,9 +3,15 @@
 # Page Object for the Checkout Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
+from __future__ import annotations
+
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pages.product_page import ProductPage
 
 
 class CheckoutPage(BasePage):
@@ -15,7 +21,7 @@ class CheckoutPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.radio_guest = page.locator('input[value="guest"]')
+        self.radio_guest = page.get_by_label("Guest Checkout")
         self.btn_continue = page.locator("#button-account")
         self.txt_first_name = page.locator("#input-payment-firstname")
         self.txt_last_name = page.locator("#input-payment-lastname")
@@ -31,9 +37,10 @@ class CheckoutPage(BasePage):
         self.btn_continue_shipping_address = page.locator("#button-shipping-method")
         self.chkbox_terms = page.locator('input[name="agree"]')
         self.btn_continue_payment_method = page.locator("#button-payment-method")
-        self.lbl_total_price = page.locator('strong:has-text("Total:") + td')
+        self.lbl_total_price = page.locator("tr:has(td strong:has-text('Total:')) td:last-child")
         self.btn_conf_order = page.locator("#button-confirm")
-        self.lbl_order_con_msg = page.locator("#content h1")
+        self.lbl_order_con_msg = page.get_by_role("heading", level=1)
+        self.lnk_product_name_confirm = page.locator("#collapse-checkout-confirm table tbody tr td.text-left a").first
 
     # ===== Page Validation =====
 
@@ -46,7 +53,7 @@ class CheckoutPage(BasePage):
     def choose_checkout_option(self, checkout_option: str):
         """Choose the checkout type (e.g., Guest Checkout)."""
         if checkout_option.lower() == "guest checkout":
-            self.click(self.radio_guest)
+            self.radio_guest.click()
 
     def click_continue(self):
         """Click the Continue button after choosing checkout option."""
@@ -84,10 +91,12 @@ class CheckoutPage(BasePage):
 
     def click_continue_after_billing_address(self):
         """Click Continue after entering billing address."""
+        self.wait_for(self.btn_continue_billing_address)
         self.click(self.btn_continue_billing_address)
 
     def click_continue_after_delivery_address(self):
         """Click Continue after confirming delivery address."""
+        self.wait_for(self.btn_continue_delivery_address)
         self.click(self.btn_continue_delivery_address)
 
     # ===== Delivery Method =====
@@ -98,6 +107,7 @@ class CheckoutPage(BasePage):
 
     def click_continue_after_delivery_method(self):
         """Click Continue after setting delivery method."""
+        self.wait_for(self.btn_continue_shipping_address)
         self.click(self.btn_continue_shipping_address)
 
     # ===== Payment Method =====
@@ -108,6 +118,7 @@ class CheckoutPage(BasePage):
 
     def click_continue_after_payment_method(self):
         """Click Continue after selecting payment method."""
+        self.wait_for(self.btn_continue_payment_method)
         self.click(self.btn_continue_payment_method)
 
     # ===== Order Confirmation =====
@@ -117,10 +128,17 @@ class CheckoutPage(BasePage):
         return self.lbl_total_price
 
     def click_confirm_order(self):
-        """Click the Confirm Order button."""
+        """Click the Confirm Order button and handle the resulting alert dialog."""
+        # Dialogs must be handled by a listener set up BEFORE the action
+        self.page.once("dialog", lambda dialog: dialog.accept())
         self.click(self.btn_conf_order)
 
     def is_order_placed(self):
         """Verify if the order confirmation message appears."""
-        self.page.on("dialog", lambda dialog: dialog.accept())
         return self.lbl_order_con_msg
+
+    def click_product_name_confirm(self) -> ProductPage:
+        """Click on the product name link in the confirm order section and return ProductPage instance."""
+        from pages.product_page import ProductPage
+        self.click(self.lnk_product_name_confirm)
+        return ProductPage(self.page)
