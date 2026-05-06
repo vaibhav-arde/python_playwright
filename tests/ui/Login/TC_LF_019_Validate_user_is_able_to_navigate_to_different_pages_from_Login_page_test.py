@@ -21,7 +21,7 @@ def test_validate_user_is_able_to_navigate_to_different_pages_from_Login_page(pa
     login_page.click_continue_register()
 
     # Acceptance Criteria: User should be navigated to 'Register Account' page
-    expect(page).to_have_title("Register Account")
+    expect(page).to_have_title(messages.REGISTER_ACCOUNT_PAGE_TITLE)
 
     # --- Step 3: Navigate back to Login page ---
     page.go_back()
@@ -44,8 +44,8 @@ def test_validate_user_is_able_to_navigate_to_different_pages_from_Login_page(pa
     # C. Menu Option: Desktops Category
     home_page.click_desktops_category()
     home_page.click_show_all_desktops()
-    expect(page).to_have_title("Desktops")
+    expect(page).to_have_title(messages.DESKTOPS_PAGE_TITLE)
 
     # D. Footer Option: Contact Us
     home_page.click_contact_us()
-    expect(page).to_have_title("Contact Us")
+    expect(page).to_have_title(messages.CONTACT_US_PAGE_TITLE)

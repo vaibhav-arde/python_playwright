@@ -5,6 +5,7 @@ from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
 from utils import messages
+from utils import change_password_constants
 
 
 @pytest.mark.ui
@@ -18,7 +19,10 @@ def test_validate_logging_out_and_browsing_back(page, registered_user):
     home_page.click_login()
 
     # 2. Login with valid credentials from fixture
-    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.login(
+        registered_user[change_password_constants.EMAIL_TXT],
+        registered_user[change_password_constants.PASSWORD_FIELD_TYPE],
+    )
 
     # 3. Click on 'My Account' Dropmenu and select 'Logout' option
     home_page.click_my_account()

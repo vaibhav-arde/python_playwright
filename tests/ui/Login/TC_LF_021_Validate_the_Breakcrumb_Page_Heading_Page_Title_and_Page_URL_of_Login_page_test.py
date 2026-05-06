@@ -56,4 +56,4 @@ def test_validate_the_breakcrumb_page_heading_page_title_and_page_url_of_login_p
 
     # Validate Breadcrumb
     expect(login_page.get_breadcrumb()).to_be_visible()
-    expect(login_page.get_breadcrumb()).to_contain_text("Account    Login")
+    expect(login_page.get_breadcrumb()).to_contain_text(messages.ACCOUNT_LOGIN_BREADCRUMB)

@@ -125,7 +125,3 @@ class LoginPage(BasePage):
     def get_breadcrumb(self):
         """Return the breadcrumb element."""
         return self.breadcrumb
-
-    def get_page_heading(self):
-        """Return the page heading element."""
-        return self.page_heading

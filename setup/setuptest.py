@@ -158,11 +158,21 @@ def _ensure_auth_state(browser, base_url: str) -> None:
 
     user_data = load_registered_user()
     if user_data:
-        logger.info("Auth state missing or expired. Recreating it with saved credentials.")
-        _login_and_save_state(browser, base_url, user_data)
-        return
+        try:
+            logger.info("Auth state missing or expired. Recreating it with saved credentials.")
+            _login_and_save_state(browser, base_url, user_data)
+            return
+        except Exception as exc:
+            logger.warning(
+                "Failed to login with saved user %s: %s. Falling back to new registration.",
+                user_data["email"],
+                exc,
+            )
+            # Remove stale user data if it exists
+            if FilePaths.AUTH_USER_PATH.exists():
+                FilePaths.AUTH_USER_PATH.unlink()
 
-    logger.info("No auth state or saved user found. Creating a new registered session.")
+    logger.info("Creating a new registered session.")
     _register_login_and_save_state(browser, base_url)
 
 

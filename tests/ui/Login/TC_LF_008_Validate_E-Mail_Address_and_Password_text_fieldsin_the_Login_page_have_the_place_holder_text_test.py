@@ -4,6 +4,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from utils import messages
+from utils import change_password_constants
 
 
 @pytest.mark.ui
@@ -18,10 +19,10 @@ def test_validate_login_field_placeholders(page):
 
     # 2. Verify E-Mail Address placeholder
     expect(login_page.get_email_field()).to_have_attribute(
-        "placeholder", messages.EMAIL_PLACEHOLDER
+        change_password_constants.PLACEHOLDER_ATTRIBUTE, messages.EMAIL_PLACEHOLDER
     )
 
     # 3. Verify Password placeholder
     expect(login_page.get_password_field()).to_have_attribute(
-        "placeholder", messages.PASSWORD_PLACEHOLDER
+        change_password_constants.PLACEHOLDER_ATTRIBUTE, messages.PASSWORD_PLACEHOLDER
     )

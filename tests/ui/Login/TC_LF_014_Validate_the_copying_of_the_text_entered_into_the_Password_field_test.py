@@ -4,6 +4,7 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from utils.config import Config
+from utils import messages
 
 
 @pytest.mark.ui
@@ -27,7 +28,7 @@ def test_validate_the_copying_of_the_text_entered_into_the_Password_field(page):
     # To fulfill this Acceptance Criteria programmatically, we inject JavaScript to verify
     # that the browser natively flags the 'copy' command as unsupported or blocked for this field.
     is_copy_allowed = login_page.is_copy_allowed_from_password_field()
-    assert not is_copy_allowed, "Copy option should be disabled in the Right click menu"
+    assert not is_copy_allowed, messages.COPY_OPTION_DISABLED_MESSAGE
 
     # 4. Select the text entered into the 'Password' field and press (Ctrl+C) shortcut for copying (ER-2)
     login_page.select_password_text_using_keyboard()
@@ -36,7 +37,7 @@ def test_validate_the_copying_of_the_text_entered_into_the_Password_field(page):
     # 5. To verify the text was not copied by any means, try to paste it into the Email field
     login_page.get_email_field().focus()
     login_page.get_email_field().fill("")
-    page.keyboard.press("Control+V")
+    page.keyboard.press(messages.PASTE_SHORTCUT)
 
     # 6. Acceptance Criteria: Password text should not be copied.
     # Native browser behavior disables copying from password fields.
