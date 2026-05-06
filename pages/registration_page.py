@@ -27,9 +27,11 @@ class RegistrationPage(BasePage):
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
         self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
         self.btn_continue = page.locator(".btn-primary")
+        self.lnk_login = page.get_by_role("link", name="Login")
         self.msg_telephone_error = page.locator(
             "div.form-group:has(input[name='telephone']) div.text-danger"
         )
+        self.login_page_link = page.get_by_role("link", name="login page")
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
@@ -84,6 +86,10 @@ class RegistrationPage(BasePage):
     def click_continue(self):
         self.click(self.btn_continue)
 
+    def click_login_link(self):
+        """Click on the 'Login' link in the Register page."""
+        self.click(self.lnk_login)
+
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
         return self.msg_confirmation
@@ -107,6 +113,10 @@ class RegistrationPage(BasePage):
     def get_telephone_error_msg(self):
         """Returns the locator for the telephone field error message."""
         return self.msg_telephone_error
+
+    def click_login_page_link(self):
+        """Click on the 'Login Page' link."""
+        self.click(self.login_page_link)
 
     # ===== Combined Workflow =====
 

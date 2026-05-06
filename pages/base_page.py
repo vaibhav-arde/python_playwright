@@ -77,6 +77,16 @@ class BasePage:
         target.wait_for(state=state, timeout=timeout)
         logger.info(f"Element {target} reached state: {state}")
 
+    def tab_until_focused(self, locator: str | Locator, max_tabs: int = 50):
+        """Press Tab until the specified locator is focused."""
+        target = self.get_locator(locator)
+        for _ in range(max_tabs):
+            if target.and_(self.page.locator(":focus")).count() > 0:
+                logger.info(f"Element {target} is now focused")
+                return
+            self.page.keyboard.press("Tab")
+        raise RuntimeError(f"Could not reach {target} using Tab after {max_tabs} attempts.")
+
     def get_title(self) -> str:
         """Return the page title."""
         return self.page.title()

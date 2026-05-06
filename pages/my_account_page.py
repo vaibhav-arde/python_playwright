@@ -30,6 +30,7 @@ class MyAccountPage(BasePage):
             "link", name="Newsletter"
         )
         self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
+        self.lnk_change_password = page.locator("a:has-text('Change your password')")
 
     # ===== Page Validation Methods =====
 
@@ -40,6 +41,10 @@ class MyAccountPage(BasePage):
     def get_newsletter_page_heading(self):
         """Returns the locator for Newsletter page."""
         return self.msg_newsletter_heading
+
+    def get_logout_link(self):
+        """Returns the locator for the 'Logout' link."""
+        return self.lnk_logout
 
     # ===== Logout Action =====
 
@@ -64,3 +69,8 @@ class MyAccountPage(BasePage):
         """Click on 'Edit your account information' and return EditAccountPage instance."""
         self.click(self.lnk_edit_account)
         return EditAccountPage(self.page)
+
+    # ===== Password Change Actions =====
+    def click_change_password_link(self):
+        """Click on 'Change your password' link."""
+        self.click(self.lnk_change_password)
