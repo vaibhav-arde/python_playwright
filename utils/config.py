@@ -28,6 +28,7 @@ class Config:
     # Valid credentials
     email = "manojpatil2198@gmail.com"
     password = "Manoj1606@"
+    password_change_new_password = "Manoj1606@New"
 
     # Invalid credentials (for negative tests)
     invalid_email = "pavanol123@abc.com"

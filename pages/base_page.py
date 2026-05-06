@@ -1,8 +1,8 @@
 # pages/base_page.py
 # =====================
 
-import re
 import logging
+import re
 
 from playwright.sync_api import Locator, Page, expect
 
@@ -62,6 +62,15 @@ class BasePage:
 
     def get_text(self, locator: str | Locator) -> str:
         return self.get_locator(locator).inner_text()
+
+    def hover(self, locator: str | Locator):
+        target = self.get_locator(locator)
+        target.hover()
+        logger.info(f"Hovered over: {target}")
+
+    def get_attribute(self, locator: str | Locator, name: str) -> str | None:
+        target = self.get_locator(locator)
+        return target.get_attribute(name)
 
     def wait_for(self, locator: str | Locator, state="visible", timeout=10000):
         self.get_locator(locator).wait_for(state=state, timeout=timeout)

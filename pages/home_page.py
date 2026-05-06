@@ -4,6 +4,7 @@
 from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
+from pages.login_page import LoginPage
 from pages.search_results_page import SearchResultsPage
 
 
@@ -24,12 +25,15 @@ class HomePage(BasePage):
         self.btn_search = page.locator("#search").get_by_role("button")
         self.main_menu = page.locator("#menu")
         self.footer = page.locator("footer")
+        self.lnk_logout = self.dropdown_menu.get_by_role("link", name="Logout")
+        self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
 
         # ==================================================
         # Category Navigation
         # ==================================================
         self.lnk_desktops = page.locator('#menu .nav > li > a:has-text("Desktops")')
         self.lnk_pc = page.get_by_role("link", name="PC (0)", exact=True)
+        self.lnk_show_all_desktops = page.locator('#menu a.see-all:has-text("Desktops")')
 
         # ==================================================
         # Hero Slider
@@ -48,6 +52,14 @@ class HomePage(BasePage):
         # ==================================================
         self.txt_featured_heading = page.get_by_role("heading", name="Featured")
         self.list_featured_products = page.locator("#content .product-layout")
+        self.lnk_featured_product_name = self.list_featured_products.first.locator(".caption h4 a")
+        self.btn_compare_featured = self.list_featured_products.first.locator(
+            'button[data-original-title="Compare this Product"]'
+        )
+        self.compare_success_message = page.locator("div.alert.alert-success.alert-dismissible")
+        self.lnk_product_comparison = self.compare_success_message.get_by_role(
+            "link", name="product comparison"
+        )
 
         # ==================================================
         # Partner Carousel
@@ -153,9 +165,11 @@ class HomePage(BasePage):
 
     def click_search(self):
         self.click(self.btn_search)
+        return SearchResultsPage(self.page)
 
     def click_contact_us(self):
         """Click on the Contact Us link in the footer."""
+        self.lnk_contact_us.scroll_into_view_if_needed()
         self.click(self.lnk_contact_us)
 
     def click_desktops_category(self):
@@ -168,7 +182,7 @@ class HomePage(BasePage):
 
     def is_dropdown_menu_visible(self) -> bool:
         """Check if the dropdown menu is visible."""
-        return self.dropdown
+        return self.is_visible(self.dropdown_menu)
 
     # ===== Featured Section Methods =====
 
@@ -205,6 +219,13 @@ class HomePage(BasePage):
     def navigate_to_empty_pc_category(self):
         self.lnk_desktops.hover()
         self.lnk_pc.click()
+
+    def click_show_all_desktops(self):
+        """Click on Show All Desktops option."""
+
+        self.lnk_desktops.hover()
+
+        self.lnk_show_all_desktops.click(force=True)
 
     # ==================================================
     # Hero Slider Methods

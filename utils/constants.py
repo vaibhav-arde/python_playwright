@@ -81,3 +81,17 @@ INVALID_PHONE_NUMBERS = [
 ]
 
 expected_title = "Your Store"
+
+
+class FilePaths:
+    """Centralized file paths."""
+
+    ROOT_DIR = Path(__file__).resolve().parent.parent
+
+    AUTH_DIR = ROOT_DIR / "playwright" / ".auth"
+
+    SESSION_STORAGE_DIR = AUTH_DIR / "session_storage"
+
+    AUTH_STATE_PATH = AUTH_DIR / "auth_state.json"
+
+    AUTH_USER_PATH = AUTH_DIR / "registered_user.json"
