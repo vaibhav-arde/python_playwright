@@ -4,12 +4,11 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from utils.config import Config
-from utils.constants import UIRoutes
 
 
 @pytest.mark.critical
 @pytest.mark.ui
-def test_validate_timeout_of_the_login_session(context):
+def test_validate_timeout_of_the_login_session(context, base_url):
     # Close default tabs to avoid empty pages in headed mode
     pages = context.pages
     for p in pages:
@@ -20,7 +19,7 @@ def test_validate_timeout_of_the_login_session(context):
     login_page = LoginPage(page)
 
     # 1. Click on 'My Account' Dropmenu
-    page.goto(UIRoutes.BASE_URL)
+    page.goto(base_url)
     home_page.click_my_account()
 
     # 2. Click on 'Login' option

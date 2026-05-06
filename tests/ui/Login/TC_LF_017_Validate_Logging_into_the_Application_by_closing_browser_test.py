@@ -4,11 +4,10 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from utils.config import Config
-from utils.constants import UIRoutes
 
 
 @pytest.mark.ui
-def test_validate_logging_into_the_application_by_closing_browser(context):
+def test_validate_logging_into_the_application_by_closing_browser(context, base_url):
     # Use the context provided by pytest-playwright directly.
     # In headed mode, pytest-playwright creates one default page.
     # We close it first to avoid having an unused empty tab.
@@ -21,7 +20,7 @@ def test_validate_logging_into_the_application_by_closing_browser(context):
     login_page = LoginPage(page)
 
     # 1. Click on 'My Account' Dropmenu and navigate to Login page
-    page.goto(UIRoutes.BASE_URL)
+    page.goto(base_url)
     home_page.click_my_account()
     home_page.click_login()
 
@@ -35,7 +34,7 @@ def test_validate_logging_into_the_application_by_closing_browser(context):
     # 4. Open the Browser and open the Application URL
     page = context.new_page()
     home_page = HomePage(page)
-    page.goto(UIRoutes.BASE_URL)
+    page.goto(base_url)
 
     # 5. Validate Loggedin Session should be still maintained
     home_page.click_my_account()

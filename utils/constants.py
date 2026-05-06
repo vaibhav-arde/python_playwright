@@ -33,8 +33,8 @@ class Headers:
 class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
-    HOME = "index.php?route=common/home"
-    LOGIN = "/index.php?route=account/login"
+    HOME = "/"
+    LOGIN = "index.php?route=account/login"
     REGISTER = "index.php?route=account/register"
     MY_ACCOUNT = "/index.php?route=account/account"
     LOGOUT = "/index.php?route=account/logout"
