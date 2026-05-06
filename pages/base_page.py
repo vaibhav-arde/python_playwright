@@ -4,9 +4,10 @@
 # Provides reusable UI interaction methods following
 # the Page Object Model (POM) pattern.
 
+import re
 import logging
 
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, Locator, expect
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +70,29 @@ class BasePage:
 
     def get_text(self, locator: str | Locator) -> str:
         """Get the inner text of an element."""
-        return self.get_locator(locator).inner_text()
+        target = self.get_locator(locator)
+        text = target.inner_text()
+        logger.info(f"Got text from {target}: '{text}'")
+        return text
+
+    def hover(self, locator: str | Locator):
+        """Hover over an element."""
+        target = self.get_locator(locator)
+        target.hover()
+        logger.info(f"Hovered over: {target}")
+
+    def dispatch_event(self, locator: str | Locator, event: str):
+        """Fire a JS-level event on an element, bypassing CSS pointer-event blocking."""
+        target = self.get_locator(locator)
+        target.dispatch_event(event)
+        logger.info(f"Dispatched '{event}' event on: {target}")
+
+    def get_attribute(self, locator: str | Locator, name: str) -> str | None:
+        """Get the value of an attribute for an element."""
+        target = self.get_locator(locator)
+        value = target.get_attribute(name)
+        logger.info(f"Got attribute '{name}' from {target}: '{value}'")
+        return value
 
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
@@ -94,6 +117,11 @@ class BasePage:
     def get_url(self) -> str:
         """Return the current page URL."""
         return self.page.url
+
+    def verify_url(self, expected_url: str | re.Pattern):
+        """Verify the current page URL matches the expected URL (supports regex)."""
+        expect(self.page).to_have_url(expected_url)
+        logger.info(f"Verified URL matches: {expected_url}")
 
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""

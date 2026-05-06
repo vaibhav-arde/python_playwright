@@ -1,0 +1,37 @@
+import re
+import pytest
+from playwright.sync_api import expect
+
+from pages.home_page import HomePage
+from pages.search_results_page import SearchResultsPage
+from pages.product_comparison_page import ProductComparisonPage
+from utils.constants import UIRoutes
+from utils.data_loader import load_json_file
+
+
+@pytest.mark.regression
+@pytest.mark.ui
+@pytest.mark.parametrize(
+    "product_names",
+    load_json_file("test_data/product_comparison.json")["one_product"],
+)
+def test_navigate_to_product_compare_page_from_search_results(page, product_names):
+    """TC_PC_008 — Validate 'Product Compare' link navigation from Search Results."""
+    product_name = product_names[0]
+    home_page = HomePage(page)
+    search_results_page = SearchResultsPage(page)
+    comparison_page = ProductComparisonPage(page)
+
+    # Step 1: Enter any existing Product name into the Search text box field
+    home_page.enter_product_name(product_name)
+
+    # Step 2: Click on the button having search icon
+    home_page.click_search()
+
+    # Step 3: Click on 'Product Compare' link displayed in the Search Results page
+    expect(search_results_page.get_search_results_page_header()).to_be_visible()
+    search_results_page.click_product_compare_link()
+
+    # Acceptance Criteria: User should be taken to 'Product Compare' page
+    comparison_page.verify_url(re.compile(re.escape(UIRoutes.COMPARISON)))
+    expect(comparison_page.get_page_heading()).to_be_visible()
