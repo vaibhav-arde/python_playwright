@@ -1,14 +1,10 @@
 # pages/home_page.py
 # =====================
-# Page Object for the Home Page.
-# Inherits from BasePage for reusable UI interaction methods.
 
-import re
-
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
-from pages.login_page import LoginPage
+from pages.search_results_page import SearchResultsPage
 
 
 class HomePage(BasePage):
@@ -17,84 +13,141 @@ class HomePage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        # ===== Locators =====
-        # This is the dropdown toggle that opens the account menu.
-        self.lnk_my_account = page.locator('#top-links a[title="My Account"]')
-        self.lnk_register = page.locator(
-            "#top-links ul.dropdown-menu.dropdown-menu-right"
-        ).get_by_text("Register", exact=True)
-        self.lnk_login = page.locator(
-            "#top-links ul.dropdown-menu.dropdown-menu-right"
-        ).get_by_text("Login", exact=True)
-        self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
-        # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
-        self.lnk_show_all_desktops = page.get_by_role(
-            "link", name=re.compile(r"Show All\s*Desktops")
-        )
-        self.txt_search_box = page.locator('input[placeholder="Search"]')
-        self.btn_search = page.locator('#search button[type="button"]')
-        self.lnk_logout = page.locator('a:has-text("Logout")')
-        self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
-        self.lnk_desktops = page.get_by_role("link", name="Desktops")
-        self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
-        self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
+        # ==================================================
+        # Header Locators
+        # ==================================================
+        self.lnk_my_account = page.locator('span:has-text("My Account")')
+        self.dropdown_menu = page.locator("li.dropdown.open ul.dropdown-menu")
+        self.lnk_register = self.dropdown_menu.get_by_role("link", name="Register")
+        self.lnk_login = self.dropdown_menu.get_by_role("link", name="Login")
+        self.txt_search_box = page.get_by_placeholder("Search")
+        self.btn_search = page.locator("#search").get_by_role("button")
+        self.main_menu = page.locator("#menu")
+        self.footer = page.locator("footer")
 
-        # ===== Featured Section Locators =====
-        self.featured_products_section = page.locator(
-            'h3:has-text("Featured") ~ .row .product-thumb'
-        )
-        self.btn_compare_featured = (
-            self.featured_products_section.first.get_by_role("button")
-            .filter(has=page.locator(".fa-exchange"))
-            .first
-        )
-        self.lnk_featured_product_name = self.featured_products_section.first.locator("h4 a")
-        self.compare_success_message = page.locator("div.alert.alert-success.alert-dismissible")
-        self.lnk_product_comparison = self.compare_success_message.get_by_role(
-            "link", name="product comparison"
-        )
+        # ==================================================
+        # Category Navigation
+        # ==================================================
+        self.lnk_desktops = page.locator('#menu .nav > li > a:has-text("Desktops")')
+        self.lnk_pc = page.get_by_role("link", name="PC (0)", exact=True)
 
-    # ===== Action Methods =====
+        # ==================================================
+        # Hero Slider
+        # ==================================================
+        self.cnt_hero_slider = page.locator("#slideshow0")
+        self.btn_slider_next = self.cnt_hero_slider.locator(".swiper-button-next")
+        self.btn_slider_prev = self.cnt_hero_slider.locator(".swiper-button-prev")
+        self.list_slider_images = self.cnt_hero_slider.locator(".swiper-slide img")
+        self.list_slider_pagination = self.cnt_hero_slider.locator(".swiper-pagination-bullet")
+        self.img_active_hero = self.cnt_hero_slider.locator(
+            ".swiper-slide-active img, .swiper-slide-duplicate-active img"
+        ).first
 
-    def get_home_page_title(self) -> str:
-        """Return the title of the Home Page."""
-        return self.get_title()
+        # ==================================================
+        # Featured Products
+        # ==================================================
+        self.txt_featured_heading = page.get_by_role("heading", name="Featured")
+        self.list_featured_products = page.locator("#content .product-layout")
+
+        # ==================================================
+        # Partner Carousel
+        # ==================================================
+        self.partner_carousel = page.locator("#carousel0")
+        self.partner_slides = self.partner_carousel.locator(".swiper-slide")
+        self.active_partner = self.partner_carousel.locator(".swiper-slide-active").first
+        self.btn_partner_next = self.partner_carousel.locator(".swiper-button-next")
+        self.btn_partner_prev = self.partner_carousel.locator(".swiper-button-prev")
+        self.partner_pagination = self.partner_carousel.locator(".swiper-pagination-bullet")
+
+        # ==================================================
+        # Breadcrumb
+        # ==================================================
+        self.icon_breadcrumb_home = page.locator("ul.breadcrumb li:first-child a")
+
+    # ==================================================
+    # Header Actions
+    # ==================================================
 
     def click_my_account(self):
-        """Click on the 'My Account' link."""
+        self.wait_visible(self.lnk_my_account)
         self.click(self.lnk_my_account)
 
     def click_register(self):
-        """Click on the 'Register' link under My Account."""
+        self.wait_visible(self.dropdown_menu)
         self.click(self.lnk_register)
 
     def click_login(self):
-        """Click on the 'Login' link under My Account."""
+        self.wait_visible(self.dropdown_menu)
         self.click(self.lnk_login)
         return LoginPage(self.page)
 
-    def get_desktops_menu(self):
-        """Return the 'Desktops' menu locator."""
-        return self.lnk_desktops_menu
+    # ==================================================
+    # Visibility Methods
+    # ==================================================
 
-    def hover_desktops_menu(self):
-        """Hover over the 'Desktops' top menu."""
-        self.hover(self.lnk_desktops_menu)
+    def verify_logo_visible(self):
+        self.verify_visible(self.img_logo)
 
-    def get_show_all_desktops_link(self):
-        """Return the 'Show All Desktops' menu link locator."""
-        return self.lnk_show_all_desktops
+    def verify_search_bar_visible(self):
+        self.verify_visible(self.txt_search_box)
 
-    def click_show_all_desktops(self):
-        """Click on the 'Show All Desktops' option under Desktops."""
-        self.click(self.lnk_show_all_desktops)
+    def verify_main_menu_visible(self):
+        self.verify_visible(self.main_menu)
+
+    def verify_footer_visible(self):
+        self.verify_visible(self.footer)
+
+    def verify_slider_is_visible(self):
+        self.verify_visible(self.cnt_hero_slider)
+
+    def verify_featured_section_visible(self):
+        self.verify_visible(self.txt_featured_heading)
+
+    def verify_partner_carousel_visible(self):
+        self.verify_visible(self.partner_carousel)
+
+    def verify_partner_logos_visible(self):
+        self.verify_visible(self.partner_slides.first)
+
+    def verify_pagination_is_visible(self):
+        if self.list_slider_pagination.count() > 0:
+            self.verify_visible(self.list_slider_pagination.first)
+
+    def verify_partner_pagination_visible(self):
+        if self.partner_pagination.count() > 0:
+            self.verify_visible(self.partner_pagination.first)
+
+    # ==================================================
+    # Grouped Methods
+    # ==================================================
+
+    def verify_home_page_ui(self):
+        self.verify_logo_visible()
+        self.verify_search_bar_visible()
+        self.verify_main_menu_visible()
+        self.verify_slider_is_visible()
+        self.verify_featured_section_visible()
+        self.verify_footer_visible()
+        self.verify_partner_carousel_visible()
+        self.verify_partner_logos_visible()
+
+    def verify_partner_carousel_section(self):
+        self.verify_partner_carousel_visible()
+        self.verify_partner_logos_visible()
+        self.verify_multiple_partner_logos()
+        self.verify_partner_navigation_buttons_visible()
+        self.verify_partner_pagination_visible()
+        self.verify_partner_next_button_working()
+        self.verify_partner_slider_working()
+
+    # ==================================================
+    # Search Methods
+    # ==================================================
 
     def enter_product_name(self, product_name: str):
-        """Enter the product name into the search input box."""
         self.fill(self.txt_search_box, product_name)
 
     def click_search(self):
-        """Click on the search button to initiate the product search."""
         self.click(self.btn_search)
 
     def click_contact_us(self):
@@ -139,3 +192,107 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+        return SearchResultsPage(self.page)
+
+    # ==================================================
+    # Category Navigation
+    # ==================================================
+
+    def navigate_to_empty_pc_category(self):
+        self.lnk_desktops.hover()
+        self.lnk_pc.click()
+
+    # ==================================================
+    # Hero Slider Methods
+    # ==================================================
+
+    def get_slider_images_count(self) -> int:
+        self.verify_visible(self.img_active_hero)
+        return self.list_slider_images.count()
+
+    def verify_slider_images_present(self):
+        assert self.get_slider_images_count() > 0
+
+    def verify_navigation_buttons_are_visible(self):
+        if self.btn_slider_next.count() > 0:
+            self.verify_visible(self.btn_slider_next)
+
+        if self.btn_slider_prev.count() > 0:
+            self.verify_visible(self.btn_slider_prev)
+
+    def click_slider_next(self):
+        if self.btn_slider_next.count() > 0:
+            self.click(self.btn_slider_next)
+
+    def click_slider_prev(self):
+        if self.btn_slider_prev.count() > 0:
+            self.click(self.btn_slider_prev)
+
+    def get_active_image_src(self) -> str:
+        return self.img_active_hero.get_attribute("src") or ""
+
+    def verify_image_changed(self, previous_src: str):
+        expect(self.img_active_hero).not_to_have_attribute("src", previous_src)
+
+    # ==================================================
+    # Featured Products
+    # ==================================================
+
+    def get_featured_products_count(self) -> int:
+        return self.list_featured_products.count()
+
+    def verify_four_featured_products(self):
+        assert self.get_featured_products_count() == 4
+
+    # ==================================================
+    # Partner Carousel
+    # ==================================================
+
+    def get_partner_logos_count(self) -> int:
+        return self.partner_slides.count()
+
+    def verify_multiple_partner_logos(self):
+        assert self.get_partner_logos_count() >= 5
+
+    def get_active_partner_index(self) -> str:
+        return self.active_partner.get_attribute("data-swiper-slide-index") or ""
+
+    def verify_partner_navigation_buttons_visible(self):
+        if self.btn_partner_next.count() > 0:
+            self.verify_visible(self.btn_partner_next)
+
+        if self.btn_partner_prev.count() > 0:
+            self.verify_visible(self.btn_partner_prev)
+
+    def click_partner_next(self):
+        if self.btn_partner_next.count() > 0:
+            self.btn_partner_next.click(force=True)
+
+    def click_partner_prev(self):
+        if self.btn_partner_prev.count() > 0:
+            self.btn_partner_prev.click(force=True)
+
+    def verify_partner_next_button_working(self):
+        before = self.get_active_partner_index()
+        self.click_partner_next()
+
+        expect(self.active_partner).not_to_have_attribute(
+            "data-swiper-slide-index",
+            before,
+        )
+
+    def verify_partner_slider_working(self):
+        before = self.get_active_partner_index()
+
+        expect(self.active_partner).not_to_have_attribute(
+            "data-swiper-slide-index",
+            before,
+        )
+
+    # ==================================================
+    # Breadcrumb
+    # ==================================================
+
+    def click_breadcrumb_home(self):
+        self.wait_visible(self.icon_breadcrumb_home)
+        self.icon_breadcrumb_home.click(force=True)
