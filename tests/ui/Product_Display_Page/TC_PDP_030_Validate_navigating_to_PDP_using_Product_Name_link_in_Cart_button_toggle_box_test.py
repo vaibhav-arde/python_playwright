@@ -22,7 +22,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_cart_button_toggl
     product_page = ProductPage(page)
     registration_page = RegistrationPage(page)
 
-
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
     home_page.click_my_account()
@@ -40,16 +39,16 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_cart_button_toggl
 
     expected_name = product_page.get_product_name()
     product_page.add_to_cart()
-    expect(product_page.get_any_alert_message()).to_be_visible()
+    expect(product_page.get_confirmation_message()).to_be_visible()
 
     # Step 3: Click on Cart button to open toggle box
-    product_page.click_cart_button()
+    product_page.click_items_to_navigate_to_cart()
 
     # Step 4: Click name link in the toggle box
     product_page.click_cart_name_link()
 
     # Validation: Navigate to PDP
-    expect(product_page.lbl_product_name).to_be_visible(timeout=10000)
+    expect(product_page.get_page_heading()).to_be_visible(timeout=10000)
     actual_name = product_page.get_product_name()
     assert expected_name in actual_name, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_name, actual=actual_name

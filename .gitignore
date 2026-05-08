@@ -32,12 +32,10 @@ htmlcov/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-<<<<<<< HEAD
 
 # Session Storage
 session_storage/auth_state.json
 session_storage/auth_user.json
-=======
 .claude/
 
 # Temporary scratch space & scripts
@@ -47,4 +45,3 @@ refactor_script.py
 # Local test output logs
 *.txt
 *.xml
->>>>>>> a68fd65 (Refactor PDP test cases (TC_PDP_007-016) to follow framework guidelines and update .gitignore)

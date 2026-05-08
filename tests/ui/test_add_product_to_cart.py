@@ -16,15 +16,13 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from utils.config import Config
-from utils.constants import TestData
 
 
 @pytest.mark.regression
-@pytest.mark.xfail
 def test_add_product_to_cart(page):
     """Verify user can search and add a product to the cart."""
 
-    product_name = TestData.PRODUCT_NAME_IMAC
+    product_name = Config.product_name
     quantity = Config.product_quantity
 
     home_page = HomePage(page)

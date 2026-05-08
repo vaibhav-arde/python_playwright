@@ -87,3 +87,37 @@ class FilePaths:
     SESSION_STORAGE_DIR = Path("session_storage")
     AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
+
+
+class UIIndexes:
+    FIRST_ADDITIONAL_THUMBNAIL = 0
+
+
+class UIAttributes:
+    IMAGE_SOURCE = "src"
+
+
+class TestData:
+    # Test Data
+    VALID_PASSWORD = "Test@123"
+    DEFAULT_PASSWORD = "Password123"
+    DEFAULT_TELEPHONE = "1234567890"
+    INVALID_PASSWORD = "123"
+
+    PRODUCT_NAME_IMAC = "iMac"
+    PRODUCT_NAME_HTC = "HTC Touch HD"
+    PRODUCT_NAME_MACBOOK = "MacBook"
+    PRODUCT_NAME_APPLE_CINEMA_30 = 'Apple Cinema 30"'
+    PRODUCTS_WITH_SPECIFICATION_TAB = [PRODUCT_NAME_APPLE_CINEMA_30, PRODUCT_NAME_MACBOOK]
+    REVIEW_AUTHOR_NAME = "Automation Reviewer"
+    REVIEW_TEXT_VALID = "This is an automation review submitted for test validation."
+    REVIEW_RATING_VALUE = "5"
+    REVIEW_TEXT_TOO_SHORT = "Short review"
+    REVIEW_TEXT_TOO_LONG = "A" * 1001
+    CART_TARGET_QUANTITY = "2"
+    INVALID_PRODUCT_QUANTITY = "0"
+    MINIMUM_PRODUCT_QUANTITY = "2"
+    BELOW_MINIMUM_PRODUCT_QUANTITY = "1"
+    ABOVE_MINIMUM_PRODUCT_QUANTITY = "3"
+    EMPTY_VALUE = ""
+    COMMA_SPACE_SEPARATOR = ", "

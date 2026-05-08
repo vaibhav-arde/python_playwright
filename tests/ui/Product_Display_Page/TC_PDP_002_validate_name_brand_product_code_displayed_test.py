@@ -32,15 +32,12 @@ def test_validate_name_brand_product_code_displayed(page: Page):
 
     # Step 3: Capture product name dynamically from Search Results and open it
     product_in_results = search_results_page.is_product_exist(search_keyword)
-<<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_002_validate_name_brand_product_code_displayed_test.py
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=search_keyword)
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-========
     assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
         keyword=search_keyword
     )
     expected_product_name = product_in_results.text_content().strip()
->>>>>>>> a50202b (style: fix formatting issues):tests/ui/ProductDisplayPage/TC_PDP_002_validate_name_brand_product_code_displayed_test.py
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
     search_results_page.select_product(expected_product_name)
 
