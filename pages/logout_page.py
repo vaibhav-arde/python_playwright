@@ -11,9 +11,7 @@ from pages.base_page import BasePage
 # Page Object for the Logout Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page
 
-from pages.base_page import BasePage
 
 
 class LogoutPage(BasePage):

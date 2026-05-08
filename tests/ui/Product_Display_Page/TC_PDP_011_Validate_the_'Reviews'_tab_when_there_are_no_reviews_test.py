@@ -67,8 +67,4 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
     ), messages.PDP_NO_REVIEWS_TEXT_MISMATCH.format(
         expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
     )
-========
-    assert (
-        actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT
-    ), f"Expected text '{messages.PDP_NO_REVIEWS_TEXT}' but got '{actual_no_reviews_text}'"
->>>>>>>> a50202b (style: fix formatting issues):tests/ui/ProductDisplayPage/TC_PDP_011_Validate_the_'Reviews'_tab_when_there_are_no_reviews_test.py
+
