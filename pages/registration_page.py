@@ -27,11 +27,12 @@ class RegistrationPage(BasePage):
         self.btn_continue = page.locator(
             'input[value="Continue"], a.btn.btn-primary:has-text("Continue")'
         )
-        self.msg_confirmation = page.locator('h1:has-text("Your Account Has Been Created!")')
+        self.msg_confirmation = page.locator(f'h1:has-text("{messages.SUCCESS_REGISTER_MSG}")')
         self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
         self.msg_privacy_policy_warning = page.locator("#account-register > div.alert.alert-danger.alert-dismissible")
         self.lnk_login = page.get_by_role("link", name="Login")
         self.lnk_breadcrumb = page.locator("#account-register ul.breadcrumb")
+        self.login_page_link = page.get_by_role("link", name="login page")
 
         # ===== Error Message Locators =====
         self.err_privacy_policy = page.locator("div.alert-danger")
@@ -74,13 +75,20 @@ class RegistrationPage(BasePage):
         """Select the Privacy Policy checkbox."""
         self.check(self.chk_policy)
 
-    def set_newsletter_subscription(self, locator: str | Locator):
-        """Select the newsletter subscription option."""
-        self.check(locator)
+    def set_newsletter_subscription(self, is_yes: bool = True):
+        """Select newsletter subscription option."""
+        if is_yes:
+            self.check(self.radio_newsletter_yes)
+        else:
+            self.check(self.radio_newsletter_no)
 
     def click_continue(self):
         """Click the Continue button to submit the registration form."""
         self.click(self.btn_continue)
+
+    def click_login_page_link(self):
+        """Click on the 'Login Page' link."""
+        self.click(self.login_page_link)
 
     def get_confirmation_msg(self):
         """Return the confirmation message locator."""
@@ -133,7 +141,7 @@ class RegistrationPage(BasePage):
 
     # ===== Combined Workflow =====
 
-    def complete_registration(self, user_data: dict, newsletter_locator: Locator = None):
+    def complete_registration(self, user_data: dict, subscribe_newsletter: bool = False, newsletter_locator: Locator = None):
         """Complete the full registration process using a data dictionary."""
         self.set_first_name(user_data["firstName"])
         self.set_last_name(user_data["lastName"])
@@ -142,8 +150,9 @@ class RegistrationPage(BasePage):
         self.set_password(user_data["password"])
         self.set_confirm_password(user_data["password"])
         if newsletter_locator:
-            self.set_newsletter_subscription(newsletter_locator)
+            self.check(newsletter_locator)
+        elif subscribe_newsletter:
+            self.set_newsletter_subscription(True)
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
-

@@ -18,6 +18,7 @@ class BasePage:
         """Initialize with a Playwright Page instance."""
         self.page = page
 
+
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
         if isinstance(locator, str):
@@ -27,6 +28,15 @@ class BasePage:
     def open(self, path: str = "/"):
         """Navigate to a path relative to the current base URL."""
         self.page.goto(path)
+        self.page.wait_for_load_state("load")
+
+        # Handle landing page redirect loop if it occurs
+        # The demo site sometimes requires multiple clicks through the landing page
+        while self.page.get_by_role("link", name="https://tutorialsninja.com/demo").is_visible():
+            logger.info("Landing page detected, clicking through...")
+            self.page.get_by_role("link", name="https://tutorialsninja.com/demo").click()
+            self.page.wait_for_load_state("load")
+
         logger.info(f"Navigated to: {path}")
 
     def click(self, locator: str | Locator):
@@ -70,6 +80,10 @@ class BasePage:
     def get_text(self, locator: str | Locator) -> str:
         """Get the inner text of an element."""
         return self.get_locator(locator).inner_text()
+
+    def get_count(self, locator: str | Locator) -> int:
+        """Get the number of elements matching the locator."""
+        return self.get_locator(locator).count()
 
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""

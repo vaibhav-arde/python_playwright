@@ -16,19 +16,35 @@ class LoginPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
+<<<<<<< HEAD
         self.txt_email_address = page.locator("#input-email")
         self.txt_password = page.locator("#input-password")
         self.btn_login = page.locator('input[value="Login"]')
         self.txt_error_message = page.locator(".alert.alert-danger.alert-dismissible")
+=======
+        self.txt_email_address = page.get_by_label("E-Mail Address")
+        self.txt_password = page.get_by_label("Password")
+        self.btn_login = page.get_by_role("button", name="Login")
+        self.txt_error_message = page.locator("#account-login .alert.alert-danger, .alert.alert-danger.alert-dismissible")
+>>>>>>> feature/Add_to_Cart_functionality
         self.txt_login_attempts_error = page.get_by_text(messages.WARN_LOGIN_ATTEMPTS_EXCEEDED)
         self.lnk_forgot_password = page.locator("#content").get_by_role(
             "link", name=messages.FORGOT_PASSWORD
         )
+<<<<<<< HEAD
         self.btn_continue = page.get_by_role("link", name="Continue")
         self.lnk_register_right = page.get_by_role("link", name="Register")
         self.right_column_login = page.locator("#column-right").get_by_role("link", name="Login")
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.page_heading = page.locator("h1")
+=======
+        self.btn_continue_register = page.locator("div.well").get_by_role("link", name="Continue")
+        self.right_column_login = page.locator("#column-right").get_by_role("link", name="Login")
+        self.breadcrumb = page.locator("ul.breadcrumb")
+        self.page_heading = page.locator("h1")
+        self.btn_continue = page.get_by_role("link", name="Continue")
+        self.lnk_register_right = page.get_by_role("link", name="Register")
+>>>>>>> feature/Add_to_Cart_functionality
 
     # ===== Action Methods =====
 
@@ -62,6 +78,7 @@ class LoginPage(BasePage):
         self.set_password(password)
         self.click_login()
 
+<<<<<<< HEAD
     def click_continue(self):
         """Click the Continue button."""
         self.click(self.btn_continue)
@@ -69,6 +86,11 @@ class LoginPage(BasePage):
     def click_continue_register(self):
         """Click the Continue button under New Customer section."""
         self.click(self.btn_continue)
+=======
+    def click_continue_register(self):
+        """Click the Continue button under New Customer section."""
+        self.click(self.btn_continue_register)
+>>>>>>> feature/Add_to_Cart_functionality
 
     def get_login_error(self):
         """Return the error message element if login fails."""
@@ -135,6 +157,15 @@ class LoginPage(BasePage):
         """Return the page heading element."""
         return self.page_heading
 
+<<<<<<< HEAD
     def click_right_column_register(self):
         """Click on the 'Register' link in the right column."""
+=======
+    def click_continue(self):
+        """Click the Continue button after logging out."""
+        self.click(self.btn_continue)
+
+    def click_right_column_register(self):
+        """Click the Register button in the right column."""
+>>>>>>> feature/Add_to_Cart_functionality
         self.click(self.lnk_register_right)
