@@ -164,3 +164,8 @@ PDP_NO_REVIEWS_TEXT_MISMATCH = "Expected text '{expected}' but got '{actual}'"
 PDP_REVIEW_COUNT_TEXT_MISMATCH = "Expected 'reviews' count in text but got '{actual}'"
 GENERIC_SUCCESS_ALERT_MISMATCH = "Success alert message mismatch: expected '{expected}', but got '{actual}'"
 PRODUCT_NOT_IN_WISHLIST = "Product '{product}' not found in Wish List"
+
+COMPARISON_PAGE_TITLE = "Product Comparison"
+COMPARISON_PAGE_HEADING = "Product Comparison"
+COMPARE_BUTTON_TOOLTIP = "Compare this Product"
+COMPARE_SUCCESS = "Success: You have added {product_name} to your product comparison!"

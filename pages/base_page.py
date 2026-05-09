@@ -4,9 +4,10 @@
 # Provides reusable UI interaction methods following
 # the Page Object Model (POM) pattern.
 
+import re
 import logging
 
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, Locator, expect
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ class BasePage:
     def __init__(self, page: Page):
         """Initialize with a Playwright Page instance."""
         self.page = page
-
+        self.lnk_site_map = page.get_by_role("link", name="Site Map")
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
@@ -28,15 +29,6 @@ class BasePage:
     def open(self, path: str = "/"):
         """Navigate to a path relative to the current base URL."""
         self.page.goto(path)
-        self.page.wait_for_load_state("load")
-
-        # Handle landing page redirect loop if it occurs
-        # The demo site sometimes requires multiple clicks through the landing page
-        while self.page.get_by_role("link", name="https://tutorialsninja.com/demo").is_visible():
-            logger.info("Landing page detected, clicking through...")
-            self.page.get_by_role("link", name="https://tutorialsninja.com/demo").click()
-            self.page.wait_for_load_state("load")
-
         logger.info(f"Navigated to: {path}")
 
     def click(self, locator: str | Locator):
@@ -79,13 +71,45 @@ class BasePage:
 
     def get_text(self, locator: str | Locator) -> str:
         """Get the inner text of an element."""
-        return self.get_locator(locator).inner_text()
+        target = self.get_locator(locator)
+        text = target.inner_text()
+        logger.info(f"Got text from {target}: '{text}'")
+        return text
+
+    def hover(self, locator: str | Locator):
+        """Hover over an element."""
+        target = self.get_locator(locator)
+        target.hover()
+        logger.info(f"Hovered over: {target}")
+
+    def dispatch_event(self, locator: str | Locator, event: str):
+        """Fire a JS-level event on an element, bypassing CSS pointer-event blocking."""
+        target = self.get_locator(locator)
+        target.dispatch_event(event)
+        logger.info(f"Dispatched '{event}' event on: {target}")
+
+    def get_attribute(self, locator: str | Locator, name: str) -> str | None:
+        """Get the value of an attribute for an element."""
+        target = self.get_locator(locator)
+        value = target.get_attribute(name)
+        logger.info(f"Got attribute '{name}' from {target}: '{value}'")
+        return value
 
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
         target = self.get_locator(locator)
         target.wait_for(state=state, timeout=timeout)
         logger.info(f"Element {target} reached state: {state}")
+
+    def tab_until_focused(self, locator: str | Locator, max_tabs: int = 50):
+        """Press Tab until the specified locator is focused."""
+        target = self.get_locator(locator)
+        for _ in range(max_tabs):
+            if target.and_(self.page.locator(":focus")).count() > 0:
+                logger.info(f"Element {target} is now focused")
+                return
+            self.page.keyboard.press("Tab")
+        raise RuntimeError(f"Could not reach {target} using Tab after {max_tabs} attempts.")
 
     def get_title(self) -> str:
         """Return the page title."""
@@ -95,19 +119,15 @@ class BasePage:
         """Return the current page URL."""
         return self.page.url
 
+    def verify_url(self, expected_url: str | re.Pattern):
+        """Verify the current page URL matches the expected URL (supports regex)."""
+        expect(self.page).to_have_url(expected_url)
+        logger.info(f"Verified URL matches: {expected_url}")
+
     def get_warning(self, field_id: str) -> Locator:
         """Return the .text-danger warning element adjacent to a field by its ID."""
         return self.page.locator(f"#{field_id} + .text-danger")
 
-    def get_element_attribute(self, element, attribute_name: str):
-        """
-        Return the value of a given attribute from a locator.
-
-        Args:
-            element: Playwright locator
-            attribute_name (str): HTML attribute name
-
-        Returns:
-            str | None: Attribute value if present, else None
-        """
-        return element.get_attribute(attribute_name)
+    def click_site_map(self):
+        """Click on the 'Site Map' link in the footer."""
+        self.click(self.lnk_site_map)
