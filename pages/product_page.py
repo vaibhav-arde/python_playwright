@@ -1,4 +1,4 @@
-# pages/product_page.py
+﻿# pages/product_page.py
 # =====================
 # Page Object for the Product Page.
 # Inherits from BasePage for reusable UI interaction methods.

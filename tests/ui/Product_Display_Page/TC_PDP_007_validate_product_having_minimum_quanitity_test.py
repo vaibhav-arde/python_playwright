@@ -48,8 +48,6 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
 
     minimum_qty_info = product_page.get_minimum_quantity_info_text()
     assert minimum_qty_info != TestData.EMPTY_VALUE, messages.PDP_MIN_QTY_INFO_EMPTY
-    assert TestData.MINIMUM_PRODUCT_QUANTITY in minimum_qty_info, messages.PDP_MIN_QTY_INFO_MISSING_VALUE.format(
-    assert minimum_qty_info != "", messages.PDP_MIN_QTY_INFO_EMPTY
     assert (
         TestData.MINIMUM_PRODUCT_QUANTITY in minimum_qty_info
     ), messages.PDP_MIN_QTY_INFO_MISSING_VALUE.format(
@@ -63,8 +61,6 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
 
     feedback_text = " ".join(product_page.any_alert_msg.all_text_contents()).strip()
     assert feedback_text != TestData.EMPTY_VALUE, messages.PDP_MIN_QTY_WARNING_NOT_VISIBLE
-    assert TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text, messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(
-    assert feedback_text != "", messages.PDP_MIN_QTY_WARNING_NOT_VISIBLE
     assert (
         TestData.MINIMUM_PRODUCT_QUANTITY in feedback_text
     ), messages.PDP_MIN_QTY_WARNING_MISSING_QTY.format(

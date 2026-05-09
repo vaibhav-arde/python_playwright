@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import expect, Page
+from playwright.sync_api import Page
 
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
@@ -10,7 +10,7 @@ from utils import messages
 @pytest.mark.ui
 @pytest.mark.regression
 def test_validate_review_text_character_range(page: Page):
-    
+
     """
     Test Case ID: TC_PDP_018
     Validate the review text given while writing is accepted according to the specified number of characters (25 to 1000)

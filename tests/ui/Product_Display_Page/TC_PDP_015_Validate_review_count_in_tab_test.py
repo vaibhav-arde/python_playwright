@@ -58,9 +58,9 @@ def test_validate_review_count_in_tab(page: Page):
 
     # Step 5: Check the count of reviews in the 'Reviews' tab label
     expect(product_page.lnk_review_tab).to_be_visible(), messages.PDP_REVIEW_TAB_NOT_VISIBLE
-    
+
     tab_text = product_page.get_text(product_page.lnk_review_tab).strip()
-    
+
 
     tab_text = product_page.lnk_review_tab.text_content().strip()
 

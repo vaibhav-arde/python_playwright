@@ -45,10 +45,6 @@ def test_validate_the_specifications(page: Page):
 
     assert selected_product_name != TestData.EMPTY_VALUE, messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
         products=TestData.COMMA_SPACE_SEPARATOR.join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
-    assert (
-        selected_product_name != ""
-    ), messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
-        products=", ".join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
     )
 
     # Step 4 (ER-1): Open Specification tab and validate specifications

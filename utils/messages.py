@@ -13,15 +13,26 @@ WARN_PRIVACY_POLICY = "Warning: You must agree to the Privacy Policy!"
 WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
 WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
 
-# ===== Product Comparison =====
-COMPARISON_PAGE_TITLE = "Product Comparison"
-COMPARISON_PAGE_HEADING = "Product Comparison"
-COMPARE_BUTTON_TOOLTIP = "Compare this Product"
-COMPARE_SUCCESS = "Success: You have added {product_name} to your product comparison!"
+# =======
+INVALID_LOGIN_MSG = "Warning: No match for E-Mail Address and/or Password."
+PRIVACY_POLICY_WARNING_MSG = "Warning: You must agree to the Privacy Policy!"
+SUCCESS_REGISTER_MSG = "Your Account Has Been Created!"
 
-# ===== Login Field error message =====
+# ===== Product Display Page / Cart Messages =====
+SUCCESS_ALERT_KEYWORD = "Success"
+WARNING_ALERT_KEYWORD = "Warning"
+INVALID_QTY_ALERT_EXPECTATION = "Expected success or warning alert for invalid quantity input"
+AVAILABILITY_STATUS_EMPTY = "Availability status should not be empty"
+AVAILABILITY_STATUS_UNEXPECTED = "Unexpected availability status: '{status}'"
+SEARCH_RESULT_PRODUCT_NOT_FOUND = "No product found in search results for '{keyword}'"
+SEARCH_RESULT_PRODUCT_NAME_EMPTY = "Product Name in search results should not be empty"
+PDP_PRODUCT_NAME_MISMATCH = "Expected Product Name '{expected}', but got '{actual}'"
+PDP_PRODUCT_BRAND_EMPTY = "Product Brand should not be empty"
+PDP_PRODUCT_CODE_EMPTY = "Product Code should not be empty"
+THUMBNAIL_SRC_SHOULD_CHANGE_ON_NEXT = "Lightbox image source should change after clicking next"
+
+# ===== Common UI messages =====
 WARN_LOGIN_ERROR = "Warning: No match for E-Mail Address and/or Password."
-
 ACCOUNT_PAGE_TITLE = "My Account"
 FORGOT_PASSWORD = "Forgotten Password"
 LOGIN_PAGE_TITLE = "Account Login"
@@ -151,3 +162,5 @@ RELATED_PRODUCT_NOT_FOUND = "Related products section not found or empty"
 ADD_TO_CART_LINK_NOT_FOUND = "Product link in 'Add to Cart' success message not found"
 PDP_NO_REVIEWS_TEXT_MISMATCH = "Expected text '{expected}' but got '{actual}'"
 PDP_REVIEW_COUNT_TEXT_MISMATCH = "Expected 'reviews' count in text but got '{actual}'"
+GENERIC_SUCCESS_ALERT_MISMATCH = "Success alert message mismatch: expected '{expected}', but got '{actual}'"
+PRODUCT_NOT_IN_WISHLIST = "Product '{product}' not found in Wish List"

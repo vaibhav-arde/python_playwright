@@ -43,6 +43,7 @@ class UIRoutes:
     CHECKOUT = "/index.php?route=checkout/checkout"
     COMPARISON = "index.php?route=product/compare"
     CHANGE_PASSWORD = "index.php?route=account/password"
+    INDEX_ENTRY = "/index.php"
 
 
 class UserDetails:
@@ -121,3 +122,27 @@ class TestData:
     ABOVE_MINIMUM_PRODUCT_QUANTITY = "3"
     EMPTY_VALUE = ""
     COMMA_SPACE_SEPARATOR = ", "
+
+
+class UILabels:
+    # UI Page Headings
+    REGISTER_PAGE_HEADING = "Register Account"
+    REGISTER_BREADCRUMB = "Register"
+    WISHLIST_PAGE_HEADING = "My Wish List"
+    CART_PAGE_HEADING = "Shopping Cart"
+
+
+class UITitles:
+    REGISTER_PAGE_TITLE = "Register Account"
+
+
+class UITimeouts:
+    CART_ALERT_WAIT_MS = 5000
+
+
+class UIAvailability:
+    VALID_PRODUCT_STATUSES = ["In Stock", "Out Of Stock", "Pre-Order", "2-3 Days"]
+
+
+class UIPricing:
+    CURRENCY_SYMBOLS = ["$", "\u20ac", "\u00a3"]
