@@ -17,23 +17,17 @@ class MyAccountPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.msg_heading = page.locator('h2:has-text("My Account")')
-        self.lnk_logout = page.locator("text='Logout'").nth(1)
-        self.newsletter_subscription = page.locator(
-            "a:has-text('Subscribe / unsubscribe to newsletter')"
-        )
+        self.msg_heading = page.get_by_role("heading", name="My Account")
+        self.lnk_logout = page.get_by_role("link", name="Logout").nth(1)
+        self.newsletter_subscription = page.get_by_role("link", name="Subscribe / unsubscribe to newsletter")
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.lnk_edit_account = page.locator('a:has-text("Edit your account information")')
+        self.lnk_edit_account = page.get_by_role("link", name="Edit your account information")
 
         self.lnk_subscribe_unsubscribe_to_newsletter = page.locator("#column-right").get_by_role(
             "link", name="Newsletter"
         )
-        self.msg_newsletter_heading = page.locator("h1:has-text('Newsletter')")
-        self.lnk_change_password = page.locator("a:has-text('Change your password')")
-        self.lnk_right_column_password = page.locator("#column-right").get_by_role(
-            "link", name="Password"
-        )
+        self.msg_newsletter_heading = page.get_by_role("heading", name="Newsletter")
 
     # ===== Page Validation Methods =====
 
@@ -44,10 +38,6 @@ class MyAccountPage(BasePage):
     def get_newsletter_page_heading(self):
         """Returns the locator for Newsletter page."""
         return self.msg_newsletter_heading
-
-    def get_logout_link(self):
-        """Returns the locator for the 'Logout' link."""
-        return self.lnk_logout
 
     # ===== Logout Action =====
 
@@ -72,12 +62,3 @@ class MyAccountPage(BasePage):
         """Click on 'Edit your account information' and return EditAccountPage instance."""
         self.click(self.lnk_edit_account)
         return EditAccountPage(self.page)
-
-    # ===== Password Change Actions =====
-    def click_change_password_link(self):
-        """Click on 'Change your password' link."""
-        self.click(self.lnk_change_password)
-
-    def click_password_right_column(self):
-        """Click on the 'Password' link in the right column."""
-        self.click(self.lnk_right_column_password)

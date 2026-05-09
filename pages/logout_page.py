@@ -15,8 +15,7 @@ class LogoutPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.btn_continue = page.locator(".btn.btn-primary")
-        self.lnk_logout = page.get_by_role("link", name="Logout").nth(1)
+        self.btn_continue = page.get_by_role("link", name="Continue")
 
     # ===== Action Methods =====
 
@@ -27,7 +26,3 @@ class LogoutPage(BasePage):
     def get_continue_button(self):
         """Return the Continue button locator."""
         return self.btn_continue
-
-    def logout(self):
-        # Click logout link from dropdown
-        self.click(self.lnk_logout)
