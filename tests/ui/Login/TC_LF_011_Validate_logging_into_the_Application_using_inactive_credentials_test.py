@@ -17,7 +17,7 @@ def test_validate_logging_into_the_Application_using_inactive_credentials(page):
     home_page.click_login()
 
     # 2. Login with valid credentials from fixture
-    login_page.login(Config.inactive_email, Config.inactive_password)
+    login_page.login(Config.invalid_email, Config.invalid_password)
 
     # Assert redirection to the Account Login page, proving the session is inactive
     expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)

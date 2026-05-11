@@ -6,8 +6,8 @@
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
-from pages.logout_page import LogoutPage
 from pages.edit_account_page import EditAccountPage
+from pages.logout_page import LogoutPage
 
 
 class MyAccountPage(BasePage):

@@ -80,10 +80,18 @@ INVALID_PHONE_NUMBERS = [
     "123456789012345678901234567890123",  # too long
 ]
 
+expected_title = "Your Store"
+
 
 class FilePaths:
-    """Centralized file and directory paths."""
+    """Centralized file paths."""
 
-    SESSION_STORAGE_DIR = Path("session_storage")
-    AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
-    AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
+    ROOT_DIR = Path(__file__).resolve().parent.parent
+
+    AUTH_DIR = ROOT_DIR / "playwright" / ".auth"
+
+    SESSION_STORAGE_DIR = AUTH_DIR / "session_storage"
+
+    AUTH_STATE_PATH = AUTH_DIR / "auth_state.json"
+
+    AUTH_USER_PATH = AUTH_DIR / "registered_user.json"

@@ -44,7 +44,7 @@ def read_csv_data(file_path: str):
     return data
 
 
-def read_excel_data(file_path: str, sheet_name: str = None):
+def read_excel_data(file_path: str, sheet_name: str | None = None):
     """
     Reads test data from an Excel file and returns a list of tuples.
     Assumes the first row contains headers (email, password, validity).

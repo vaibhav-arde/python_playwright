@@ -42,7 +42,6 @@ def test_validate_user_is_able_to_navigate_to_different_pages_from_Login_page(pa
     expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)
 
     # C. Menu Option: Desktops Category
-    home_page.click_desktops_category()
     home_page.click_show_all_desktops()
     expect(page).to_have_title(messages.DESKTOPS_PAGE_TITLE)
 

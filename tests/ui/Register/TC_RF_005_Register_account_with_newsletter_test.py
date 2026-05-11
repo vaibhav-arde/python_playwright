@@ -14,8 +14,8 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
 from pages.registration_page import RegistrationPage
-from utils.helpers import RandomDataUtil
 from utils import messages
+from utils.helpers import RandomDataUtil
 
 
 @pytest.mark.sanity

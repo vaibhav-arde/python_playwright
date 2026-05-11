@@ -60,3 +60,15 @@ class RandomDataUtil:
 
     def get_random_uuid(self) -> str:
         return str(self.faker.uuid4())
+
+    def get_user(self) -> dict:
+        password = self.get_password()
+
+        return {
+            "firstName": self.get_first_name(),
+            "lastName": self.get_last_name(),
+            "email": self.get_email(),
+            "telephone": self.get_phone_number(),
+            "password": password,
+            "confirmPassword": password,
+        }
