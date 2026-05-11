@@ -33,17 +33,17 @@ class Headers:
 class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
-    HOME = "/"
+    HOME = "index.php?route=common/home"
     LOGIN = "index.php?route=account/login"
     REGISTER = "index.php?route=account/register"
-    MY_ACCOUNT = "/index.php?route=account/account"
-    LOGOUT = "/index.php?route=account/logout"
-    SEARCH = "/index.php?route=product/search"
-    CART = "/index.php?route=checkout/cart"
-    CHECKOUT = "/index.php?route=checkout/checkout"
+    MY_ACCOUNT = "index.php?route=account/account"
+    LOGOUT = "index.php?route=account/logout"
+    SEARCH = "index.php?route=product/search"
+    CART = "index.php?route=checkout/cart"
+    CHECKOUT = "index.php?route=checkout/checkout"
     COMPARISON = "index.php?route=product/compare"
     CHANGE_PASSWORD = "index.php?route=account/password"
-    INDEX_ENTRY = "/index.php"
+    INDEX_ENTRY = "index.php"
 
 
 class UserDetails:
@@ -51,10 +51,10 @@ class UserDetails:
 
     first_name = "Pavan"
     last_name = "B"
-    email = "pavanoltraining@gmail.com"
-    telephone = "814240XXXX"
-    password = "12345"
-    confirm_password = "12345"
+    email = "antigravity_test2@gmail.com"
+    telephone = "1234567890"
+    password = "Password123"
+    confirm_password = "Password123"
 
 
 class InvalidPassword:

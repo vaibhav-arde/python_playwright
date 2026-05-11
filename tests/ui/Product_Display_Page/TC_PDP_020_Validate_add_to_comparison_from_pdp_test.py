@@ -5,35 +5,23 @@ from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
 from pages.product_comparison_page import ProductComparisonPage
-from pages.registration_page import RegistrationPage
 from utils.constants import TestData
 from utils import messages
-from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_add_to_comparison_from_pdp(page: Page):
+def test_validate_add_to_comparison_from_pdp(authenticated_page):
     """
     Test Case ID: TC_PDP_020
     Validate adding the product for comparison from the Product Display page
     """
+    page = authenticated_page
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
     comparison_page = ProductComparisonPage(page)
-    registration_page = RegistrationPage(page)
 
-
-    # Step 1: Register a new account to ensure active session and clean context
-    home_page.open_home_page()
-    home_page.click_my_account()
-    home_page.click_register()
-
-    # Use the POM helper and method to complete registration dynamically
-    unique_user = RandomTestData.get_user()
-    registration_page.complete_registration(unique_user)
-    expect(registration_page.get_confirmation_msg()).to_be_visible()
 
     # Step 2: Search for a product
     home_page.open_home_page()

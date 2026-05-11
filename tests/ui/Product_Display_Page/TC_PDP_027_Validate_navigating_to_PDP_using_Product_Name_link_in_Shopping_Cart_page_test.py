@@ -13,26 +13,18 @@ from utils.random_test_data import RandomTestData
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_page(page: Page):
+def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_page(authenticated_page):
     """
     Test Case ID: TC_PDP_027
     Validate navigating to the Product Display page by using the Product name link in the 'Shopping Cart' page
     """
+    page = authenticated_page
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
     shopping_cart_page = ShoppingCartPage(page)
     registration_page = RegistrationPage(page)
 
-
-    # Step 1: Register a new account to ensure active session and clean context
-    home_page.open_home_page()
-    home_page.click_my_account()
-    home_page.click_register()
-
-    unique_user = RandomTestData.get_user()
-    registration_page.complete_registration(unique_user)
-    expect(registration_page.get_confirmation_msg()).to_be_visible()
 
     # Step 2: Add product to cart
     home_page.open_home_page()

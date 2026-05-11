@@ -26,6 +26,7 @@ class LoginPage(BasePage):
         )
         self.btn_continue_register = page.locator("div.well").get_by_role("link", name="Continue")
         self.right_column_login = page.locator("#column-right").get_by_role("link", name="Login")
+        self.right_column_register = page.locator("#column-right").get_by_role("link", name="Register")
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.page_heading = page.locator("h1")
 
@@ -64,6 +65,10 @@ class LoginPage(BasePage):
     def click_continue_register(self):
         """Click the Continue button under New Customer section."""
         self.click(self.btn_continue_register)
+
+    def click_continue(self):
+        """Alias for click_continue_register to support existing tests."""
+        self.click_continue_register()
 
     def get_login_error(self):
         """Return the error message element if login fails."""
@@ -121,6 +126,10 @@ class LoginPage(BasePage):
     def click_right_column_login(self):
         """Click on the 'Login' link in the right column."""
         self.click(self.right_column_login)
+
+    def click_right_column_register(self):
+        """Click on the 'Register' link in the right column."""
+        self.click(self.right_column_register)
 
     def get_breadcrumb(self):
         """Return the breadcrumb element."""

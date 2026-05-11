@@ -9,17 +9,18 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-@pytest.mark.sanity
-def test_validate_add_to_cart_functionality(page: Page):
+def test_validate_add_to_cart_functionality(authenticated_page):
     """
     Test Case ID: TC_PDP_005
-    Validate the 'Add to Cart' functionality including quantity selection and success notification.
+    Validate adding the product to the Cart from the Product Display page
     """
+    page = authenticated_page
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
 
-    # Step 1-3: Search and Navigate to Product
+    # Search for product
+    home_page.open_home_page()
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
     search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)

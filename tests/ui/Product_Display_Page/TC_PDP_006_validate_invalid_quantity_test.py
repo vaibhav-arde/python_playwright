@@ -10,16 +10,18 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_invalid_quantity(page: Page):
+def test_validate_invalid_quantity(authenticated_page):
     """
     Test Case ID: TC_PDP_006
-    Validate system behavior when an invalid quantity is entered on PDP.
+    Validate adding the product to the Cart with invalid quantity from the Product Display page
     """
+    page = authenticated_page
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
 
-    # Step 1-3: Search and navigate to product details page
+    # Search for product
+    home_page.open_home_page()
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()
     search_results_page.select_product(TestData.PRODUCT_NAME_IMAC)

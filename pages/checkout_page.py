@@ -34,6 +34,7 @@ class CheckoutPage(BasePage):
         self.lbl_total_price = page.locator('strong:has-text("Total:") + td')
         self.btn_conf_order = page.locator("#button-confirm")
         self.lbl_order_con_msg = page.locator("#content h1")
+        self.lnk_product_confirm = page.locator("#collapse-checkout-confirm a")
 
     # ===== Page Validation =====
 
@@ -124,3 +125,7 @@ class CheckoutPage(BasePage):
         """Verify if the order confirmation message appears."""
         self.page.on("dialog", lambda dialog: dialog.accept())
         return self.lbl_order_con_msg
+
+    def click_product_name_confirm(self):
+        """Click on the product name link in the 'Confirm Order' section."""
+        self.click(self.lnk_product_confirm)

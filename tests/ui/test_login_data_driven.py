@@ -11,21 +11,26 @@ from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
-from utils.data_loader import read_excel_data
+from utils.data_loader import read_json_data
 
 # Load/read the data from the test data files
-excel_data = read_excel_data("test_data/logindata.xlsx")
+json_data = read_json_data("test_data/logindata.json")
 
 
 @pytest.mark.datadriven
-@pytest.mark.parametrize("testName,email,password,expected", excel_data)
-def test_login_data_driven(page, testName, email, password, expected):
+@pytest.mark.parametrize("testName,email,password,expected", json_data)
+def test_login_data_driven(page, testName, email, password, expected, registered_user):
     home_page = HomePage(page)
     login_page = LoginPage(page)
     my_account_page = MyAccountPage(page)
 
     home_page.click_my_account()
     home_page.click_login()
+
+    # Use dynamically registered user for valid login to ensure test stability
+    if testName == "Valid login":
+        email = registered_user["email"]
+        password = registered_user["password"]
 
     login_page.login(email, password)
 

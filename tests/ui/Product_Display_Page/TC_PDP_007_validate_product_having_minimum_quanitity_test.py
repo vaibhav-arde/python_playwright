@@ -11,16 +11,22 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_product_having_minimum_quantity_set(page: Page):
+def test_validate_product_having_minimum_quantity_set(authenticated_page):
     """
     Test Case ID: TC_PDP_007
-    Validate product behavior when minimum quantity is configured.
+    Validate that product can only be added with its specified minimum quantity.
     """
+    page = authenticated_page
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
+    shopping_cart_page = ShoppingCartPage(page)
 
     product_name = TestData.PRODUCT_NAME_APPLE_CINEMA_30
+
+    # Step 0: Ensure a clean shopping cart
+    shopping_cart_page.open(UIRoutes.CART)
+    shopping_cart_page.clear_cart()
 
     # Step 1-3: Search and open the product
     home_page.enter_product_name(product_name)

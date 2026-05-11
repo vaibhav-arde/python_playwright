@@ -20,6 +20,7 @@ class ProductComparisonPage(BasePage):
         # ===== Locators =====
         # Heading: role="heading" scoped to the page content area
         self.page_heading = page.get_by_role("heading", name="Product Comparison", exact=True)
+        self.lbl_heading = self.page_heading
         self.empty_comparison_text = page.locator("#content").get_by_text(
             messages.EMPTY_COMPARISON_MESSAGE
         )
@@ -82,6 +83,10 @@ class ProductComparisonPage(BasePage):
         return self.page.get_by_role("cell").filter(
             has_text=re.compile(rf"^{re.escape(product_name)}$")
         )
+
+    def is_product_in_comparison(self, product_name: str) -> bool:
+        """Check if the product name exists in the comparison table."""
+        return self.get_product_name_in_table(product_name).first.is_visible()
 
     def get_product_image_in_table(self, product_name: str):
         """Return the product image locator scoped to the comparison table."""

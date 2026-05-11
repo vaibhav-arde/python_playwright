@@ -123,6 +123,34 @@ class ProductPage(BasePage):
         """Click the 'Add to Cart' button."""
         self.click(self.btn_add_to_cart)
 
+    def get_product_header(self):
+        """Return the product name heading locator."""
+        return self.lbl_product_name
+
+    def click_compare_button(self):
+        """Alias for click_compare."""
+        self.click_compare()
+
+    def hover_compare_button(self):
+        """Hover over the compare button."""
+        self.btn_compare.hover()
+
+    def get_compare_button_tooltip(self) -> str:
+        """Return the tooltip text of the compare button."""
+        tooltip = self.get_element_attribute(self.btn_compare, "title")
+        if not tooltip:
+            tooltip = self.get_element_attribute(self.btn_compare, "data-original-title")
+        return tooltip or ""
+
+    def get_compare_success_message(self) -> str:
+        """Return the text content of the comparison success message alert."""
+        self.wait_for(self.any_alert_msg, state="visible")
+        return self.get_text(self.any_alert_msg.first)
+
+    def click_product_comparison_link(self):
+        """Alias for click_comparison_link_on_success_msg."""
+        self.click_comparison_link_on_success_msg()
+
     # ===== Confirmation Message =====
 
     def get_confirmation_message(self):
@@ -168,7 +196,15 @@ class ProductPage(BasePage):
 
     def click_product_link_on_success_msg(self, product_name: str):
         """Click on the product name link within any visible alert message."""
-        self.any_alert_msg.first.get_by_role("link", name=product_name, exact=True).click()
+        self.click(self.get_product_name_link_in_success_message(product_name))
+
+    def get_product_name_link_in_success_message(self, product_name: str) -> Locator:
+        """Return the locator for the product name link within any visible alert message."""
+        return self.any_alert_msg.first.get_by_role("link", name=product_name, exact=True)
+
+    def click_product_name_link_in_success_message(self, product_name: str):
+        """Click the product name link within any visible alert message."""
+        self.click(self.get_product_name_link_in_success_message(product_name))
 
     # ===== Cart Toggle Box Methods =====
 
@@ -432,9 +468,28 @@ class ProductPage(BasePage):
         """Scroll the related products section into view."""
         self.pnl_related_products.scroll_into_view_if_needed()
 
-    def get_related_product_name(self, index: int) -> str:
+    def get_related_product_name(self, index: int = 0) -> str:
         """Return the name of the n-th related product."""
         return self.get_text(self.lnk_related_product.nth(index)).strip()
+
+    def click_related_compare_button(self, index: int = 0):
+        """Click the compare button for a specific related product."""
+        related_thumb = self.page.locator(".product-thumb").nth(index)
+        self.click(related_thumb.locator("button").filter(has=self.page.locator("i.fa-exchange")))
+
+    def hover_related_compare_button(self, index: int = 0):
+        """Hover over the compare button for a specific related product."""
+        related_thumb = self.page.locator(".product-thumb").nth(index)
+        related_thumb.locator("button").filter(has=self.page.locator("i.fa-exchange")).hover()
+
+    def get_related_compare_button_tooltip(self, index: int = 0) -> str:
+        """Return the tooltip text of the compare button for a specific related product."""
+        related_thumb = self.page.locator(".product-thumb").nth(index)
+        button = related_thumb.locator("button").filter(has=self.page.locator("i.fa-exchange"))
+        tooltip = self.get_element_attribute(button, "title")
+        if not tooltip:
+            tooltip = self.get_element_attribute(button, "data-original-title")
+        return tooltip or ""
 
     def validate_discounted_price(self):
         new_price = self.get_current_price()

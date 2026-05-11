@@ -26,6 +26,7 @@ class HomePage(BasePage):
         self.lnk_login = page.locator(
             "#top-links ul.dropdown-menu.dropdown-menu-right"
         ).get_by_text("Login", exact=True)
+        self.lnk_wishlist = page.locator("#wishlist-total")
         self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
         # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
         self.lnk_show_all_desktops = page.get_by_role(
@@ -36,7 +37,6 @@ class HomePage(BasePage):
         self.lnk_logout = page.locator('a:has-text("Logout")')
         self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
-        self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
         self.lnk_change_password = page.get_by_role("link", name="Change your password")
 
@@ -60,6 +60,11 @@ class HomePage(BasePage):
     def get_home_page_title(self) -> str:
         """Return the title of the Home Page."""
         return self.get_title()
+
+    def open_home_page(self):
+        """Navigate to the Home Page."""
+        from utils.constants import UIRoutes
+        self.open(UIRoutes.HOME)
 
     def click_my_account(self):
         """Click on the 'My Account' link."""
@@ -128,9 +133,12 @@ class HomePage(BasePage):
         """Hover over the 'Compare this Product' button of the first featured product."""
         self.hover(self.btn_compare_featured)
 
-    def get_featured_compare_button_tooltip(self) -> str | None:
+    def get_featured_compare_button_tooltip(self) -> str:
         """Return the tooltip text (title) of the featured product's compare button."""
-        return self.get_attribute(self.btn_compare_featured, "data-original-title")
+        tooltip = self.get_attribute(self.btn_compare_featured, "title")
+        if not tooltip:
+            tooltip = self.get_attribute(self.btn_compare_featured, "data-original-title")
+        return tooltip or ""
 
     def click_featured_compare_button(self):
         """Click the 'Compare this Product' button of the first featured product."""
@@ -144,3 +152,6 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+    def click_wishlist(self):
+        """Click on the 'Wish List' link."""
+        self.click(self.lnk_wishlist)

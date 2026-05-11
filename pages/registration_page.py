@@ -45,6 +45,9 @@ class RegistrationPage(BasePage):
 
         # ===== Warning / Validation Message Locators =====
         self.warn_privacy_policy = page.locator(".alert-danger")
+        self.lbl_page_heading = page.locator("#content h1")
+        self.lnk_breadcrumb = page.locator("ul.breadcrumb")
+        self.txt_confirm_password = page.locator("#input-confirm")
 
     # ===== Action Methods =====
 
@@ -106,9 +109,9 @@ class RegistrationPage(BasePage):
         """Return the native browser validation message for the email input."""
         return self.txt_email.evaluate("node => node.validationMessage")
 
-    def get_privacy_policy_warning(self) -> str:
-        """Return the Privacy Policy alert warning text."""
-        return self.get_text(self.warn_privacy_policy)
+    def get_privacy_policy_warning(self):
+        """Return the Privacy Policy alert warning locator."""
+        return self.warn_privacy_policy
 
     def get_telephone_error_msg(self):
         """Returns the locator for the telephone field error message."""
@@ -133,6 +136,14 @@ class RegistrationPage(BasePage):
         self.set_privacy_policy()
         self.click_continue()
         return self.msg_confirmation
+
+    def get_password_field_type(self) -> str:
+        """Return the type attribute of the password field."""
+        return self.get_element_attribute(self.txt_password, "type")
+
+    def get_confirm_password_field_type(self) -> str:
+        """Return the type attribute of the confirm password field."""
+        return self.get_element_attribute(self.txt_confirm_password, "type")
 
     def error_msg_visible(self):
         """check the error message visible or not for empty fields on click continue."""
