@@ -39,13 +39,13 @@ class ShoppingCartPage(BasePage):
         self.page.locator("table.table-bordered").locator("td.text-left").get_by_role(
             "link", name=product_name, exact=True
         ).first.click()
-    
+
     def clear_cart(self):
         """Removes all items from the shopping cart by clicking the Remove button for each item."""
         # The remove buttons have class 'btn-danger' and icons 'fa-times-circle'
         # Or they have title/data-original-title='Remove'
         remove_buttons = self.page.locator("button.btn-danger").filter(has=self.page.locator("i.fa-times-circle"))
-        
+
         while remove_buttons.count() > 0:
             remove_buttons.first.click()
             # Wait for the item to be removed (usually the page reloads or the row disappears)

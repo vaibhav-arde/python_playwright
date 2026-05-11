@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 import re
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect, Locator
 
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
@@ -25,7 +25,6 @@ class ProductPage(BasePage):
         self.cnf_msg = page.locator("div.alert.alert-success, div.alert-success")
         self.lnk_shopping_cart_success = self.cnf_msg.get_by_role("link", name="shopping cart")
         self.warning_msg = page.locator("div.alert.alert-danger, div.alert-danger")
-        self.any_alert_msg = page.locator("div.alert, .alert-success, .alert-danger, .alert-info")
         self.btn_items = page.locator("#cart > button")
         self.btn_cart_total = self.btn_items
         self.pnl_cart_dropdown = page.locator("#cart .dropdown-menu")
@@ -114,7 +113,6 @@ class ProductPage(BasePage):
 
     def set_quantity(self, qty: str):
         """Set the desired product quantity."""
-        self.fill(self.txt_quantity, "")
         self.fill(self.txt_quantity, qty)
 
     # ===== Add to Cart Methods =====
@@ -144,8 +142,9 @@ class ProductPage(BasePage):
 
     def get_compare_success_message(self) -> str:
         """Return the text content of the comparison success message alert."""
-        self.wait_for(self.any_alert_msg, state="visible")
-        return self.get_text(self.any_alert_msg.first)
+        alert = self.get_any_alert_message()
+        self.wait_for(alert, state="visible")
+        return self.get_text(alert)
 
     def click_product_comparison_link(self):
         """Alias for click_comparison_link_on_success_msg."""
@@ -163,7 +162,7 @@ class ProductPage(BasePage):
 
     def get_any_alert_message(self):
         """Return the first alert/success message locator found on the page."""
-        return self.any_alert_msg.first
+        return super().get_any_alert_message()
 
     # ===== Navigate to Shopping Cart =====
 
@@ -184,15 +183,15 @@ class ProductPage(BasePage):
     def click_wishlist_link_on_success_msg(self):
         """Click the 'wish list' link within any visible alert message."""
         # This uses self.any_alert_msg from locators to find the embedded link
-        self.any_alert_msg.first.get_by_role(
+        self.click(self.get_any_alert_message().get_by_role(
             "link", name=re.compile(r"wish list", re.IGNORECASE)
-        ).click()
+        ))
 
     def click_comparison_link_on_success_msg(self):
         """Click the 'product comparison' link within any visible alert message."""
-        self.any_alert_msg.first.get_by_role(
+        self.click(self.get_any_alert_message().get_by_role(
             "link", name=re.compile(r"product comparison", re.IGNORECASE)
-        ).click()
+        ))
 
     def click_product_link_on_success_msg(self, product_name: str):
         """Click on the product name link within any visible alert message."""
@@ -200,7 +199,7 @@ class ProductPage(BasePage):
 
     def get_product_name_link_in_success_message(self, product_name: str) -> Locator:
         """Return the locator for the product name link within any visible alert message."""
-        return self.any_alert_msg.first.get_by_role("link", name=product_name, exact=True)
+        return self.get_any_alert_message().get_by_role("link", name=product_name, exact=True)
 
     def click_product_name_link_in_success_message(self, product_name: str):
         """Click the product name link within any visible alert message."""
@@ -214,17 +213,13 @@ class ProductPage(BasePage):
 
     def click_cart_image_link(self) -> ProductPage:
         """Click the product image in the cart toggle box and return ProductPage."""
-        from pages.product_page import ProductPage
-
         self.click(self.lnk_cart_image)
-        return ProductPage(self.page)
+        return self
 
     def click_cart_name_link(self) -> ProductPage:
         """Click the product name link in the cart toggle box and return ProductPage."""
-        from pages.product_page import ProductPage
-
         self.click(self.lnk_cart_name)
-        return ProductPage(self.page)
+        return self
 
     # ===== Combined Workflow =====
 
@@ -242,11 +237,7 @@ class ProductPage(BasePage):
 
     def get_product_name(self) -> str:
         """Return the product name."""
-        return (
-            self.lbl_product_name.text_content().strip()
-            if self.lbl_product_name.is_visible()
-            else ""
-        )
+        return self.get_text(self.lbl_product_name).strip()
 
     def get_product_brand(self) -> str:
         """Return the product brand."""
@@ -320,11 +311,7 @@ class ProductPage(BasePage):
 
     def get_product_price(self) -> str:
         """Return the main product price."""
-        return (
-            self.lbl_product_price.text_content().strip()
-            if self.lbl_product_price.is_visible()
-            else ""
-        )
+        return self.get_text(self.lbl_product_price).strip()
 
     def get_ex_tax_price(self) -> str:
         """Return the ex-tax price text."""
@@ -500,7 +487,7 @@ class ProductPage(BasePage):
         assert old_price.is_visible(), "Old price not visible"
 
         # Verify new price has a dollar symbol
-        new_text = new_price.inner_text().strip()
+        new_text = self.get_text(new_price).strip()
         assert "$" in new_text, "New price missing currency symbol"
 
         # Verify old price is displayed with strike-through style

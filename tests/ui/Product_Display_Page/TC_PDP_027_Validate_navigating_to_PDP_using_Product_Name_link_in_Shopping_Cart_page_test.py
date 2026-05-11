@@ -1,14 +1,12 @@
 import pytest
-from playwright.sync_api import expect, Page
+from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
 from pages.shopping_cart_page import ShoppingCartPage
-from pages.registration_page import RegistrationPage
 from utils.constants import TestData
 from utils import messages
-from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
@@ -23,7 +21,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_pag
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
     shopping_cart_page = ShoppingCartPage(page)
-    registration_page = RegistrationPage(page)
 
 
     # Step 2: Add product to cart
