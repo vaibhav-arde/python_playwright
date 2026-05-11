@@ -26,8 +26,8 @@ class Config:
     """Centralized test data and credentials configuration."""
 
     # Valid credentials
-    email = "ariastaylor@example.com"
-    password = "PUy&13So29"
+    email = "melanie25@example.com"
+    password = "NcWhK^9K^9"
 
     # Password change test data
     password_change_new_password = "sourabh123"
