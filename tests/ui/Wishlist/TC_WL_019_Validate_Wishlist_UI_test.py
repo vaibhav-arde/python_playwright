@@ -65,10 +65,11 @@ def test_validate_wishlist_ui(authenticated_page):
         WishlistColumnNames.UNIT_PRICE,
         WishlistColumnNames.ACTION,
     ]
-    assert (
-        wishlist_page.get_wishlist_table_headers() == expected_headers
-    ), ERR_WISHLIST_HEADERS_MISMATCH.format(
-        expected=expected_headers, actual=wishlist_page.get_wishlist_table_headers()
+    # Check table headers match expected list
+    assert wishlist_page.get_wishlist_table_headers() == expected_headers, (
+        ERR_WISHLIST_HEADERS_MISMATCH.format(
+            expected=expected_headers, actual=wishlist_page.get_wishlist_table_headers()
+        )
     )
 
     # Validate row elements visibility for the product

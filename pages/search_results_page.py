@@ -143,4 +143,3 @@ class SearchResultsPage(BasePage):
     def get_product_count(self):
         """Returns product link locators found in search results."""
         return self.product_links
-
