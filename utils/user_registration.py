@@ -67,3 +67,36 @@ def register_user(page: Page, user_data: dict) -> None:
     expect(confirmation_msg).to_have_text(messages.ACCOUNT_CREATED, timeout=10000)
 
     logger.info(f"User registered successfully — email: {user_data['email']}")
+
+
+def register_user_to_return_login_credentials(page: Page, user_data: dict) -> None:
+    """
+    Perform user registration via UI using the provided user data.
+
+    Steps:
+        1. Navigate to Home → My Account → Register.
+        2. Fill all mandatory fields from user_data.
+        3. Accept privacy policy and submit.
+        4. Assert the success confirmation message.
+    """
+    home_page = HomePage(page)
+    registration_page = RegistrationPage(page)
+
+    logger.info("Starting user registration flow")
+
+    home_page.click_my_account()
+    home_page.click_register()
+
+    registration_page.set_first_name(user_data["firstName"])
+    registration_page.set_last_name(user_data["lastName"])
+    registration_page.set_email(user_data["email"])
+    registration_page.set_telephone(user_data["telephone"])
+    registration_page.set_password(user_data["password"])
+    registration_page.set_confirm_password(user_data["password"])
+    registration_page.set_privacy_policy()
+    registration_page.click_continue()
+
+    home_page.click_my_account()
+    home_page.click_logout()
+
+    return {"email": user_data["email"], "password": user_data["password"]}

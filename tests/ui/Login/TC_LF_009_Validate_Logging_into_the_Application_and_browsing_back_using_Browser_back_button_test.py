@@ -5,13 +5,17 @@ from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
 from utils import change_password_constants
+from utils import user_registration
 
 
 @pytest.mark.ui
-def test_validate_logging_and_browsing_back(page, registered_user):
+def test_validate_logging_and_browsing_back(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)
     my_account_page = MyAccountPage(page)
+
+    user_data = user_registration.generate_user_data()
+    registered_user = user_registration.register_user_to_return_login_credentials(page, user_data)
 
     # 1. Click on 'My Account' Dropmenu and navigate to Login page
     home_page.click_my_account()
