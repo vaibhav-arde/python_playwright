@@ -5,30 +5,23 @@ from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
-from pages.registration_page import RegistrationPage
 from utils.constants import UIRoutes
 from utils.messages import MY_WISHLIST_HEADING, MY_WISHLIST_PAGE_TITLE
-from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
-def test_validate_page_title_page_url_and_page_heading_of_wishlist_page(page):
-    home_page = HomePage(page)
-    my_account_page = MyAccountPage(page)
-    registration_page = RegistrationPage(page)
+def test_validate_page_title_page_url_and_page_heading_of_wishlist_page(authenticated_page):
+    home_page = HomePage(authenticated_page)
+    my_account_page = MyAccountPage(authenticated_page)
 
-    # Pre-requisite: Create a fresh account to ensure a logged-in user state
+    # Navigate to My Account page where the 'Modify your wish list' option is visible
     home_page.click_my_account()
-    home_page.click_register()
-
-    user_data = RandomTestData.get_user()
-    registration_page.complete_registration(user_data)
-    registration_page.click_continue()
+    home_page.click_my_account_option()
 
     # Step 1: Click on 'Modify your wish list' option
     wishlist_page = my_account_page.click_modify_wishlist_option()
 
     # Step 2: Check the Page Title, Page URL and Page Heading
-    expect(page).to_have_title(MY_WISHLIST_PAGE_TITLE)
-    expect(page).to_have_url(re.compile(rf".*{re.escape(UIRoutes.WISHLIST)}.*"))
+    expect(authenticated_page).to_have_title(MY_WISHLIST_PAGE_TITLE)
+    expect(authenticated_page).to_have_url(re.compile(rf".*{re.escape(UIRoutes.WISHLIST)}.*"))
     expect(wishlist_page.get_wishlist_page_heading()).to_have_text(MY_WISHLIST_HEADING)

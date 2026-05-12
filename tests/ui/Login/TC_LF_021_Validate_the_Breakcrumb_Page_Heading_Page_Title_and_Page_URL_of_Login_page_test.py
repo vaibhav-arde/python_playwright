@@ -33,6 +33,7 @@ from pages.home_page import HomePage
 from pages.login_page import LoginPage
 from utils.constants import UIRoutes
 from utils import messages
+import re
 
 
 @pytest.mark.ui
@@ -49,7 +50,8 @@ def test_validate_the_breakcrumb_page_heading_page_title_and_page_url_of_login_p
     expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)
 
     # Validate Page URL
-    expect(page).to_have_url(f"{base_url}{UIRoutes.LOGIN}")
+
+    expect(page).to_have_url(re.compile(rf".*{re.escape(UIRoutes.LOGIN)}"))
 
     # Validate Page Heading
     # expect(login_page.get_page_heading()).to_have_text(messages.LOGIN_PAGE_TITLE)

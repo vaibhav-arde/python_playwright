@@ -4,7 +4,6 @@ from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from pages.my_account_page import MyAccountPage
-from pages.registration_page import RegistrationPage
 from pages.search_results_page import SearchResultsPage
 from utils.messages import (
     ERR_PRODUCT_NOT_FOUND,
@@ -12,26 +11,16 @@ from utils.messages import (
     MY_WISHLIST_HEADING,
 )
 from utils.constants import TestData, UIRoutes
-from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
-def test_validate_multiple_products_wishlist_page(page):
+def test_validate_multiple_products_wishlist_page(authenticated_page):
     """
     TC_WL_017: Validate adding the multiple products to the 'My Wish List' page
     """
-    home_page = HomePage(page)
-    my_account_page = MyAccountPage(page)
-    registration_page = RegistrationPage(page)
-    search_results_page = SearchResultsPage(page)
-
-    # Pre-requisite: Create a fresh account
-    # Note: Using dynamic registration to ensure a clean session and valid login.
-    home_page.click_my_account()
-    home_page.click_register()
-    user_data = RandomTestData.get_user()
-    registration_page.complete_registration(user_data)
-    registration_page.click_continue()
+    home_page = HomePage(authenticated_page)
+    my_account_page = MyAccountPage(authenticated_page)
+    search_results_page = SearchResultsPage(authenticated_page)
 
     # Pre-requisite: Add multiple products to 'My Wish List' page
     products_to_add = [TestData.PRODUCT_IMAC, TestData.PRODUCT_MACBOOK]
@@ -61,7 +50,7 @@ def test_validate_multiple_products_wishlist_page(page):
 
     # Acceptance Criteria:
     # 1. User should be taken to 'My Wish List' page
-    expect(page).to_have_url(re.compile(rf".*{re.escape(UIRoutes.WISHLIST)}.*"))
+    expect(authenticated_page).to_have_url(re.compile(rf".*{re.escape(UIRoutes.WISHLIST)}.*"))
     expect(wishlist_page.get_wishlist_page_heading()).to_have_text(MY_WISHLIST_HEADING)
 
     # 2. All multiple products added are displayed with correct details
@@ -85,16 +74,16 @@ def test_validate_multiple_products_wishlist_page(page):
     # Image link navigation
     product_page = wishlist_page.click_product_image(target_product)
     expect(product_page.get_product_page_heading()).to_have_text(target_product)
-    page.go_back()
-    page.wait_for_load_state()
+    authenticated_page.go_back()
+    authenticated_page.wait_for_load_state()
 
     # Name link navigation
     product_page = wishlist_page.click_product_name(target_product)
     expect(product_page.get_product_page_heading()).to_have_text(target_product)
-    page.go_back()
-    page.wait_for_load_state()
+    authenticated_page.go_back()
+    authenticated_page.wait_for_load_state()
 
     # Continue button navigation
     my_account_page = wishlist_page.click_continue_button()
     expect(my_account_page.get_my_account_page_heading()).to_have_text(MY_ACCOUNT_HEADING)
-    expect(page).to_have_url(re.compile(rf".*{re.escape(UIRoutes.MY_ACCOUNT)}.*"))
+    expect(authenticated_page).to_have_url(re.compile(rf".*{re.escape(UIRoutes.MY_ACCOUNT)}.*"))

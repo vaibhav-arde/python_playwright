@@ -2,7 +2,6 @@ import pytest
 from playwright.sync_api import expect
 
 from pages.home_page import HomePage
-from pages.registration_page import RegistrationPage
 from pages.search_results_page import SearchResultsPage
 from utils.messages import (
     ERR_PRODUCT_NOT_FOUND,
@@ -10,25 +9,15 @@ from utils.messages import (
     ERR_DUPLICATE_PRODUCT_IN_WISHLIST,
 )
 from utils.constants import TestData
-from utils.random_test_data import RandomTestData
 
 
 @pytest.mark.ui
-def test_validate_duplicate_products_wishlist_page(page):
+def test_validate_duplicate_products_wishlist_page(authenticated_page):
     """
     TC_WL_018: Validate adding duplicate products to 'My Wish List' page
     """
-    home_page = HomePage(page)
-    registration_page = RegistrationPage(page)
-    search_results_page = SearchResultsPage(page)
-
-    # Pre-requisite: Open the Application URL and login
-    # Note: Using dynamic registration to ensure a clean session and valid login.
-    home_page.click_my_account()
-    home_page.click_register()
-    user_data = RandomTestData.get_user()
-    registration_page.complete_registration(user_data)
-    registration_page.click_continue()
+    home_page = HomePage(authenticated_page)
+    search_results_page = SearchResultsPage(authenticated_page)
 
     # Test Step 1: Enter any existing Product name into the Search text box field
     product_name = TestData.PRODUCT_IMAC
