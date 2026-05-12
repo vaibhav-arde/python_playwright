@@ -6,13 +6,18 @@ from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
 from utils import messages
 from utils import change_password_constants
+from utils import user_registration
 
 
 @pytest.mark.ui
 @pytest.mark.critical
-def test_login_using_keyboard_keys(page, registered_user):
+def test_login_using_keyboard_keys(page):
     home_page = HomePage(page)
     login_page = LoginPage(page)
+    my_account_page = MyAccountPage(page)
+
+    user_data = user_registration.generate_user_data()
+    registered_user = user_registration.register_user_to_return_login_credentials(page, user_data)
 
     # 1. Click on 'My Account' Dropmenu
     home_page.click_my_account()
@@ -29,5 +34,4 @@ def test_login_using_keyboard_keys(page, registered_user):
 
     # (ER-1) Verify navigation to My Account page
     expect(page).to_have_title(messages.ACCOUNT_PAGE_TITLE)
-    my_account_page = MyAccountPage(page)
     expect(my_account_page.get_my_account_page_heading()).to_be_visible()

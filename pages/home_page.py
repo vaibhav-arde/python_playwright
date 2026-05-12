@@ -33,7 +33,7 @@ class HomePage(BasePage):
         )
         self.txt_search_box = page.locator('input[placeholder="Search"]')
         self.btn_search = page.locator('#search button[type="button"]')
-        self.lnk_logout = page.locator('a:has-text("Logout")')
+        self.lnk_logout = page.locator("#top-links").get_by_role("link", name="Logout")
         self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
         self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
@@ -113,6 +113,10 @@ class HomePage(BasePage):
     def logout_link(self):
         """Click on the 'Logout' link."""
         return self.lnk_logout
+
+    def click_logout(self):
+        """Click on the 'Logout' link."""
+        self.click(self.lnk_logout)
 
     def is_dropdown_menu_visible(self) -> bool:
         """Check if the dropdown menu is visible."""
