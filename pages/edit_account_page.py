@@ -96,13 +96,15 @@ class EditAccountPage(BasePage):
     def clear_email_field(self):
         self.txt_email.clear()
 
-    def get_placeholder(self, field_id: str) -> str:
+    def get_placeholder(self, field_id: str) -> str | None:
         return self.page.locator(f"#{field_id}").get_attribute("placeholder")
 
     def is_field_mandatory(self, field_id: str) -> bool:
         field = self.page.locator(f"#{field_id}")
         parent = field.locator("xpath=ancestor::div[contains(@class,'form-group')]")
         classes = parent.get_attribute("class")
+        if classes is None:
+            return False
         return "required" in classes
 
     def verify_mandatory_fields(self, account_fields: dict):
