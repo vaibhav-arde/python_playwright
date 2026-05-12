@@ -110,9 +110,9 @@ class EditAccountPage(BasePage):
     def verify_mandatory_fields(self, account_fields: dict):
         for field_id, data in account_fields.items():
             if data.get("mandatory"):
-                assert self.is_field_mandatory(
-                    field_id
-                ), f"{data['label']} is not marked as mandatory"
+                assert self.is_field_mandatory(field_id), (
+                    f"{data['label']} is not marked as mandatory"
+                )
 
     def get_email_validation_message(self) -> str:
         return self.txt_email.evaluate("el => el.validationMessage")

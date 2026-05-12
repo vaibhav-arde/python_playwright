@@ -31,6 +31,6 @@ def test_edit_account_info_placeholders(authenticated_page):
     for field_id, expected in ACCOUNT_FIELDS.items():
         actual = edit_account_page.get_placeholder(field_id)
         expected_placeholder = expected["placeholder"]
-        assert (
-            actual == expected_placeholder
-        ), f"{field_id} placeholder mismatch: expected '{expected_placeholder}', got '{actual}'"
+        assert actual == expected_placeholder, (
+            f"{field_id} placeholder mismatch: expected '{expected_placeholder}', got '{actual}'"
+        )

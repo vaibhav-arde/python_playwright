@@ -49,6 +49,6 @@ def test_edit_account_info_back_button(authenticated_page):
     current = edit_account_page.get_account_information()
 
     for key in original_data:
-        assert (
-            current[key] == original_data[key]
-        ), f"{key} changed: expected {original_data[key]}, got {current[key]}"
+        assert current[key] == original_data[key], (
+            f"{key} changed: expected {original_data[key]}, got {current[key]}"
+        )
