@@ -34,6 +34,8 @@ class MyAccountPage(BasePage):
         self.lnk_right_column_password = page.locator("#column-right").get_by_role(
             "link", name="Password"
         )
+        self.lnk_edit_right_column = page.get_by_role("link", name="Edit Account")
+        self.lnk_my_account_option = page.locator("a:has-text('My Account')")
 
     # ===== Page Validation Methods =====
 
@@ -81,3 +83,8 @@ class MyAccountPage(BasePage):
     def click_password_right_column(self):
         """Click on the 'Password' link in the right column."""
         self.click(self.lnk_right_column_password)
+
+    def click_edit_right_column_option(self) -> EditAccountPage:
+        """Click on 'Edit your account information' and return EditAccountPage instance."""
+        self.click(self.lnk_edit_right_column)
+        return EditAccountPage(self.page)

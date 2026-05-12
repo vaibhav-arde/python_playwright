@@ -16,6 +16,7 @@ class APIEndpoints:
     ORDER = f"{BASE}/order"
     PAYMENT = f"{BASE}/payment"
     SHIPPING = f"{BASE}/shipping"
+    EDIT_ACCOUNT_INFORMATION = f"{BASE}/account/edit"
 
 
 class Headers:
@@ -41,6 +42,7 @@ class UIRoutes:
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
+    EDIT_ACCOUNT_INFORMATION = "index.php?route=account/edit"
     COMPARISON = "index.php?route=product/compare"
     CHANGE_PASSWORD = "index.php?route=account/password"
 
@@ -87,3 +89,16 @@ class FilePaths:
     SESSION_STORAGE_DIR = Path("session_storage")
     AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
+
+
+# utils/constants.py
+
+ACCOUNT_FIELDS = {
+    "input-firstname": {"label": "First Name", "placeholder": "First Name", "mandatory": True},
+    "input-lastname": {"label": "Last Name", "placeholder": "Last Name", "mandatory": True},
+    "input-email": {"label": "Email", "placeholder": "E-Mail", "mandatory": True},
+    "input-telephone": {"label": "Telephone", "placeholder": "Telephone", "mandatory": True},
+}
+
+
+MAI_TITLE = "My Account Information"
