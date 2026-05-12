@@ -29,14 +29,7 @@ def test_validate_description_of_product(page: Page):
         keyword=TestData.PRODUCT_NAME_IMAC
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
-========
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
-        keyword=product_name
-    )
-    expected_product_name = product_in_results.text_content().strip()
     assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
->>>>>>>> a50202b (style: fix formatting issues):tests/ui/ProductDisplayPage/TC_PDP_008_Validate_description_of_Product_test.py
     search_results_page.select_product(expected_product_name)
 
     # Step 4 (ER-1): Open Description tab and validate product description
@@ -45,4 +38,4 @@ def test_validate_description_of_product(page: Page):
     expect(product_page.pnl_description).to_be_visible()
 
     actual_description = product_page.get_description_text()
-    assert actual_description != TestData.EMPTY_VALUE, messages.PDP_DESCRIPTION_TEXT_EMPTY
+    assert actual_description != "", messages.PDP_DESCRIPTION_TEXT_EMPTY

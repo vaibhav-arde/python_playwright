@@ -14,16 +14,6 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
     """
     Test Case ID: TC_PDP_011
     Validate the 'Reviews' tab when there are no reviews or zero reviews added.
-
-    Steps:
-        1. Open the Application URL (handled by navigate_to_base_url fixture)
-        2. Enter any existing Product name into the Search text box field for which there are no existing reviews
-        3. Click on the button having search icon
-        4. Click on the Product displayed in the Search results
-        5. Click on the Reviews(0) tab of the Product in the displayed 'Product Display' page
-
-    Expected Result:
-        'There are no reviews for this product.' text should be displayed under the 'Reviews' tab
     """
     # Initialize Page Objects
     home_page = HomePage(page)
@@ -42,7 +32,7 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
         keyword=TestData.PRODUCT_NAME_IMAC
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
     search_results_page.select_product(expected_product_name)
@@ -67,8 +57,3 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
     ), messages.PDP_NO_REVIEWS_TEXT_MISMATCH.format(
         expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
     )
-========
-    assert (
-        actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT
-    ), f"Expected text '{messages.PDP_NO_REVIEWS_TEXT}' but got '{actual_no_reviews_text}'"
->>>>>>>> a50202b (style: fix formatting issues):tests/ui/ProductDisplayPage/TC_PDP_011_Validate_the_'Reviews'_tab_when_there_are_no_reviews_test.py

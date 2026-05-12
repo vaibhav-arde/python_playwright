@@ -14,16 +14,6 @@ def test_validate_average_review_display(page: Page):
     """
     Test Case ID: TC_PDP_014
     Validate average of the user reviews should be dispalyed under the 'Add to Cart' button of the Product Display page
-
-    Steps:
-        1. Open the Application URL (handled by navigate_to_base_url fixture)
-        2. Enter any existing Product name into the Search text box field
-        3. Click on the button having search icon
-        4. Click on the Product displayed in the Search results
-        5. Check the average and number of reviews on the Product Display page
-
-    Expected Result:
-        Correct average review and the number of reviews count should be displayed
     """
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
@@ -41,7 +31,7 @@ def test_validate_average_review_display(page: Page):
         keyword=TestData.PRODUCT_NAME_IMAC
     )
     expected_product_name = search_results_page.get_text(product_in_results).strip()
-    assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+    assert expected_product_name != "", messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
 
     # Step 4: Click on the Product displayed in the Search results
     search_results_page.select_product(expected_product_name)
@@ -54,21 +44,11 @@ def test_validate_average_review_display(page: Page):
     )
 
     # Step 5: Check the average and number of reviews
-    # Validate ER-1: Correct average review (stars block) is displayed
     expect(product_page.pnl_rating_summary).to_be_visible(), messages.PDP_RATING_SUMMARY_NOT_VISIBLE
-
-    # Validate ER-1: The number of reviews count ("X reviews") should be displayed
     expect(product_page.lbl_review_count).to_be_visible(), messages.PDP_REVIEW_COUNT_NOT_VISIBLE
 
     # Advanced assertion: grab the text to verify it contains the word "review"
-<<<<<<<< HEAD:tests/ui/Product_Display_Page/TC_PDP_014_Validate_average_review_display_test.py
     review_count_text = product_page.get_text(product_page.lbl_review_count).strip()
     assert messages.REVIEW_KEYWORD in review_count_text.lower(), messages.PDP_REVIEW_COUNT_TEXT_MISMATCH.format(
         actual=review_count_text
     )
-========
-    review_count_text = product_page.lbl_review_count.text_content().strip()
-    assert (
-        "review" in review_count_text.lower()
-    ), f"Expected 'reviews' count in text but got '{review_count_text}'"
->>>>>>>> a50202b (style: fix formatting issues):tests/ui/ProductDisplayPage/TC_PDP_014_Validate_average_review_display_test.py
