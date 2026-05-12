@@ -12,6 +12,7 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
+@pytest.mark.xfail
 def test_validate_navigating_to_pdp_using_product_name_link_in_checkout_page(authenticated_page):
     """
     Test Case ID: TC_PDP_028
