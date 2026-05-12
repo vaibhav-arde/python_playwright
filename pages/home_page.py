@@ -8,7 +8,10 @@ import re
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
+from pages.category_page import CategoryPage
 from pages.login_page import LoginPage
+from pages.wishlist_page import WishlistPage
+from utils.constants import FooterOptionNames, HeaderOptionNames
 
 
 class HomePage(BasePage):
@@ -26,6 +29,9 @@ class HomePage(BasePage):
         self.lnk_login = page.locator(
             "#top-links ul.dropdown-menu.dropdown-menu-right"
         ).get_by_text("Login", exact=True)
+        self.lnk_my_account_option = page.locator("ul.dropdown-menu").get_by_role(
+            "link", name=HeaderOptionNames.MY_ACCOUNT, exact=True
+        )
         self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
         # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
         self.lnk_show_all_desktops = page.get_by_role(
@@ -53,6 +59,13 @@ class HomePage(BasePage):
         self.compare_success_message = page.locator("div.alert.alert-success.alert-dismissible")
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
+        )
+        self.lnk_logo = page.locator("#logo a")
+        self.featured_section = page.locator("h3:has-text('Featured')")
+        self.success_msg = page.locator(".alert-success")
+        self.lnk_wishlist_success = self.success_msg.get_by_role("link", name="wish list")
+        self.lnk_wishlist_footer = page.locator("footer").get_by_role(
+            "link", name=FooterOptionNames.WISH_LIST, exact=True
         )
 
     # ===== Action Methods =====
@@ -93,6 +106,10 @@ class HomePage(BasePage):
     def click_show_all_desktops(self):
         """Click on the 'Show All Desktops' option under Desktops."""
         self.click(self.lnk_show_all_desktops)
+
+    def click_my_account_option(self):
+        """Click the logged-in 'My Account' option."""
+        self.click(self.lnk_my_account_option)
 
     def enter_product_name(self, product_name: str):
         """Enter the product name into the search input box."""
@@ -144,3 +161,56 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def click_logo(self):
+        """Click on the 'Store logo' (Your Store)."""
+        self.click(self.lnk_logo)
+
+    def scroll_to_featured_section(self):
+        """Scroll down to the 'Featured' section."""
+        self.featured_section.scroll_into_view_if_needed()
+
+    def add_featured_product_to_wishlist(self, product_name: str):
+        """
+        Click on 'Add to Wish List' option for a product in the 'Featured' section.
+        Identifies the product container by name and then clicks the heart icon.
+        """
+        # Locating the product container that contains the product name link
+        product_container = self.page.locator(".product-layout").filter(
+            has=self.page.get_by_role("link", name=product_name)
+        )
+        # Clicking the wishlist button (usually the second button in the group: cart, wishlist, compare)
+        # We can use the title or the icon class. OpenCart uses title="Add to Wish List"
+        btn_wishlist = product_container.get_by_role("button").nth(1)
+        self.click(btn_wishlist)
+
+    def get_success_message(self):
+        """Return the success message locator."""
+        return self.success_msg
+
+    def click_wishlist_link_in_success_message(self):
+        """Click on the 'wish list!' link in the success message."""
+        self.click(self.lnk_wishlist_success)
+        return WishlistPage(self.page)
+
+    def click_wishlist_footer_option(self):
+        """Click the footer 'Wish List' link."""
+        self.click(self.lnk_wishlist_footer)
+        return WishlistPage(self.page)
+
+    def open_category_menu(self, category_name: str):
+        """Open a main category dropdown in the top navigation menu by clicking it."""
+        locator = self.page.get_by_role("link", name=category_name, exact=True)
+        self.click(locator)
+
+    def click_show_all_in_category(self, category_name: str):
+        """Click on the 'Show All [Category]' link in the dropdown menu."""
+        # Using a CSS selector for the 'See All' link to be more robust against text spacing issues
+        locator = self.page.locator("a.see-all").filter(has_text=f"Show All {category_name}")
+        # If the exact text filter fails due to spacing, fall back to just the visible see-all link
+        if not locator.is_visible():
+            locator = self.page.locator("a.see-all").filter(has_text=category_name)
+
+        locator.wait_for(state="visible")
+        self.click(locator)
+        return CategoryPage(self.page)

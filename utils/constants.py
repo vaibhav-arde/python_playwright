@@ -30,19 +30,81 @@ class Headers:
     }
 
 
+class CommonValues:
+    """Common reusable literal values."""
+
+    EMPTY = ""
+
+
 class UIRoutes:
     """Common UI route paths (relative to base URL)."""
 
     HOME = "/"
-    LOGIN = "index.php?route=account/login"
+    LOGIN = "/index.php?route=account/login"
+    COMMON_HOME = "/index.php?route=common/home"
+
     REGISTER = "index.php?route=account/register"
     MY_ACCOUNT = "/index.php?route=account/account"
     LOGOUT = "/index.php?route=account/logout"
+    PRODUCT_DISPLAY = "/index.php?route=product/product"
     SEARCH = "/index.php?route=product/search"
     CART = "/index.php?route=checkout/cart"
     CHECKOUT = "/index.php?route=checkout/checkout"
     COMPARISON = "index.php?route=product/compare"
+    WISHLIST = "/index.php?route=account/wishlist"
     CHANGE_PASSWORD = "index.php?route=account/password"
+
+
+class ButtonNames:
+    """Common UI button accessible names."""
+
+    ADD_TO_CART = "Add to Cart"
+    ADD_TO_WISH_LIST = "Add to Wish List"
+    REMOVE = "Remove"
+
+
+class HeaderOptionNames:
+    """Common header option accessible names."""
+
+    MY_ACCOUNT = "My Account"
+    WISH_LIST = "Wish List"
+
+
+class FooterOptionNames:
+    """Common footer option accessible names."""
+
+    WISH_LIST = "Wish List"
+
+
+class BreadcrumbOptionNames:
+    """Common breadcrumb accessible names."""
+
+    ACCOUNT = "Account"
+    MY_WISH_LIST = "My Wish List"
+
+
+class AccountOptionNames:
+    """Common account page option accessible names."""
+
+    MODIFY_WISH_LIST = "Modify your wish list"
+
+
+class ProductDetailLabels:
+    """Common product detail labels shown on product display pages."""
+
+    PRODUCT_CODE = "Product Code:"
+    AVAILABILITY = "Availability:"
+
+
+class WishlistColumnNames:
+    """Common wishlist table column names."""
+
+    IMAGE = "Image"
+    PRODUCT_NAME = "Product Name"
+    MODEL = "Model"
+    STOCK = "Stock"
+    UNIT_PRICE = "Unit Price"
+    ACTION = "Action"
 
 
 class UserDetails:
@@ -81,9 +143,23 @@ INVALID_PHONE_NUMBERS = [
 ]
 
 
+class TestData:
+    """Test data values for scenarios."""
+
+    PRODUCT_IMAC = "iMac"
+    PRODUCT_MACBOOK = "MacBook"
+
+
 class FilePaths:
     """Centralized file and directory paths."""
 
     SESSION_STORAGE_DIR = Path("session_storage")
     AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
+
+
+class CategoryNames:
+    """Category and Subcategory names."""
+
+    DESKTOPS = "Desktops"
+    MAC = "Mac"
