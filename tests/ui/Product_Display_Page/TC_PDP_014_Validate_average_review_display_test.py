@@ -68,6 +68,6 @@ def test_validate_average_review_display(page: Page):
         actual=review_count_text
     )
     review_count_text = product_page.lbl_review_count.text_content().strip()
-    assert (
-        "review" in review_count_text.lower()
-    ), f"Expected 'reviews' count in text but got '{review_count_text}'"
+    assert "review" in review_count_text.lower(), (
+        f"Expected 'reviews' count in text but got '{review_count_text}'"
+    )

@@ -11,7 +11,9 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_page(authenticated_page):
+def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_page(
+    authenticated_page,
+):
     """
     Test Case ID: TC_PDP_027
     Validate navigating to the Product Display page by using the Product name link in the 'Shopping Cart' page
@@ -21,7 +23,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_shopping_cart_pag
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
     shopping_cart_page = ShoppingCartPage(page)
-
 
     # Step 2: Add product to cart
     home_page.open_home_page()

@@ -31,7 +31,9 @@ class SearchResultsPage(BasePage):
 
     def is_product_exist(self, product_name: str):
         """Check whether a specific product is displayed in search results."""
-        product = self.search_products.filter(has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")).first
+        product = self.search_products.filter(
+            has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")
+        ).first
         try:
             product.wait_for(state="attached", timeout=3000)
             return product
@@ -43,7 +45,9 @@ class SearchResultsPage(BasePage):
     def select_product(self, product_name: str) -> ProductPage | None:
         """Select a product from search results by name."""
         self.wait_for(self.search_products.first, state="visible")
-        product = self.search_products.filter(has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")).first
+        product = self.search_products.filter(
+            has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")
+        ).first
         self.click(product)
         product_page = ProductPage(self.page)
         expect(product_page.lbl_product_name).to_be_visible(timeout=10000)
@@ -66,14 +70,18 @@ class SearchResultsPage(BasePage):
     def hover_compare_button(self, product_name: str):
         """Hover over the compare button for a specific product."""
         product_container = self.page.locator(".product-layout").filter(
-            has=self.page.locator("h4 a", has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$"))
+            has=self.page.locator(
+                "h4 a", has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")
+            )
         )
         product_container.locator("button").filter(has=self.page.locator("i.fa-exchange")).hover()
 
     def get_compare_button_tooltip(self, product_name: str) -> str:
         """Return the tooltip text of the compare button for a specific product."""
         product_container = self.page.locator(".product-layout").filter(
-            has=self.page.locator("h4 a", has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$"))
+            has=self.page.locator(
+                "h4 a", has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")
+            )
         )
         button = product_container.locator("button").filter(has=self.page.locator("i.fa-exchange"))
         tooltip = self.get_element_attribute(button, "title")
@@ -92,9 +100,13 @@ class SearchResultsPage(BasePage):
     def click_compare_button(self, product_name: str):
         """Click the compare button for a specific product in search results."""
         product_container = self.page.locator(".product-layout").filter(
-            has=self.page.locator("h4 a", has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$"))
+            has=self.page.locator(
+                "h4 a", has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$")
+            )
         )
-        self.click(product_container.locator("button").filter(has=self.page.locator("i.fa-exchange")))
+        self.click(
+            product_container.locator("button").filter(has=self.page.locator("i.fa-exchange"))
+        )
 
     def get_compare_success_message(self) -> str:
         """Return the text of the comparison success message."""

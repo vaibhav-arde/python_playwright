@@ -17,7 +17,9 @@ class ShoppingCartPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        self.lbl_page_heading = page.get_by_role("heading", name=re.compile(r"Shopping Cart", re.IGNORECASE))
+        self.lbl_page_heading = page.get_by_role(
+            "heading", name=re.compile(r"Shopping Cart", re.IGNORECASE)
+        )
         self.lbl_total_price = page.locator("//*[@id='cart']/ul/li[2]/div/table/tbody/tr[4]/td[2]")
         self.btn_checkout = page.locator("a.btn.btn-primary")
         self.lbl_empty_cart_msg = page.locator("#content").get_by_text(messages.CART_EMPTY_TEXT)
@@ -44,14 +46,18 @@ class ShoppingCartPage(BasePage):
         """Removes all items from the shopping cart by clicking the Remove button for each item."""
         # The remove buttons have class 'btn-danger' and icons 'fa-times-circle'
         # Or they have title/data-original-title='Remove'
-        remove_buttons = self.page.locator("button.btn-danger").filter(has=self.page.locator("i.fa-times-circle"))
+        remove_buttons = self.page.locator("button.btn-danger").filter(
+            has=self.page.locator("i.fa-times-circle")
+        )
 
         while remove_buttons.count() > 0:
             remove_buttons.first.click()
             # Wait for the item to be removed (usually the page reloads or the row disappears)
             self.page.wait_for_load_state("networkidle")
             # Re-locate as the page might have changed
-            remove_buttons = self.page.locator("button.btn-danger").filter(has=self.page.locator("i.fa-times-circle"))
+            remove_buttons = self.page.locator("button.btn-danger").filter(
+                has=self.page.locator("i.fa-times-circle")
+            )
 
     def get_total_price(self):
         """Returns the total price element from the shopping cart."""

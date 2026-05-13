@@ -183,15 +183,19 @@ class ProductPage(BasePage):
     def click_wishlist_link_on_success_msg(self):
         """Click the 'wish list' link within any visible alert message."""
         # This uses self.any_alert_msg from locators to find the embedded link
-        self.click(self.get_any_alert_message().get_by_role(
-            "link", name=re.compile(r"wish list", re.IGNORECASE)
-        ))
+        self.click(
+            self.get_any_alert_message().get_by_role(
+                "link", name=re.compile(r"wish list", re.IGNORECASE)
+            )
+        )
 
     def click_comparison_link_on_success_msg(self):
         """Click the 'product comparison' link within any visible alert message."""
-        self.click(self.get_any_alert_message().get_by_role(
-            "link", name=re.compile(r"product comparison", re.IGNORECASE)
-        ))
+        self.click(
+            self.get_any_alert_message().get_by_role(
+                "link", name=re.compile(r"product comparison", re.IGNORECASE)
+            )
+        )
 
     def click_product_link_on_success_msg(self, product_name: str):
         """Click on the product name link within any visible alert message."""

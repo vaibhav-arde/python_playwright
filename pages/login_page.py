@@ -26,7 +26,9 @@ class LoginPage(BasePage):
         )
         self.btn_continue_register = page.locator("div.well").get_by_role("link", name="Continue")
         self.right_column_login = page.locator("#column-right").get_by_role("link", name="Login")
-        self.right_column_register = page.locator("#column-right").get_by_role("link", name="Register")
+        self.right_column_register = page.locator("#column-right").get_by_role(
+            "link", name="Register"
+        )
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.page_heading = page.locator("h1")
 

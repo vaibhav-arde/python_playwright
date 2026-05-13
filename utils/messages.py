@@ -162,7 +162,9 @@ RELATED_PRODUCT_NOT_FOUND = "Related products section not found or empty"
 ADD_TO_CART_LINK_NOT_FOUND = "Product link in 'Add to Cart' success message not found"
 PDP_NO_REVIEWS_TEXT_MISMATCH = "Expected text '{expected}' but got '{actual}'"
 PDP_REVIEW_COUNT_TEXT_MISMATCH = "Expected 'reviews' count in text but got '{actual}'"
-GENERIC_SUCCESS_ALERT_MISMATCH = "Success alert message mismatch: expected '{expected}', but got '{actual}'"
+GENERIC_SUCCESS_ALERT_MISMATCH = (
+    "Success alert message mismatch: expected '{expected}', but got '{actual}'"
+)
 PRODUCT_NOT_IN_WISHLIST = "Product '{product}' not found in Wish List"
 
 COMPARISON_PAGE_TITLE = "Product Comparison"

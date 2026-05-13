@@ -69,6 +69,6 @@ def test_validate_reviews_tab_with_no_reviews(page: Page):
             expected=messages.PDP_NO_REVIEWS_TEXT, actual=actual_no_reviews_text
         )
     )
-    assert (
-        actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT
-    ), f"Expected text '{messages.PDP_NO_REVIEWS_TEXT}' but got '{actual_no_reviews_text}'"
+    assert actual_no_reviews_text == messages.PDP_NO_REVIEWS_TEXT, (
+        f"Expected text '{messages.PDP_NO_REVIEWS_TEXT}' but got '{actual_no_reviews_text}'"
+    )

@@ -22,7 +22,6 @@ def test_validate_navigating_to_pdp_using_product_image_in_shopping_cart_page(au
     product_page = ProductPage(page)
     shopping_cart_page = ShoppingCartPage(page)
 
-
     # Step 2: Add product to cart
     home_page.open_home_page()
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)

@@ -26,9 +26,13 @@ def test_validate_the_specifications(page: Page):
         home_page.click_search()
 
         product_in_results = search_results_page.is_product_exist(product_name)
-        assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
+        assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
+            keyword=product_name
+        )
         expected_product_name = search_results_page.get_text(product_in_results).strip()
-        assert expected_product_name != TestData.EMPTY_VALUE, messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+        assert expected_product_name != TestData.EMPTY_VALUE, (
+            messages.SEARCH_RESULT_PRODUCT_NAME_EMPTY
+        )
         assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
             keyword=product_name
         )
@@ -43,14 +47,16 @@ def test_validate_the_specifications(page: Page):
             selected_product_name = expected_product_name
             break
 
-    assert selected_product_name != TestData.EMPTY_VALUE, messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
-        products=TestData.COMMA_SPACE_SEPARATOR.join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
+    assert selected_product_name != TestData.EMPTY_VALUE, (
+        messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
+            products=TestData.COMMA_SPACE_SEPARATOR.join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
+        )
     )
 
     # Step 4 (ER-1): Open Specification tab and validate specifications
-    assert (
-        product_page.lnk_specification_tab.is_visible()
-    ), messages.PDP_SPECIFICATION_TAB_NOT_VISIBLE
+    assert product_page.lnk_specification_tab.is_visible(), (
+        messages.PDP_SPECIFICATION_TAB_NOT_VISIBLE
+    )
     product_page.click_specification_tab()
     assert product_page.pnl_specification.is_visible(), messages.PDP_SPECIFICATION_PANEL_NOT_VISIBLE
 

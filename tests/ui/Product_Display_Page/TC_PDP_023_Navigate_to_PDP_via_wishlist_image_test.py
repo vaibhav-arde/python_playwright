@@ -22,7 +22,6 @@ def test_navigate_to_pdp_via_wishlist_image(authenticated_page):
     product_page = ProductPage(page)
     wishlist_page = WishListPage(page)
 
-
     # Step 2: Add product to wishlist
     home_page.open_home_page()
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)

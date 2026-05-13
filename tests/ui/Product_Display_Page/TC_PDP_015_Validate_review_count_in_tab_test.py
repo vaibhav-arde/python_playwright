@@ -61,10 +61,9 @@ def test_validate_review_count_in_tab(page: Page):
 
     tab_text = product_page.get_text(product_page.lnk_review_tab).strip()
 
-
     tab_text = product_page.lnk_review_tab.text_content().strip()
 
     # Validate ER-1: Reviews tab contains the count, e.g. "Reviews (0)"
-    assert re.search(
-        r"Reviews \(\d+\)", tab_text, re.IGNORECASE
-    ), f"{messages.PDP_REVIEW_TAB_COUNT_MISSING}. Actual text: '{tab_text}'"
+    assert re.search(r"Reviews \(\d+\)", tab_text, re.IGNORECASE), (
+        f"{messages.PDP_REVIEW_TAB_COUNT_MISSING}. Actual text: '{tab_text}'"
+    )

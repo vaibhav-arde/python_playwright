@@ -64,6 +64,7 @@ class HomePage(BasePage):
     def open_home_page(self):
         """Navigate to the Home Page."""
         from utils.constants import UIRoutes
+
         self.open(UIRoutes.HOME)
 
     def click_my_account(self):
@@ -152,6 +153,7 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
     def click_wishlist(self):
         """Click on the 'Wish List' link."""
         self.click(self.lnk_wishlist)

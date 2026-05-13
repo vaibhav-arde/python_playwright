@@ -10,7 +10,9 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_validate_navigating_to_pdp_using_product_image_in_cart_button_toggle_box(authenticated_page):
+def test_validate_navigating_to_pdp_using_product_image_in_cart_button_toggle_box(
+    authenticated_page,
+):
     """
     Test Case ID: TC_PDP_029
     Validate navigating to the Product Display page by using the Product image in the 'Cart' button toggle box
@@ -19,7 +21,6 @@ def test_validate_navigating_to_pdp_using_product_image_in_cart_button_toggle_bo
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
-
 
     # Step 2: Add product to cart
     home_page.open_home_page()

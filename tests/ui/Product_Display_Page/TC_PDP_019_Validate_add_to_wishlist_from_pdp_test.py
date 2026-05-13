@@ -45,9 +45,9 @@ def test_validate_add_to_wishlist_from_pdp(authenticated_page):
     expect(success_alert).to_be_visible(timeout=10000)
 
     actual_msg = product_page.get_text(success_alert)
-    assert (
-        messages.SUCCESS_ALERT_KEYWORD in actual_msg
-    ), f"Expected success message but got: {actual_msg}"
+    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, (
+        f"Expected success message but got: {actual_msg}"
+    )
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
     )

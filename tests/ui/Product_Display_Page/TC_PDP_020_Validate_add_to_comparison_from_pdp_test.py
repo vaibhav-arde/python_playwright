@@ -22,7 +22,6 @@ def test_validate_add_to_comparison_from_pdp(authenticated_page):
     product_page = ProductPage(page)
     comparison_page = ProductComparisonPage(page)
 
-
     # Step 2: Search for a product
     home_page.open_home_page()
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
@@ -44,8 +43,10 @@ def test_validate_add_to_comparison_from_pdp(authenticated_page):
     expect(success_alert).to_be_visible(timeout=10000)
 
     actual_msg = product_page.get_text(success_alert)
-    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, messages.GENERIC_SUCCESS_ALERT_MISMATCH.format(
-        expected=messages.SUCCESS_ALERT_KEYWORD, actual=actual_msg
+    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, (
+        messages.GENERIC_SUCCESS_ALERT_MISMATCH.format(
+            expected=messages.SUCCESS_ALERT_KEYWORD, actual=actual_msg
+        )
     )
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
@@ -58,5 +59,6 @@ def test_validate_add_to_comparison_from_pdp(authenticated_page):
     expect(comparison_page.lbl_heading).to_be_visible(timeout=10000)
 
     # Validation: Product is in the table
-    assert comparison_page.is_product_in_comparison(expected_product_name), \
+    assert comparison_page.is_product_in_comparison(expected_product_name), (
         messages.PRODUCT_NOT_IN_COMPARISON.format(product=expected_product_name)
+    )
