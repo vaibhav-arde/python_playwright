@@ -22,38 +22,44 @@ def test_validate_logging_into_the_application_after_changing_the_password(page)
     home_page.click_my_account()
     home_page.click_login()
 
-    # 2. Enter any text into the 'Password' field
-    login_page.login(Config.email, Config.password)
+    try:
+        # 2. Enter any text into the 'Password' field
+        login_page.login(Config.email, Config.password)
 
-    # 5. Click on 'Change your password' link
-    my_account_page.click_change_password_link()
+        # 5. Click on 'Change your password' link
+        my_account_page.click_change_password_link()
 
-    # 6. Fill new password details and click continue
-    change_password_page.fill_new_password_details(Config.password_change_new_password)
+        # 6. Fill new password details and click continue
+        change_password_page.fill_new_password_details(Config.password_change_new_password)
 
-    my_account_page.click_logout()
+        my_account_page.click_logout()
 
-    # 8. Click on 'Logout' link
-    logout_page.click_continue()
+        # 8. Click on 'Logout' link
+        logout_page.click_continue()
 
-    home_page.click_my_account()
+        home_page.click_my_account()
 
-    # 9. Click on 'Login' link
-    home_page.click_login()
+        # 9. Click on 'Login' link
+        home_page.click_login()
 
-    # 10. Enter existing password details and click continue
-    login_page.login(Config.email, Config.password)
+        # 10. Enter existing password details and click continue
+        login_page.login(Config.email, Config.password)
 
-    expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)
+        expect(page).to_have_title(messages.LOGIN_PAGE_TITLE)
 
-    login_page.login(Config.email, Config.password_change_new_password)
+        login_page.login(Config.email, Config.password_change_new_password)
 
-    expect(page).to_have_title(messages.MY_ACCOUNT_HEADING)
+        expect(page).to_have_title(messages.MY_ACCOUNT_HEADING)
+    finally:
+        # --- Teardown: Revert password back to original to maintain test isolation ---
+        # Ensure we are logged in with the current active password (which could be the new one)
+        page.goto("https://tutorialsninja.com/demo/index.php?route=account/login")
+        if "Login" in page.title():
+             # Try logging in with the new password first (if it was changed)
+             login_page.login(Config.email, Config.password_change_new_password)
 
-    # --- Teardown: Revert password back to original to maintain test isolation ---
-    my_account_page.click_change_password_link()
-    change_password_page.fill_new_password_details(Config.password)
-
-    # Logout after reverting password
-    my_account_page.click_logout()
-    logout_page.click_continue()
+        if "My Account" in page.title():
+            my_account_page.click_change_password_link()
+            change_password_page.fill_new_password_details(Config.password)
+            my_account_page.click_logout()
+            logout_page.click_continue()

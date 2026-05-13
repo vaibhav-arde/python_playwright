@@ -17,7 +17,7 @@ def test_user_registration_no_newsletter(page):
     user = RandomTestData.get_user()
 
     registration_page.complete_registration(
-        user, newsletter_locator=registration_page.radio_newsletter_no
+        user, subscribe_newsletter=False
     )
 
     confirmation_msg = registration_page.get_confirmation_msg()

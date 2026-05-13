@@ -25,11 +25,11 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator('input[value="Continue"]')
+        self.btn_continue = page.locator('input[value="Continue"], a.btn-primary:has-text("Continue")').first
         self.msg_confirmation = page.locator(f'h1:has-text("{messages.SUCCESS_REGISTER_MSG}")')
         self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
         self.msg_privacy_policy_warning = page.locator(".alert-danger")
-        self.lnk_login = page.get_by_role("link", name="Login")
+        self.lnk_login = page.locator("#top-links").get_by_role("link", name="Login")
         self.lnk_breadcrumb = page.locator("#account-register ul.breadcrumb")
 
         # ===== Warning / Validation Message Locators =====
@@ -45,8 +45,6 @@ class RegistrationPage(BasePage):
         self.password_mismatch_error = page.get_by_text(messages.WARN_PASSWORD_MISMATCH)
         self.err_email_already_exist = page.get_by_text(messages.WARN_EMAIL_ALREADY_EXISTS)
 
-        # ===== Warning / Validation Message Locators =====
-        self.warn_privacy_policy = page.locator(".alert-danger")
         self.login_page_link = page.get_by_role("link", name="login page")
 
     # ===== Action Methods =====
@@ -114,6 +112,52 @@ class RegistrationPage(BasePage):
         """Return the privacy policy warning locator."""
         return self.msg_privacy_policy_warning
 
+    def get_privacy_policy_checkbox(self):
+        """Return the privacy policy checkbox locator."""
+        return self.chk_policy
+
+    def get_password_mismatch_error(self):
+        """Return the password mismatch error locator."""
+        return self.password_mismatch_error
+
+    def get_email_already_exist_error(self):
+        """Return the email already exist error locator."""
+        return self.err_email_already_exist
+
+    def get_email_validation_message(self):
+        """Return the HTML5 validation message for the email field."""
+        return self.txt_email.evaluate("el => el.validationMessage")
+
+    def error_msg_visible(self):
+        """Verify that all mandatory field error messages are visible."""
+        from playwright.sync_api import expect
+        expect(self.err_firstname).to_be_visible()
+        expect(self.err_lastname).to_be_visible()
+        expect(self.err_email).to_be_visible()
+        expect(self.err_telephone).to_be_visible()
+        expect(self.err_password).to_be_visible()
+        expect(self.err_privacy_policy).to_be_visible()
+
+    def get_firstname_error_msg(self):
+        """Return the firstname error message locator."""
+        return self.err_firstname
+
+    def get_lastname_error_msg(self):
+        """Return the lastname error message locator."""
+        return self.err_lastname
+
+    def get_email_error_msg(self):
+        """Return the email error message locator."""
+        return self.err_email
+
+    def get_telephone_error_msg(self):
+        """Return the telephone error message locator."""
+        return self.err_telephone
+
+    def get_password_error_msg(self):
+        """Return the password error message locator."""
+        return self.err_password
+
     def get_password_field_type(self):
         """Return the type attribute of the password field."""
         return self.txt_password.get_attribute("type")
@@ -121,7 +165,7 @@ class RegistrationPage(BasePage):
     def get_confirm_password_field_type(self):
         """Return the type attribute of the confirm password field."""
         return self.txt_confirm_password.get_attribute("type")
-    
+
     # ===== Combined Workflow =====
 
     def complete_registration(self, user_data: dict, subscribe_newsletter: bool = False):

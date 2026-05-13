@@ -11,9 +11,7 @@ from pages.base_page import BasePage
 # Page Object for the Logout Page.
 # Inherits from BasePage for reusable UI interaction methods.
 
-from playwright.sync_api import Page
 
-from pages.base_page import BasePage
 
 
 class LogoutPage(BasePage):
@@ -24,10 +22,15 @@ class LogoutPage(BasePage):
 
         # ===== Locators =====
         self.btn_continue = page.get_by_role("link", name="Continue")
+        self.lnk_logout = page.get_by_role("link", name="Logout").last
 
     def get_continue_button(self):
         """Return the Continue button locator."""
         return self.btn_continue
+
+    def click_continue(self):
+        """Click the Continue button on the logout page."""
+        self.click(self.btn_continue)
 
     def logout(self):
         # Click logout link from dropdown

@@ -34,7 +34,7 @@ def test_validate_name_brand_product_code_displayed(page: Page):
     product_name = TestData.PRODUCT_NAME_IMAC
     product_in_results = search_results_page.get_product_link(product_name)
     expect(product_in_results).to_be_visible()
-    
+
     search_results_page.select_product(product_name)
 
     # Step 4: Check the Product Name, Brand and Product Code in the displayed Product Display Page

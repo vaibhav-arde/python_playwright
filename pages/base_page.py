@@ -1,3 +1,4 @@
+from __future__ import annotations
 # pages/base_page.py
 # =====================
 # Base Page class that all page objects inherit from.
@@ -8,6 +9,10 @@ import re
 import logging
 
 from playwright.sync_api import Page, Locator, expect
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from pages.product_page import ProductPage
 
 logger = logging.getLogger(__name__)
 
@@ -28,13 +33,13 @@ class BasePage:
         """Click the cart button to open the toggle box."""
         self.click(self.btn_cart_total)
 
-    def click_cart_image_link(self) -> "ProductPage":
+    def click_cart_image_link(self) -> ProductPage:
         """Click the product image in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
         self.click(self.lnk_cart_image)
         return ProductPage(self.page)
 
-    def click_cart_name_link(self) -> "ProductPage":
+    def click_cart_name_link(self) -> ProductPage:
         """Click the product name link in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
         self.click(self.lnk_cart_name)

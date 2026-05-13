@@ -78,7 +78,7 @@ class ProductPage(BasePage):
         self.pnl_description = self.content.locator("#tab-description")
         self.lnk_specification_tab = self.content.locator("a[href='#tab-specification']").first
         self.pnl_specification = self.content.locator("#tab-specification")
-        
+
         # ===== Price Locators =====
         self.lbl_product_price = self.content.locator("ul.list-unstyled li h2")
         self.lbl_product_ex_tax = self.content.locator("ul.list-unstyled li", has_text="Ex Tax:")
@@ -280,9 +280,11 @@ class ProductPage(BasePage):
 
     # ===== Related Products Methods =====
 
-    def get_related_product_name(self) -> str:
-        """Return the name of the first related product."""
-        return self.get_text(self.lnk_related_product_name)
+    def get_related_product_name(self, index: int = 0) -> str:
+        """Return the name of the n-th related product (defaults to first)."""
+        if index == 0 and self.lnk_related_product_name.is_visible():
+             return self.get_text(self.lnk_related_product_name).strip()
+        return self.get_text(self.lnk_related_product.nth(index)).strip()
 
     def hover_related_compare_button(self):
         """Hover over the 'Compare this Product' button of the first related product."""
@@ -567,9 +569,6 @@ class ProductPage(BasePage):
         """Scroll the related products section into view."""
         self.pnl_related_products.scroll_into_view_if_needed()
 
-    def get_related_product_name(self, index: int) -> str:
-        """Return the name of the n-th related product."""
-        return self.get_text(self.lnk_related_product.nth(index)).strip()
 
     def validate_discounted_price(self):
         new_price = self.get_current_price()

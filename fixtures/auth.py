@@ -37,7 +37,10 @@ def authenticated_page(new_context, auth_state_path, request, launch_browser):
 
     context = new_context(storage_state=auth_state_path)
     page = context.new_page()
-    page.goto(base_url)
+    
+    # Navigate to My Account page directly to ensure tests start in the authenticated area
+    account_url = f"{base_url.rstrip('/')}/index.php?route=account/account"
+    page.goto(account_url)
 
     try:
         yield page

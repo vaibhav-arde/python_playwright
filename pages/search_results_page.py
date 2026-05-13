@@ -51,11 +51,10 @@ class SearchResultsPage(BasePage):
     # ===== Product Verification =====
 
     def get_product_link(self, product_name: str):
-        """Return the product title link inside the product card."""
+        """Return the product title link (text) inside the product card."""
         return (
-            self.page.locator(".product-layout")
-            .filter(has_text=product_name)
-            .get_by_role("link", name=product_name)
+            self.page.locator(".product-layout h4 a")
+            .filter(has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$", re.IGNORECASE))
             .first
         )
 

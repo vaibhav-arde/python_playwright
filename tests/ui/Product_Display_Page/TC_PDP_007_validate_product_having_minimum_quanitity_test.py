@@ -29,7 +29,7 @@ def test_validate_product_having_minimum_quantity_set(page: Page):
 
     product_in_results = search_results_page.get_product_link(product_name)
     expect(product_in_results).to_be_visible()
-    
+
     search_results_page.select_product(product_name)
 
     # Step 4 (ER-1): Default quantity and minimum quantity info should be shown

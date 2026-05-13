@@ -29,7 +29,7 @@ class LoginPage(BasePage):
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.page_heading = page.locator("h1")
         self.btn_continue = page.get_by_role("link", name="Continue")
-        self.lnk_register_right = page.get_by_role("link", name="Register")
+        self.lnk_register_right = page.locator("#column-right").get_by_role("link", name="Register")
 
     # ===== Action Methods =====
 

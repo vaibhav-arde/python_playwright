@@ -31,7 +31,7 @@ def test_register_account_details_stored_in_db(page):
     user = RandomTestData.get_user()
 
     registration_page.complete_registration(
-        user, newsletter_locator=registration_page.radio_newsletter_yes
+        user, subscribe_newsletter=True
     )
 
     # Verification: Account Created Success Message
