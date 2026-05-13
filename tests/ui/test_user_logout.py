@@ -15,30 +15,16 @@ Test Steps
 import pytest
 from playwright.sync_api import expect
 
-from pages.home_page import HomePage
-from pages.login_page import LoginPage
 from pages.my_account_page import MyAccountPage
-from utils.config import Config
 
 
 @pytest.mark.regression
-def test_user_logout(page):
+def test_user_logout(authenticated_page):
     """Verify that a logged-in user can successfully log out."""
-
-    home_page = HomePage(page)
-    login_page = LoginPage(page)
+    page = authenticated_page
     my_account_page = MyAccountPage(page)
 
-    # Navigate to Login Page
-    home_page.click_my_account()
-    home_page.click_login()
-
-    # Login with valid credentials
-    login_page.set_email(Config.email)
-    login_page.set_password(Config.password)
-    login_page.click_login()
-
-    # Verify My Account page
+    # Verify My Account page (already logged in via fixture)
     expect(my_account_page.get_my_account_page_heading()).to_be_visible(timeout=5000)
 
     # Perform Logout

@@ -5,7 +5,7 @@
 
 import re
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from pages.product_page import ProductPage
@@ -29,6 +29,9 @@ class SearchResultsPage(BasePage):
         )
         self.product_links = page.locator(".product-layout").get_by_role("link")
         self.lnk_product_compare = page.get_by_role("link", name=re.compile(r"Product Compare"))
+        self.search_products = page.locator("#content h4 > a")
+        self.product_thumbs = page.locator(".product-thumb")
+        self.cnf_msg = page.locator(".alert-success")
 
     # ===== Page Header =====
 
@@ -49,11 +52,10 @@ class SearchResultsPage(BasePage):
     # ===== Product Verification =====
 
     def get_product_link(self, product_name: str):
-        """Return the product title link inside the product card."""
+        """Return the product title link (text) inside the product card."""
         return (
-            self.page.locator(".product-layout")
-            .filter(has_text=product_name)
-            .get_by_role("link", name=product_name)
+            self.page.locator(".product-layout h4 a")
+            .filter(has_text=re.compile(rf"^\s*{re.escape(product_name)}\s*$", re.IGNORECASE))
             .first
         )
 
@@ -70,8 +72,11 @@ class SearchResultsPage(BasePage):
             self.wait_for(product, state="visible")
         except Exception:
             return None
+
         self.click(product)
-        return ProductPage(self.page)
+        product_page = ProductPage(self.page)
+        expect(product_page.lbl_product_name).to_be_visible(timeout=10000)
+        return product_page
 
     # ===== Product Comparison in List View =====
 
@@ -110,8 +115,44 @@ class SearchResultsPage(BasePage):
         """Click the 'Product Compare' link displayed above the search results."""
         self.click(self.lnk_product_compare)
 
-    # ===== Product Count =====
-
     def get_product_count(self):
         """Returns product link locators found in search results."""
         return self.product_links
+
+    def click_add_to_cart(self, product_name: str):
+        """Click 'Add to Cart' for a specific product in search results."""
+        product_thumb = self.product_thumbs.filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        )
+        # Using a regex to find the button with "Add to Cart" text
+        self.click(
+            product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE))
+        )
+
+    def click_compare_this_product(self, product_name: str):
+        """Click 'Compare this Product' for a specific product in search results."""
+        # Find the product container first
+        product_container = (
+            self.page.locator(".product-layout")
+            .filter(
+                has=self.page.get_by_role(
+                    "link", name=re.compile(rf"^\s*{re.escape(product_name)}\s*$", re.IGNORECASE)
+                )
+            )
+            .first
+        )
+
+        # Click the compare button using title or data-original-title
+        compare_btn = product_container.locator(
+            "button[title*='Compare'], button[data-original-title*='Compare']"
+        )
+        self.click(compare_btn)
+
+    def click_comparison_link_in_success_msg(self):
+        """Click on the 'product comparison' link in the success message."""
+        # Success message usually has a link with text 'product comparison'
+        self.cnf_msg.get_by_role("link", name="product comparison").click()
+
+    def get_confirmation_message(self):
+        """Return the confirmation message locator."""
+        return self.cnf_msg

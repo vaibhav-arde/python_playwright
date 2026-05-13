@@ -1,3 +1,4 @@
+from __future__ import annotations
 # pages/base_page.py
 # =====================
 # Base Page class that all page objects inherit from.
@@ -9,6 +10,11 @@ import logging
 
 from playwright.sync_api import Page, Locator, expect
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from pages.product_page import ProductPage
+
 logger = logging.getLogger(__name__)
 
 
@@ -19,6 +25,28 @@ class BasePage:
         """Initialize with a Playwright Page instance."""
         self.page = page
         self.lnk_site_map = page.get_by_role("link", name="Site Map")
+        self.btn_cart_total = page.locator("#cart > button")
+        self.pnl_cart_dropdown = page.locator("#cart .dropdown-menu")
+        self.lnk_cart_image = self.pnl_cart_dropdown.locator("table tr td.text-center a").first
+        self.lnk_cart_name = self.pnl_cart_dropdown.locator("table tr td.text-left a").first
+
+    def click_cart_button(self):
+        """Click the cart button to open the toggle box."""
+        self.click(self.btn_cart_total)
+
+    def click_cart_image_link(self) -> ProductPage:
+        """Click the product image in the cart toggle box and return ProductPage."""
+        from pages.product_page import ProductPage
+
+        self.click(self.lnk_cart_image)
+        return ProductPage(self.page)
+
+    def click_cart_name_link(self) -> ProductPage:
+        """Click the product name link in the cart toggle box and return ProductPage."""
+        from pages.product_page import ProductPage
+
+        self.click(self.lnk_cart_name)
+        return ProductPage(self.page)
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
@@ -29,6 +57,15 @@ class BasePage:
     def open(self, path: str = "/"):
         """Navigate to a path relative to the current base URL."""
         self.page.goto(path)
+        self.page.wait_for_load_state("load")
+
+        # Handle landing page redirect loop if it occurs
+        # The demo site sometimes requires multiple clicks through the landing page
+        while self.page.get_by_role("link", name="https://tutorialsninja.com/demo").is_visible():
+            logger.info("Landing page detected, clicking through...")
+            self.page.get_by_role("link", name="https://tutorialsninja.com/demo").click()
+            self.page.wait_for_load_state("load")
+
         logger.info(f"Navigated to: {path}")
 
     def click(self, locator: str | Locator):
@@ -95,6 +132,10 @@ class BasePage:
         logger.info(f"Got attribute '{name}' from {target}: '{value}'")
         return value
 
+    def get_count(self, locator: str | Locator) -> int:
+        """Get the number of elements matching the locator."""
+        return self.get_locator(locator).count()
+
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
         target = self.get_locator(locator)
@@ -131,3 +172,16 @@ class BasePage:
     def click_site_map(self):
         """Click on the 'Site Map' link in the footer."""
         self.click(self.lnk_site_map)
+
+    def get_element_attribute(self, element, attribute_name: str):
+        """
+        Return the value of a given attribute from a locator.
+
+        Args:
+            element: Playwright locator
+            attribute_name (str): HTML attribute name
+
+        Returns:
+            str | None: Attribute value if present, else None
+        """
+        return element.get_attribute(attribute_name)

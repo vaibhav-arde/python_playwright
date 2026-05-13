@@ -16,10 +16,12 @@ class LoginPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.txt_email_address = page.locator("#input-email")
-        self.txt_password = page.locator("#input-password")
-        self.btn_login = page.locator('input[value="Login"]')
-        self.txt_error_message = page.get_by_text(messages.WARN_LOGIN_ERROR)
+        self.txt_email_address = page.get_by_label("E-Mail Address")
+        self.txt_password = page.get_by_label("Password")
+        self.btn_login = page.get_by_role("button", name="Login")
+        self.txt_error_message = page.locator(
+            "#account-login .alert.alert-danger, .alert.alert-danger.alert-dismissible"
+        )
         self.txt_login_attempts_error = page.get_by_text(messages.WARN_LOGIN_ATTEMPTS_EXCEEDED)
         self.lnk_forgot_password = page.locator("#content").get_by_role(
             "link", name=messages.FORGOT_PASSWORD
@@ -28,6 +30,8 @@ class LoginPage(BasePage):
         self.right_column_login = page.locator("#column-right").get_by_role("link", name="Login")
         self.breadcrumb = page.locator("ul.breadcrumb")
         self.page_heading = page.locator("h1")
+        self.btn_continue = page.get_by_role("link", name="Continue")
+        self.lnk_register_right = page.locator("#column-right").get_by_role("link", name="Register")
 
     # ===== Action Methods =====
 
@@ -125,3 +129,11 @@ class LoginPage(BasePage):
     def get_breadcrumb(self):
         """Return the breadcrumb element."""
         return self.breadcrumb
+
+    def click_continue(self):
+        """Click the Continue button after logging out."""
+        self.click(self.btn_continue)
+
+    def click_right_column_register(self):
+        """Click the Register button in the right column."""
+        self.click(self.lnk_register_right)

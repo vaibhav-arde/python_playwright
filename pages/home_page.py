@@ -5,10 +5,12 @@
 
 import re
 
+
 from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 from pages.login_page import LoginPage
+from utils import messages
 
 
 class HomePage(BasePage):
@@ -19,24 +21,23 @@ class HomePage(BasePage):
 
         # ===== Locators =====
         # This is the dropdown toggle that opens the account menu.
-        self.lnk_my_account = page.locator('#top-links a[title="My Account"]')
-        self.lnk_register = page.locator(
-            "#top-links ul.dropdown-menu.dropdown-menu-right"
-        ).get_by_text("Register", exact=True)
-        self.lnk_login = page.locator(
-            "#top-links ul.dropdown-menu.dropdown-menu-right"
-        ).get_by_text("Login", exact=True)
+        self.lnk_my_account = page.locator("a[title='My Account']")
+        self.lnk_register = page.locator("#top-links").get_by_role("link", name="Register")
+        self.lnk_login = page.locator("#top-links").get_by_role("link", name="Login")
+
+        self.txt_search_box = page.get_by_placeholder("Search")
+        self.btn_search = page.locator("#search").get_by_role("button")
+
         self.lnk_desktops_menu = page.get_by_role("link", name="Desktops", exact=True)
         # The menu renders as "Show AllDesktops" in the DOM, so a regex keeps this semantic.
         self.lnk_show_all_desktops = page.get_by_role(
             "link", name=re.compile(r"Show All\s*Desktops")
         )
-        self.txt_search_box = page.locator('input[placeholder="Search"]')
-        self.btn_search = page.locator('#search button[type="button"]')
+
         self.lnk_logout = page.locator('a:has-text("Logout")')
         self.lnk_contact_us = page.get_by_role("link", name="Contact Us")
         self.lnk_desktops = page.get_by_role("link", name="Desktops")
-        self.lnk_show_all_desktops = page.get_by_role("link", name="Show AllDesktops")
+
         self.dropdown = page.locator("a.dropdown-toggle").filter(has_text="My Account")
         self.lnk_change_password = page.get_by_role("link", name="Change your password")
 
@@ -54,15 +55,27 @@ class HomePage(BasePage):
         self.lnk_product_comparison = self.compare_success_message.get_by_role(
             "link", name="product comparison"
         )
+        self.lnk_wishlist = page.locator("#wishlist-total")
+        self.lnk_shopping_cart = page.get_by_role("link", name="Shopping Cart").first
+        self.btn_cart_total = page.locator("#cart > button")
+        self.lnk_view_cart = page.get_by_role("link", name="View Cart")
+        self.nav_menu = page.locator("#menu")
+        self.cnf_msg = page.locator("div.alert").filter(has_text=messages.SUCCESS_ALERT_KEYWORD)
 
     # ===== Action Methods =====
 
+    def get_confirmation_message(self):
+        """Return the confirmation message locator."""
+        return self.cnf_msg
+
     def get_home_page_title(self) -> str:
         """Return the title of the Home Page."""
+        self.lnk_my_account.wait_for(state="visible")
         return self.get_title()
 
     def click_my_account(self):
         """Click on the 'My Account' link."""
+        self.lnk_my_account.wait_for(state="visible")
         self.click(self.lnk_my_account)
 
     def click_change_password(self):
@@ -116,7 +129,7 @@ class HomePage(BasePage):
 
     def is_dropdown_menu_visible(self) -> bool:
         """Check if the dropdown menu is visible."""
-        return self.dropdown
+        return self.dropdown.is_visible()
 
     # ===== Featured Section Methods =====
 
@@ -144,3 +157,63 @@ class HomePage(BasePage):
     def click_product_comparison_link(self):
         """Click the 'product comparison' link from the success message."""
         self.click(self.lnk_product_comparison)
+
+    def click_wishlist(self):
+        """Click on the 'Wish List' link."""
+        self.click(self.lnk_wishlist)
+
+    def click_shopping_cart(self):
+        """Click on the 'Shopping Cart' link in the top bar."""
+        self.click(self.lnk_shopping_cart)
+
+    def click_cart_total_button(self):
+        """Click the black cart button to open the dropdown."""
+        self.click(self.btn_cart_total)
+
+    def click_view_cart(self):
+        """Click 'View Cart' link from the cart dropdown."""
+        self.click(self.lnk_view_cart)
+
+    def open_home_page(self):
+        """Navigate to the home page."""
+        self.open("/")
+
+    def click_featured_product_image(self, product_name: str):
+        """Click on the image of a product in the Featured section."""
+        # This locator finds the product-thumb container that contains the link with the product name, then finds the image inside it.
+        self.page.locator("div.product-thumb").filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        ).get_by_role("img").click()
+
+    def click_featured_product_name(self, product_name: str):
+        """Click on the name link of a product in the Featured section."""
+        self.page.locator("div.product-thumb").get_by_role(
+            "link", name=product_name, exact=True
+        ).click()
+
+    def hover_menu(self, menu_name: str):
+        """Hover over or click a top-level menu item to reveal sub-menus."""
+        target = self.nav_menu.get_by_role("link", name=menu_name, exact=True)
+        target.hover()
+        # Using a more specific locator to avoid strict mode violation if checking visibility
+        # or simply click to ensure the dropdown is triggered.
+        target.click()
+
+    def click_sub_menu(self, sub_menu_name: str):
+        """Click on a sub-menu item with flexible matching."""
+        # Create a regex that allows optional whitespace between words
+        parts = sub_menu_name.split()
+        pattern = r"\s*".join([re.escape(p) for p in parts])
+        regex_name = re.compile(pattern, re.IGNORECASE)
+        self.nav_menu.get_by_role("link", name=regex_name).first.click()
+        self.page.wait_for_load_state("load")
+
+    def click_add_to_cart_of_featured_product(self, product_name: str):
+        """Click on the 'Add to Cart' button of a product in the Featured section."""
+        self.page.locator("div.product-thumb").filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        ).get_by_role("button", name="Add to Cart").click()
+
+    def click_shopping_cart_link_in_success_msg(self):
+        """Click on the 'shopping cart!' link in the success message."""
+        self.cnf_msg.get_by_role("link", name="shopping cart").click()
