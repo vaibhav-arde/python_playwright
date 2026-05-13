@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import expect, TimeoutError as PlaywrightTimeoutError
+from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
@@ -9,6 +9,7 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
+@pytest.mark.flaky(reruns=2, reruns_delay=2)
 def test_validate_add_to_cart_functionality(authenticated_page):
     """
     Test Case ID: TC_PDP_005
@@ -32,14 +33,8 @@ def test_validate_add_to_cart_functionality(authenticated_page):
 
     # Step 5: Validate Success Message
     # ER: Success message should be displayed for adding the product to cart
-
     success_msg = product_page.get_confirmation_message()
-    try:
-        expect(success_msg).to_be_visible(timeout=UITimeouts.CART_ALERT_WAIT_MS)
-    except PlaywrightTimeoutError:
-        # Retry once for occasional transient miss-click/network lag on demo site.
-        product_page.add_to_cart()
-        expect(success_msg).to_be_visible(timeout=UITimeouts.CART_ALERT_WAIT_MS)
+    expect(success_msg).to_be_visible(timeout=UITimeouts.CART_ALERT_WAIT_MS)
 
     # ER: Success message should contain product name and success text
     expect(success_msg).to_contain_text(TestData.PRODUCT_NAME_IMAC)

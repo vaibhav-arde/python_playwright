@@ -137,7 +137,7 @@ class UITitles:
 
 
 class UITimeouts:
-    CART_ALERT_WAIT_MS = 5000
+    CART_ALERT_WAIT_MS = 10000
 
 
 class UIAvailability:
