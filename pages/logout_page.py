@@ -12,8 +12,6 @@ from pages.base_page import BasePage
 # Inherits from BasePage for reusable UI interaction methods.
 
 
-
-
 class LogoutPage(BasePage):
     """Page Object Model class for the Logout Page."""
 

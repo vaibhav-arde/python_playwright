@@ -19,7 +19,6 @@ def test_validate_description_of_product(page: Page):
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
 
-
     # Step 1-3: Search and open product
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()

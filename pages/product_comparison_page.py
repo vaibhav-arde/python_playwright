@@ -11,7 +11,6 @@ from pages.base_page import BasePage
 from utils import messages
 
 
-
 class ProductComparisonPage(BasePage):
     """Page Object Model class for the Product Comparison page."""
 
@@ -21,14 +20,14 @@ class ProductComparisonPage(BasePage):
         # ===== Locators =====
         # Heading: role="heading" scoped to the page content area
         self.page_heading = page.get_by_role("heading", name="Product Comparison", exact=True)
-        self.lbl_heading = page.locator("#content h1, #content h2").filter(has_text=re.compile(r"Comparison", re.IGNORECASE))
+        self.lbl_heading = page.locator("#content h1, #content h2").filter(
+            has_text=re.compile(r"Comparison", re.IGNORECASE)
+        )
         self.empty_comparison_text = page.locator("#content").get_by_text(
             messages.EMPTY_COMPARISON_MESSAGE
         )
         self.btn_continue = page.get_by_role("link", name="Continue")
         self.success_message = page.locator("div.alert.alert-success.alert-dismissible")
-
-
 
         # ===== Breadcrumb Locators =====
         self.breadcrumb = page.locator("ul.breadcrumb")

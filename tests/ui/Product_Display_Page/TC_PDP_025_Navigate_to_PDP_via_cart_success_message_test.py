@@ -6,6 +6,7 @@ from pages.search_results_page import SearchResultsPage
 from pages.product_page import ProductPage
 from utils.constants import TestData
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_navigate_to_pdp_via_cart_success_message(page: Page):
@@ -26,7 +27,6 @@ def test_navigate_to_pdp_via_cart_success_message(page: Page):
     home_page = HomePage(page)
     search_results_page = SearchResultsPage(page)
     product_page = ProductPage(page)
-
 
     home_page.enter_product_name(TestData.PRODUCT_NAME_IMAC)
     home_page.click_search()

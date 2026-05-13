@@ -55,8 +55,6 @@ class TestProductDisplayPage:
 
         # Validate that price is not empty and contains a currency symbol
         assert price != TestData.EMPTY_VALUE, "Product price should not be empty"
-        assert any(
-            symbol in price for symbol in UIPricing.CURRENCY_SYMBOLS
-        ), f"Price '{price}' does not contain a valid currency symbol"
-
-
+        assert any(symbol in price for symbol in UIPricing.CURRENCY_SYMBOLS), (
+            f"Price '{price}' does not contain a valid currency symbol"
+        )

@@ -55,8 +55,8 @@ def test_validate_logging_into_the_application_after_changing_the_password(page)
         # Ensure we are logged in with the current active password (which could be the new one)
         page.goto("https://tutorialsninja.com/demo/index.php?route=account/login")
         if "Login" in page.title():
-             # Try logging in with the new password first (if it was changed)
-             login_page.login(Config.email, Config.password_change_new_password)
+            # Try logging in with the new password first (if it was changed)
+            login_page.login(Config.email, Config.password_change_new_password)
 
         if "My Account" in page.title():
             my_account_page.click_change_password_link()

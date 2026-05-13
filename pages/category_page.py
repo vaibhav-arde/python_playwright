@@ -9,6 +9,7 @@ from playwright.sync_api import Page
 from pages.base_page import BasePage
 from pages.shopping_cart_page import ShoppingCartPage
 
+
 class CategoryPage(BasePage):
     """Page Object Model class for Category and Sub-category pages."""
 
@@ -27,7 +28,9 @@ class CategoryPage(BasePage):
     def select_subcategory(self, subcategory_name: str):
         """Select a subcategory from the left side list group."""
         # Relaxed regex to match even if there are prefixes like " - " or counts like " (1)"
-        self.list_subcategory.filter(has_text=re.compile(rf"{re.escape(subcategory_name)}", re.IGNORECASE)).click()
+        self.list_subcategory.filter(
+            has_text=re.compile(rf"{re.escape(subcategory_name)}", re.IGNORECASE)
+        ).click()
 
     # ===== Product Methods =====
 
@@ -37,7 +40,9 @@ class CategoryPage(BasePage):
             has=self.page.get_by_role("link", name=product_name, exact=True)
         )
         # Using a regex to find the button with "Add to Cart" text
-        self.click(product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE)))
+        self.click(
+            product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE))
+        )
 
     # ===== Confirmation Message Methods =====
 

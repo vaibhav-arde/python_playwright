@@ -9,6 +9,7 @@ from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from pages.shopping_cart_page import ShoppingCartPage
 
@@ -34,13 +35,9 @@ class ProductPage(BasePage):
         self.lnk_cart_name = self.pnl_cart_dropdown.locator("table tr td.text-left a").first
         self.lnk_view_cart = page.get_by_role("link", name="View Cart")
 
-        self.btn_compare = (
-            self.content
-            .locator(
-                'button[data-original-title="Compare this Product"], button[title="Compare this Product"]'
-            )
-            .first
-        )
+        self.btn_compare = self.content.locator(
+            'button[data-original-title="Compare this Product"], button[title="Compare this Product"]'
+        ).first
         # Link inside the success alert navigating to the product comparison page.
         self.lnk_product_comparison = self.cnf_msg.get_by_role("link", name="product comparison")
         # Link inside the success alert navigating back to the product's own display page.
@@ -61,7 +58,9 @@ class ProductPage(BasePage):
 
         # ===== Product Details Locators =====
         self.lbl_product_name = self.content.get_by_role("heading", level=1)
-        self.lbl_reward_points = self.content.locator("ul.list-unstyled li", has_text="Reward Points:").first
+        self.lbl_reward_points = self.content.locator(
+            "ul.list-unstyled li", has_text="Reward Points:"
+        ).first
         self.lbl_product_brand = self.content.locator("ul.list-unstyled li", has_text="Brand:")
         self.lbl_product_code = self.content.locator(
             "ul.list-unstyled li", has_text="Product Code:"
@@ -103,7 +102,9 @@ class ProductPage(BasePage):
             "link", name=re.compile(r"^\d+\s+reviews?$", re.IGNORECASE)
         )
 
-        self.lnk_review_tab = self.content.get_by_role("link", name=re.compile(r"^Reviews", re.IGNORECASE))
+        self.lnk_review_tab = self.content.get_by_role(
+            "link", name=re.compile(r"^Reviews", re.IGNORECASE)
+        )
         self.li_review_tab = self.lnk_review_tab.locator("xpath=..")
         self.pnl_review = self.content.locator("#tab-review")
         self.cnt_review = self.pnl_review.locator("#review")
@@ -186,12 +187,14 @@ class ProductPage(BasePage):
     def click_view_cart(self) -> ShoppingCartPage:
         """Click 'View Cart' link and return ShoppingCartPage instance."""
         from pages.shopping_cart_page import ShoppingCartPage
+
         self.click(self.lnk_view_cart)
         return ShoppingCartPage(self.page)
 
     def click_shopping_cart_link(self) -> ShoppingCartPage:
         """Click the 'shopping cart' link from the success message."""
         from pages.shopping_cart_page import ShoppingCartPage
+
         self.click(self.lnk_shopping_cart_success)
         return ShoppingCartPage(self.page)
 
@@ -283,7 +286,7 @@ class ProductPage(BasePage):
     def get_related_product_name(self, index: int = 0) -> str:
         """Return the name of the n-th related product (defaults to first)."""
         if index == 0 and self.lnk_related_product_name.is_visible():
-             return self.get_text(self.lnk_related_product_name).strip()
+            return self.get_text(self.lnk_related_product_name).strip()
         return self.get_text(self.lnk_related_product.nth(index)).strip()
 
     def hover_related_compare_button(self):
@@ -306,7 +309,11 @@ class ProductPage(BasePage):
 
     def get_product_name(self) -> str:
         """Return the product name."""
-        return self.get_text(self.lbl_product_name).strip() if self.lbl_product_name.is_visible() else ""
+        return (
+            self.get_text(self.lbl_product_name).strip()
+            if self.lbl_product_name.is_visible()
+            else ""
+        )
 
     def get_product_brand(self) -> str:
         """Return the product brand."""
@@ -385,7 +392,11 @@ class ProductPage(BasePage):
 
     def get_product_price(self) -> str:
         """Return the main product price."""
-        return self.get_text(self.lbl_product_price).strip() if self.lbl_product_price.is_visible() else ""
+        return (
+            self.get_text(self.lbl_product_price).strip()
+            if self.lbl_product_price.is_visible()
+            else ""
+        )
 
     def get_ex_tax_price(self) -> str:
         """Return the ex-tax price text."""
@@ -569,14 +580,17 @@ class ProductPage(BasePage):
         """Scroll the related products section into view."""
         self.pnl_related_products.scroll_into_view_if_needed()
 
-
     def validate_discounted_price(self):
         new_price = self.get_current_price()
         old_price = self.old_price.first
 
         # Verify both price elements are visible
-        assert new_price.is_visible(), f"New price is not visible for product '{self.get_product_name()}'"
-        assert old_price.is_visible(), f"Old price is not visible for product '{self.get_product_name()}'"
+        assert new_price.is_visible(), (
+            f"New price is not visible for product '{self.get_product_name()}'"
+        )
+        assert old_price.is_visible(), (
+            f"Old price is not visible for product '{self.get_product_name()}'"
+        )
 
         # Verify new price has a dollar symbol
         new_text = new_price.inner_text().strip()
@@ -589,8 +603,12 @@ class ProductPage(BasePage):
         """Click 'Add to Cart' for a specific product in the Related Products section."""
         # Identify the related products heading semantically and locate the subsequent product row
         related_heading = self.page.get_by_role("heading", name="Related Products")
-        related_section = related_heading.locator("xpath=following-sibling::div[contains(@class, 'row')][1]")
+        related_section = related_heading.locator(
+            "xpath=following-sibling::div[contains(@class, 'row')][1]"
+        )
         product_thumb = related_section.locator(".product-thumb").filter(
             has=self.page.get_by_role("link", name=product_name, exact=True)
         )
-        self.click(product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE)))
+        self.click(
+            product_thumb.get_by_role("button", name=re.compile(r"Add to Cart", re.IGNORECASE))
+        )

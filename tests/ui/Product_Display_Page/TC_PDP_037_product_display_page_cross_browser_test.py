@@ -22,7 +22,6 @@ from utils.constants import TestData
 from playwright.sync_api import expect, Page
 
 
-
 @pytest.mark.ui
 @pytest.mark.regression
 @pytest.mark.cross_browser

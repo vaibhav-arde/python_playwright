@@ -6,6 +6,7 @@ from pages.category_page import CategoryPage
 from utils import messages
 from utils.constants import TestData, UILabels
 
+
 @pytest.mark.ui
 @pytest.mark.critical
 @pytest.mark.regression
@@ -44,8 +45,12 @@ def test_atc_005_validate_adding_product_to_cart_from_category_page(page: Page):
     # ER-1: Success message should be displayed
     # OpenCart success message often contains extra whitespace/newlines, so we check for containment or use a flexible regex
     expect(category_page.get_confirmation_message()).to_contain_text(product_name)
-    expect(category_page.get_confirmation_message()).to_contain_text(messages.PDP_ADD_TO_CART_SUCCESS_PREFIX)
-    expect(category_page.get_confirmation_message()).to_contain_text(messages.PDP_ADD_TO_CART_SUCCESS_SUFFIX)
+    expect(category_page.get_confirmation_message()).to_contain_text(
+        messages.PDP_ADD_TO_CART_SUCCESS_PREFIX
+    )
+    expect(category_page.get_confirmation_message()).to_contain_text(
+        messages.PDP_ADD_TO_CART_SUCCESS_SUFFIX
+    )
 
     # Step 6: Click on the 'shopping cart!' link in the displayed success message
     shopping_cart_page = category_page.click_shopping_cart_link()

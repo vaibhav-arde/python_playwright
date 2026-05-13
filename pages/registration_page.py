@@ -25,7 +25,9 @@ class RegistrationPage(BasePage):
         self.chk_policy = page.locator('input[name="agree"]')
         self.radio_newsletter_yes = page.locator('input[name="newsletter"][value="1"]')
         self.radio_newsletter_no = page.locator('input[name="newsletter"][value="0"]')
-        self.btn_continue = page.locator('input[value="Continue"], a.btn-primary:has-text("Continue")').first
+        self.btn_continue = page.locator(
+            'input[value="Continue"], a.btn-primary:has-text("Continue")'
+        ).first
         self.msg_confirmation = page.locator(f'h1:has-text("{messages.SUCCESS_REGISTER_MSG}")')
         self.lbl_page_heading = page.get_by_role("heading", name="Register Account")
         self.msg_privacy_policy_warning = page.locator(".alert-danger")
@@ -131,6 +133,7 @@ class RegistrationPage(BasePage):
     def error_msg_visible(self):
         """Verify that all mandatory field error messages are visible."""
         from playwright.sync_api import expect
+
         expect(self.err_firstname).to_be_visible()
         expect(self.err_lastname).to_be_visible()
         expect(self.err_email).to_be_visible()

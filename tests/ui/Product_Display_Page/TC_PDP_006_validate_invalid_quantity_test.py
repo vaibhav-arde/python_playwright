@@ -10,7 +10,6 @@ from utils import messages
 
 @pytest.mark.ui
 @pytest.mark.regression
-
 def test_validate_invalid_quantity(page: Page):
     """
     Test Case ID: TC_PDP_006

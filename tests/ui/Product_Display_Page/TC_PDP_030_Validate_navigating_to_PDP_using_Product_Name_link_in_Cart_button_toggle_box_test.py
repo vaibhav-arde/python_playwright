@@ -22,7 +22,6 @@ def test_validate_navigating_to_pdp_using_product_name_link_in_cart_button_toggl
     product_page = ProductPage(page)
     registration_page = RegistrationPage(page)
 
-
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
     home_page.click_my_account()

@@ -10,6 +10,7 @@ from playwright.sync_api import Page
 from pages.base_page import BasePage
 
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from pages.product_page import ProductPage
 
@@ -40,7 +41,9 @@ class CheckoutPage(BasePage):
         self.lbl_total_price = page.locator("tr:has(td strong:has-text('Total:')) td:last-child")
         self.btn_conf_order = page.locator("#button-confirm")
         self.lbl_order_con_msg = page.get_by_role("heading", level=1)
-        self.lnk_product_name_confirm = page.locator("#collapse-checkout-confirm table tbody tr td.text-left a").first
+        self.lnk_product_name_confirm = page.locator(
+            "#collapse-checkout-confirm table tbody tr td.text-left a"
+        ).first
 
     # ===== Page Validation =====
 
@@ -140,5 +143,6 @@ class CheckoutPage(BasePage):
     def click_product_name_confirm(self) -> ProductPage:
         """Click on the product name link in the confirm order section and return ProductPage instance."""
         from pages.product_page import ProductPage
+
         self.click(self.lnk_product_name_confirm)
         return ProductPage(self.page)

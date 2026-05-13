@@ -10,6 +10,7 @@ from utils.constants import TestData
 from utils import messages
 from utils.random_test_data import RandomTestData
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_validate_add_to_comparison_from_pdp(page: Page):
@@ -22,8 +23,6 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     product_page = ProductPage(page)
     comparison_page = ProductComparisonPage(page)
     registration_page = RegistrationPage(page)
-
-
 
     # Step 1: Register a new account to ensure active session and clean context
     home_page.open_home_page()
@@ -56,8 +55,10 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     expect(success_alert).to_be_visible(timeout=10000)
 
     actual_msg = product_page.get_text(success_alert)
-    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, messages.GENERIC_SUCCESS_ALERT_MISMATCH.format(
-        expected=messages.SUCCESS_ALERT_KEYWORD, actual=actual_msg
+    assert messages.SUCCESS_ALERT_KEYWORD in actual_msg, (
+        messages.GENERIC_SUCCESS_ALERT_MISMATCH.format(
+            expected=messages.SUCCESS_ALERT_KEYWORD, actual=actual_msg
+        )
     )
     assert expected_product_name in actual_msg, messages.PDP_PRODUCT_NAME_MISMATCH.format(
         expected=expected_product_name, actual=actual_msg
@@ -70,6 +71,6 @@ def test_validate_add_to_comparison_from_pdp(page: Page):
     expect(comparison_page.lbl_heading).to_be_visible(timeout=10000)
 
     # Validation: Product is in the table
-    assert comparison_page.is_product_in_comparison(
-        expected_product_name
-    ), f"Product {expected_product_name} should be in the comparison table"
+    assert comparison_page.is_product_in_comparison(expected_product_name), (
+        f"Product {expected_product_name} should be in the comparison table"
+    )

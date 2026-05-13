@@ -34,7 +34,6 @@ def test_validate_bulk_prices(page: Page):
     product_page = ProductPage(page)
     registration_page = RegistrationPage(page)
 
-
     # Step 1: Open Application URL and Register new account
     # Register new account (user is auto-logged in after successful registration)
     home_page.open_home_page()

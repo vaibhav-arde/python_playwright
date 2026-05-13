@@ -50,7 +50,6 @@ class UIRoutes:
     INDEX_ENTRY = "index.php"
 
 
-
 class UserDetails:
     """User details for validate existing account in registration."""
 
@@ -94,6 +93,7 @@ class FilePaths:
     AUTH_STATE_PATH = SESSION_STORAGE_DIR / "auth_state.json"
     AUTH_USER_PATH = SESSION_STORAGE_DIR / "auth_user.json"
 
+
 class UIHeadingsAndTestData:
     # UI Page Headings
     REGISTER_PAGE_HEADING = "Register Account"
@@ -103,12 +103,14 @@ class UIHeadingsAndTestData:
     VALID_PASSWORD = "Test@123"
     INVALID_PASSWORD = "123"
 
+
 class UILabels:
     # UI Page Headings
     REGISTER_PAGE_HEADING = "Register Account"
     REGISTER_BREADCRUMB = "Register"
     WISHLIST_PAGE_HEADING = "My Wish List"
     CART_PAGE_HEADING = "Shopping Cart"
+
 
 class UITitles:
     REGISTER_PAGE_TITLE = "Register Account"

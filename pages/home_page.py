@@ -62,7 +62,6 @@ class HomePage(BasePage):
         self.nav_menu = page.locator("#menu")
         self.cnf_msg = page.locator("div.alert").filter(has_text=messages.SUCCESS_ALERT_KEYWORD)
 
-
     # ===== Action Methods =====
 
     def get_confirmation_message(self):
@@ -182,12 +181,15 @@ class HomePage(BasePage):
     def click_featured_product_image(self, product_name: str):
         """Click on the image of a product in the Featured section."""
         # This locator finds the product-thumb container that contains the link with the product name, then finds the image inside it.
-        self.page.locator("div.product-thumb").filter(has=self.page.get_by_role("link", name=product_name, exact=True)).get_by_role("img").click()
-
+        self.page.locator("div.product-thumb").filter(
+            has=self.page.get_by_role("link", name=product_name, exact=True)
+        ).get_by_role("img").click()
 
     def click_featured_product_name(self, product_name: str):
         """Click on the name link of a product in the Featured section."""
-        self.page.locator("div.product-thumb").get_by_role("link", name=product_name, exact=True).click()
+        self.page.locator("div.product-thumb").get_by_role(
+            "link", name=product_name, exact=True
+        ).click()
 
     def hover_menu(self, menu_name: str):
         """Hover over or click a top-level menu item to reveal sub-menus."""

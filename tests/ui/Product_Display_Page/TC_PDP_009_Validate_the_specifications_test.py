@@ -40,16 +40,16 @@ def test_validate_the_specifications(page: Page):
             selected_product_name = expected_product_name
             break
 
-    assert (
-        selected_product_name != ""
-    ), messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
-        products=", ".join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
+    assert selected_product_name != "", (
+        messages.PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS.format(
+            products=", ".join(TestData.PRODUCTS_WITH_SPECIFICATION_TAB)
+        )
     )
 
     # Step 4 (ER-1): Open Specification tab and validate specifications
-    assert (
-        product_page.lnk_specification_tab.is_visible()
-    ), messages.PDP_SPECIFICATION_TAB_NOT_VISIBLE
+    assert product_page.lnk_specification_tab.is_visible(), (
+        messages.PDP_SPECIFICATION_TAB_NOT_VISIBLE
+    )
     product_page.click_specification_tab()
     assert product_page.pnl_specification.is_visible(), messages.PDP_SPECIFICATION_PANEL_NOT_VISIBLE
 

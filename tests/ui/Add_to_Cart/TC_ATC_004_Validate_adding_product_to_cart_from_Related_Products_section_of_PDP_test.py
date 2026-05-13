@@ -46,7 +46,9 @@ def test_atc_004_validate_adding_product_to_cart_from_related_products_section(p
     product_page.click_add_to_cart_for_related_product(related_product_name)
 
     # Validate ER-1: Success message with text - 'Success: You have added Product Name to your shopping cart!' should be displayed
-    expected_success_msg = f"{PDP_ADD_TO_CART_SUCCESS_PREFIX} {related_product_name} {PDP_ADD_TO_CART_SUCCESS_SUFFIX}"
+    expected_success_msg = (
+        f"{PDP_ADD_TO_CART_SUCCESS_PREFIX} {related_product_name} {PDP_ADD_TO_CART_SUCCESS_SUFFIX}"
+    )
     expect(product_page.get_confirmation_message()).to_contain_text(expected_success_msg)
 
     # Step 5: Click on the 'shopping cart!' link in the displayed success message

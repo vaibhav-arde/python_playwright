@@ -21,7 +21,9 @@ class WishListPage(BasePage):
         self.lnk_product_image = self.product_items.locator("td.text-center a, td.image a")
         self.lnk_product_name = self.product_items.locator("td.name a, td.text-left a")
         self.btn_remove = self.product_items.get_by_role("link", name="Remove")
-        self.btn_add_to_cart = self.product_items.locator("button[title*='Add to Cart' i], button[data-original-title*='Add to Cart' i]")
+        self.btn_add_to_cart = self.product_items.locator(
+            "button[title*='Add to Cart' i], button[data-original-title*='Add to Cart' i]"
+        )
         self.cnf_msg = page.locator("div.alert.alert-success, div.alert-success")
 
     # ===== Action Methods =====
@@ -39,7 +41,11 @@ class WishListPage(BasePage):
     def click_add_to_cart(self, product_name: str):
         """Click the Add to Cart button for the specified product."""
         row = self.get_product_row_by_name(product_name)
-        self.click(row.locator("button[title*='Add to Cart' i], button[data-original-title*='Add to Cart' i]").first)
+        self.click(
+            row.locator(
+                "button[title*='Add to Cart' i], button[data-original-title*='Add to Cart' i]"
+            ).first
+        )
 
     def get_confirmation_message(self):
         """Return the confirmation message element shown after adding to cart."""

@@ -7,6 +7,7 @@ from pages.product_page import ProductPage
 from utils.constants import TestData
 from utils import messages
 
+
 @pytest.mark.ui
 @pytest.mark.regression
 def test_validate_submit_review_without_mandatory_fields(page: Page):
@@ -34,7 +35,9 @@ def test_validate_submit_review_without_mandatory_fields(page: Page):
     home_page.click_search()
 
     product_in_results = search_results_page.is_product_exist(product_name)
-    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(keyword=product_name)
+    assert product_in_results is not None, messages.SEARCH_RESULT_PRODUCT_NOT_FOUND.format(
+        keyword=product_name
+    )
 
     expected_product_name = search_results_page.get_text(product_in_results).strip()
     search_results_page.select_product(expected_product_name)
@@ -48,6 +51,8 @@ def test_validate_submit_review_without_mandatory_fields(page: Page):
     expect(warning_alert).to_be_visible(), messages.PDP_REVIEW_WARNING_ALERT_NOT_VISIBLE
 
     actual_warning_text = product_page.get_review_warning_text()
-    assert messages.WARNING_ALERT_KEYWORD in actual_warning_text, messages.PDP_REVIEW_WARNING_MISSING_KEYWORD.format(
-        keyword=messages.WARNING_ALERT_KEYWORD, actual=actual_warning_text
+    assert messages.WARNING_ALERT_KEYWORD in actual_warning_text, (
+        messages.PDP_REVIEW_WARNING_MISSING_KEYWORD.format(
+            keyword=messages.WARNING_ALERT_KEYWORD, actual=actual_warning_text
+        )
     )

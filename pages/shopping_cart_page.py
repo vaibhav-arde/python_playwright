@@ -14,6 +14,7 @@ from pages.checkout_page import CheckoutPage
 if TYPE_CHECKING:
     from pages.product_page import ProductPage
 
+
 class ShoppingCartPage(BasePage):
     """Page Object Model for the Shopping Cart Page."""
 
@@ -21,7 +22,9 @@ class ShoppingCartPage(BasePage):
         super().__init__(page)
 
         # ===== Locators =====
-        self.lbl_cart_page_header = page.get_by_role("heading", name=UILabels.CART_PAGE_HEADING).first
+        self.lbl_cart_page_header = page.get_by_role(
+            "heading", name=UILabels.CART_PAGE_HEADING
+        ).first
         self.product_items = page.locator(".table-responsive table tbody tr")
         self.lbl_total_price = page.locator(
             "#content tr:has(td strong:text-is('Total:')) td:last-child"
@@ -86,7 +89,9 @@ class ShoppingCartPage(BasePage):
     def clear_cart(self):
         """Remove all items from the shopping cart."""
         # Use selector for remove button (cross icon)
-        remove_buttons = self.page.locator("button[data-original-title='Remove'], button[title='Remove']")
+        remove_buttons = self.page.locator(
+            "button[data-original-title='Remove'], button[title='Remove']"
+        )
         while self.get_count(remove_buttons) > 0:
             target = remove_buttons.first
             self.click(target)

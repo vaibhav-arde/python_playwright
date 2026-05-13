@@ -11,6 +11,7 @@ import logging
 from playwright.sync_api import Page, Locator, expect
 
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from pages.product_page import ProductPage
 
@@ -36,12 +37,14 @@ class BasePage:
     def click_cart_image_link(self) -> ProductPage:
         """Click the product image in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
+
         self.click(self.lnk_cart_image)
         return ProductPage(self.page)
 
     def click_cart_name_link(self) -> ProductPage:
         """Click the product name link in the cart toggle box and return ProductPage."""
         from pages.product_page import ProductPage
+
         self.click(self.lnk_cart_name)
         return ProductPage(self.page)
 

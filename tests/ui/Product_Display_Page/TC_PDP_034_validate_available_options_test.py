@@ -36,7 +36,6 @@ def test_validate_available_options(page: Page):
     product_page = ProductPage(page)
     registration_page = RegistrationPage(page)
 
-
     # Step 1: Open Application URL and Register new account
     # User is auto-logged in after successful registration
     home_page.open_home_page()
