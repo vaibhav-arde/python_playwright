@@ -13,15 +13,26 @@ WARN_PRIVACY_POLICY = "Warning: You must agree to the Privacy Policy!"
 WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
 WARN_EMAIL_ALREADY_EXISTS = "Warning: E-Mail Address is already registered!"
 
-# ===== Product Comparison =====
-COMPARISON_PAGE_TITLE = "Product Comparison"
-COMPARISON_PAGE_HEADING = "Product Comparison"
-COMPARE_BUTTON_TOOLTIP = "Compare this Product"
-COMPARE_SUCCESS = "Success: You have added {product_name} to your product comparison!"
+# =======
+INVALID_LOGIN_MSG = "Warning: No match for E-Mail Address and/or Password."
+PRIVACY_POLICY_WARNING_MSG = "Warning: You must agree to the Privacy Policy!"
+SUCCESS_REGISTER_MSG = "Your Account Has Been Created!"
 
-# ===== Login Field error message =====
+# ===== Product Display Page / Cart Messages =====
+SUCCESS_ALERT_KEYWORD = "Success"
+WARNING_ALERT_KEYWORD = "Warning"
+INVALID_QTY_ALERT_EXPECTATION = "Expected success or warning alert for invalid quantity input"
+AVAILABILITY_STATUS_EMPTY = "Availability status should not be empty"
+AVAILABILITY_STATUS_UNEXPECTED = "Unexpected availability status: '{status}'"
+SEARCH_RESULT_PRODUCT_NOT_FOUND = "No product found in search results for '{keyword}'"
+SEARCH_RESULT_PRODUCT_NAME_EMPTY = "Product Name in search results should not be empty"
+PDP_PRODUCT_NAME_MISMATCH = "Expected Product Name '{expected}', but got '{actual}'"
+PDP_PRODUCT_BRAND_EMPTY = "Product Brand should not be empty"
+PDP_PRODUCT_CODE_EMPTY = "Product Code should not be empty"
+THUMBNAIL_SRC_SHOULD_CHANGE_ON_NEXT = "Lightbox image source should change after clicking next"
+
+# ===== Common UI messages =====
 WARN_LOGIN_ERROR = "Warning: No match for E-Mail Address and/or Password."
-
 ACCOUNT_PAGE_TITLE = "My Account"
 FORGOT_PASSWORD = "Forgotten Password"
 LOGIN_PAGE_TITLE = "Account Login"
@@ -54,9 +65,8 @@ COMPARISON_TABLE_HEADERS = [
 ]
 
 # Change Password Field error message
-WARN_PASSWORD_MISMATCH = "Password confirmation does not match password!"
+WARN_PASSWORD_MISMATCH_CHANGE = "Password confirmation does not match password!"
 WARN_PASSWORD_REQUIRED = "Password must be between 4 and 20 characters!"
-
 
 # Change Password Field assert message
 ASSERT_PASSWORD_REQUIRED = "Password field should be marked as mandatory with a red asterisk"
@@ -73,3 +83,91 @@ CONTACT_US_PAGE_TITLE = "Contact Us"
 # KEYBOARDSHORTCUTS
 COPY_shortcut = "Control+C"
 PASTE_SHORTCUT = "Control+V"
+
+# Aliases for compatibility during rebase
+INVALID_LOGIN_MSG = WARN_LOGIN_ERROR
+PRIVACY_POLICY_WARNING_MSG = WARN_PRIVACY_POLICY
+SUCCESS_REGISTER_MSG = ACCOUNT_CREATED
+
+# ===== Product Display Page (PDP) Messages =====
+PDP_DEFAULT_QTY_MISMATCH = "Expected default quantity '{expected}', but got '{actual}'"
+PDP_MIN_QTY_INFO_EMPTY = "Minimum quantity information text should not be empty"
+PDP_MIN_QTY_INFO_MISSING_VALUE = (
+    "Minimum quantity info should contain '{expected}', but got '{actual}'"
+)
+PDP_MIN_QTY_WARNING_NOT_VISIBLE = (
+    "Minimum quantity warning message should be visible in shopping cart"
+)
+PDP_MIN_QTY_WARNING_MISSING_PRODUCT = (
+    "Warning should mention product '{product}', but got '{actual}'"
+)
+PDP_MIN_QTY_WARNING_MISSING_QTY = (
+    "Warning should mention minimum quantity '{qty}', but got '{actual}'"
+)
+PDP_CART_QTY_MISMATCH = "Expected cart quantity '{expected}', but got '{actual}'"
+PDP_MIN_QTY_WARNING_MISSING_KEYWORD = (
+    "Warning should mention minimum quantity rule, but got '{actual}'"
+)
+CART_EMPTY_MESSAGE_MISSING = (
+    "Shopping cart should show empty-cart message after below-minimum quantity add"
+)
+CART_EMPTY_TEXT = "Your shopping cart is empty!"
+PDP_ADD_TO_CART_FEEDBACK_EMPTY = (
+    "Add-to-cart feedback should be displayed for above-minimum quantity"
+)
+PDP_ADD_TO_CART_FEEDBACK_UNEXPECTED = (
+    "Expected success or minimum-quantity feedback, but got '{actual}'"
+)
+PDP_DESCRIPTION_TAB_NOT_VISIBLE = "Description tab should be visible on Product Display Page"
+PDP_DESCRIPTION_PANEL_NOT_VISIBLE = (
+    "Description panel should be visible after clicking Description tab"
+)
+PDP_DESCRIPTION_TEXT_EMPTY = "Product description should not be empty"
+PDP_SPECIFICATION_TAB_NOT_VISIBLE = "Specification tab should be visible on Product Display Page"
+PDP_SPECIFICATION_PANEL_NOT_VISIBLE = (
+    "Specification panel should be visible after clicking Specification tab"
+)
+PDP_SPECIFICATION_TEXT_EMPTY = "Product specification should not be empty"
+PDP_SPECIFICATION_TAB_NOT_FOUND_FOR_PRODUCTS = (
+    "Specification tab was not visible for any candidate products: {products}"
+)
+PDP_ADD_TO_CART_SUCCESS_PREFIX = "Success: You have added"
+PDP_MIN_QTY_KEYWORD = "minimum quantity"
+PDP_PRICE_FORMAT_INCORRECT = "Price format incorrect: {price}"
+PDP_PRODUCT_PRICE_EMPTY = "Product price should not be empty"
+PDP_EX_TAX_FORMAT_INCORRECT = "Ex Tax format incorrect: {ex_tax}"
+PDP_EX_TAX_PRICE_EMPTY = "Ex Tax price should not be empty"
+PDP_REVIEW_TAB_NOT_VISIBLE = "Review tab should be visible on Product Display Page"
+PDP_REVIEW_PANEL_NOT_VISIBLE = "Review panel should be visible after clicking the write review link"
+PDP_RATING_SUMMARY_NOT_VISIBLE = "Product rating summary (stars and review count) should be visible"
+PDP_REVIEW_COUNT_NOT_VISIBLE = "The number of reviews count (e.g. '0 reviews') should be displayed"
+PDP_REVIEW_TAB_COUNT_MISSING = (
+    "Review tab label should contain a valid reviews count (e.g., 'Reviews (0)')"
+)
+PDP_REVIEW_ALERT_NOT_VISIBLE = "Review submission feedback should be visible"
+PDP_REVIEW_WARNING_ALERT_NOT_VISIBLE = "Review validation warning feedback should be visible"
+PDP_REVIEW_SUCCESS_TEXT = (
+    "Thank you for your review. It has been submitted to the webmaster for approval."
+)
+PDP_REVIEW_SUCCESS_TEXT_MISMATCH = "Expected review success text '{expected}', but got '{actual}'"
+PDP_REVIEW_WARNING_MISSING_KEYWORD = (
+    "Review warning text should contain '{keyword}', but got '{actual}'"
+)
+PDP_NO_REVIEWS_TEXT = "There are no reviews for this product."
+WARN_REVIEW_RANGE = "Warning: Review Text must be between 25 and 1000 characters!"
+WISHLIST_PAGE_NOT_VISIBLE = "Wish List page heading not visible"
+COMPARE_PAGE_NOT_VISIBLE = "Comparison page heading not visible"
+SOCIAL_OPTION_NOT_VISIBLE = "Social option {option} not visible"
+RELATED_PRODUCT_NOT_FOUND = "Related products section not found or empty"
+ADD_TO_CART_LINK_NOT_FOUND = "Product link in 'Add to Cart' success message not found"
+PDP_NO_REVIEWS_TEXT_MISMATCH = "Expected text '{expected}' but got '{actual}'"
+PDP_REVIEW_COUNT_TEXT_MISMATCH = "Expected 'reviews' count in text but got '{actual}'"
+GENERIC_SUCCESS_ALERT_MISMATCH = (
+    "Success alert message mismatch: expected '{expected}', but got '{actual}'"
+)
+PRODUCT_NOT_IN_WISHLIST = "Product '{product}' not found in Wish List"
+
+COMPARISON_PAGE_TITLE = "Product Comparison"
+COMPARISON_PAGE_HEADING = "Product Comparison"
+COMPARE_BUTTON_TOOLTIP = "Compare this Product"
+COMPARE_SUCCESS = "Success: You have added {product_name} to your product comparison!"

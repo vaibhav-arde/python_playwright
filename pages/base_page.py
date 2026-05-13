@@ -19,6 +19,7 @@ class BasePage:
         """Initialize with a Playwright Page instance."""
         self.page = page
         self.lnk_site_map = page.get_by_role("link", name="Site Map")
+        self.any_alert_msg = page.locator("div.alert, .alert-success, .alert-danger, .alert-info")
 
     def get_locator(self, locator: str | Locator) -> Locator:
         """Robustly returns a Locator. Only converts if the input is strictly a string."""
@@ -34,30 +35,35 @@ class BasePage:
     def click(self, locator: str | Locator):
         """Click an element. Accepts string selector OR Locator object."""
         target = self.get_locator(locator)
+        target.wait_for(state="visible")
         target.click()
         logger.info(f"Clicked: {target}")
 
     def fill(self, locator: str | Locator, value: str):
         """Fill a text field. Accepts string selector OR Locator object."""
         target = self.get_locator(locator)
+        target.wait_for(state="visible")
         target.fill(value)
         logger.info(f"Filled {target} with value: {value}")
 
     def check(self, locator: str | Locator):
         """Select a checkbox or radio button."""
         target = self.get_locator(locator)
+        target.wait_for(state="visible")
         target.check()
         logger.info(f"Checked element: {target}")
 
     def uncheck(self, locator: str | Locator):
         """Deselect a checkbox."""
         target = self.get_locator(locator)
+        target.wait_for(state="visible")
         target.uncheck()
         logger.info(f"Unchecked element: {target}")
 
     def select_option(self, locator: str | Locator, **kwargs):
         """Select an option from a dropdown."""
         target = self.get_locator(locator)
+        target.wait_for(state="visible")
         target.select_option(**kwargs)
         logger.info(f"Selected option in {target} with args: {kwargs}")
 
@@ -79,6 +85,7 @@ class BasePage:
     def hover(self, locator: str | Locator):
         """Hover over an element."""
         target = self.get_locator(locator)
+        target.wait_for(state="visible")
         target.hover()
         logger.info(f"Hovered over: {target}")
 
@@ -94,6 +101,10 @@ class BasePage:
         value = target.get_attribute(name)
         logger.info(f"Got attribute '{name}' from {target}: '{value}'")
         return value
+
+    def get_element_attribute(self, locator: str | Locator, name: str) -> str | None:
+        """Alias for get_attribute to support existing tests."""
+        return self.get_attribute(locator, name)
 
     def wait_for(self, locator: str | Locator, state: str = "visible", timeout: int = 10000):
         """Wait for an element to reach a specific state."""
@@ -131,3 +142,11 @@ class BasePage:
     def click_site_map(self):
         """Click on the 'Site Map' link in the footer."""
         self.click(self.lnk_site_map)
+
+    def get_any_alert_message(self) -> Locator:
+        """Return the generic alert message locator (success/danger/info)."""
+        return self.any_alert_msg.first
+
+    def wait_for_page_load(self, timeout: int = 30000):
+        """Wait for the page to reach 'load' state."""
+        self.page.wait_for_load_state("load", timeout=timeout)
